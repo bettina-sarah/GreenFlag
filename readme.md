@@ -1,8 +1,9 @@
 # Green Flag
 
 #   QUESTIONS POUR JC
-si qlqn swipe like NO sur toi, tu ne laura pas dans tes suggestions ... mais qsq on fait si toulmonde swipe left pour toi? Tu aura personne? 
+1. si qlqn swipe like NO sur toi, tu ne laura pas dans tes suggestions ... mais qsq on fait si toulmonde swipe left pour toi? Tu aura personne? 
 Je trouve c pas une bonne idee dajuster les suggestions des autres en fonc de les profils q toi a swipé ?
+2. struct des tables: message; conversation; tab de match avec memes info? 
 
 ### par Vincent Fournier et Bettina-Sarah Janesch
 
