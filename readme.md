@@ -1,5 +1,9 @@
 # Green Flag
 
+#   QUESTIONS POUR JC
+si qlqn swipe like NO sur toi, tu ne laura pas dans tes suggestions ... mais qsq on fait si toulmonde swipe left pour toi? Tu aura personne? 
+Je trouve c pas une bonne idee dajuster les suggestions des autres en fonc de les profils q toi a swipé ?
+
 ### par Vincent Fournier et Bettina-Sarah Janesch
 
 ## Présentation
