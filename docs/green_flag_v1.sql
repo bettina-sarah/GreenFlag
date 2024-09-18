@@ -33,6 +33,18 @@ CREATE TABLE "activity" (
   "name" varchar
 );
 
+CREATE TABLE "user_photo" (
+  "id" serial PRIMARY KEY,
+  "user_id" integer,
+  "photo_id" integer
+);
+
+CREATE TABLE "photo" (
+  "id" serial PRIMARY KEY,
+  "encryption_key" varchar,
+  "position" integer
+);
+
 CREATE TABLE "match" (
   "id" serial PRIMARY KEY,
   "suggestion_id" integer,
@@ -62,6 +74,8 @@ COMMENT ON COLUMN "user_activities"."user_id" IS 'PK & FK - contrainte d.unicit√
 
 COMMENT ON COLUMN "user_activities"."activity_id" IS 'PK & FK - contrainte d.unicit√©';
 
+COMMENT ON COLUMN "photo"."position" IS 'enum de 1 a 5 ou interval?';
+
 COMMENT ON COLUMN "match"."user_id_1" IS 'contrainte unique ensemble';
 
 COMMENT ON TABLE "message" IS 'fonction - exiger acces au BE via table message';
@@ -87,3 +101,7 @@ ALTER TABLE "user" ADD FOREIGN KEY ("id") REFERENCES "suggestion" ("user_id_1");
 ALTER TABLE "user" ADD FOREIGN KEY ("id") REFERENCES "suggestion" ("user_id_2");
 
 ALTER TABLE "user" ADD FOREIGN KEY ("id") REFERENCES "message" ("receiver_id");
+
+ALTER TABLE "user" ADD FOREIGN KEY ("id") REFERENCES "user_photo" ("user_id");
+
+ALTER TABLE "photo" ADD FOREIGN KEY ("id") REFERENCES "user_photo" ("photo_id");
