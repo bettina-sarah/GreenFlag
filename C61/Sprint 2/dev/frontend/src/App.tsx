@@ -1,16 +1,14 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import TestConnection from './TestConnection';
+import './App.css'
+import TestConnection from './components/TestConnection'
 
 function App() {
 
   return (
-    <div className="App">
-      <h1>Home</h1>
+    <>
+      <h1>Vite + React</h1>
       <TestConnection/>
-    </div>
-  );
+    </>
+  )
 }
 
-export default App;
+export default App

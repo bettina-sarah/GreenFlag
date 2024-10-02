@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useEffect} from 'react';
+import { useState} from 'react';
 
 const TestConnection = () => {
         const [message,SetMessage] = useState('');
@@ -8,8 +8,10 @@ const TestConnection = () => {
         try{
             const response = await axios.get('http://127.0.0.1:5000/test');
             SetMessage(response.data.message);
-        } catch (error){
-            SetMessage('Connection failed!');
+        } catch (error) {
+            let message = 'Unknown error';
+            if (error instanceof Error) message = error.message;
+            SetMessage('Connection failed! because of' + message);
         }
     };
     
