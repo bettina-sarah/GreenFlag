@@ -1,5 +1,6 @@
 import './App.css'
 import TestConnection from './components/TestConnection'
+import Router from './Router'
 
 function App() {
 
