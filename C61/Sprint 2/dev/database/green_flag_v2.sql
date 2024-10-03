@@ -39,35 +39,35 @@ CREATE TYPE REASON_FLAGGED AS ENUM (
 
 CREATE TABLE user (
   id                SERIAL            PRIMARY KEY,
-  first_name        VARCHAR           NOT NULL,
-  last_name         VARCHAR           NOT NULL,
-  password          VARCHAR,
-  email             VARCHAR,
-  date_of_birth     DATE,
-  gender            GENDER,
-  preferred_gender  GENDER,
-  preferred_min_age INTEGER,
-  preferred_max_age INTEGER,
-  relationship_type RELATIONSHIP,
-  height            INTEGER,
-  religion          VARCHAR,
-  wants_kids        BOOL,
-  city              VARCHAR,
-  last_lat          DOUBLE PRECISION,
-  last_long         DOUBLE PRECISION,
-  token             VARCHAR,
-  email_confirmed   BOOL
+  first_name        VARCHAR(50)           NOT NULL,
+  last_name         VARCHAR(50)           NOT NULL,
+  password          VARCHAR(128)          NOT NULL,
+  email             VARCHAR(255) UNIQUE    NOT NULL,
+  date_of_birth     DATE DEFAULT NULL,
+  gender            GENDER DEFAULT 'x',
+  preferred_gender  GENDER DEFAULT 'x',
+  preferred_min_age INTEGER DEFAULT 18,
+  preferred_max_age INTEGER DEFAULT 60,
+  relationship_type RELATIONSHIP DEFAULT 'longterm',
+  height            INTEGER CHECK (height > 0),
+  religion          VARCHAR(50) DEFAULT NULL,
+  wants_kids        BOOL DEFAULT FALSE,
+  city              VARCHAR(100),
+  last_lat          DOUBLE PRECISION DEFAULT NULL,
+  last_long         DOUBLE PRECISION DEFAULT NULL,
+  token             VARCHAR(255),
+  email_confirmed   BOOL DEFAULT FALSE
 );
 
 CREATE TABLE activity (
   id                SERIAL PRIMARY KEY,
-  name              VARCHAR
+  name              VARCHAR(50) UNIQUE
 );
 
 CREATE TABLE photo (
   id                SERIAL PRIMARY KEY,
-  encryption_key    VARCHAR,
-  position          INTEGER
+  encryption_key    VARCHAR(128) NOT NULL,
+  position          INTEGER CHECK (position BETWEEN 0 AND 3),
 );
 
 CREATE TABLE user_activities (
@@ -78,16 +78,16 @@ CREATE TABLE user_activities (
 
 CREATE TABLE flagged (
   id                INTEGER PRIMARY KEY,
-  user_id           INTEGER,
-  reporter_id       INTEGER,
-  reason            REASON_FLAGGED
+  user_id           INTEGER NOT NULL,
+  reporter_id       INTEGER NOT NULL,
+  reason            REASON_FLAGGED NOT NULL 
 );
 
 CREATE TABLE alert_notification (
   user_id           INTEGER PRIMARY KEY,
-  subject_id        INTEGER,
-  text_message      TEXT,
-  is_read           BOOLEAN
+  subject_id        INTEGER NOT NULL,
+  text_message      TEXT NOT NULL,
+  is_read           BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE user_photo (
@@ -98,24 +98,24 @@ CREATE TABLE user_photo (
 
 CREATE TABLE suggestion (
   id                SERIAL PRIMARY KEY,
-  date_creation     DATE,
-  user_id_1         INTEGER UNIQUE,
-  user_id_2         INTEGER UNIQUE,
+  date_creation     DATE NOT NULL,
+  user_id_1         INTEGER UNIQUE NOT NULL,
+  user_id_2         INTEGER UNIQUE NOT NULL,
   situation         STATUS DEFAULT 'pending'
 );
 
 CREATE TABLE match (
   id                SERIAL PRIMARY KEY,
-  suggestion_id     INTEGER,
-  chatroom_name     VARCHAR
+  suggestion_id     INTEGER UNIQUE NOT NULL,
+  chatroom_name     VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE message (
   id                SERIAL PRIMARY KEY,
-  match_id          INTEGER,
-  sender_id         INTEGER,
+  match_id          INTEGER NOT NULL,
+  sender_id         INTEGER NOT NULL,
   text_message      TEXT NOT NULL,
-  date_envoi        DATE
+  date_envoi        DATE NOT NULL
 );
 
 ALTER TABLE user_activities ADD FOREIGN KEY (activity_id) REFERENCES activity (id)
