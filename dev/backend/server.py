@@ -8,27 +8,27 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 def test_connection():
     return jsonify(message="Hello React this is Flask")
 
-@app.route('/login', method=['POST'])
+@app.route('/login', methods=['POST'])
 def login() -> bool:
-    pass
+    return jsonify(True)
 
-@app.route('/create_account', method=['POST'])
+@app.route('/create_account', methods=['POST'])
 def create_account() -> bool:
     pass
 
-@app.route('/questionnaire', method=['POST'])
+@app.route('/questionnaire', methods=['POST'])
 def questionnaire() -> bool:
     pass
 
-@app.route('/chatrooms', method=['GET'])
+@app.route('/chatrooms', methods=['GET'])
 def fetch_chatroom_list() -> list:  #send JSON jsonify ... 
     pass
 
-@app.route('/chat', method=['GET'])
+@app.route('/chat', methods=['GET'])
 def connect_chatroom() -> list:  #send JSON jsonify ... 
     pass
 
-@app.route('/modify_profile', method=['POST'])
+@app.route('/modify_profile', methods=['POST'])
 def modify_profile()-> bool:
     pass
 
@@ -36,7 +36,7 @@ def modify_profile()-> bool:
 def update_suggestion() -> bool:
     pass
 
-@app.route('/suggestions', method=['POST'])
+@app.route('/suggestions', methods=['POST'])
 def get_suggestions() -> list:
     pass
 

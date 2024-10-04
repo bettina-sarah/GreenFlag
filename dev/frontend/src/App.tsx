@@ -15,9 +15,9 @@ const App: React.FC = () => {
   return (
     <>
       <BrowserRouter>
-        <header>
+        {/* <header>
           <Link to="/">Green Flag</Link>
-        </header>
+        </header> */}
         <Routes>
           <Route path="/" element={<HomePage/>}/>
           <Route path="/login" element={<Login/>}/>
