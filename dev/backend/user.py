@@ -36,3 +36,20 @@ class User:
     @gender.setter
     def gender(self, gender:Gender) -> None:
         self.__gender = gender
+        
+    
+    @property
+    def preferences(self) -> tuple:
+        return self.__preferences
+    
+    @preferences.setter
+    def preferences(self, preferences:tuple) -> None:
+        self.__preferences = preferences
+    
+    @property
+    def interests(self) -> tuple:
+        return self.__interests
+    
+    @interests.setter
+    def interests(self, interests:tuple) -> None:
+        self.__interests = interests
