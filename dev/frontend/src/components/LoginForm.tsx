@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+// FORM LIBRARY: React hook form
+
 const LoginForm = () => {
     const navigate = useNavigate(); //hook
     const [formData, setFormData] = useState({
@@ -12,6 +14,8 @@ const LoginForm = () => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
+        //setFormData({email: formData.email, password: formData.password });
+        // spread operaror: array into an object, cant spread object into an array
     };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) =>{
