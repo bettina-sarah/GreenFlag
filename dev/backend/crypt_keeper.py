@@ -8,11 +8,11 @@ class CryptKeeper(ABC):
         pass
     
     @staticmethod
-    def decode(a: str) -> str:
+    def decode(token: str) -> str:
         # or a list of strings
         pass
 
     @staticmethod
-    def encode(a: str) -> str:
+    def encode(token: str) -> str:
         pass
     
