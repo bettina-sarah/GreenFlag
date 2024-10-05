@@ -16,3 +16,11 @@ class AuthenticationMiddleware:
             return True
 
         return False    
+
+    def generate_token(self, user_id:str, user_password:str) -> str:
+        # make token
+        token = "1234"
+        encoded_token = CryptKeeper.encode(token)
+        return encoded_token
+
+    

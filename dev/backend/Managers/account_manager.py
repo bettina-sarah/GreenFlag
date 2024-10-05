@@ -1,6 +1,4 @@
-from utility_functions import requires_token
-from crypt_keeper import CryptKeeper
-# decorator
+
 
 class AccountManager:
     def __init__(self) -> None:
@@ -8,12 +6,10 @@ class AccountManager:
     
     def login(self) -> bool:
         pass
-    
-    @requires_token
-    def modify_profile(self) -> bool:
+
+    def get_profile(self) -> bool:
         pass
     
-    @requires_token
     def modify_profile(self) -> bool:
         pass
     
