@@ -2,13 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-#root {
-  height: 100vh;
+/* index.css */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
-html, body {
-  height: 100%;
-  margin: 0; /* Prevent scrolling */
+#root {
+  height: 100%; /* Make sure the root takes full height */
 }
 
 :root {
