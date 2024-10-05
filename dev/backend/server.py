@@ -14,7 +14,7 @@ def login() -> bool:
 
 @app.route('/create_account', methods=['POST'])
 def create_account() -> bool:
-    pass
+    return jsonify(True)
 
 @app.route('/questionnaire', methods=['POST'])
 def questionnaire() -> bool:
