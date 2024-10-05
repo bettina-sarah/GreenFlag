@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 const HomePage: React.FC = () => {
-  const navigate = useNavigate(); //hook
+  const navigate = useNavigate();
 
   const handleLoginButtonClick = () => {
     navigate('/login');
@@ -15,9 +15,9 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div className='w-full h-screen flex flex-col items-center'>
-		  <h1 className='text-3xl font-bold'>GreenFlag</h1>
-      <div className='flex flex-col flex-auto m-0'>
+    <div className='w-full h-screen flex flex-col justify-evenly items-center'>
+      <h1 className='text-3xl font-bold'>GreenFlag</h1>
+      <div className='flex flex-col m-0'>
         <h2>Welcome to the Home Page</h2>
         <button onClick={handleLoginButtonClick} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2'>
           Go to Login
