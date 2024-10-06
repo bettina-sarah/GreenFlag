@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request, make_response
 from flask_cors import CORS
 
 from Managers.account_manager import AccountManager
-from authentification_middleware import AuthenticationMiddleware
+from backend.authentication.authentification_middleware import AuthenticationMiddleware
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})

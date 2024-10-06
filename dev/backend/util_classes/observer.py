@@ -7,4 +7,6 @@ class Observer(ABC):
     def process(self) -> bool:
         pass
 
-    
+    # makes an object iterable?
+    def __iter__(self):
+        pass
