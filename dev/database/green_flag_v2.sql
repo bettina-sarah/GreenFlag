@@ -45,7 +45,7 @@ CREATE TABLE member (
   id                SERIAL            PRIMARY KEY,
   first_name        VARCHAR(50)           NOT NULL,
   last_name         VARCHAR(50)           NOT NULL,
-  member_password   VARCHAR(128)          NOT NULL,
+  member_password   VARCHAR(20)          NOT NULL,
   email             VARCHAR(255) UNIQUE    NOT NULL,
   date_of_birth     DATE DEFAULT NULL,
   gender            GENDER DEFAULT 'x',
