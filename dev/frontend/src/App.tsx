@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import CreateAccount from './pages/CreateAccount';
 import MatchingPage from './pages/MatchingPage';
 import ChatroomsPage from './pages/ChatroomsPage';
+import '@mantine/core/styles.css';
 
 
 
