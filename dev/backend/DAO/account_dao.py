@@ -1,5 +1,6 @@
 from dao import DAO
 from types import List
+from util_classes.email_adapter import EmailAdapter
 
 class AccountDAO(DAO):
 
