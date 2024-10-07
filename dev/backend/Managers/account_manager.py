@@ -1,17 +1,30 @@
-from DAO.account_dao import AccountDAO
+from account_dao import AccountDAO
+from abc import ABC, abstractmethod
+from flask import jsonify
 
-class AccountManager:
+class AccountManager(ABC):
     def __init__(self) -> None:
         pass
     
-    def login(self) -> bool:
-        pass
+    @staticmethod
+    def login(request) -> bool:
+        data = request
+        return False
 
-    def get_profile(self) -> bool:
+    @staticmethod
+    def get_profile(data) -> bool:
         pass
     
-    def modify_profile(self) -> bool:
+    @staticmethod
+    def modify_profile(data) -> bool:
         pass
     
-    def delete_account(self) -> bool:
+    @staticmethod
+    def delete_account(data) -> bool:
         pass
+    
+
+
+if __name__ == '__main__':
+    if not AccountManager.login(True):
+        print("hello")

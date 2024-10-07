@@ -1,5 +1,5 @@
 from dao import DAO
-from types import List
+from typing import List
 
 class MatchingDAO(DAO):
     def __init__(self) -> None:

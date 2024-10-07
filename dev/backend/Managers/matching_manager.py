@@ -1,6 +1,6 @@
 from user import User
 from util_classes.observer import Observer
-from DAO.matching_dao import MatchingDAO
+from DAOs.matching_dao import MatchingDAO
 
 class MatchingManager(Observer):
     def __init__(self) -> None:

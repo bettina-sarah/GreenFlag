@@ -1,5 +1,5 @@
 from dao import DAO
-from types import List, Tuple
+from typing import List, Tuple
 
 class StatsDAO(DAO):
     def __init__(self) -> None:
