@@ -21,7 +21,7 @@ const RegisterForm = () => {
     } = useForm<FormData>()
     const onSubmit = handleSubmit( async (data)=> {
         try{
-            const answer = await axios.post(IP_SERVER+'/create_account',data)
+            const answer = await axios.post(IP_SERVER+'/create-account',data)
             if (answer.data){
                 console.log(answer);
                 navigate('/login')
