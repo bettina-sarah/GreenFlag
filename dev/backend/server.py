@@ -9,13 +9,10 @@ path.append('dev\\backend\\Managers')
 from Managers.account_manager import AccountManager
 #from authentication.authentification_middleware import AuthenticationMiddleware
 
-print(AccountManager.login('daa'))
-
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 #authentication_middleware = AuthenticationMiddleware() 
-AccountManager.login() # bad ? should be a singleton? not global?
 # SHOULD THESE be abstract ???? 
 
 @app.route('/test',methods=['GET'])
@@ -24,11 +21,11 @@ def test_connection():
 
 @app.route('/login', methods=['POST'])
 def login() -> bool:
+    response = AccountManager.login(request.json)
     # call middleware to generate token; send it to frontend
     # make sure database gets it !!!!
-    data = request.json
-    
-    return jsonify(True)
+    return jsonify(response)
+    #return jsonify(True)
 
 
 @app.route('/create_account', methods=['POST'])
