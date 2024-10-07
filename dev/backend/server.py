@@ -1,19 +1,14 @@
 from flask import Flask, jsonify, request, make_response
 from flask_cors import CORS
-
-
+from file_tree import create_file_tree
 from sys import path
-path.append('dev\\backend\\DAOs')
-path.append('dev\\backend\\Managers')
+
+create_file_tree()
 
 from Managers.account_manager import AccountManager
-#from authentication.authentification_middleware import AuthenticationMiddleware
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
-
-#authentication_middleware = AuthenticationMiddleware() 
-# SHOULD THESE be abstract ???? 
 
 @app.route('/test',methods=['GET'])
 def test_connection():
