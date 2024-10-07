@@ -1,4 +1,4 @@
-from DAO.notification_dao import NotificationDAO
+from DAOs.notification_dao import NotificationDAO
 
 class NotificationManager:
     def __init__(self) -> None:

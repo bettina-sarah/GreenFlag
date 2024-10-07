@@ -1,4 +1,4 @@
-from backend.DAO.chat_dao import ChatDAO
+from DAOs.chat_dao import ChatDAO
 
 # another class that manages the websocket chatroom? 
 class ChatroomManager:

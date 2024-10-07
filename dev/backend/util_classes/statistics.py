@@ -1,4 +1,4 @@
-from DAO.stats_dao import StatsDAO
+from DAOs.stats_dao import StatsDAO
 
 class Statistics:
     def __init__(self, data) -> None:

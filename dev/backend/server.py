@@ -1,14 +1,21 @@
 from flask import Flask, jsonify, request, make_response
 from flask_cors import CORS
 
+
+from sys import path
+path.append('dev\\backend\\DAOs')
+path.append('dev\\backend\\Managers')
+
 from Managers.account_manager import AccountManager
-from backend.authentication.authentification_middleware import AuthenticationMiddleware
+#from authentication.authentification_middleware import AuthenticationMiddleware
+
+print(AccountManager.login('daa'))
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
-authentication_middleware = AuthenticationMiddleware() 
-account_manager = AccountManager() # bad ? should be a singleton? not global?
+#authentication_middleware = AuthenticationMiddleware() 
+AccountManager.login() # bad ? should be a singleton? not global?
 # SHOULD THESE be abstract ???? 
 
 @app.route('/test',methods=['GET'])
@@ -19,6 +26,8 @@ def test_connection():
 def login() -> bool:
     # call middleware to generate token; send it to frontend
     # make sure database gets it !!!!
+    data = request.json
+    
     return jsonify(True)
 
 
@@ -38,10 +47,11 @@ def fetch_chatroom_list() -> list:  #send JSON jsonify ...
 def connect_chatroom() -> list:  #send JSON jsonify ... 
     pass
 
-@app.route('/profile', method=['GET'])
+@app.route('/profile', methods=['GET'])
 def get_profile() -> bool:
-    if authentication_middleware.check_session_validity():
-        return account_manager.get_profile()
+    # if authentication_middleware.check_session_validity():
+    #     return account_manager.get_profile()
+        pass
 
 @app.route('/modify_profile', methods=['POST'])
 def modify_profile()-> bool:
