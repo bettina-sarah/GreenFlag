@@ -15,17 +15,11 @@ class AccountManager(ABC):
         password = data.get('password')
         
         params = (email,password)
-        
-        # 
         try:
-            connection = pg.connect(dbname="postgres",
-                                    password="AAAaaa123",
-                                    host="localhost",
-                                    port=5432, user='postgres')
-            pg_cursor = connection.cursor()
-            pg_cursor.execute('SELECT * FROM member WHERE email = %s and member_password = %s', params)
-            print(pg_cursor.fetchall())
-            return True
+            AccountDAO.login(params)
+        except Exception as error:
+            print(error)
+            return False
             
             
     #     cur.execute("""

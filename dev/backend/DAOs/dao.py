@@ -1,24 +1,43 @@
-from abc import ABC
-#import psycopg2
+from abc import ABC, abstractmethod
+from psycopg import pg
+import constants
 
 class DAO(ABC):
-    def __init__(self) -> None:
-        pass
+    connection = None
 
     @staticmethod
-    def create_connection(params: dict ) -> None:
-        pass
+    def create_connection():
+        # confirm that the database is available
+        try:
+            DAO.connection = pg.connect(dbname=DB_NAME,
+                                    password=DB_PASSWORD,
+                                    host=DB_HOST,
+                                    port=DB_PORT, user=DB_USER)
+        except Exception as error:
+            print(error)
+            return False
 
-    @staticmethod
+    @staticmethod 
     def get_connection() -> None:
-        pass
+        if DAO.connection is None:
+            return DAO.create_connection()
+        else
+            return DAO.connection()
+        
+    # connection pool maybe??? 
 
     @staticmethod
     def store_request(request) -> None: 
         pass
 
+    @abstractmethod
+    def send_request(params: tuple, query: str) -> bool:
+        # connection
+        pass
+
     @staticmethod
     def send_requests(requests: list) -> None:
+
         pass
 
 
