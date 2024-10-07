@@ -4,11 +4,6 @@ from typing import List
 
 class AccountDAO(DAO):
 
-    @staticmethod   
-    def create_connection(params: dict ) -> None:
-        pass    
-
-    # all dao methods need to be redefined here?
 
     def create_account() -> bool:
         return True
@@ -22,7 +17,25 @@ class AccountDAO(DAO):
     def delete_account() -> bool:
         return True
     
-    def login() -> bool:
+    def login(params:tuple) -> bool:
+        try:
+            connection = DAO.create_connection()
+            pg_cursor = connection.cursor()
+            pg_cursor.execute('SELECT * FROM member WHERE email = %s and member_password = %s', params)
+            print(pg_cursor.fetchall())
+            return True
+        except Exception as error:  
+            print(error)
+
+        #query: str 
+
+            # connection = pg.connect(dbname=DB_NAME,
+            #                         password="AAAaaa123",
+            #                         host="localhost",
+            #                         port=5432, user='postgres')
+            # pg_cursor = connection.cursor()
+            # pg_cursor.execute('SELECT * FROM member WHERE email = %s and member_password = %s', params)
+            # print(pg_cursor.fetchall())
         return False
 
 
