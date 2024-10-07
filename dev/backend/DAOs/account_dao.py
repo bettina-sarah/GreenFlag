@@ -19,23 +19,12 @@ class AccountDAO(DAO):
     
     def login(params:tuple) -> bool:
         try:
-            connection = DAO.create_connection()
-            pg_cursor = connection.cursor()
-            pg_cursor.execute('SELECT * FROM member WHERE email = %s and member_password = %s', params)
-            print(pg_cursor.fetchall())
-            return True
+            connection = DAO.get_connection()
+            query = ('SELECT * FROM member WHERE email = %s and member_password = %s')
+            response = DAO.send_request(connection, query, params)
+            return response
         except Exception as error:  
             print(error)
-
-        #query: str 
-
-            # connection = pg.connect(dbname=DB_NAME,
-            #                         password="AAAaaa123",
-            #                         host="localhost",
-            #                         port=5432, user='postgres')
-            # pg_cursor = connection.cursor()
-            # pg_cursor.execute('SELECT * FROM member WHERE email = %s and member_password = %s', params)
-            # print(pg_cursor.fetchall())
         return False
 
 

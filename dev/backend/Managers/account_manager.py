@@ -16,7 +16,9 @@ class AccountManager(ABC):
         
         params = (email,password)
         try:
-            AccountDAO.login(params)
+            response = AccountDAO.login(params)
+            return response
+            # CREAte token .... & SENT to the front
         except Exception as error:
             print(error)
             return False
