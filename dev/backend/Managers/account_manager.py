@@ -22,17 +22,25 @@ class AccountManager(ABC):
         except Exception as error:
             print(error)
             return False
-            
-            
-    #     cur.execute("""
-    # INSERT INTO some_table (id, created_at, updated_at, last_name)
-    # VALUES (%(id)s, %(created)s, %(created)s, %(name)s);
-    # """,
-    # {'id': 10, 'name': "O'Reilly", 'created': datetime.date(2020, 11, 18)})
-            
+    
+    @staticmethod
+    def create_account(data) -> bool:
+        first_name = data.get('firstname')
+        last_name = data.get('lastname')
+        email = data.get('email')
+        password = data.get('password')
+        
+        params = (first_name, last_name, email, password)
+
+        try:
+            response = AccountDAO.create_account(params)
+            return response
+                # email sequence here
         except Exception as error:
             print(error)
-        return False
+            print('account manager')
+            return False
+
 
     @staticmethod
     def get_profile(data) -> bool:
@@ -46,8 +54,3 @@ class AccountManager(ABC):
     def delete_account(data) -> bool:
         pass
     
-
-
-if __name__ == '__main__':
-    if not AccountManager.login(True):
-        print("hello")

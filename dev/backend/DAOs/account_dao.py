@@ -5,8 +5,7 @@ from typing import List
 class AccountDAO(DAO):
 
 
-    def create_account() -> bool:
-        return True
+
 
     def update_account() -> bool:
         return True
@@ -25,6 +24,17 @@ class AccountDAO(DAO):
             return response
         except Exception as error:  
             print(error)
+        return False
+
+    def create_account(params:tuple) -> bool:
+        try:
+            connection = DAO.get_connection()
+            query = ('INSERT INTO member (first_name, last_name, member_password,email) VALUES (%s, %s, %s, %s)')
+            response = DAO.send_request(connection, query, params)
+            return response
+        except Exception as error:  
+            print(error)
+            print('account dao')
         return False
 
 

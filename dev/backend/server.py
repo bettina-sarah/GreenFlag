@@ -23,9 +23,10 @@ def login() -> bool:
     #return jsonify(True)
 
 
-@app.route('/create_account', methods=['POST'])
+@app.route('/create-account', methods=['POST'])
 def create_account() -> bool:
-    return jsonify(True)
+    response = AccountManager.create_account(request.json)
+    return jsonify(response)
 
 @app.route('/questionnaire', methods=['POST'])
 def questionnaire() -> bool:
