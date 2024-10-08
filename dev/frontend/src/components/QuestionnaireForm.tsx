@@ -3,22 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from "react-hook-form";
 import axios from 'axios';
 import { DatePicker } from '@mantine/dates';
-import { NumberInput } from "@mantine/core";
+import { MultiSelect, NumberInput } from "@mantine/core";
 
-const RegisterForm = () => {
+const QuestionnaireForm = () => {
     const navigate = useNavigate(); //hook
 
-    enum Relationship {
-        fun,
-        shortterm,
-        longterm
-    }
+    const relationship =  [
+        "fun",
+        "shortterm",
+        "longterm"
+    ]
 
-    enum Gender {
-        m,
-        f,
-        x
-    }
+    const gender = [
+        {value: 'm', label: 'Men'},
+        {value: 'f', label: 'Women'},
+        {value: 'x', label: 'Non-binary'},
+    ]
 
     type FormData = {
         Hiking: boolean
@@ -42,11 +42,11 @@ const RegisterForm = () => {
         PetLoverOrAnimalCare: boolean
         LearningNewLanguages: boolean
         DateOfBirth: Date
-        min_age: bigint
-        max_age: bigint
-        relationship_type: Relationship
-        prefered_gender: Gender
-        height: bigint
+        min_age: number
+        max_age: number
+        relationship_type: string
+        prefered_gender: string[]
+        height: number
         religion: string
         want_kids: boolean
         city: string
@@ -163,14 +163,62 @@ const RegisterForm = () => {
                 render={({ field }) => (
                     <DatePicker
                         {...field}
-                        value={field.value || null} // Ensure the value is either a date or null
+                        value={field.value || null}
                     />
                 )}
             />
             <div>
                 <label>Age preference range:</label>
-                <NumberInput></NumberInput>
+                <div className="flex flex-row">
+                    <Controller
+                        name="min_age"
+                        control={control}
+                        defaultValue={18}
+                        render={({field})=>(
+                            <NumberInput
+                            {...field}
+                            label="Minimum Age"
+                            placeholder=""
+                            min={18}
+                            max={99}
+                            step={1}
+                            onChange={(value)=>field.onChange(value)}
+                            />
+                        )}
+                    />
+                    <Controller
+                        name="max_age"
+                        control={control}
+                        defaultValue={99}
+                        render={({field})=>(
+                            <NumberInput
+                                {...field}
+                                label="Maximum Age"
+                                placeholder="99"
+                                min={18}
+                                max={99}
+                                step={1}
+                                onChange={(value)=>field.onChange(value)}
+                            />
+                        )}
+                    />
+                </div>
             </div>
+            <Controller
+                name="prefered_gender"
+                control={control}
+                defaultValue={[]}
+                render={({field})=>(
+                    <MultiSelect
+                        {...field}
+                        data={gender}
+                        label="Which type of relationship are you looking for"
+                        placeholder="gender"
+                        onChange={field.onChange}
+                        value={field.value}
+                    />
+                )}
+            />
             <label>City:</label>
             <input {...register("city",{required: true, maxLength: 50})} />
             {errors.city && errors.city.type === "required" && (
@@ -188,4 +236,4 @@ const RegisterForm = () => {
 };
 
 
-export default RegisterForm
+export default QuestionnaireForm

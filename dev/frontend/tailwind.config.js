@@ -1,3 +1,6 @@
+import tailwindPresetMantine from 'tailwind-preset-mantine';
+import { DEFAULT_THEME } from '@mantine/core';
+
 /** @type {import('tailwindcss').Config} */
 export default {
     darkMode: ["class"],
@@ -56,6 +59,12 @@ export default {
   		}
   	}
   },
+  corePlugins:{
+	preflight: false,
+  },
   plugins: [require("tailwindcss-animate")],
+  presets:[
+	tailwindPresetMantine({mantineColors: DEFAULT_THEME.colors}),
+  ],
 }
 

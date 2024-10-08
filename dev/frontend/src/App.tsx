@@ -8,13 +8,19 @@ import CreateAccount from './pages/CreateAccount';
 import MatchingPage from './pages/MatchingPage';
 import ChatroomsPage from './pages/ChatroomsPage';
 import '@mantine/core/styles.css';
+import Questionnaire from './pages/Questionnaire';
+import { MantineProvider, DEFAULT_THEME } from '@mantine/core';
+import createCache from '@emotion/cache';
 
-
+// https://dev.to/aryaman_/setting-up-mantine-with-tailwind-css-using-emotion-cache-15ch
+// https://v5.mantine.dev/theming/emotion-cache/
+// https://github.com/orgs/mantinedev/discussions/1672#discussioncomment-7561382
+// https://github.com/Songkeys/tailwind-preset-mantine
 
 const App: React.FC = () => {
- 
+  const cache = createCache({ key: "mantine", prepend: false });
   return (
-    <>
+    <MantineProvider theme={DEFAULT_THEME} emotionCache={cache}>
       <BrowserRouter>
         {/* <header>
           <Link to="/">Green Flag</Link>
@@ -26,10 +32,10 @@ const App: React.FC = () => {
           <Route path="/create-account" element={<CreateAccount/>}/>
           <Route path="/matching" element={<MatchingPage/>}/>
           <Route path="/chatrooms" element={<ChatroomsPage/>}/>
-
+          <Route path="/questionnaire" element={<Questionnaire/>}/>
         </Routes>
       </BrowserRouter>
-    </>
+    </MantineProvider>
     )
 }
 
