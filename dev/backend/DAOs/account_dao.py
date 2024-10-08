@@ -4,9 +4,6 @@ from typing import List
 
 class AccountDAO(DAO):
 
-
-
-
     def update_account() -> bool:
         return True
 
@@ -16,6 +13,7 @@ class AccountDAO(DAO):
     def delete_account() -> bool:
         return True
     
+    @staticmethod
     def login(params:tuple) -> bool:
         try:
             connection = DAO.get_connection()
@@ -26,11 +24,13 @@ class AccountDAO(DAO):
             print(error)
         return False
 
+    @staticmethod
     def create_account(params:tuple) -> bool:
         try:
             connection = DAO.get_connection()
-            query = ('INSERT INTO member (first_name, last_name, member_password,email) VALUES (%s, %s, %s, %s)')
+            query = ('INSERT INTO member (first_name, last_name, email, member_password) VALUES (%s, %s, %s, %s) RETURNING id;')
             response = DAO.send_request(connection, query, params)
+            connection.commit() # possibly necessary for an insert request
             return response
         except Exception as error:  
             print(error)
