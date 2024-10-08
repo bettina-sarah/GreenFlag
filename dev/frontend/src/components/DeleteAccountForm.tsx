@@ -20,7 +20,7 @@ const DeleteAccountForm = () => {
 
     const onSubmit = handleSubmit(async (data) => {
         try {
-            const answer = await axios.post(IP_SERVER + '/login', data);
+            const answer = await axios.post(IP_SERVER + '/settings', data);
             if (answer.data) {
                 console.log(answer);
                 console.log('Account deleted successfully');
