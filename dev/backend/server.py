@@ -24,6 +24,14 @@ def login() -> bool:
     return jsonify(response)
     #return jsonify(True)
 
+@app.route('/settings', methods=['POST'])
+def login() -> bool:
+    response = AccountManager.delete_account(request.json)
+    # call middleware to generate token; send it to frontend
+    # make sure database gets it !!!!
+    return jsonify(response)
+    #return jsonify(True)
+
 
 @app.route('/create-account', methods=['POST'])
 def create_account() -> bool:

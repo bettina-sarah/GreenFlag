@@ -41,6 +41,21 @@ class AccountManager(ABC):
             print('account manager')
             return False
 
+    @staticmethod
+    def delete_account(data) -> bool:
+        first_name = data.get('firstname')
+        password = data.get('lastname')
+        params = (first_name, password)
+        
+        try:
+            response = AccountDAO.create_account(params)
+            return response
+                # email sequence here
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False
+    
 
     @staticmethod
     def get_profile(data) -> bool:
@@ -50,7 +65,4 @@ class AccountManager(ABC):
     def modify_profile(data) -> bool:
         pass
     
-    @staticmethod
-    def delete_account(data) -> bool:
-        pass
-    
+

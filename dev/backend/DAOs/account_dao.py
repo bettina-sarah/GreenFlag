@@ -10,31 +10,39 @@ class AccountDAO(DAO):
     def get_user_infos(user_id) -> List[tuple]:
         pass
 
-    def delete_account() -> bool:
-        return True
+
+
     
     @staticmethod
     def login(params:tuple) -> bool:
-        try:
-            connection = DAO.get_connection()
-            query = ('SELECT * FROM member WHERE email = %s and member_password = %s')
-            response = DAO.send_request(connection, query, params)
-            return response
-        except Exception as error:  
-            print(error)
-        return False
+        query = 'SELECT * FROM member WHERE email = %s and member_password = %s'
+        response = AccountDAO.prepare_statement(query, params)
+        return response
+
 
     @staticmethod
     def create_account(params:tuple) -> bool:
+            query = 'INSERT INTO member (first_name, last_name, email, member_password) VALUES (%s, %s, %s, %s) RETURNING id;'
+            response = AccountDAO.prepare_statement(query, params)
+            return response
+    
+    # rudimentaire: version finale faut que ca delete la personne des tables de suggestions de tout le monde, les match, les messages, les photos dans berkeleyDB
+    @staticmethod
+    def delete_account(params:tuple) -> bool:
+        query = 'DELETE FROM member where first_name = %s and member_password = %s;'
+        response = AccountDAO.prepare_statement(query, params)
+        return response
+    
+    
+    # this can be in DAO directly 
+    def prepare_statement(query, params) -> bool:
         try:
             connection = DAO.get_connection()
-            query = ('INSERT INTO member (first_name, last_name, email, member_password) VALUES (%s, %s, %s, %s) RETURNING id;')
             response = DAO.send_request(connection, query, params)
             connection.commit() # possibly necessary for an insert request
             return response
         except Exception as error:  
             print(error)
-            print('account dao')
         return False
 
 
@@ -42,3 +50,14 @@ class AccountDAO(DAO):
 # if __name__ == '__main__':
 #     if not AccountDAO.login():
 #         print("hello")
+
+    
+    
+        # try:
+        #     connection = DAO.get_connection()
+        #     query = 'SELECT * FROM member WHERE email = %s and member_password = %s'
+        #     response = DAO.send_request(connection, query, params)
+        #     return response
+        # except Exception as error:  
+        #     print(error)
+        # return False
