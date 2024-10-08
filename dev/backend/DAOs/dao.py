@@ -37,8 +37,8 @@ class DAO(ABC):
         try:
             pg_cursor = connection.cursor()
             pg_cursor.execute(query, params)
-            print(pg_cursor.fetchall())
-            return True
+            if pg_cursor.rowcount > 0:
+                return True
         except Exception as e:
             print(e)
             return False

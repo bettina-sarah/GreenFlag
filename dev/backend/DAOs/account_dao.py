@@ -29,7 +29,7 @@ class AccountDAO(DAO):
     # rudimentaire: version finale faut que ca delete la personne des tables de suggestions de tout le monde, les match, les messages, les photos dans berkeleyDB
     @staticmethod
     def delete_account(params:tuple) -> bool:
-        query = 'DELETE FROM member where first_name = %s and member_password = %s;'
+        query = 'DELETE FROM member where email = %s and member_password = %s;'
         response = AccountDAO.prepare_statement(query, params)
         return response
     
@@ -44,14 +44,6 @@ class AccountDAO(DAO):
         except Exception as error:  
             print(error)
         return False
-
-
-
-# if __name__ == '__main__':
-#     if not AccountDAO.login():
-#         print("hello")
-
-    
     
         # try:
         #     connection = DAO.get_connection()

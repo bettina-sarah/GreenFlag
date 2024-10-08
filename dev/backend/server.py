@@ -25,7 +25,8 @@ def login() -> bool:
     #return jsonify(True)
 
 @app.route('/settings', methods=['POST'])
-def login() -> bool:
+def settings() -> bool:
+    print(request.json)
     response = AccountManager.delete_account(request.json)
     # call middleware to generate token; send it to frontend
     # make sure database gets it !!!!
@@ -73,3 +74,4 @@ def get_suggestions() -> list:
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5000)
+    # AccountManager.delete_account('PA')
