@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import CreateAccount from './pages/CreateAccount';
 import MatchingPage from './pages/MatchingPage';
 import ChatroomsPage from './pages/ChatroomsPage';
+import QuestionnairePage from './pages/Questionnaire';
 import '@mantine/core/styles.css';
 
 
@@ -26,6 +27,7 @@ const App: React.FC = () => {
           <Route path="/create-account" element={<CreateAccount/>}/>
           <Route path="/matching" element={<MatchingPage/>}/>
           <Route path="/chatrooms" element={<ChatroomsPage/>}/>
+          <Route path="/questionnaire" element={<QuestionnairePage/>}/>
 
         </Routes>
       </BrowserRouter>
