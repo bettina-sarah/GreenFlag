@@ -61,7 +61,17 @@ class AccountManager(ABC):
 
     @staticmethod
     def get_profile(data) -> bool:
-        pass
+        email = data.get('email')
+        # normally here we get token or verify it
+        params = (email,)
+        try:
+            response = AccountDAO.get_profile(params)
+            return response
+                # email sequence here
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False
     
     @staticmethod
     def modify_profile(data) -> bool:

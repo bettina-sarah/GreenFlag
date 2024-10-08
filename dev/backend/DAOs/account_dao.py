@@ -7,12 +7,6 @@ class AccountDAO(DAO):
     def update_account() -> bool:
         return True
 
-    def get_user_infos(user_id) -> List[tuple]:
-        pass
-
-
-
-    
     @staticmethod
     def login(params:tuple) -> bool:
         query = 'SELECT * FROM member WHERE email = %s and member_password = %s'
@@ -44,6 +38,11 @@ class AccountDAO(DAO):
         except Exception as error:  
             print(error)
         return False
+    
+    def get_profile(params:tuple) -> List[tuple]:
+        query = 'SELECT * FROM member where email = %s;'
+        response = AccountDAO.prepare_statement(query, params)
+        return response
     
         # try:
         #     connection = DAO.get_connection()

@@ -37,7 +37,13 @@ def settings() -> bool:
 @app.route('/create-account', methods=['POST'])
 def create_account() -> bool:
     response = AccountManager.create_account(request.json)
-    
+    return jsonify(True) if response else jsonify(False)
+
+@app.route('/profile', methods=['POST'])
+def get_profile() -> bool:
+    # if authentication_middleware.check_session_validity():
+    #     return account_manager.get_profile()
+    response = AccountManager.get_profile(request.json)
     return jsonify(True) if response else jsonify(False)
 
 @app.route('/questionnaire', methods=['POST'])
@@ -52,11 +58,7 @@ def fetch_chatroom_list() -> list:  #send JSON jsonify ...
 def connect_chatroom() -> list:  #send JSON jsonify ... 
     pass
 
-@app.route('/profile', methods=['GET'])
-def get_profile() -> bool:
-    # if authentication_middleware.check_session_validity():
-    #     return account_manager.get_profile()
-        pass
+
 
 @app.route('/modify_profile', methods=['POST'])
 def modify_profile()-> bool:

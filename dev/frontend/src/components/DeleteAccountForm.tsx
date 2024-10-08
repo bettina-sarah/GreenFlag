@@ -18,7 +18,7 @@ const DeleteAccountForm = () => {
         formState: { errors },
     } = useForm<FormData>();
 
-    const onSubmit = handleSubmit(async (data) => {
+    const onSubmit = handleSubmit(async (data:any) => {
         try {
             const answer = await axios.post(IP_SERVER + '/settings', data);
             if (answer.data) {

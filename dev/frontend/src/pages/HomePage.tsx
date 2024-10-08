@@ -18,6 +18,11 @@ const HomePage: React.FC = () => {
     navigate('/settings');
   };
 
+  
+  const handleButtonClickProfile = () => {
+    navigate('/profile');
+  };
+
   return (
     <div className='w-full h-full flex flex-col justify-between items-center'>
       <h1 className='text-3xl font-bold text-teal-500'>GreenFlag</h1>
@@ -36,6 +41,9 @@ const HomePage: React.FC = () => {
           </button>
           <button onClick={handleButtonClickSettings} className='bg-pink-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2'>
             Settings page
+          </button>
+          <button onClick={handleButtonClickProfile} className='bg-purple-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2'>
+            My profile
           </button>
         </div>
       </div>
