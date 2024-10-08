@@ -8,7 +8,9 @@ create_file_tree()
 from Managers.account_manager import AccountManager
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/*": {"origins": "*"}})
+cors = CORS(app, resources={r"/*": {"origins": "*"}}, 
+            methods=["GET", "POST", "OPTIONS"],
+            allow_headers=["Content-Type", "Authorization", "X-Requested-With"])
 
 @app.route('/test',methods=['GET'])
 def test_connection():
@@ -26,7 +28,8 @@ def login() -> bool:
 @app.route('/create-account', methods=['POST'])
 def create_account() -> bool:
     response = AccountManager.create_account(request.json)
-    return jsonify(response)
+    
+    return jsonify(True) if response else jsonify(False)
 
 @app.route('/questionnaire', methods=['POST'])
 def questionnaire() -> bool:
