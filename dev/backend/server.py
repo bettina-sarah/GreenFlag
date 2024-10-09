@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, request, make_response
 from flask_cors import CORS
 from file_tree import create_file_tree
-from sys import path
 
 #create_file_tree()
 
@@ -59,11 +58,10 @@ def fetch_chatroom_list() -> list:  #send JSON jsonify ...
 def connect_chatroom() -> list:  #send JSON jsonify ... 
     pass
 
-
-
 @app.route('/modify_profile', methods=['POST'])
 def modify_profile()-> bool:
-    pass
+    response = AccountManager.modify_profile(request.json)
+    return jsonify(True) if response else jsonify(False)
 
 @app.route('/suggestions', methods=['POST', 'GET'])
 def update_suggestion() -> bool:
@@ -78,17 +76,7 @@ def get_suggestions() -> list:
 if __name__ == '__main__':
     # app.run(debug=True, host="0.0.0.0", port=5000)
     
-
-    json_create = {
-                    'firstname': 'haha',
-        'lastname': 'hehe',
-        'email': 'haaaa@email.com',
-        'password': '1234'}
-    
-    json_delete = {
-        'email': 'haaaa@email.com',
-        'password': '1234'}
     # AccountManager.get_profile(json)
-    AccountManager.delete_account(json_delete)
+    # AccountManager.delete_account(json_delete)
 
-
+    AccountManager.modify_profile()

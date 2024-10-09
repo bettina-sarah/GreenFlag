@@ -1,12 +1,14 @@
+<<<<<<< HEAD
 from DAOs.account_dao import AccountDAO
 #from account_dao import AccountDAO
 from abc import ABC, abstractmethod
+=======
+from account_dao import AccountDAO
+>>>>>>> account-manager-dao
 from flask import jsonify
 
-import psycopg as pg
 
-
-class AccountManager(ABC):
+class AccountManager:
     def __init__(self) -> None:
         pass
     
