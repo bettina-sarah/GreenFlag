@@ -36,21 +36,44 @@ class AccountManager(ABC):
             response = AccountDAO.create_account(params)
             return response
                 # email sequence here
+#             la valeur d'une clé dupliquée rompt la contrainte unique « member_email_key »
+# DETAIL:  La clé « (email)=(haha@jaja.com) » existe déjà.
         except Exception as error:
             print(error)
             print('account manager')
             return False
 
+    @staticmethod
+    def delete_account(data) -> bool:
+        email = data.get('email')
+        password = data.get('password')
+        params = (email, password)
+        
+        try:
+            response = AccountDAO.delete_account(params)
+            return response
+                # email sequence here
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False
+    
 
     @staticmethod
     def get_profile(data) -> bool:
-        pass
+        email = data.get('email')
+        # normally here we get token or verify it
+        params = (email,)
+        try:
+            response = AccountDAO.get_profile(params)
+            return response
+                # email sequence here
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False
     
     @staticmethod
     def modify_profile(data) -> bool:
-        pass
-    
-    @staticmethod
-    def delete_account(data) -> bool:
         pass
     

@@ -6,7 +6,7 @@ class MatchingDAO(DAO):
         pass
 
     @staticmethod
-    def create_connection(params: dict) -> None:
+    def _create_connection(params: dict) -> None:
         pass
 
     def get_suggestions(self, user_id)-> List[tuple]: # return not good? more dcomplex

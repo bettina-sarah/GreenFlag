@@ -6,7 +6,7 @@ class NotificationDAO(DAO):
         pass
 
     @staticmethod
-    def create_connection(params: dict) -> None:
+    def _create_connection(params: dict) -> None:
         pass
 
     def send_notification(self) -> bool:
