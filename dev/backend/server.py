@@ -29,7 +29,8 @@ def create_account() -> bool:
 
 @app.route('/questionnaire', methods=['POST'])
 def questionnaire() -> bool:
-    pass
+    response = AccountManager.modify_profile(request.json)
+    return jsonify(response)
 
 @app.route('/chatrooms', methods=['GET'])
 def fetch_chatroom_list() -> list:  #send JSON jsonify ... 
