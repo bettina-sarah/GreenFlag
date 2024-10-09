@@ -3,7 +3,7 @@ from flask_cors import CORS
 from file_tree import create_file_tree
 from sys import path
 
-create_file_tree()
+#create_file_tree()
 
 from Managers.account_manager import AccountManager
 
