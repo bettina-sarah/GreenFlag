@@ -72,5 +72,26 @@ class AccountManager:
     
     @staticmethod
     def modify_profile(data) -> bool:
+
+        first_name = data.get('firstname')
+        last_name = data.get('lastname')
+        email = data.get('email')
+        password = data.get('password')
+        params = (first_name, last_name, email, password)
+
+        try:
+            response = AccountDAO.modify_profile(params)
+            return response
+                # email sequence here
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False
+
+        # json_modify = {
+        #             'firstname': 'new name',
+        # 'lastname': 'NEW',
+        # 'email': 'user@email.com',
+        # 'password': '1234'}
         pass
     

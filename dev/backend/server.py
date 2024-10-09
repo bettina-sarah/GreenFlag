@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, make_response
 from flask_cors import CORS
 from file_tree import create_file_tree
+import json_tests
 
 create_file_tree()
 
@@ -78,4 +79,5 @@ if __name__ == '__main__':
     # AccountManager.get_profile(json)
     # AccountManager.delete_account(json_delete)
 
-    AccountManager.modify_profile()
+    AccountManager.modify_profile(json_tests.json_modify)
+    

@@ -141,3 +141,26 @@ ALTER TABLE member_match ADD FOREIGN KEY (suggestion_id) REFERENCES suggestion (
 
 ALTER TABLE msg ADD FOREIGN KEY (match_id) REFERENCES member_match (id);
 ALTER TABLE msg ADD FOREIGN KEY (sender_id) REFERENCES member (id);
+
+INSERT INTO activity (activity_name)
+VALUES
+  ('hiking'),
+  ('yoga'),
+  ('photography'),
+  ('cooking'),
+  ('traveling'),
+  ('reading'),
+  ('videogaming'),
+  ('biking'),
+  ('running'),
+  ('watchingmovies'),
+  ('workingout'),
+  ('dancing'),
+  ('playinginstrument'),
+  ('attendingconcerts'),
+  ('painting'),
+  ('volunteering'),
+  ('playingsports'),
+  ('crafting'),
+  ('petlover'),
+  ('learningnewlanguage')
