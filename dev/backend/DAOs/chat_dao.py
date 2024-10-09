@@ -7,7 +7,7 @@ class ChatDAO(DAO):
         pass
 
     @staticmethod   
-    def create_connection(params: dict ) -> None:
+    def _create_connection(params: dict ) -> None:
         pass    
 
     # all dao methods need to be redefined here?

@@ -1,19 +1,12 @@
-from abc import ABC, abstractmethod
 import psycopg as pg
 from constants import *
 
-
-'''
-type de requete avec fonction, dict
-'''
-
-
-class DAO(ABC):
+class DAO():
     connection = None
     pg_cursor = None
     
     @staticmethod
-    def create_connection():
+    def _create_connection():
         # TO ADD: confirm that the database is available ?
         try:
             DAO.connection = pg.connect(dbname=DB_NAME,
@@ -25,7 +18,7 @@ class DAO(ABC):
             print(error)
             return False
     
-    def select_request(cursor) -> tuple: # retour pas claire? faut debug qsq c'est retourné
+    def _select_request(cursor) -> tuple: # retour pas claire? faut debug qsq c'est retourné
         try:
             result = cursor.fetchall()
             if result:
@@ -36,7 +29,7 @@ class DAO(ABC):
     
     # --- ATTENTION: insert, delete, update: same thing. not sure if they differ in the database - TO REFACTOR
     
-    def insert_request(cursor) -> bool:
+    def _insert_request(cursor) -> bool:
         try:
             if cursor.rowcount > 0: # we might want to know how much was inserted, return count later
                 return True
@@ -44,7 +37,7 @@ class DAO(ABC):
             print(e)
             return False
     
-    def delete_request(cursor) -> bool:
+    def _delete_request(cursor) -> bool:
         try:
             if cursor.rowcount > 0:
                 return True
@@ -52,7 +45,7 @@ class DAO(ABC):
             print(e)
             return False 
     
-    def update_request(cursor) -> bool:
+    def _update_request(cursor) -> bool:
         try:
             if cursor.rowcount > 0:
                 return True
@@ -61,15 +54,15 @@ class DAO(ABC):
             return False 
 
     request_type = {
-    "select":select_request,
-    "insert":insert_request,
-    "delete":delete_request,
-    "update":update_request }
+    "select":_select_request,
+    "insert":_insert_request,
+    "delete":_delete_request,
+    "update":_update_request }
 
     @staticmethod 
-    def get_connection() -> None:
+    def _get_connection() -> None:
         if DAO.connection is None:
-            DAO.connection = DAO.create_connection()
+            DAO.connection = DAO._create_connection()
             return DAO.connection
         else:
             return DAO.connection
@@ -81,7 +74,7 @@ class DAO(ABC):
         pass
 
     @staticmethod
-    def send_request(connection_type, connection, query: str, params: tuple) -> tuple | bool :
+    def _send_request(connection_type, connection, query: str, params: tuple) -> tuple | bool :
         try:
             pg_cursor = connection.cursor()
             pg_cursor.execute(query, params)
@@ -90,6 +83,18 @@ class DAO(ABC):
         except Exception as e:
             print(e)
             return False
+
+    # this can be in DAO directly 
+    @staticmethod
+    def _prepare_statement(request_type, query, params) -> bool:
+        try:
+            connection = DAO._get_connection()
+            response = DAO._send_request(request_type, connection, query, params)
+            connection.commit() # possibly necessary for an insert request
+            return response
+        except Exception as error:  
+            print(error)
+        return False
 
     @staticmethod
     def send_requests(requests: list) -> None:
