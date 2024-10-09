@@ -1,4 +1,4 @@
-from dao import DAO
+from DAOs.dao import DAO
 from typing import List
 #from backend.util_classes.email_adapter import EmailAdapter
 
