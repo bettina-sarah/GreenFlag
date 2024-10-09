@@ -17,32 +17,35 @@ const QuestionnaireForm = () => {
         );
     };
     type FormData = {
-        Hiking: boolean
-        YogaOrMeditation: boolean
-        Photography: boolean
-        CookingOrBaking: boolean
-        Traveling: boolean
-        ReadingBooks: boolean
-        VideoGaming: boolean
-        BikingOrCycling: boolean
-        RunningOrJogging: boolean
-        WatchingMoviesOrTVShows: boolean
-        WorkingOutFitness: boolean
-        Dancing: boolean
-        PlayingMusicalInstrument: boolean
-        AttendingConcertsOrFestivals: boolean
-        PaintingOrDrawing: boolean
-        Volunteering: boolean
-        PlayingSports: boolean //(e.g., Soccer, Tennis, Basketball)
-        CraftingOrDIYProjects: boolean
-        PetLoverOrAnimalCare: boolean
-        LearningNewLanguages: boolean
+        // Activities
+        hiking: boolean
+        yoga: boolean
+        photography: boolean
+        cooking: boolean
+        traveling: boolean
+        reading: boolean
+        videogaming: boolean
+        biking: boolean
+        running: boolean
+        watchingmovies: boolean
+        workingout: boolean
+        dancing: boolean
+        playinginstrument: boolean
+        attendingconcerts: boolean
+        painting: boolean
+        volunteering: boolean
+        playingsports: boolean //(e.g., Soccer, Tennis, Basketball)
+        crafting: boolean
+        petlover: boolean
+        learningnewlanguage: boolean
+        // Infos
         DateOfBirth: Date | null
         gender: string
         height: number
         religion: string
         want_kids: boolean
         city: string
+        // Preferences
         min_age: number
         max_age: number
         relationship_type: string
@@ -60,7 +63,7 @@ const QuestionnaireForm = () => {
             const answer = await axios.post(IP_SERVER+'/questionnaire',data)
             if (answer.data){
                 console.log(answer);
-                navigate('/login')
+                navigate('/matching')
             }
         } catch(error){
             console.error('Error during account modification:',error)
@@ -71,84 +74,84 @@ const QuestionnaireForm = () => {
         <form onSubmit={onSubmit} className="flex flex-col justify-between m-2 overflow-visible">
             <div className="flex flex-col space-y-4 p-3 m-4">
                 <div className="flex items-center gap-2">
-                    <Checkbox id="Hiking" {...register("Hiking")}/>
-                    <Label htmlFor="Hiking">Hiking</Label>
+                    <Checkbox id="hiking" {...register("hiking")}/>
+                    <Label htmlFor="hiking">Hiking</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="YogaOrMeditation" {...register("YogaOrMeditation")} />
-                    <Label htmlFor="YogaOrMeditation">Yoga or Meditation</Label>
+                    <Checkbox id="yoga" {...register("yoga")} />
+                    <Label htmlFor="yoga">Yoga or Meditation</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="Photography" {...register("Photography")} />
-                    <Label htmlFor="Photography">Photography</Label>
+                    <Checkbox id="photography" {...register("photography")} />
+                    <Label htmlFor="photography">Photography</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="CookingOrBaking" {...register("CookingOrBaking")} />
-                    <Label htmlFor="CookingOrBaking">Cooking or Baking</Label>
+                    <Checkbox id="cooking" {...register("cooking")} />
+                    <Label htmlFor="cooking">Cooking or Baking</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="Traveling" {...register("Traveling")} />
-                    <Label htmlFor="Traveling">Traveling</Label>
+                    <Checkbox id="traveling" {...register("traveling")} />
+                    <Label htmlFor="traveling">Traveling</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="ReadingBooks" {...register("ReadingBooks")} />
-                    <Label htmlFor="ReadingBooks">Reading Books</Label>
+                    <Checkbox id="reading" {...register("reading")} />
+                    <Label htmlFor="reading">Reading Books</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="VideoGaming" {...register("VideoGaming")} />
-                    <Label htmlFor="VideoGaming">Video Gaming</Label>
+                    <Checkbox id="videogaming" {...register("videogaming")} />
+                    <Label htmlFor="videogaming">Video Gaming</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="BikingOrCycling" {...register("BikingOrCycling")} />
-                    <Label htmlFor="BikingOrCycling">Biking or Cycling</Label>
+                    <Checkbox id="biking" {...register("biking")} />
+                    <Label htmlFor="biking">Biking or Cycling</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="RunningOrJogging" {...register("RunningOrJogging")} />
-                    <Label htmlFor="RunningOrJogging">Running or Jogging</Label>
+                    <Checkbox id="running" {...register("running")} />
+                    <Label htmlFor="running">Running or Jogging</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="WatchingMoviesOrTVShows" {...register("WatchingMoviesOrTVShows")} />
-                    <Label htmlFor="WatchingMoviesOrTVShows">Watching Movies or TV Shows</Label>
+                    <Checkbox id="watchingmovies" {...register("watchingmovies")} />
+                    <Label htmlFor="watchingmovies">Watching Movies or TV Shows</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="WorkingOutFitness" {...register("WorkingOutFitness")} />
-                    <Label htmlFor="WorkingOutFitness">Working Out / Fitness</Label>
+                    <Checkbox id="workingout" {...register("workingout")} />
+                    <Label htmlFor="workingout">Working Out / Fitness</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="Dancing" {...register("Dancing")} />
-                    <Label htmlFor="Dancing">Dancing</Label>
+                    <Checkbox id="dancing" {...register("dancing")} />
+                    <Label htmlFor="dancing">Dancing</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="PlayingMusicalInstrument" {...register("PlayingMusicalInstrument")} />
-                    <Label htmlFor="PlayingMusicalInstrument">Playing Musical Instrument</Label>
+                    <Checkbox id="playinginstrument" {...register("playinginstrument")} />
+                    <Label htmlFor="playinginstrument">Playing Musical Instrument</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="AttendingConcertsOrFestivals" {...register("AttendingConcertsOrFestivals")} />
-                    <Label htmlFor="AttendingConcertsOrFestivals">Attending Concerts or Festivals</Label>
+                    <Checkbox id="attendingconcerts" {...register("attendingconcerts")} />
+                    <Label htmlFor="attendingconcerts">Attending Concerts or Festivals</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="PaintingOrDrawing" {...register("PaintingOrDrawing")} />
-                    <Label htmlFor="PaintingOrDrawing">Painting or Drawing</Label>
+                    <Checkbox id="painting" {...register("painting")} />
+                    <Label htmlFor="painting">Painting or Drawing</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="Volunteering" {...register("Volunteering")} />
-                    <Label htmlFor="Volunteering">Volunteering</Label>
+                    <Checkbox id="volunteering" {...register("volunteering")} />
+                    <Label htmlFor="volunteering">Volunteering</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="PlayingSports" {...register("PlayingSports")} />
-                    <Label htmlFor="PlayingSports">Playing Sports</Label>
+                    <Checkbox id="playingsports" {...register("playingsports")} />
+                    <Label htmlFor="playingsports">Playing Sports</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="CraftingOrDIYProjects" {...register("CraftingOrDIYProjects")} />
-                    <Label htmlFor="CraftingOrDIYProjects">Crafting or DIY Projects</Label>
+                    <Checkbox id="crafting" {...register("crafting")} />
+                    <Label htmlFor="crafting">Crafting or DIY Projects</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="PetLoverOrAnimalCare" {...register("PetLoverOrAnimalCare")} />
-                    <Label htmlFor="PetLoverOrAnimalCare">Pet Lover or Animal Care</Label>
+                    <Checkbox id="petlover" {...register("petlover")} />
+                    <Label htmlFor="petlover">Pet Lover or Animal Care</Label>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="LearningNewLanguages" {...register("LearningNewLanguages")} />
-                    <Label htmlFor="LearningNewLanguages">Learning New Languages</Label>
+                    <Checkbox id="learningnewlanguage" {...register("learningnewlanguage")} />
+                    <Label htmlFor="learningnewlanguage">Learning New Languages</Label>
                 </div>
             </div>
 
