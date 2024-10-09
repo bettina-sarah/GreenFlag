@@ -36,6 +36,27 @@ class AccountDAO(DAO):
         response = AccountDAO._prepare_statement("select", query, params)
         return response
     
+    '''
+    !!!! ATTENTION: quand il faut modifier plusieurs tables:
+    UPDATE accounts SET contact_first_name = first_name,
+                     contact_last_name = last_name
+    FROM employees WHERE employees.id = accounts.sales_person;
+    '''
+    @staticmethod
+    def modify_profile(params:tuple) -> bool:
+        query = 'UPDATE member SET first_name =%s, last_name = %s WHERE email = %s and member_password = %s;'
+        response = AccountDAO._prepare_statement("update", query, params)
+        return response
+    # retour: UPDATE 1
+
+
+
+
+
+
+
+
+    
         # try:
         #     connection = DAO.get_connection()
         #     query = 'SELECT * FROM member WHERE email = %s and member_password = %s'
