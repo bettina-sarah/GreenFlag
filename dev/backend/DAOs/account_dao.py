@@ -10,7 +10,7 @@ class AccountDAO(DAO):
     @staticmethod
     def login(params:tuple) -> bool:
         query = 'SELECT * FROM member WHERE email = %s and member_password = %s'
-        response = AccountDAO.prepare_statement(query, params)
+        response = AccountDAO._prepare_statement(query, params)
         # user returned ici : 
         return response
 
@@ -18,7 +18,7 @@ class AccountDAO(DAO):
     @staticmethod
     def create_account(params:tuple) -> bool:
             query = 'INSERT INTO member (first_name, last_name, email, member_password) VALUES (%s, %s, %s, %s) RETURNING id;'
-            response = AccountDAO.prepare_statement("insert", query, params)
+            response = AccountDAO._prepare_statement("insert", query, params)
             # si courriel existe deja, DB retorune erreur cle existe - faut gerer - envoyer au frontend 'account exists' 
             return response
     
@@ -26,24 +26,14 @@ class AccountDAO(DAO):
     @staticmethod
     def delete_account(params:tuple) -> bool:
         query = 'DELETE FROM member where email = %s and member_password = %s;'
-        response = AccountDAO.prepare_statement("delete", query, params)
+        response = AccountDAO._prepare_statement("delete", query, params)
         return response
+
     
-    
-    # this can be in DAO directly 
-    def prepare_statement(request_type, query, params) -> bool:
-        try:
-            connection = AccountDAO.get_connection()
-            response = AccountDAO.send_request(request_type, connection, query, params)
-            connection.commit() # possibly necessary for an insert request
-            return response
-        except Exception as error:  
-            print(error)
-        return False
-    
+    @staticmethod
     def get_profile(params:tuple) -> List[tuple]:
         query = 'SELECT * FROM member where email = %s;'
-        response = AccountDAO.prepare_statement("select", query, params)
+        response = AccountDAO._prepare_statement("select", query, params)
         return response
     
         # try:
