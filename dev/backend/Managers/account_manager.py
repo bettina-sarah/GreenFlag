@@ -15,43 +15,65 @@ class AccountManager(ABC):
         password = data.get('password')
         
         params = (email,password)
-        
-        # 
         try:
-            connection = pg.connect(dbname="postgres",
-                                    password="AAAaaa123",
-                                    host="localhost",
-                                    port=5432, user='postgres')
-            pg_cursor = connection.cursor()
-            pg_cursor.execute('SELECT * FROM member WHERE email = %s and member_password = %s', params)
-            print(pg_cursor.fetchall())
-            return True
-            
-            
-    #     cur.execute("""
-    # INSERT INTO some_table (id, created_at, updated_at, last_name)
-    # VALUES (%(id)s, %(created)s, %(created)s, %(name)s);
-    # """,
-    # {'id': 10, 'name': "O'Reilly", 'created': datetime.date(2020, 11, 18)})
-            
+            response = AccountDAO.login(params)
+            return response
+            # CREAte token .... & SENT to the front
         except Exception as error:
             print(error)
-        return False
+            return False
+    
+    @staticmethod
+    def create_account(data) -> bool:
+        first_name = data.get('firstname')
+        last_name = data.get('lastname')
+        email = data.get('email')
+        password = data.get('password')
+        
+        params = (first_name, last_name, email, password)
+
+        try:
+            response = AccountDAO.create_account(params)
+            return response
+                # email sequence here
+#             la valeur d'une clé dupliquée rompt la contrainte unique « member_email_key »
+# DETAIL:  La clé « (email)=(haha@jaja.com) » existe déjà.
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False
+
+    @staticmethod
+    def delete_account(data) -> bool:
+        email = data.get('email')
+        password = data.get('password')
+        params = (email, password)
+        
+        try:
+            response = AccountDAO.delete_account(params)
+            return response
+                # email sequence here
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False
+    
 
     @staticmethod
     def get_profile(data) -> bool:
-        pass
+        email = data.get('email')
+        # normally here we get token or verify it
+        params = (email,)
+        try:
+            response = AccountDAO.get_profile(params)
+            return response
+                # email sequence here
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False
     
     @staticmethod
     def modify_profile(data) -> bool:
         pass
     
-    @staticmethod
-    def delete_account(data) -> bool:
-        pass
-    
-
-
-if __name__ == '__main__':
-    if not AccountManager.login(True):
-        print("hello")
