@@ -4,29 +4,43 @@ from typing import List
 
 class AccountDAO(DAO):
 
-    @staticmethod   
-    def create_connection(params: dict ) -> None:
-        pass    
-
-    # all dao methods need to be redefined here?
-
-    def create_account() -> bool:
-        return True
-
     def update_account() -> bool:
         return True
 
-    def get_user_infos(user_id) -> List[tuple]:
-        pass
+    @staticmethod
+    def login(params:tuple) -> bool:
+        query = 'SELECT * FROM member WHERE email = %s and member_password = %s'
+        response = AccountDAO._prepare_statement(query, params)
+        # user returned ici : 
+        return response
 
-    def delete_account() -> bool:
-        return True
+
+    @staticmethod
+    def create_account(params:tuple) -> bool:
+            query = 'INSERT INTO member (first_name, last_name, email, member_password) VALUES (%s, %s, %s, %s) RETURNING id;'
+            response = AccountDAO._prepare_statement("insert", query, params)
+            # si courriel existe deja, DB retorune erreur cle existe - faut gerer - envoyer au frontend 'account exists' 
+            return response
     
-    def login() -> bool:
-        return False
+    # rudimentaire: version finale faut que ca delete la personne des tables de suggestions de tout le monde, les match, les messages, les photos dans berkeleyDB
+    @staticmethod
+    def delete_account(params:tuple) -> bool:
+        query = 'DELETE FROM member where email = %s and member_password = %s;'
+        response = AccountDAO._prepare_statement("delete", query, params)
+        return response
 
-
-
-# if __name__ == '__main__':
-#     if not AccountDAO.login():
-#         print("hello")
+    
+    @staticmethod
+    def get_profile(params:tuple) -> List[tuple]:
+        query = 'SELECT * FROM member where email = %s;'
+        response = AccountDAO._prepare_statement("select", query, params)
+        return response
+    
+        # try:
+        #     connection = DAO.get_connection()
+        #     query = 'SELECT * FROM member WHERE email = %s and member_password = %s'
+        #     response = DAO.send_request(connection, query, params)
+        #     return response
+        # except Exception as error:  
+        #     print(error)
+        # return False
