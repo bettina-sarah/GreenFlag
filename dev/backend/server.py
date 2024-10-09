@@ -3,7 +3,7 @@ from flask_cors import CORS
 from file_tree import create_file_tree
 from sys import path
 
-create_file_tree()
+#create_file_tree()
 
 from Managers.account_manager import AccountManager
 
@@ -48,7 +48,8 @@ def get_profile() -> bool:
 
 @app.route('/questionnaire', methods=['POST'])
 def questionnaire() -> bool:
-    pass
+    response = AccountManager.modify_profile(request.json)
+    return jsonify(response)
 
 @app.route('/chatrooms', methods=['GET'])
 def fetch_chatroom_list() -> list:  #send JSON jsonify ... 
