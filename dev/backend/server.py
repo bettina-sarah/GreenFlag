@@ -75,5 +75,19 @@ def get_suggestions() -> list:
 # undo():json - plus necessaire ? juste affiché dans le frontend?
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=5000)
-    # AccountManager.delete_account('PA')
+    # app.run(debug=True, host="0.0.0.0", port=5000)
+    
+
+    json_create = {
+                    'firstname': 'haha',
+        'lastname': 'hehe',
+        'email': 'haaaa@email.com',
+        'password': '1234'}
+    
+    json_delete = {
+        'email': 'haaaa@email.com',
+        'password': '1234'}
+    # AccountManager.get_profile(json)
+    AccountManager.delete_account(json_delete)
+
+

@@ -2,12 +2,19 @@ from abc import ABC, abstractmethod
 import psycopg as pg
 from constants import *
 
+
+'''
+type de requete avec fonction, dict
+'''
+
+
 class DAO(ABC):
     connection = None
-
+    pg_cursor = None
+    
     @staticmethod
     def create_connection():
-        # confirm that the database is available
+        # TO ADD: confirm that the database is available ?
         try:
             DAO.connection = pg.connect(dbname=DB_NAME,
                                     password=DB_PASSWORD,
@@ -17,6 +24,47 @@ class DAO(ABC):
         except Exception as error:
             print(error)
             return False
+    
+    def select_request(cursor) -> tuple: # retour pas claire? faut debug qsq c'est retourné
+        try:
+            result = cursor.fetchall()
+            if result:
+                return result
+        except Exception as e:
+            print(e)
+            return False   
+    
+    # --- ATTENTION: insert, delete, update: same thing. not sure if they differ in the database - TO REFACTOR
+    
+    def insert_request(cursor) -> bool:
+        try:
+            if cursor.rowcount > 0: # we might want to know how much was inserted, return count later
+                return True
+        except Exception as e:
+            print(e)
+            return False
+    
+    def delete_request(cursor) -> bool:
+        try:
+            if cursor.rowcount > 0:
+                return True
+        except Exception as e:
+            print(e)
+            return False 
+    
+    def update_request(cursor) -> bool:
+        try:
+            if cursor.rowcount > 0:
+                return True
+        except Exception as e:
+            print(e)
+            return False 
+
+    request_type = {
+    "select":select_request,
+    "insert":insert_request,
+    "delete":delete_request,
+    "update":update_request }
 
     @staticmethod 
     def get_connection() -> None:
@@ -32,13 +80,13 @@ class DAO(ABC):
     def store_request(request) -> None: 
         pass
 
-    @abstractmethod
-    def send_request(connection, query: str, params: tuple) -> bool:
+    @staticmethod
+    def send_request(connection_type, connection, query: str, params: tuple) -> tuple | bool :
         try:
             pg_cursor = connection.cursor()
             pg_cursor.execute(query, params)
-            if pg_cursor.rowcount > 0:
-                return True
+            response = DAO.request_type[connection_type](pg_cursor) # tuple OR bool!
+            return response
         except Exception as e:
             print(e)
             return False
@@ -69,3 +117,35 @@ class DAO(ABC):
 
     # def __call__(self, *args, **kwargs):
     #     pass
+    
+
+
+    # def insert_request(connection, query: str, params: tuple) -> bool:
+    #     try:
+    #         pg_cursor = connection.cursor()
+    #         pg_cursor.execute(query, params)
+    #         if pg_cursor.rowcount > 0:
+    #             return True
+    #     except Exception as e:
+    #         print(e)
+    #         return False 
+
+    # def delete_request(connection, query: str, params: tuple) -> bool:
+    #     try:
+    #         pg_cursor = connection.cursor()
+    #         pg_cursor.execute(query, params)
+    #         if pg_cursor.rowcount > 0:
+    #             return True
+    #     except Exception as e:
+    #         print(e)
+    #         return False  
+
+    # def update_request(connection, query: str, params: tuple) -> bool:
+    #     try:
+    #         pg_cursor = connection.cursor()
+    #         pg_cursor.execute(query, params)
+    #         if pg_cursor.rowcount > 0:
+    #             return True
+    #     except Exception as e:
+    #         print(e)
+    #         return False 
