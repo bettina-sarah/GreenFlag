@@ -72,5 +72,15 @@ class MeanShift:
         
         return clusters_centers, labels
 
-    def predict(self, np_array:np.ndarray) -> None:
-        pass
+    # will need to be used on the subject to know his label
+    # and then on all the data to get a list of all the other users with the same label
+    # or we need to find a way to keep an array of the points(users) with the label they have
+    def predict(self, point:np.ndarray, data:np.ndarray) -> None:
+        clusters_centers, labels = self.fit(data)
+        
+        # find the closest cluster center
+        distances = np.linalg.norm(clusters_centers - point, axis=1)
+        closest_cluster = np.argmin(distances)
+        
+        # return the label predicted
+        return labels[closest_cluster]
