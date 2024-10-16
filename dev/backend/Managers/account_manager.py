@@ -88,10 +88,27 @@ class AccountManager:
             print('account manager')
             return False
 
-        # json_modify = {
-        #             'firstname': 'new name',
-        # 'lastname': 'NEW',
-        # 'email': 'user@email.com',
-        # 'password': '1234'}
-        pass
-    
+    @staticmethod
+    def modify_photos(data) -> bool:
+
+        token = data.get('token')
+        # we verify if token is valid here ... and return right user id to put in params !
+        user_id = '11'
+        # hook up berkeley DB and call it here. returns the keys 
+        # we assume photos are [ strings, 5 ]
+        # by now we assume Frontend knows which photos were changed ??? overwrites them all ?
+        photos = data.get('photos')
+        params = [user_id] + photos
+        params = tuple(params)
+        # params.append(user_id)
+        # for photo in photos:
+        #     params.append(photo)
+
+        try:
+            response = AccountDAO.modify_photos(params)
+            return response
+                # email sequence here
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False
