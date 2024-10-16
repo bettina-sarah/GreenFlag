@@ -50,6 +50,8 @@ def get_profile() -> bool:
 def questionnaire() -> bool:
     pass
 
+
+
 @app.route('/chatrooms', methods=['GET'])
 def fetch_chatroom_list() -> list:  #send JSON jsonify ... 
     pass
@@ -62,6 +64,12 @@ def connect_chatroom() -> list:  #send JSON jsonify ...
 def modify_profile()-> bool:
     response = AccountManager.modify_profile(request.json)
     return jsonify(True) if response else jsonify(False)
+
+@app.route('/modify_photos', methods=['POST'])
+def modify_photos()->bool:
+    response = AccountManager.modify_photos(request.json)
+    return jsonify(True) if response else jsonify(False)
+
 
 @app.route('/suggestions', methods=['POST', 'GET'])
 def update_suggestion() -> bool:

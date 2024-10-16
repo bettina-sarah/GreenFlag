@@ -49,6 +49,17 @@ class AccountDAO(DAO):
         return response
     # retour: UPDATE 1
 
+    @staticmethod
+    def modify_photos(params:tuple) -> bool:
+        query = 'UPDATE member SET first_name =%s, last_name = %s WHERE user_id = %s;'
+        response = AccountDAO._prepare_statement("update", query, params)
+        return response
+    
+    """
+    list of ids orderd in the way they appear
+    relace """
+    # retour: UPDATE 1
+
 
 
 
