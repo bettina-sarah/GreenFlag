@@ -1,5 +1,6 @@
 from account_dao import AccountDAO
 from flask import jsonify
+from photo_dao import PhotoDAO
 
 
 class AccountManager:
@@ -89,21 +90,23 @@ class AccountManager:
             return False
 
     @staticmethod
-    def modify_photos(data) -> bool:
+    def modify_photos(info, files) -> bool:
 
-        token = data.get('token')
+        token = info.get('token')
         # we verify if token is valid here ... and return right user id to put in params !
         user_id = '11'
-        # hook up berkeley DB and call it here. returns the keys 
-        # we assume photos are [ strings, 5 ]
-        # by now we assume Frontend knows which photos were changed ??? overwrites them all ?
-        photos = data.get('photos')
-        params = [user_id] + photos
-        params = tuple(params)
-        # params.append(user_id)
-        # for photo in photos:
-        #     params.append(photo)
 
+        # by now we assume Frontend knows which photos were changed ??? overwrites them all ?
+        try:
+            images = files.get('photo').getlist()
+        except Exception as error:
+            print(error)
+            return False
+        photo_dao = PhotoDAO()
+        keys = photo_dao.add_photos(images)
+
+        params = [user_id] + keys
+        params = tuple(params)
         try:
             response = AccountDAO.modify_photos(params)
             return response
