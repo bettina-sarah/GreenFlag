@@ -10,7 +10,7 @@ class AccountDAO(DAO):
     @staticmethod
     def login(params:tuple) -> bool:
         query = 'SELECT * FROM member WHERE email = %s and member_password = %s'
-        response = AccountDAO._prepare_statement(query, params)
+        response = AccountDAO._prepare_statement("select", query, params)
         # user returned ici : 
         return response
 
@@ -47,6 +47,17 @@ class AccountDAO(DAO):
         query = 'UPDATE member SET first_name =%s, last_name = %s WHERE email = %s and member_password = %s;'
         response = AccountDAO._prepare_statement("update", query, params)
         return response
+    # retour: UPDATE 1
+
+    @staticmethod
+    def modify_photos(params:tuple) -> bool:
+        query = 'UPDATE member SET first_name =%s, last_name = %s WHERE user_id = %s;'
+        response = AccountDAO._prepare_statement("update", query, params)
+        return response
+    
+    """
+    list of ids orderd in the way they appear
+    relace """
     # retour: UPDATE 1
 
 

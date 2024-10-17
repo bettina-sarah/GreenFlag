@@ -74,7 +74,7 @@ class DAO():
         pass
 
     @staticmethod
-    def _send_request(connection_type, connection, query: str, params: tuple) -> tuple | bool :
+    def _send_request(connection_type, connection, query: str, params: tuple | list) -> tuple | bool :
         try:
             pg_cursor = connection.cursor()
             pg_cursor.execute(query, params)
