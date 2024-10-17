@@ -67,7 +67,9 @@ def modify_profile()-> bool:
 
 @app.route('/modify_photos', methods=['POST'])
 def modify_photos()->bool:
-    response = AccountManager.modify_photos(request.json)
+    files = request.files
+    info = request.json
+    response = AccountManager.modify_photos(info, files)
     return jsonify(True) if response else jsonify(False)
 
 
