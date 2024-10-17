@@ -51,6 +51,8 @@ def questionnaire() -> bool:
     response = AccountManager.modify_profile(request.json)
     return jsonify(response)
 
+
+
 @app.route('/chatrooms', methods=['GET'])
 def fetch_chatroom_list() -> list:  #send JSON jsonify ... 
     pass
@@ -64,6 +66,14 @@ def modify_profile()-> bool:
     response = AccountManager.modify_profile(request.json)
     return jsonify(True) if response else jsonify(False)
 
+@app.route('/modify_photos', methods=['POST'])
+def modify_photos()->bool:
+    files = request.files
+    info = request.json
+    response = AccountManager.modify_photos(info, files)
+    return jsonify(True) if response else jsonify(False)
+
+
 @app.route('/suggestions', methods=['POST', 'GET'])
 def update_suggestion() -> bool:
     pass
@@ -75,10 +85,10 @@ def get_suggestions() -> list:
 # undo():json - plus necessaire ? juste affiché dans le frontend?
 
 if __name__ == '__main__':
-    # app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5000)
     
     # AccountManager.get_profile(json)
     # AccountManager.delete_account(json_delete)
 
-    AccountManager.modify_profile(json_tests.json_modify)
+    # AccountManager.modify_profile(json_tests.json_modify)
     
