@@ -70,9 +70,13 @@ class AccountDAO(DAO):
         query = 'DELETE from member_photo USING member WHERE member_photo.member_id = member.id AND member.user_id = %s;'
         response = AccountDAO._prepare_statement("delete", query, user_param)
         if response:
-            for i in range(photo_keys): # NOT GOOD
-                query = 'INSERT INTO member_photo (user_id, photo) VALUES (%s, %s) RETURNING id;'
-                response = AccountDAO._prepare_statement("insert", query, photo_keys[i])
+            query = 'INSERT INTO member_photo (user_id, photo)'
+            for i in range(photo_keys): # build the query progressively based on how many photos
+                query += ' VALUES (%s, %s),'
+                if i == photo_keys - 1:
+                    query = query[:-1]
+                    query += ' RETURNING id;' # might not work bc multiple inserts
+                response = AccountDAO._prepare_statement("insert", query, params)
             return response
     
     """
