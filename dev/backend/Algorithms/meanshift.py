@@ -63,6 +63,21 @@ class MeanShift:
         
         # get the clusters center points
         clusters_centers = np.unique(np.round(new, decimals=1),axis=0)
+        
+        print(clusters_centers)
+        
+        # clusters_centers = np.zeros((1, number_of_columns))
+        # for center in np.unique(np.round(new, decimals=1), axis=0):
+        #     if not np.equal(clusters_centers,center).all(axis=1).any():
+        #         np.vstack((clusters_centers, center))
+        #     else:
+        #         # Check if this center is close to any existing ones
+        #         if np.min(np.linalg.norm(np.array(clusters_centers) - center, axis=1)) > self.bandwidth:
+        #             np.vstack((clusters_centers, center))
+        
+        #print(clusters_centers)
+        
+        
         labels = np.zeros(number_of_rows, np.int32)
         
         # for each point calculate the distance with the cluster centers
