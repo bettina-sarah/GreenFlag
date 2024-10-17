@@ -10,7 +10,7 @@ from Managers.account_manager import AccountManager
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}}, 
             methods=["GET", "POST", "OPTIONS"],
-            allow_headers=["Content-Type", "Authorization", "X-Requested-With"])
+            allow_headers=["Content-Type", "Authorization", "X-Requested-With","Access-Control-Allow-Origin"])
 
 @app.route('/test',methods=['GET'])
 def test_connection():
@@ -68,17 +68,21 @@ def modify_profile()-> bool:
 def update_suggestion() -> bool:
     pass
 
-@app.route('/suggestions', methods=['POST'])
-def get_suggestions() -> list:
-    pass
+@app.route('/photo', methods=['POST'])
+def photos() -> None:
+    files = request.files
+    
+    print(files)
+    return jsonify(True)
+    
 
 # undo():json - plus necessaire ? juste affiché dans le frontend?
 
 if __name__ == '__main__':
-    # app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5000)
     
     # AccountManager.get_profile(json)
     # AccountManager.delete_account(json_delete)
 
-    AccountManager.modify_profile(json_tests.json_modify)
+    #AccountManager.modify_profile(json_tests.json_modify)
     
