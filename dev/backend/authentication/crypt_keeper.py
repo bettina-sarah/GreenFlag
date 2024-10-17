@@ -57,14 +57,16 @@ class CryptKeeper:
         pass
     
     def decode(self,token: str) -> str:
-        try:
-            decoded_jwt = jwt.decode(token, "secret", algorithms=["HS256"])
-            return decoded_jwt
-        except jwt.ExpiredSignatureError:
-            print("expired")
-        except jwt.DecodeError as e:
-            print(e)
-    
+        if self.validate_jwt(token):
+            try:
+                decoded_jwt = jwt.decode(token, "secret", algorithms=["HS256"])
+                return decoded_jwt
+            except jwt.ExpiredSignatureError:
+                print("expired")
+            except jwt.DecodeError as e:
+                print(f'Decoder Error: ',e)
+        return None
+        
 
     def encode(self,json_information) -> str:
         final_json = self.expiry_date(json_information)  
@@ -83,12 +85,9 @@ class CryptKeeper:
             header, payload, signature = self.validate_format(token)
             decoded_header = self.decode_header(header)
             if self.validate_header(decoded_header):
-                decoded_payload = self.decode(payload)
-                if decoded_payload is not None:  # Check if the payload was valid
-                    return True
                 return True
         except Exception as e:
-            print(e)
+            print(f'error in validate jwt:', e)
         return False
         
     def validate_format(self,token) -> bool:
@@ -104,11 +103,11 @@ class CryptKeeper:
         return json.loads(decoded)
 
     def validate_header(self,header) -> bool:
-        header_data = json.loads(header)
+        # header_data = json.loads(header)
         known_algorithms = ['HS256', 'RS256']  # Example known algorithms
         known_types = ['JWT']
     
-        if header_data.get('typ') not in known_types or header_data.get('alg') not in known_algorithms:
+        if header.get('typ') not in known_types or header.get('alg') not in known_algorithms:
             return False
         return True
     
@@ -120,16 +119,14 @@ class CryptKeeper:
         
     #     return True
 
-    
-        
-    
-    
+
 if __name__ == "__main__":
     crypt = CryptKeeper()
     jsonn = {"some": "payload"}
     result = crypt.encode(jsonn)
-    print(result)
-    print(crypt.validate_jwt(result))
+    print('encoded:', result)
+    decode = crypt.decode(result)
+    print('decoded', decode)
     # decoded = crypt.decode(result)
     # print(decoded)
     
