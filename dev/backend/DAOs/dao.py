@@ -1,5 +1,5 @@
 import psycopg as pg
-from constants import *
+from DAOs.constants import *
 
 class DAO():
     connection = None
