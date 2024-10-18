@@ -13,6 +13,11 @@ DROP TYPE IF EXISTS SUGGESTION_STATUS;
 DROP TYPE IF EXISTS RELATIONSHIP;
 DROP TYPE IF EXISTS REASON_FLAGGED;
 
+DROP VIEW IF EXISTS member_photos_view;
+DROP VIEW IF EXISTS member_activities_view;
+
+
+
 CREATE TYPE GENDER AS ENUM (
   'f',
   'm',
@@ -141,6 +146,36 @@ ALTER TABLE member_match ADD FOREIGN KEY (suggestion_id) REFERENCES suggestion (
 
 ALTER TABLE msg ADD FOREIGN KEY (match_id) REFERENCES member_match (id);
 ALTER TABLE msg ADD FOREIGN KEY (sender_id) REFERENCES member (id);
+
+
+CREATE VIEW member_photos_view AS
+SELECT 
+  m.id AS member_id, 
+  m.first_name, 
+  m.last_name, 
+  p.id AS photo_id, 
+  p.encryption_key, 
+  p.position
+FROM 
+  member AS m
+INNER JOIN member_photo AS mp ON m.id = mp.member_id
+INNER JOIN photo AS p ON mp.photo_id = p.id;
+
+CREATE VIEW member_activities_view AS
+SELECT 
+  m.id AS member_id, 
+  m.first_name, 
+  m.last_name, 
+  a.id AS activity_id, 
+  a.activity_name
+FROM 
+  member AS m
+INNER JOIN member_activities AS ma ON m.id = ma.member_id
+INNER JOIN activity AS a ON ma.activity_id = a.id;
+
+
+
+
 
 INSERT INTO activity (activity_name)
 VALUES
