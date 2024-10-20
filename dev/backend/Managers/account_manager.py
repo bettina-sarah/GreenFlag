@@ -1,8 +1,8 @@
 
 from DAOs.account_dao import AccountDAO
 #from account_dao import AccountDAO
-from flask import jsonify
-from photo_dao import PhotoDAO
+#from flask import jsonify
+from DAOs.photo_lmdb_dao import PhotoDAO
 
 
 class AccountManager:
@@ -92,20 +92,22 @@ class AccountManager:
             return False
 
     @staticmethod
-    def modify_photos(info, files) -> bool:
+    def modify_photos(files, info=None) -> bool:
 
-        token = info.get('token')
+        #token = info.get('token')
         # we verify if token is valid here ... and return right user id to put in params !
         user_id = '11'
 
         # by now we assume Frontend knows which photos were changed ??? overwrites them all ?
         try:
-            images = files.get('photo').getlist()
+            images = files.get('image')
+            print(images)
+            # images = files.get('image').getlist()
         except Exception as error:
             print(error)
             return False
         photo_dao = PhotoDAO()
-        keys = photo_dao.add_photos(images)
+        keys = photo_dao.add_photos(files)
 
         params = [user_id] + keys
         params = tuple(params)
