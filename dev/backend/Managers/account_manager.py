@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 from DAOs.account_dao import AccountDAO
 #from account_dao import AccountDAO
 from abc import ABC, abstractmethod
-=======
-from account_dao import AccountDAO
->>>>>>> account-manager-dao
+
 from flask import jsonify
 
 
