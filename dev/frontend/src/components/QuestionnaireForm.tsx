@@ -124,7 +124,7 @@ const QuestionnaireForm = () => {
             const formData = new FormData();
             if(data.image){
                 formData.append('image',data.image);
-                const answer = await axios.post(IP_SERVER+'/photo',data)
+                const answer = await axios.post(IP_SERVER+'/photo',formData)
                 if (answer.data){
                     console.log(answer);
                     console.log(data)
