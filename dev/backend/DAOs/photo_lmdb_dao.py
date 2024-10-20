@@ -13,22 +13,32 @@ class PhotoDAO:
     def add_photos(self, photos:List[str]) -> list | bool:
         keys = []
         try:
-            with self.env.begin(write=True) as txn: 
-                for photo in photos:
-                    key = photo.filename.encode('utf-8')
-                    
-                    img_byte_arr = io.BytesIO()
-                    image = Image.open(photo)
-                    image.save(img_byte_arr, format=image.format)
-                    img_bytes = img_byte_arr.getvalue()
-                    txn.put(key, img_bytes)
+            with self.env.begin(write=True) as txn:
+                if isinstance(photos, list): 
+                    for photo in photos:
+                        key = self.encode_image(txn, photo)
+                        keys.append(key)
+                    self.env.close()
+                    return keys
+                else:
+                    key = self.encode_image(txn, photos)
                     keys.append(key)
-                self.env.close()
-                return keys
+                    return keys
         except Exception as e:
-            print(e)
-            return False
+            print("PHOTO DAO add phptp not working: ", e)
+            return []
     
+
+
+    def encode_image(self,txn,photo) -> str:
+        # key = photo.filename.encode('utf-8')    
+        key = "hello".encode('utf-8')           
+        img_byte_arr = io.BytesIO()
+        image = Image.open(photo)
+        image.save(img_byte_arr, format=image.format)
+        img_bytes = img_byte_arr.getvalue()
+        txn.put(key, img_bytes)
+        return key
 
 
     def delete_photo(self, user_id:str, photo_id:str) -> bool:

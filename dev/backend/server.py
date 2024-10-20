@@ -66,11 +66,13 @@ def modify_profile()-> bool:
     response = AccountManager.modify_profile(request.json)
     return jsonify(True) if response else jsonify(False)
 
-@app.route('/modify_photos', methods=['POST'])
+@app.route('/photo', methods=['POST'])
 def modify_photos()->bool:
+    print(request.files)
     files = request.files
-    info = request.json
-    response = AccountManager.modify_photos(info, files)
+    # #info = request.json
+    # #response = AccountManager.modify_photos(info, files)
+    response = AccountManager.modify_photos(files)
     return jsonify(True) if response else jsonify(False)
 
 
