@@ -118,3 +118,17 @@ class AccountManager:
             print(error)
             print('account manager')
             return False
+    
+    @staticmethod
+    def get_photos(data) -> bool:
+        user_id = data.get('user_id')
+        # tokens ... 
+        user_id = '11'
+        params = (user_id,)
+        try:
+            response = AccountDAO.get_photos(params)
+            return response
+                # email sequence here
+        except Exception as error:
+            print(error)
+            print('account manager')
