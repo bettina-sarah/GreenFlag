@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import axios from 'axios';
-import {Datepicker, Checkbox, Label, Select, TextInput, Dropdown } from "flowbite-react";
+import {Datepicker, Checkbox, Label, Select, TextInput, Dropdown, Textarea } from "flowbite-react";
 import ImageInputCustom from "./ImageInput";
 
 const QuestionnaireForm = () => {
@@ -49,6 +49,7 @@ const QuestionnaireForm = () => {
         religion: string
         want_kids: boolean
         city: string
+        bio: string
         // Preferences
         min_age: number
         max_age: number
@@ -297,6 +298,9 @@ const QuestionnaireForm = () => {
                 {errorsInfo.city && errorsInfo.city.type === "maxLength" && (
                     <span>Max length exceeded</span>
                 )}
+
+                <label>Tell us a little thing about yourself:</label>
+                <Textarea {...registerInfo("bio", {required: true})} required rows={6}/>
 
                 <div className="flex flex-col">
                     <label>Age preference range:</label>
