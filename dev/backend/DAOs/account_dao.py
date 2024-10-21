@@ -87,24 +87,9 @@ class AccountDAO(DAO):
             return response
         return False
     
-    """
-    list of ids orderd in the way they appear
-    relace """
-    # retour: UPDATE 1
-
-
-
-
-
-
-
-
-    
-        # try:
-        #     connection = DAO.get_connection()
-        #     query = 'SELECT * FROM member WHERE email = %s and member_password = %s'
-        #     response = DAO.send_request(connection, query, params)
-        #     return response
-        # except Exception as error:  
-        #     print(error)
-        # return False
+    def get_photos(params:tuple) -> List[tuple]:   
+        query = 'SELECT encryption_key from member_photos_view where member_id = %s;'
+        response = AccountDAO._prepare_statement("select", query, params)
+        if response:
+            return response
+        return False
