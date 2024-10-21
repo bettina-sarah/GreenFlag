@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Callable
 from time import perf_counter
+import threading
 
 class DischargedList(ABC):
   def __init__(self,limit: int, max_time: float):
@@ -9,6 +10,9 @@ class DischargedList(ABC):
     self._limit = limit
     self._max_time = max_time
     self._start_time = None
+    
+  def __getitem__(self,index):
+    return self._items[index]
     
   def add_item(self, item):
     if not self._items:
@@ -29,7 +33,7 @@ class DischargedList(ABC):
     
   def _notify_observers(self):
     for observer in self._observers:
-      observer.update()
+      observer()
     
   def get_items(self):
     return self._items
