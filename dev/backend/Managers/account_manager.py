@@ -101,7 +101,6 @@ class AccountManager:
         # by now we assume Frontend knows which photos were changed ??? overwrites them all ?
         try:
             images = files.get('image')
-            print(images)
             # images = files.get('image').getlist()
         except Exception as error:
             print(error)

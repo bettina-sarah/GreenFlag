@@ -26,21 +26,31 @@ INNER JOIN activity AS a ON ma.activity_id = a.id;
 DROP FUNCTION IF EXISTS add_photos;
 
 CREATE OR REPLACE FUNCTION add_photos
-(user_id INTEGER, photo_key VARCHAR(128), photo_number INTEGER) --photo number donné par backend 
-RETURN BOOLEAN
+(user_id INTEGER, photo_keys VARCHAR(128)[])
+RETURNS BOOLEAN
 LANGUAGE PLPGSQL
 AS $$
+DECLARE
+    photo_id INTEGER;
+    key VARCHAR(128);
+    position_counter INTEGER := 1;    -- Counter to track position in the array, starting at 1
 BEGIN
   --delete all photos
   DELETE from member_photo USING member 
-  WHERE member_photo.member_id = member.id AND member.user_id = user_id;
-  -- insert into photo
-  FOR i IN 1..photo_number BY 1 LOOP
-    @photo_id = INSERT INTO photo (encryption_key, position) VALUES (photo_key, 1) RETURNING photo_id;
-    --insert into member_photo
-    INSERT INTO member_photo (member_id, photo_id) VALUES (user_id, @photo_id)
-    END LOOP;
-    -- return TRUE / FALSE
-    RETURN TRUE;
-  RETURN FALSE;
+  WHERE member_photo.member_id = member.id AND member.id = user_id;
+  DELETE from photo WHERE photo.encryption_key = key;
+  -- here we loop through the keys if multiple
+  FOREACH key IN ARRAY photo_keys
+  LOOP
+    INSERT INTO photo (encryption_key, position) 
+    VALUES (key, position_counter) 
+    RETURNING id INTO photo_id;
+
+    -- now we insert into member_photo table using member_id and photo_id
+    INSERT INTO member_photo (member_id, photo_id)
+    VALUES (user_id, photo_id);
+    position_counter := position_counter + 1;
+  END LOOP;
+  
+  RETURN TRUE;
 END$$;
