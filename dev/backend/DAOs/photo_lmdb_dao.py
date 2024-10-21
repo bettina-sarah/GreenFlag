@@ -51,10 +51,10 @@ class PhotoDAO:
             print(e)
             return False
     
-    def get_photo(self, user_id:str, photo_id:str) -> str | bool:
+    def get_photo(self, key) -> str | bool:
         try:
             with self.env.begin() as txn:
-                photo_data = txn.get(user_id + photo_id)
+                photo_data = txn.get(key.encode('utf-8'))
                 self.env.close()
                 return photo_data
         except Exception as e:

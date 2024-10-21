@@ -125,10 +125,14 @@ class AccountManager:
         # tokens ... 
         user_id = '11'
         params = (user_id,)
+        photo_dao = PhotoDAO()
         try:
-            response = AccountDAO.get_photos(params)
-            return response
-                # email sequence here
+            photos = []
+            encryption_keys = AccountDAO.get_photos(params)
+            for key in encryption_keys:
+                photo = photo_dao.get_photo(key)
+                photos.append(photo)
+            return photos
         except Exception as error:
             print(error)
             print('account manager')
