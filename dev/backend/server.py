@@ -79,13 +79,6 @@ def modify_photos()->bool:
 @app.route('/suggestions', methods=['POST', 'GET'])
 def update_suggestion() -> bool:
     pass
-
-@app.route('/photo', methods=['POST'])
-def photos() -> None:
-    files = request.files
-    
-    print(files)
-    return jsonify(True)
     
 
 # undo():json - plus necessaire ? juste affiché dans le frontend?
