@@ -10,7 +10,7 @@ class AccountDAO(DAO):
     @staticmethod
     def login(params:tuple) -> bool:
         query = 'SELECT * FROM member WHERE email = %s and member_password = %s'
-        response = AccountDAO._prepare_statement(query, params)
+        response = AccountDAO._prepare_statement("select", query, params)
         # user returned ici : 
         return response
 
@@ -47,6 +47,41 @@ class AccountDAO(DAO):
         query = 'UPDATE member SET first_name =%s, last_name = %s WHERE email = %s and member_password = %s;'
         response = AccountDAO._prepare_statement("update", query, params)
         return response
+    # retour: UPDATE 1
+
+    @staticmethod
+    def add_photos(params:tuple) -> bool:
+        # params: (user id, keys)
+        # delete & remake it all.
+        '''
+        ------ postgres DOCU:
+        PostgreSQL lets you reference columns of other tables in the WHERE condition by specifying the other tables in the USING
+        clause. For example, to delete all films produced by a given producer, one can do:
+
+        DELETE FROM films USING producers
+        WHERE producer_id = producers.id AND producers.name = 'foo';
+        What is essentially happening here is a join between films and producers, with all successfully joined films rows being marked
+        for deletion. This syntax is not standard. A more standard way to do it is:
+
+        DELETE FROM films
+        WHERE producer_id IN (SELECT id FROM producers WHERE name = 'foo');
+        '''
+        user_param, photo_keys = params
+        query = 'DELETE from member_photo USING member WHERE member_photo.member_id = member.id AND member.user_id = %s;'
+        response = AccountDAO._prepare_statement("delete", query, user_param)
+        if response:
+            query = 'INSERT INTO member_photo (user_id, photo)'
+            for i in range(photo_keys): # build the query progressively based on how many photos
+                query += ' VALUES (%s, %s),'
+                if i == photo_keys - 1:
+                    query = query[:-1]
+                    query += ' RETURNING id;' # might not work bc multiple inserts
+                response = AccountDAO._prepare_statement("insert", query, params)
+            return response
+    
+    """
+    list of ids orderd in the way they appear
+    relace """
     # retour: UPDATE 1
 
 
