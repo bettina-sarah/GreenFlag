@@ -107,12 +107,12 @@ class AccountManager:
             print(error)
             return False
         photo_dao = PhotoDAO()
-        keys = photo_dao.add_photos(files)
+        keys = photo_dao.add_photos(images)
 
         params = [user_id] + keys
         params = tuple(params)
         try:
-            response = AccountDAO.modify_photos(params)
+            response = AccountDAO.add_photos(params)
             return response
                 # email sequence here
         except Exception as error:
