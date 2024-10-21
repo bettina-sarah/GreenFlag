@@ -66,9 +66,12 @@ class AccountDAO(DAO):
         DELETE FROM films
         WHERE producer_id IN (SELECT id FROM producers WHERE name = 'foo');
         '''
+        print('accounTdao, add photos', params)
         user_param, photo_keys = params
+        print('user param', user_param, 'photo keys', photo_keys)
         query = 'DELETE from member_photo USING member WHERE member_photo.member_id = member.id AND member.user_id = %s;'
         response = AccountDAO._prepare_statement("delete", query, user_param)
+        print('response', response)
         if response:
             query = 'INSERT INTO member_photo (user_id, photo)'
             for i in range(photo_keys): # build the query progressively based on how many photos
@@ -78,6 +81,7 @@ class AccountDAO(DAO):
                     query += ' RETURNING id;' # might not work bc multiple inserts
                 response = AccountDAO._prepare_statement("insert", query, params)
             return response
+        return False
     
     """
     list of ids orderd in the way they appear
