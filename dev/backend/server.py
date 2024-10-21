@@ -75,6 +75,12 @@ def modify_photos()->bool:
     response = AccountManager.modify_photos(files)
     return jsonify(True) if response else jsonify(False)
 
+@app.route('/photo', methods=['GET'])   
+def get_photos() -> list:
+    # i need user_id here!
+    response = AccountManager.get_photos(request.json)
+    return response
+
 
 @app.route('/suggestions', methods=['POST', 'GET'])
 def update_suggestion() -> bool:
