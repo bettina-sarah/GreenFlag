@@ -51,6 +51,8 @@ def questionnaire() -> bool:
     response = AccountManager.modify_profile(request.json)
     return jsonify(response)
 
+
+
 @app.route('/chatrooms', methods=['GET'])
 def fetch_chatroom_list() -> list:  #send JSON jsonify ... 
     pass
@@ -63,6 +65,16 @@ def connect_chatroom() -> list:  #send JSON jsonify ...
 def modify_profile()-> bool:
     response = AccountManager.modify_profile(request.json)
     return jsonify(True) if response else jsonify(False)
+
+@app.route('/photo', methods=['POST'])
+def modify_photos()->bool:
+    print(request.files)
+    files = request.files
+    # #info = request.json
+    # #response = AccountManager.modify_photos(info, files)
+    response = AccountManager.modify_photos(files)
+    return jsonify(True) if response else jsonify(False)
+
 
 @app.route('/suggestions', methods=['POST', 'GET'])
 def update_suggestion() -> bool:
@@ -85,4 +97,5 @@ if __name__ == '__main__':
     # AccountManager.delete_account(json_delete)
 
     #AccountManager.modify_profile(json_tests.json_modify)
+
     
