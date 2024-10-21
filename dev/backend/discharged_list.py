@@ -15,20 +15,7 @@ class DischargedList(ABC):
     
   def __getitem__(self,index):
     return self._items[index]
-    
-  # def add_item(self, item):
-  #   if not self._items:
-  #     self._start_time = perf_counter()
-  #     self._items.append(item)
-  #   else:
-  #     now = perf_counter()
-  #     if (now - self._start_time) >= self._max_time:
-  #       self._notify_observers()
-  #       self.clear_list()
 
-  #     self._start_time = perf_counter()
-  #     self._items.append(item)
-  
   def add_item(self,item):
     if not self._items:
       self._start_time = perf_counter()
@@ -107,4 +94,3 @@ if __name__ == "__main__":
   diss.add_item("!")
   diss.add_item("!")
   diss.add_item("!")
-  
