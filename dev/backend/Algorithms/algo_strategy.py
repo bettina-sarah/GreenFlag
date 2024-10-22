@@ -7,6 +7,7 @@ class AlgoStrategy(Strategy):
     
     def fit(self, np_array:np.ndarray):
         pass
+        
 
     def predict(self, np_array:np.ndarray):
         pass
