@@ -53,8 +53,7 @@ class AccountDAO(DAO):
     def add_photos(params:tuple) -> bool:
         # params: (user id, keys)
         # delete & remake it all.
-        '''
-        ------ postgres DOCU:
+        ''' ------ postgres DOCU:
         PostgreSQL lets you reference columns of other tables in the WHERE condition by specifying the other tables in the USING
         clause. For example, to delete all films produced by a given producer, one can do:
 
@@ -66,37 +65,35 @@ class AccountDAO(DAO):
         DELETE FROM films
         WHERE producer_id IN (SELECT id FROM producers WHERE name = 'foo');
         '''
-        user_param, photo_keys = params
-        query = 'DELETE from member_photo USING member WHERE member_photo.member_id = member.id AND member.user_id = %s;'
-        response = AccountDAO._prepare_statement("delete", query, user_param)
+        print('accounTdao, add photos', params)
+        # query = 'SELECT add_photos(%s, ARRAY[%s]);'
+        # we format the sql array in manager
+        query = 'SELECT update_hobbies(%s, %s);'
+        response = AccountDAO._prepare_statement("select", query, params)
         if response:
-            query = 'INSERT INTO member_photo (user_id, photo)'
-            for i in range(photo_keys): # build the query progressively based on how many photos
-                query += ' VALUES (%s, %s),'
-                if i == photo_keys - 1:
-                    query = query[:-1]
-                    query += ' RETURNING id;' # might not work bc multiple inserts
-                response = AccountDAO._prepare_statement("insert", query, params)
             return response
+        return False
     
-    """
-    list of ids orderd in the way they appear
-    relace """
-    # retour: UPDATE 1
+    @staticmethod
+    def get_photos(params:tuple) -> List[tuple]:   
+        query = 'SELECT encryption_key from member_photos_view where member_id = %s;'
+        response = AccountDAO._prepare_statement("select", query, params)
+        if response:
+            return response
+        return False
 
-
-
-
-
-
-
-
+    # @staticmethod
+    # def update_hobbies(params:tuple) -> bool:
+    #     new_params = (params[0],)  # First element is the user ID
+    #     hobbies_list = params[1:]  # The rest are hobbies
+    #     formatted_hobbies = ','.join(f"'{hobby}'" for hobby in hobbies_list)
+    #     #query = 'SELECT update_hobbies(%s, ARRAY[%s]);'
+    #     query = f"SELECT update_hobbies(%s, ARRAY[{formatted_hobbies}]);"
+    #     response = AccountDAO._prepare_statement("select", query, new_params)
+    #     return response
     
-        # try:
-        #     connection = DAO.get_connection()
-        #     query = 'SELECT * FROM member WHERE email = %s and member_password = %s'
-        #     response = DAO.send_request(connection, query, params)
-        #     return response
-        # except Exception as error:  
-        #     print(error)
-        # return False
+    @staticmethod
+    def update_hobbies(params:tuple) -> bool:
+        query = 'SELECT update_hobbies(%s, %s);'
+        response = AccountDAO._prepare_statement("select", query, params)
+        return response

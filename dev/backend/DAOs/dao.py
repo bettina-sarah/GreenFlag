@@ -78,6 +78,7 @@ class DAO():
         try:
             pg_cursor = connection.cursor()
             pg_cursor.execute(query, params)
+            pg_cursor.executemany
             response = DAO.request_type[connection_type](pg_cursor) # tuple OR bool!
             return response
         except Exception as e:

@@ -31,14 +31,14 @@ class PhotoDAO:
 
 
     def encode_image(self,txn,photo) -> str:
-        # key = photo.filename.encode('utf-8')    
-        key = "hello".encode('utf-8')           
+        # encodage pour lm db seulement !
+        key = photo.filename.encode('utf-8')        
         img_byte_arr = io.BytesIO()
         image = Image.open(photo)
         image.save(img_byte_arr, format=image.format)
         img_bytes = img_byte_arr.getvalue()
         txn.put(key, img_bytes)
-        return key
+        return key.decode('utf-8')
 
 
     def delete_photo(self, user_id:str, photo_id:str) -> bool:
@@ -51,10 +51,10 @@ class PhotoDAO:
             print(e)
             return False
     
-    def get_photo(self, user_id:str, photo_id:str) -> str | bool:
+    def get_photo(self, key) -> str | bool:
         try:
             with self.env.begin() as txn:
-                photo_data = txn.get(user_id + photo_id)
+                photo_data = txn.get(key.encode('utf-8'))
                 self.env.close()
                 return photo_data
         except Exception as e:
