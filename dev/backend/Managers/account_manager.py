@@ -107,9 +107,8 @@ class AccountManager:
             return False
         photo_dao = PhotoDAO()
         keys = photo_dao.add_photos(images)
-
-        params = [user_id] + keys
-        params = tuple(params)
+        formatted_keys = '{' + ','.join(keys) + '}'
+        params = (user_id,formatted_keys)
         try:
             response = AccountDAO.add_photos(params)
             return response
@@ -146,8 +145,10 @@ class AccountManager:
 
         # token verification yo
         user_id = '11'
-        params = [user_id] + hobbies
-        params = tuple(params)
+        # postgres approved way of an array !!
+        formatted_hobbies = '{' + ','.join(hobbies) + '}'
+        params = (user_id,formatted_hobbies)
+
         try:
             response = AccountDAO.update_hobbies(params)
             return response

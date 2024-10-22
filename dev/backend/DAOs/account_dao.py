@@ -66,7 +66,9 @@ class AccountDAO(DAO):
         WHERE producer_id IN (SELECT id FROM producers WHERE name = 'foo');
         '''
         print('accounTdao, add photos', params)
-        query = 'SELECT add_photos(%s, ARRAY[%s]);'
+        # query = 'SELECT add_photos(%s, ARRAY[%s]);'
+        # we format the sql array in manager
+        query = 'SELECT update_hobbies(%s, %s);'
         response = AccountDAO._prepare_statement("select", query, params)
         if response:
             return response
@@ -80,9 +82,18 @@ class AccountDAO(DAO):
             return response
         return False
 
+    # @staticmethod
+    # def update_hobbies(params:tuple) -> bool:
+    #     new_params = (params[0],)  # First element is the user ID
+    #     hobbies_list = params[1:]  # The rest are hobbies
+    #     formatted_hobbies = ','.join(f"'{hobby}'" for hobby in hobbies_list)
+    #     #query = 'SELECT update_hobbies(%s, ARRAY[%s]);'
+    #     query = f"SELECT update_hobbies(%s, ARRAY[{formatted_hobbies}]);"
+    #     response = AccountDAO._prepare_statement("select", query, new_params)
+    #     return response
+    
     @staticmethod
     def update_hobbies(params:tuple) -> bool:
-        # make an0thr function...
-        query = 'UPDATE member SET hobbies = %s WHERE id = %s;'
-        response = AccountDAO._prepare_statement("update", query, params)
+        query = 'SELECT update_hobbies(%s, %s);'
+        response = AccountDAO._prepare_statement("select", query, params)
         return response
