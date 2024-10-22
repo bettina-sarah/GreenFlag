@@ -14,6 +14,8 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}},
             allow_headers=["Content-Type", "Authorization", "X-Requested-With", "Access-Control-Allow-Origin"])
 
 
+
+
 @app.route('/test', methods=['GET'])
 def test_connection():
     return jsonify(message="Hello React this is Flask")
@@ -69,13 +71,9 @@ def update_hobbies() -> bool:
 
 
 ''' MEMBER TABLE:
+wants kids!!
 {'gender': 'm', 'height': '84', 'religion': 'Atheist', 'want_kids': True, 'city': 'Montreal', 'min_age': '46', 
 'max_age': '60', 'relationship_type': 'shortterm', 'DateOfBirth': '2024-10-22T03:37:43.894Z', 'prefered_genders': ['Female']}
---- ACTIVITIES TABLES:
-{'hiking': False, 'yoga': False, 'photography': False, 'cooking': False, 'traveling': False,
- 'reading': False, 'videogaming': True, 'biking': True, 'running': True, 'watchingmovies': True, 'workingout': True,
-   'dancing': False, 'playinginstrument': False, 'attendingconcerts': False, 'painting': False, 'volunteering': False, 
-   'playingsports': False, 'crafting': False, 'petlover': False, 'learningnewlanguage': False}
 '''
 
 
