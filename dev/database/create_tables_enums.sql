@@ -52,6 +52,7 @@ CREATE TABLE member (
   email             VARCHAR(255) UNIQUE    NOT NULL,
   date_of_birth     DATE DEFAULT NULL,
   gender            GENDER DEFAULT 'Other',
+bio TEXT,
   preferred_genders  GENDER[] DEFAULT '{}',
   min_age INTEGER DEFAULT 18,
   max_age INTEGER DEFAULT 99,
