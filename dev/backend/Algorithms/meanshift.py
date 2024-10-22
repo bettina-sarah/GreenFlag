@@ -1,6 +1,7 @@
 import numpy as np
 import sklearn.cluster._mean_shift as ms
-class MeanShift:
+from algo_strategy import AlgoStrategy
+class MeanShift(AlgoStrategy):
     def __init__(self, bandwidth:int,max_iteration:int, tolerance:int):
         self.bandwidth = bandwidth
         self.max_iteration = max_iteration
@@ -95,7 +96,7 @@ class MeanShift:
         self.clusters_centers = clusters_centers
         self.labels = labels
         
-        return old, origin
+        return self.clusters_centers, self.labels
 
     # will need to be used on the subject to know his label
     # and then on all the data to get a list of all the other users with the same label
