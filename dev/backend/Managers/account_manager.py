@@ -101,18 +101,56 @@ class AccountManager:
         # by now we assume Frontend knows which photos were changed ??? overwrites them all ?
         try:
             images = files.get('image')
-            print(images)
             # images = files.get('image').getlist()
         except Exception as error:
             print(error)
             return False
         photo_dao = PhotoDAO()
-        keys = photo_dao.add_photos(files)
-
-        params = [user_id] + keys
-        params = tuple(params)
+        keys = photo_dao.add_photos(images)
+        formatted_keys = '{' + ','.join(keys) + '}'
+        params = (user_id,formatted_keys)
         try:
-            response = AccountDAO.modify_photos(params)
+            response = AccountDAO.add_photos(params)
+            return response
+                # email sequence here
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False
+    
+    @staticmethod
+    def get_photos(data) -> bool:
+        user_id = data.get('user_id')
+        # tokens ... 
+        user_id = '11'
+        params = (user_id,)
+        photo_dao = PhotoDAO()
+        try:
+            photos = []
+            encryption_keys = AccountDAO.get_photos(params)
+            for key in encryption_keys:
+                photo = photo_dao.get_photo(key)
+                photos.append(photo)
+            return photos
+        except Exception as error:
+            print(error)
+            print('account manager')
+    
+    @staticmethod
+    def update_hobbies(data) -> bool:
+        hobbies = []
+        for key, value in data.items():
+            if value:
+                hobbies.append(key)
+
+        # token verification yo
+        user_id = '11'
+        # postgres approved way of an array !!
+        formatted_hobbies = '{' + ','.join(hobbies) + '}'
+        params = (user_id,formatted_hobbies)
+
+        try:
+            response = AccountDAO.update_hobbies(params)
             return response
                 # email sequence here
         except Exception as error:

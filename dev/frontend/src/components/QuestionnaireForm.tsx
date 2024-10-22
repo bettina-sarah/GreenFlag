@@ -44,7 +44,7 @@ const QuestionnaireForm = () => {
 
     type FormDataInfo = {
         // Infos
-        DateOfBirth: Date | null
+        date_of_birth: Date | null
         gender: string
         height: number
         religion: string
@@ -55,7 +55,7 @@ const QuestionnaireForm = () => {
         min_age: number
         max_age: number
         relationship_type: string
-        prefered_genders: string[]
+        preferred_genders: string[]
     }
 
     // type FormDataPhotos = {
@@ -73,7 +73,7 @@ const QuestionnaireForm = () => {
     } = useForm<FormDataHobbies>()
     const onSubmitFormHobbies = handleSubmitHobbies( async (data)=> {
         try{
-            const answer = await axios.post(IP_SERVER+'/questionnaire',data)
+            const answer = await axios.post(IP_SERVER+'/hobbies',data)
             if (answer.data){
                 console.log(answer);
                 navigate('/matching')
@@ -232,7 +232,7 @@ const QuestionnaireForm = () => {
             <form  onSubmit={onSubmitFormInfo}>
                 <label>Select Your Date of Birth:</label>
                 <Controller
-                    name="DateOfBirth"
+                    name="date_of_birth"
                     control={controlInfo}
                     defaultValue={new Date()}
                     render={({field}) =>(
@@ -242,7 +242,7 @@ const QuestionnaireForm = () => {
                         />
                     )}
                 />
-                {errorsInfo.DateOfBirth && errorsInfo.DateOfBirth.type === "required" && (
+                {errorsInfo.date_of_birth && errorsInfo.date_of_birth.type === "required" && (
                     <span>This is required</span>
                 )}
                 
@@ -352,7 +352,7 @@ const QuestionnaireForm = () => {
                 <div>
                     <label>What genders are you interested in when choosing a partner?</label>
                     <Controller
-                        name="prefered_genders"
+                        name="preferred_genders"
                         control={controlInfo}
                         defaultValue={[]} // Default value for the genders array
                         render={({ field: { onChange } }) => (
