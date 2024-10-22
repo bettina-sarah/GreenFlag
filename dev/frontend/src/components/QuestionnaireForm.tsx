@@ -248,10 +248,10 @@ const QuestionnaireForm = () => {
                 
                 <label>Select Your Gender:</label>
                 <Select {...registerInfo("gender", {required: true})}>
-                    <option value="m">Male</option>
-                    <option value="f">Female</option>
-                    <option value="x">Non-binary</option>
-                    <option value="o">Other</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Non-binary">Non-Binary</option>
+                    <option value="Other">Other</option>
                 </Select>
                 {errorsInfo.gender && errorsInfo.gender.type === "required" && (
                     <span>This is required</span>
