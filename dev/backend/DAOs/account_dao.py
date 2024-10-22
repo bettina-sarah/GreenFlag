@@ -10,7 +10,7 @@ class AccountDAO(DAO):
     @staticmethod
     def login(params:tuple) -> bool:
         query = 'SELECT * FROM member WHERE email = %s and member_password = %s'
-        response = AccountDAO._prepare_statement(query, params)
+        response = AccountDAO._prepare_statement("select", query, params)
         # user returned ici : 
         return response
 
@@ -36,11 +36,63 @@ class AccountDAO(DAO):
         response = AccountDAO._prepare_statement("select", query, params)
         return response
     
-        # try:
-        #     connection = DAO.get_connection()
-        #     query = 'SELECT * FROM member WHERE email = %s and member_password = %s'
-        #     response = DAO.send_request(connection, query, params)
-        #     return response
-        # except Exception as error:  
-        #     print(error)
-        # return False
+    '''
+    !!!! ATTENTION: quand il faut modifier plusieurs tables:
+    UPDATE accounts SET contact_first_name = first_name,
+                     contact_last_name = last_name
+    FROM employees WHERE employees.id = accounts.sales_person;
+    '''
+    @staticmethod
+    def modify_profile(params:tuple) -> bool:
+        query = 'UPDATE member SET first_name =%s, last_name = %s WHERE email = %s and member_password = %s;'
+        response = AccountDAO._prepare_statement("update", query, params)
+        return response
+    # retour: UPDATE 1
+    
+    def update_preferences(columns,values,user_id) -> bool:
+    
+        query = "UPDATE member SET " + ", ".join([f"{col} = %s" for col in columns]) + " WHERE id = %s"
+        params = values + [user_id]
+        response = AccountDAO._prepare_statement("update", query, params)
+        return response
+
+
+
+    @staticmethod
+    def add_photos(params:tuple) -> bool:
+        # params: (user id, keys)
+        # delete & remake it all.
+        ''' ------ postgres DOCU:
+        PostgreSQL lets you reference columns of other tables in the WHERE condition by specifying the other tables in the USING
+        clause. For example, to delete all films produced by a given producer, one can do:
+
+        DELETE FROM films USING producers
+        WHERE producer_id = producers.id AND producers.name = 'foo';
+        What is essentially happening here is a join between films and producers, with all successfully joined films rows being marked
+        for deletion. This syntax is not standard. A more standard way to do it is:
+
+        DELETE FROM films
+        WHERE producer_id IN (SELECT id FROM producers WHERE name = 'foo');
+        '''
+        print('accounTdao, add photos', params)
+        # query = 'SELECT add_photos(%s, ARRAY[%s]);'
+        # we format the sql array in manager
+        query = 'SELECT add_photos(%s, %s);'
+        response = AccountDAO._prepare_statement("select", query, params)
+        if response:
+            return response
+        return False
+    
+    @staticmethod
+    def get_photos(params:tuple) -> List[tuple]:   
+        query = 'SELECT encryption_key from member_photos_view where member_id = %s;'
+        response = AccountDAO._prepare_statement("select", query, params)
+        if response:
+            return response
+        return False
+
+    @staticmethod
+    def update_hobbies(params:tuple) -> bool:
+        query = 'SELECT update_hobbies(%s, %s);'
+        response = AccountDAO._prepare_statement("select", query, params)
+        return response
