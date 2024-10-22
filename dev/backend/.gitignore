@@ -80,6 +80,9 @@ docs/_build/
 .pybuilder/
 target/
 
+# LMDB database
+.mdb
+
 # Jupyter Notebook
 .ipynb_checkpoints
 
