@@ -22,6 +22,8 @@ class MeanShift:
             for i in range(number_of_rows):
                 # check if the point doesn't need to move anymore
                 if done_moving[i]:
+                    if np.all(new[i, :] == 0):
+                        new[i, :] = old[i, :]
                     continue
                 
                 # point of interest
@@ -118,7 +120,7 @@ if __name__ == "__main__":
     skms = ms.MeanShift(bandwidth=5, max_iter=10000)
     skms.fit(data)
     
-    meanshift = MeanShift(bandwidth=1, max_iteration=100, tolerance=0.001)
+    meanshift = MeanShift(bandwidth=3, max_iteration=100, tolerance=0.001)
     old, origin = meanshift.fit(data)
     
     point = np.array([3, 3])
