@@ -1,8 +1,7 @@
-
 from DAOs.account_dao import AccountDAO
 #from account_dao import AccountDAO
-#from flask import jsonify
 from DAOs.photo_lmdb_dao import PhotoDAO
+from datetime import datetime
 
 
 class AccountManager:
@@ -90,6 +89,54 @@ class AccountManager:
             print(error)
             print('account manager')
             return False
+    
+    # {'gender': 'x', 'height': '44', 'religion': 'Christian', 'want_kids': True, 'city': 'Maaa', 'min_age': '24', 'max_age': '57', 'relationship_type': 'shortterm', 'date_of_birth': '2024-10-07T04:00:00.000Z', 'preferred_genders': ['Non-Binary', 'Male']}
+    
+    @staticmethod
+    def update_preferences(data) -> bool:
+        columns, values = AccountManager.validate_preference_fields(data)
+        # columns = []
+        # values = []
+        # for key, value in data.items():
+        #     # change dob to sql appropriate
+        #     if key == 'date_of_birth':
+        #         dt = datetime.fromisoformat(value[:-1])  # format is '2024-10-07T04:00:00.000Z' - removes Z and keeps date only
+        #         value = dt.date()
+        #     if key == 'preferred_genders': # make array into sql appropriate list:
+        #         formatted_genders = '{' + ','.join(value) + '}'
+        #         value = formatted_genders
+        #     columns.append(key)
+        #     values.append(value)
+        
+        # Create a tuple of column-value pairs
+        # params = tuple(zip(columns, values))
+        
+        # obviously fish id from token ... 
+        user_id = '11'
+        try:
+            response = AccountDAO.update_preferences(columns,values, user_id)
+            return response
+                # email sequence here
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False
+    
+    @staticmethod
+    def validate_preference_fields(data):
+        columns = []
+        values = []
+        for key, value in data.items():
+            # change dob to sql appropriate
+            if key == 'date_of_birth':
+                dt = datetime.fromisoformat(value[:-1])  # format is '2024-10-07T04:00:00.000Z' - removes Z and keeps date only
+                value = dt.date()
+            if key == 'preferred_genders': # make array into sql appropriate list:
+                formatted_genders = '{' + ','.join(value) + '}'
+                value = formatted_genders
+            columns.append(key)
+            values.append(value)
+        return columns, values
 
     @staticmethod
     def modify_photos(files, info=None) -> bool:
@@ -135,6 +182,7 @@ class AccountManager:
         except Exception as error:
             print(error)
             print('account manager')
+    
     
     @staticmethod
     def update_hobbies(data) -> bool:

@@ -48,6 +48,15 @@ class AccountDAO(DAO):
         response = AccountDAO._prepare_statement("update", query, params)
         return response
     # retour: UPDATE 1
+    
+    def update_preferences(columns,values,user_id) -> bool:
+    
+        query = "UPDATE member SET " + ", ".join([f"{col} = %s" for col in columns]) + " WHERE id = %s"
+        params = values + [user_id]
+        response = AccountDAO._prepare_statement("update", query, params)
+        return response
+
+
 
     @staticmethod
     def add_photos(params:tuple) -> bool:
@@ -68,7 +77,7 @@ class AccountDAO(DAO):
         print('accounTdao, add photos', params)
         # query = 'SELECT add_photos(%s, ARRAY[%s]);'
         # we format the sql array in manager
-        query = 'SELECT update_hobbies(%s, %s);'
+        query = 'SELECT add_photos(%s, %s);'
         response = AccountDAO._prepare_statement("select", query, params)
         if response:
             return response
@@ -82,16 +91,6 @@ class AccountDAO(DAO):
             return response
         return False
 
-    # @staticmethod
-    # def update_hobbies(params:tuple) -> bool:
-    #     new_params = (params[0],)  # First element is the user ID
-    #     hobbies_list = params[1:]  # The rest are hobbies
-    #     formatted_hobbies = ','.join(f"'{hobby}'" for hobby in hobbies_list)
-    #     #query = 'SELECT update_hobbies(%s, ARRAY[%s]);'
-    #     query = f"SELECT update_hobbies(%s, ARRAY[{formatted_hobbies}]);"
-    #     response = AccountDAO._prepare_statement("select", query, new_params)
-    #     return response
-    
     @staticmethod
     def update_hobbies(params:tuple) -> bool:
         query = 'SELECT update_hobbies(%s, %s);'

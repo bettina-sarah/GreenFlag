@@ -55,11 +55,12 @@ def get_profile() -> bool:
 
 
 # ------ QUESTIONNAIRE -------
-
+# ATTENTION WE SHOULD KNOW IF NEW USER OR NOT. DIFFERENCE BETWEEN INSERT & UPDATE REQUEST
 @app.route('/questionnaire', methods=['POST'])
 def questionnaire() -> bool:
     print(request.json)
-    response = AccountManager.modify_profile(request.json)
+    response = AccountManager.update_preferences(request.json)
+    #response = AccountManager.modify_profile(request.json)
     return jsonify(response)
 
 
@@ -68,13 +69,6 @@ def update_hobbies() -> bool:
     print(request.json)
     response = AccountManager.update_hobbies(request.json)
     return jsonify(response)
-
-
-''' MEMBER TABLE:
-wants kids!!
-{'gender': 'm', 'height': '84', 'religion': 'Atheist', 'want_kids': True, 'city': 'Montreal', 'min_age': '46', 
-'max_age': '60', 'relationship_type': 'shortterm', 'DateOfBirth': '2024-10-22T03:37:43.894Z', 'prefered_genders': ['Female']}
-'''
 
 
 @app.route('/chatrooms', methods=['GET'])
