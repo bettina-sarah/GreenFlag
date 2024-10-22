@@ -78,8 +78,9 @@ class DAO():
         try:
             pg_cursor = connection.cursor()
             pg_cursor.execute(query, params)
-            pg_cursor.executemany
+            # pg_cursor.executemany
             response = DAO.request_type[connection_type](pg_cursor) # tuple OR bool!
+            pg_cursor.close()
             return response
         except Exception as e:
             print(e)
@@ -92,6 +93,7 @@ class DAO():
             connection = DAO._get_connection()
             response = DAO._send_request(request_type, connection, query, params)
             connection.commit() # possibly necessary for an insert request
+            # connection.close()
             return response
         except Exception as error:  
             print(error)
@@ -99,7 +101,6 @@ class DAO():
 
     @staticmethod
     def send_requests(requests: list) -> None:
-
         pass
 
 
