@@ -19,9 +19,7 @@ DROP VIEW IF EXISTS member_activities_view;
 
 
 CREATE TYPE GENDER AS ENUM (
-  'f',
-  'm',
-  'x'
+'Non-Binary', 'Male', 'Female', 'Other'
 );
 
 CREATE TYPE SUGGESTION_STATUS AS ENUM (
@@ -53,8 +51,8 @@ CREATE TABLE member (
   member_password   VARCHAR(20)          NOT NULL,
   email             VARCHAR(255) UNIQUE    NOT NULL,
   date_of_birth     DATE DEFAULT NULL,
-  gender            GENDER DEFAULT 'x',
-  preferred_genders  GENDER DEFAULT 'x',
+  gender            GENDER DEFAULT 'Other',
+  preferred_genders  GENDER[] DEFAULT '{}',
   min_age INTEGER DEFAULT 18,
   max_age INTEGER DEFAULT 99,
   relationship_type RELATIONSHIP DEFAULT 'longterm',
