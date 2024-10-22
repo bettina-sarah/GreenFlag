@@ -25,7 +25,7 @@ class MeanShift:
                     continue
                 
                 # point of interest
-                P = old[i,:]
+                P = old[i]
                 
                 # calculate norms (euclidian distances)
                 distances = np.linalg.norm(old - P, axis=1)
@@ -43,11 +43,15 @@ class MeanShift:
                 within_bandwidth = distances <= self.bandwidth
                 # only poits within the bandwidth
                 points_within = old[within_bandwidth]
-                # find the mean of these points to get the new center
-                new[i,:] = np.mean(points_within, axis=0)
+                
+                if points_within.size > 0:
+                    # find the mean of these points to get the new center
+                    new[i] = np.mean(points_within, axis=0)
+                else:
+                    new[i] = old[i]
                 
                 # find the distance of movement
-                movement = np.linalg.norm(new[i,:] - P)
+                movement = np.linalg.norm(new[i] - P)
                 max_movement = max(max_movement, movement)
                 
                 # keep log of points that doesn't need to move anymore
@@ -62,7 +66,7 @@ class MeanShift:
             old = new.copy()
         
         # get the clusters center points
-        clusters_centers = np.unique(np.round(new, decimals=1),axis=0)
+        clusters_centers = np.unique(np.round(new, decimals=3),axis=0)
         
         print(clusters_centers)
         
@@ -114,7 +118,7 @@ if __name__ == "__main__":
     skms = ms.MeanShift(bandwidth=5, max_iter=10000)
     skms.fit(data)
     
-    meanshift = MeanShift(bandwidth=0.5, max_iteration=100, tolerance=0.00001)
+    meanshift = MeanShift(bandwidth=1, max_iteration=100, tolerance=0.001)
     old, origin = meanshift.fit(data)
     
     point = np.array([3, 3])
