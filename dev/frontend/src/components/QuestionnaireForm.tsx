@@ -72,7 +72,7 @@ const QuestionnaireForm = () => {
     } = useForm<FormDataHobbies>()
     const onSubmitFormHobbies = handleSubmitHobbies( async (data)=> {
         try{
-            const answer = await axios.post(IP_SERVER+'/questionnaire',data)
+            const answer = await axios.post(IP_SERVER+'/hobbies',data)
             if (answer.data){
                 console.log(answer);
                 navigate('/matching')
