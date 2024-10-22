@@ -287,7 +287,7 @@ const QuestionnaireForm = () => {
 
                 <div className="flex items-center gap-2">
                         <Label htmlFor="want_kids">Do you want kids? (check for yes)</Label>
-                        <Checkbox {...registerInfo("want_kids", {required: true})}/>
+                        <Checkbox {...registerInfo("want_kids")}/>
                 </div>
                 
                 <label>Insert Your City:</label>
