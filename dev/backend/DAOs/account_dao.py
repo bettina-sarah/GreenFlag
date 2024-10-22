@@ -53,8 +53,7 @@ class AccountDAO(DAO):
     def add_photos(params:tuple) -> bool:
         # params: (user id, keys)
         # delete & remake it all.
-        '''
-        ------ postgres DOCU:
+        ''' ------ postgres DOCU:
         PostgreSQL lets you reference columns of other tables in the WHERE condition by specifying the other tables in the USING
         clause. For example, to delete all films produced by a given producer, one can do:
 
@@ -67,29 +66,23 @@ class AccountDAO(DAO):
         WHERE producer_id IN (SELECT id FROM producers WHERE name = 'foo');
         '''
         print('accounTdao, add photos', params)
-        
-        # user_param, photo_keys = params
-        # print('user param', user_param, 'photo keys', photo_keys)
-        # query = 'DELETE from member_photo USING member WHERE member_photo.member_id = member.id AND member.user_id = %s;'
-        # response = AccountDAO._prepare_statement("delete", query, user_param)
-        # print('response', response)
-        # if response:
-        #     query = 'INSERT INTO member_photo (user_id, photo)'
-        #     for i in range(photo_keys): # build the query progressively based on how many photos
-        #         query += ' VALUES (%s, %s),'
-        #         if i == photo_keys - 1:
-        #             query = query[:-1]
-        #             query += ' RETURNING id;' # might not work bc multiple inserts
-        #         response = AccountDAO._prepare_statement("insert", query, params)
         query = 'SELECT add_photos(%s, ARRAY[%s]);'
         response = AccountDAO._prepare_statement("select", query, params)
         if response:
             return response
         return False
     
+    @staticmethod
     def get_photos(params:tuple) -> List[tuple]:   
         query = 'SELECT encryption_key from member_photos_view where member_id = %s;'
         response = AccountDAO._prepare_statement("select", query, params)
         if response:
             return response
         return False
+
+    @staticmethod
+    def update_hobbies(params:tuple) -> bool:
+        # make an0thr function...
+        query = 'UPDATE member SET hobbies = %s WHERE id = %s;'
+        response = AccountDAO._prepare_statement("update", query, params)
+        return response

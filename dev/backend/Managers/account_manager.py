@@ -136,3 +136,23 @@ class AccountManager:
         except Exception as error:
             print(error)
             print('account manager')
+    
+    @staticmethod
+    def update_hobbies(data) -> bool:
+        hobbies = []
+        for key, value in data.items():
+            if value:
+                hobbies.append(key)
+
+        # token verification yo
+        user_id = '11'
+        params = [user_id] + hobbies
+        params = tuple(params)
+        try:
+            response = AccountDAO.update_hobbies(params)
+            return response
+                # email sequence here
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False

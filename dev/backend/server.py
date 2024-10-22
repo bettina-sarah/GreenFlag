@@ -46,10 +46,35 @@ def get_profile() -> bool:
     response = AccountManager.get_profile(request.json)
     return jsonify(True) if response else jsonify(False)
 
+
+#------ QUESTIONNAIRE -------
+
 @app.route('/questionnaire', methods=['POST'])
 def questionnaire() -> bool:
+    print(request.json)
     response = AccountManager.modify_profile(request.json)
     return jsonify(response)
+
+@app.route('/hobbies', methods=['POST'])
+def update_hobbies() -> bool:
+    print(request.json)
+    response = AccountManager.update_hobbies(request.json)
+    return jsonify(response)
+
+
+
+
+''' MEMBER TABLE:
+{'gender': 'm', 'height': '84', 'religion': 'Atheist', 'want_kids': True, 'city': 'Montreal', 'min_age': '46', 
+'max_age': '60', 'relationship_type': 'shortterm', 'DateOfBirth': '2024-10-22T03:37:43.894Z', 'prefered_genders': ['Female']}
+--- ACTIVITIES TABLES:
+{'hiking': False, 'yoga': False, 'photography': False, 'cooking': False, 'traveling': False,
+ 'reading': False, 'videogaming': True, 'biking': True, 'running': True, 'watchingmovies': True, 'workingout': True,
+   'dancing': False, 'playinginstrument': False, 'attendingconcerts': False, 'painting': False, 'volunteering': False, 
+   'playingsports': False, 'crafting': False, 'petlover': False, 'learningnewlanguage': False}
+'''
+
+
 
 
 
