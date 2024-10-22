@@ -54,13 +54,13 @@ CREATE TABLE member (
   email             VARCHAR(255) UNIQUE    NOT NULL,
   date_of_birth     DATE DEFAULT NULL,
   gender            GENDER DEFAULT 'x',
-  preferred_gender  GENDER DEFAULT 'x',
-  preferred_min_age INTEGER DEFAULT 18,
-  preferred_max_age INTEGER DEFAULT 99,
+  preferred_genders  GENDER DEFAULT 'x',
+  min_age INTEGER DEFAULT 18,
+  max_age INTEGER DEFAULT 99,
   relationship_type RELATIONSHIP DEFAULT 'longterm',
   height            INTEGER CHECK (height > 0),
   religion          VARCHAR(50) DEFAULT NULL,
-  wants_kids        BOOL DEFAULT FALSE,
+  want_kids        BOOL DEFAULT FALSE,
   city              VARCHAR(100),
   last_lat          DOUBLE PRECISION DEFAULT NULL,
   last_long         DOUBLE PRECISION DEFAULT NULL,
@@ -171,6 +171,11 @@ VALUES
   ('petlover'),
   ('learningnewlanguage')
 
+DROP VIEW IF EXISTS member_photos_view;
+DROP VIEW IF EXISTS member_activities_view;
+
+------- VIEWS 
+
 CREATE VIEW member_photos_view AS
 SELECT 
   m.id AS member_id, 
@@ -196,7 +201,11 @@ FROM
 INNER JOIN member_activities AS ma ON m.id = ma.member_id
 INNER JOIN activity AS a ON ma.activity_id = a.id;
 
+
+------- FUNCTIONS
+
 DROP FUNCTION IF EXISTS add_photos;
+DROP FUNCTION IF EXISTS update_hobbies;
 
 CREATE OR REPLACE FUNCTION add_photos
 (user_id INTEGER, photo_keys VARCHAR(128)[])
@@ -225,6 +234,29 @@ BEGIN
     position_counter := position_counter + 1;
   END LOOP;
   
+  RETURN TRUE;
+END$$;
+
+
+CREATE OR REPLACE FUNCTION update_hobbies
+(user_id INTEGER, hobbies VARCHAR(128)[])
+RETURNS BOOLEAN
+LANGUAGE PLPGSQL
+AS $$
+DECLARE
+    hobby_id INTEGER;
+    hobby VARCHAR(128);
+BEGIN
+  --delete associated hobbies
+  DELETE from member_activities USING member 
+  WHERE member_activities.member_id = member.id AND member.id = user_id;
+  FOREACH hobby IN ARRAY hobbies
+  LOOP
+  --return hobby id corresponding users hobbies (returning only works with INSERT, UPDATE, or DELETE)
+  	SELECT id INTO hobby_id FROM activity WHERE activity_name = hobby;
+    INSERT INTO member_activities (member_id, activity_id) 
+    VALUES (user_id, hobby_id);
+  END LOOP;
   RETURN TRUE;
 END$$;
 INSERT INTO member (first_name, last_name, member_password, email, date_of_birth, gender, preferred_gender, preferred_min_age, preferred_max_age, relationship_type, height, wants_kids, token, email_confirmed) 
