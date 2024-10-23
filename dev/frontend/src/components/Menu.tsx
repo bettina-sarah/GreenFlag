@@ -1,11 +1,21 @@
 import React from 'react';
-import {IconButton} from '@primer/react'
+import IconButton from './IconButton';
+import matchingIcon from '../../ressources/icons/matching.png'
+
+{/* <Button><Horizontal><Icon icon={icon} /><P>Label</P></Horizontal></Button> */}
 
 const Menu: React.FC = () => (
-	<div>
-        {/* 	'default' | 'primary' | 'danger' | 'outline' | 'invisible' | 'link' */}
-		<IconButton icon={HeartIcon} variant="primary" aria-label="Favorite" size='medium'/>
-	</div>
+    <div className='w-full h-full'>
+       	<div className='flex w-full h-full justify-evenly  bg-green-600'>
+        <IconButton icon={matchingIcon}/>
+        <IconButton/>
+        <IconButton/>
+        <IconButton/>
+        <IconButton/>
+	</div> 
+    </div>
+
 );
 
 export default Menu;
+
