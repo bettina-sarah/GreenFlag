@@ -1,14 +1,24 @@
 import React from 'react';
-import MatchingIcon from './Icon';
+import Icon from './Icon';
+import { useNavigate } from 'react-router-dom';
 interface IconButtonProps {
-    icon: string; // or you can use 'string | undefined' if you want to allow for optional icons
-}
+    icon: string; 
+    page: string;}
 
-const IconButton: React.FC<IconButtonProps> = ({icon}) => (
+
+
+const IconButton: React.FC<IconButtonProps> = ({icon, page}) => {
+    const navigate = useNavigate();
+
+    const handleClick = (place:string) => {
+        navigate(`/${place}`);
+    };
+return(
 	<button className='w-10 h-12 flex items-center justify-center p-1 border-none bg-green-600
-    hover:bg-green-900 rounded'>
-        <MatchingIcon icon={icon} />
+    hover:bg-green-900 rounded' onClick={() => handleClick(page)}>
+        <Icon icon={icon} />
     </button>
-);
+    );    
+};
 
 export default IconButton;
