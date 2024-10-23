@@ -2,6 +2,16 @@ import { IP_SERVER } from "@/config/constants";
 import axios from 'axios';
 import { NavigateFunction } from 'react-router-dom';
 
+export const genders = ["Male", "Female", "Non-Binary", "Other"];
+export const hobbiesKeys = [
+    "hiking", "yoga", "photography", "cooking", "traveling", "reading", "videogaming", "biking", "running",
+    "watchingmovies", "workingout", "dancing", "playinginstrument", "attendingconcerts", "painting", "volunteering",
+    "playingsports", "crafting", "petlover", "learningnewlanguage"
+    ] as const;
+export const religions = [
+    "Atheist", "Spiritual", "Christian", "Muslim", "Jewish", "Hindu", "Buddhist",
+    "Sikh", "Taoist", "Shinto", "Confucian","Bahai","Pagan","Agnostic","Other"]
+
 
 export type FormDataHobbies = {
     // Activities
