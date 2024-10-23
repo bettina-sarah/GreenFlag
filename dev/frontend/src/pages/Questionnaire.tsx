@@ -1,7 +1,7 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
-import QuestionnaireForm from '@/components/QuestionnaireForm';
-import { ThemeProvider } from 'react-admin';
+import QuestionnaireForm from '@/components/form_components/QuestionnaireForm';
+// import { ThemeProvider } from 'react-admin';
 
 
 const QuestionnairePage: React.FC = () => {
