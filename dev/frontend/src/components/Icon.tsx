@@ -1,10 +1,10 @@
 
-interface MatchingIconProps {
+interface IconProps {
     icon: string;
 }
 
-const MatchingIcon: React.FC<MatchingIconProps> = ({icon}) => (
-    <img src={icon} alt="Matching Icon" className='object-contain w-full h-full p-0'  />
+const Icon: React.FC<IconProps> = ({icon}) => (
+    <img src={icon} alt="Icon" className='object-contain w-full h-full p-0'  />
 );
 
-export default MatchingIcon;
+export default Icon;
