@@ -5,11 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Débogueur Python: Fichier actuel",
+            "name": "Débogueur Python: serveur",
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/dev/backend/server.py",
             "cwd": "${workspaceFolder}/dev/backend",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Débogueur Python: Fichier actuel",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
             "console": "integratedTerminal"
         }
     ]
