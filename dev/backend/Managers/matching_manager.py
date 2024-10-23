@@ -3,25 +3,40 @@ from util_classes.observer import Observer
 from DAOs.matching_dao import MatchingDAO
 
 class MatchingManager(Observer):
-    def __init__(self) -> None:
-        self.suggestions = [] # Users
-        self.matches = []
+    suggestions = [] # Users
+    matches = []
 
-    def process(self) -> bool: #observer method
+    @staticmethod
+    def process() -> bool: #observer method
         pass
+    
+    @staticmethod
+    def get_suggestions():
+        try:
+            user_id = '11'
+            response = MatchingDAO.get_suggestions(user_id)
+            if response:
+                return response
+            
+        except Exception as error:
+            print(error)
 
-    def check_suggestion_for_match(self, suggestions:list) -> list:
+    @staticmethod
+    def check_suggestion_for_match(suggestions:list) -> list:
         return []
 
-    def create_match(self, matches:list) -> bool:
+    @staticmethod
+    def create_match(matches:list) -> bool:
         pass
 
-    def flag_user(self, user_id) -> bool:
+    @staticmethod
+    def flag_user(user_id) -> bool:
         return True
     
     # do we want to be able to unflag someone?
 
-    def unmatch(self, user_id) -> bool:
+    @staticmethod
+    def unmatch(user_id) -> bool:
         return True
 
 

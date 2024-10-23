@@ -1,37 +1,39 @@
-from dao import DAO
+from DAOs.dao import DAO
 from typing import List
 
 class MatchingDAO(DAO):
-    def __init__(self) -> None:
+
+    @staticmethod
+    def get_suggestions(user_id)-> List[tuple]: # return not good? more dcomplex
+        
+        return []
+
+    @staticmethod
+    def update_suggestion() -> bool:
+        return True
+
+    @staticmethod
+    def create_matches(matches:list) -> bool:
+        return True
+
+    @staticmethod
+    def get_matches(user_id) -> bool:
         pass
 
     @staticmethod
-    def _create_connection(params: dict) -> None:
+    def update_matches() -> bool:
         pass
 
-    def get_suggestions(self, user_id)-> List[tuple]: # return not good? more dcomplex
-        return []
-
-    def update_suggestion(self) -> bool:
-        return True
-
-    def create_matches(self, matches:list) -> bool:
-        return True
-
-    def get_matches(self, user_id) -> bool:
+    @staticmethod
+    def get_user_infos(user_id) -> List[tuple]:
         pass
 
-    def update_matches(self) -> bool:
-        pass
-
-    def get_user_infos(self, user_id) -> List[tuple]:
-        pass
-
-    def flag_user(self, user_id, reason) -> bool:
-        self.unmatch(user_id)
+    @staticmethod
+    def flag_user(user_id, reason) -> bool:
+        MatchingDAO.unmatch(user_id)
+        params = (reason, user_id)
         return True
 
-    def unmatch(self, user_id) -> bool:
+    @staticmethod
+    def unmatch(user_id) -> bool:
         return True
-
-

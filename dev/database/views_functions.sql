@@ -86,3 +86,21 @@ BEGIN
   END LOOP;
   RETURN TRUE;
 END$$;
+
+CREATE OR REPLACE FUNCTION get_hobbies_suggestions
+(user_id INTEGER)
+RETURNS LIST
+LANGUAGE PLPGSQL
+AS $$
+DECLARE
+	matched_member_ids INT[];
+BEGIN
+	SELECT ARRAY_AGG(m.id) INTO matched_member_ids
+	FROM member m
+	WHERE m.gender = ANY((SELECT preferred_genders FROM member WHERE id = user_id))
+		AND m.date_of_birth BETWEEN (CURRENT_DATE - (SELECT max_age FROM member WHERE id = user_id))
+		
+	
+	
+	
+END$$;
