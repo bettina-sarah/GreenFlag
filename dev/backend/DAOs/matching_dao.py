@@ -1,12 +1,20 @@
 from DAOs.dao import DAO
+
 from typing import List
+import numpy as np
+
+
 
 class MatchingDAO(DAO):
 
     @staticmethod
-    def get_suggestions(user_id)-> List[tuple]: # return not good? more dcomplex
-        
-        return []
+    def get_eligible_members(user_id)-> List[tuple]: # return not good? more dcomplex
+        query = 'SELECT * FROM find_eligible_members_activities(%s)'
+        params = (user_id,)
+        reponse = MatchingDAO._prepare_statement('select',query,params)
+        if reponse:
+            return reponse
+        return False
 
     @staticmethod
     def update_suggestion() -> bool:
@@ -37,3 +45,8 @@ class MatchingDAO(DAO):
     @staticmethod
     def unmatch(user_id) -> bool:
         return True
+
+
+   
+        
+        

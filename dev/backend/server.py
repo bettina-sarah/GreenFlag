@@ -16,9 +16,6 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}},
             methods=["GET", "POST", "OPTIONS"],
             allow_headers=["Content-Type", "Authorization", "X-Requested-With", "Access-Control-Allow-Origin"])
 
-
-
-
 @app.route('/test', methods=['GET'])
 def test_connection():
     return jsonify(message="Hello React this is Flask")
@@ -122,7 +119,7 @@ if __name__ == '__main__':
     #app.run(debug=True, host="0.0.0.0", port=5000)
 
 
-    MatchingDAO.get_users_infos()
+    MatchingDAO.get_suggestions('1')
     # AccountManager.get_profile(json)
     # AccountManager.delete_account(json_delete)
 
