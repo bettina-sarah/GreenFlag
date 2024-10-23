@@ -6,7 +6,10 @@ import json_tests
 
 # create_file_tree()
 
+from DAOs.matching_dao import MatchingDAO
+
 from Managers.account_manager import AccountManager
+from Managers.matching_manager import MatchingManager
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}},
@@ -104,16 +107,22 @@ def get_photos() -> list:
     return response
 
 
-@app.route('/suggestions', methods=['POST', 'GET'])
+@app.route('/suggestions', methods=['GET'])
+def get_suggestions() -> list:
+    response = MatchingManager.get_suggestions()
+    return jsonify(True) if response else jsonify(False)
+
+@app.route('/update-suggestion', methods=['POST'])
 def update_suggestion() -> bool:
     pass
-
 
 # undo():json - plus necessaire ? juste affiché dans le frontend?
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    #app.run(debug=True, host="0.0.0.0", port=5000)
 
+
+    MatchingDAO.get_users_infos()
     # AccountManager.get_profile(json)
     # AccountManager.delete_account(json_delete)
 
