@@ -87,20 +87,35 @@ BEGIN
   RETURN TRUE;
 END$$;
 
-CREATE OR REPLACE FUNCTION get_hobbies_suggestions
+CREATE OR REPLACE FUNCTION find_eligible_members_activities
 (user_id INTEGER)
-RETURNS LIST
-LANGUAGE PLPGSQL
+RETURNS TABLE(member_id INT, aggregated_id_activities INT[])
 AS $$
-DECLARE
-	matched_member_ids INT[];
 BEGIN
-	SELECT ARRAY_AGG(m.id) INTO matched_member_ids
-	FROM member m
-	WHERE m.gender = ANY((SELECT preferred_genders FROM member WHERE id = user_id))
-		AND m.date_of_birth BETWEEN (CURRENT_DATE - (SELECT max_age FROM member WHERE id = user_id))
-		
-	
-	
-	
-END$$;
+	RETURN QUERY
+  WITH eligible_members AS (
+    SELECT m.id
+    FROM member m
+    WHERE m.gender = ANY (
+        SELECT UNNEST(preferred_genders)
+        FROM member
+        WHERE id = user_id
+      )
+      AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, m.date_of_birth)) BETWEEN (
+        SELECT min_age
+        FROM member
+        WHERE id = user_id
+      )
+      AND (
+        SELECT max_age
+        FROM member
+        WHERE id = user_id
+      )
+  )
+  SELECT m.id AS member_id, ARRAY_AGG(ma.activity_id) AS aggregated_id_activities
+	FROM member_activities ma
+  JOIN eligible_members em ON ma.member_id = em.id
+  JOIN member m ON ma.member_id = m.id
+  GROUP BY m.id;
+END;
+$$ LANGUAGE PLPGSQL;
