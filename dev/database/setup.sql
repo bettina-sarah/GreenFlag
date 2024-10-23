@@ -258,7 +258,39 @@ BEGIN
   END LOOP;
   RETURN TRUE;
 END$$;
-INSERT INTO member (first_name, last_name, member_password, email, date_of_birth, gender, preferred_genders, min_age, max_age, relationship_type, height, religion, want_kids, city, token, email_confirmed) 
+
+CREATE OR REPLACE FUNCTION find_eligible_members_activities
+(user_id INTEGER)
+RETURNS TABLE(member_id INT, aggregated_id_activities INT[])
+AS $$
+BEGIN
+	RETURN QUERY
+  WITH eligible_members AS (
+    SELECT m.id
+    FROM member m
+    WHERE m.gender = ANY (
+        SELECT preferred_genders
+        FROM member
+        WHERE id = user_id
+      )
+      AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, m.date_of_birth)) BETWEEN (
+        SELECT min_age
+        FROM member
+        WHERE id = user_id
+      )
+      AND (
+        SELECT max_age
+        FROM member
+        WHERE id = user_id
+      )
+  )
+  SELECT m.id AS member_id, ARRAY_AGG(ma.activity_id) AS aggregated_id_activities
+	FROM member_activities ma
+  JOIN eligible_members em ON ma.member_id = em.id
+  JOIN member m ON ma.member_id = m.id
+  GROUP BY m.id;
+END;
+$$ LANGUAGE PLPGSQL;INSERT INTO member (first_name, last_name, member_password, email, date_of_birth, gender, preferred_genders, min_age, max_age, relationship_type, height, religion, want_kids, city, token, email_confirmed) 
 VALUES
 ('John', 'Doe', 'password123', 'john.doe1@example.com', '1990-05-12', 'Male'::GENDER, ARRAY['Female', 'Non-Binary']::GENDER[], 20, 35, 'longterm'::RELATIONSHIP, 180, NULL, TRUE, 'New York', 'token12345', TRUE),
 ('Jane', 'Smith', 'password123', 'jane.smith2@example.com', '1988-11-22', 'Female'::GENDER, ARRAY['Male']::GENDER[], 25, 40, 'shortterm'::RELATIONSHIP, 165, NULL, FALSE, 'Los Angeles', 'token12346', FALSE),
