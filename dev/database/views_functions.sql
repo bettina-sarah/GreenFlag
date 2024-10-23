@@ -111,6 +111,11 @@ BEGIN
         FROM member
         WHERE id = user_id
       )
+      AND m.relationship_type = (
+        SELECT relationship_type
+        FROM member
+        WHERE id = user_id
+      )
   )
   SELECT m.id AS member_id, ARRAY_AGG(ma.activity_id) AS aggregated_id_activities
 	FROM member_activities ma
