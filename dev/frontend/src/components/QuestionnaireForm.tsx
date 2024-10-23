@@ -3,21 +3,11 @@ import { useState } from 'react';
 import { Controller, useForm } from "react-hook-form";
 import {Datepicker, Checkbox, Label, Select, TextInput, Dropdown, Textarea } from "flowbite-react";
 import ImageInputCustom from "./ImageInput";
-import { FormDataHobbies, FormDataInfo, FormDataPhoto, onSubmitFormHobbies, onSubmitFormInfo, onSubmitPhoto } from "./form_submits/QuestionnaireSubmitHandlers";
+import { FormDataHobbies, FormDataInfo, FormDataPhoto, onSubmitFormHobbies, onSubmitFormInfo, onSubmitPhoto, genders, religions, hobbiesKeys} from "./form_submits/QuestionnaireSubmitHandlers";
 // https://marmelab.com/react-admin/ImageInput.html
 
 const QuestionnaireForm = () => {
     const navigate = useNavigate(); //hook
-
-    const genders = ["Male", "Female", "Non-Binary", "Other"];
-    const hobbiesKeys = [
-        "hiking", "yoga", "photography", "cooking", "traveling", "reading", "videogaming", "biking", "running",
-        "watchingmovies", "workingout", "dancing", "playinginstrument", "attendingconcerts", "painting", "volunteering",
-        "playingsports", "crafting", "petlover", "learningnewlanguage"
-        ] as const;
-    const religions = [
-        "Atheist", "Spiritual", "Christian", "Muslim", "Jewish", "Hindu", "Buddhist",
-        "Sikh", "Taoist", "Shinto", "Confucian","Bahai","Pagan","Agnostic","Other"]
 
     const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
 
