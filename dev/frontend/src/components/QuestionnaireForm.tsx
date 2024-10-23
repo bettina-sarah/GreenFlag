@@ -11,36 +11,25 @@ const QuestionnaireForm = () => {
     const navigate = useNavigate(); //hook
 
     const genders = ["Male", "Female", "Non-Binary", "Other"];
-    const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
+    const hobbiesKeys = [
+        "hiking", "yoga", "photography", "cooking", "traveling", "reading", "videogaming", "biking", "running",
+        "watchingmovies", "workingout", "dancing", "playinginstrument", "attendingconcerts", "painting", "volunteering",
+        "playingsports", "crafting", "petlover", "learningnewlanguage"
+        ];
 
+
+    const religions = [
+        "Atheist", "Spiritual", "Christian", "Muslim", "Jewish", "Hindu", "Buddhist",
+        "Sikh", "Taoist", "Shinto", "Confucian", "Bahai", "Pagan", "Agnostic", "Other"
+    ];
+    
+    const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
     const toggleGender = (gender: string) => {
         setSelectedGenders((prev) => 
             prev.includes(gender) ? prev.filter((g) => g !== gender) : [...prev, gender]
         );
     };
-    type FormDataHobbies = {
-        // Activities
-        hiking: boolean
-        yoga: boolean
-        photography: boolean
-        cooking: boolean
-        traveling: boolean
-        reading: boolean
-        videogaming: boolean
-        biking: boolean
-        running: boolean
-        watchingmovies: boolean
-        workingout: boolean
-        dancing: boolean
-        playinginstrument: boolean
-        attendingconcerts: boolean
-        painting: boolean
-        volunteering: boolean
-        playingsports: boolean //(e.g., Soccer, Tennis, Basketball)
-        crafting: boolean
-        petlover: boolean
-        learningnewlanguage: boolean
-    }
+
 
     type FormDataInfo = {
         // Infos
@@ -143,7 +132,13 @@ const QuestionnaireForm = () => {
 
             <form onSubmit={onSubmitFormHobbies} >
                 <div className="flex flex-col space-y-4 p-3 m-4">
-                    <div className="flex items-center gap-2">
+                    {hobbiesKeys.map((hobby) =>(
+                        <div className="flex items-center gap-2">
+                            <Checkbox id={hobby} {...registerHobbies(hobby)}/>
+                            <Label htmlFor={hobby}>{hobby}</Label>
+                        </div>
+                    ))}
+                    {/* <div className="flex items-center gap-2">
                         <Checkbox id="hiking" {...registerHobbies("hiking")}/>
                         <Label htmlFor="hiking">Hiking</Label>
                     </div>
@@ -222,7 +217,7 @@ const QuestionnaireForm = () => {
                     <div className="flex items-center gap-2">
                         <Checkbox id="learningnewlanguage" {...registerHobbies("learningnewlanguage")} />
                         <Label htmlFor="learningnewlanguage">Learning New Languages</Label>
-                    </div>
+                    </div> */}
                 </div>
 
                 <button className="bg-teal-600 p-1 rounded-md text-white" type="submit">
@@ -248,10 +243,13 @@ const QuestionnaireForm = () => {
                 
                 <label>Select Your Gender:</label>
                 <Select {...registerInfo("gender", {required: true})}>
-                    <option value="Male">Male</option>
+                    {genders.map((gender)=>(
+                        <option value={gender}>{gender}</option>
+                    ))}
+                    {/* <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Non-binary">Non-Binary</option>
-                    <option value="Other">Other</option>
+                    <option value="Other">Other</option> */}
                 </Select>
                 {errorsInfo.gender && errorsInfo.gender.type === "required" && (
                     <span>This is required</span>
@@ -266,7 +264,10 @@ const QuestionnaireForm = () => {
 
                 <label>Select Your Religion or Belief:</label>
                 <Select {...registerInfo("religion", {required: true})}>
-                    <option value="Atheist">Atheist</option>
+                    {religions.map((religion)=>(
+                        <option value={religion}>{religion}</option>
+                    ))}
+                    {/* <option value="Atheist">Atheist</option>
                     <option value="Spiritual">Spiritual</option>
                     <option value="Christian">Christian</option>
                     <option value="Muslim">Muslim</option>
@@ -280,7 +281,7 @@ const QuestionnaireForm = () => {
                     <option value="Bahai">Bahai</option>
                     <option value="Pagan">Pagan</option>
                     <option value="Agnostic">Agnostic</option>
-                    <option value="Other">Other</option>
+                    <option value="Other">Other</option> */}
                 </Select>
                 {errorsInfo.religion && errorsInfo.religion.type === "required" && (
                     <span>This is required</span>
