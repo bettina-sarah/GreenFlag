@@ -1,10 +1,13 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
 import Menu from '@/components/Menu';
+import ProfileCard from '@/components/ProfileCard';
 
 const MatchingPage: React.FC = () => (
-	<div>
+	<div bg-green-300>
 		<Menu/>
+		<ProfileCard/>
+
 		<h1>MatchingPage</h1>
 
 	</div>

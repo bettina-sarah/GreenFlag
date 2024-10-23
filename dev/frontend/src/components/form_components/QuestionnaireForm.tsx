@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Controller, useForm } from "react-hook-form";
 import {Datepicker, Checkbox, Label, Select, TextInput, Dropdown, Textarea } from "flowbite-react";
-import ImageInputCustom from "./ImageInput";
-import { FormDataHobbies, FormDataInfo, FormDataPhoto, onSubmitFormHobbies, onSubmitFormInfo, onSubmitPhoto, genders, religions, hobbiesKeys} from "./form_submits/QuestionnaireSubmitHandlers";
+import ImageInputCustom from "../ImageInput";
+import { FormDataHobbies, FormDataInfo, FormDataPhoto, onSubmitFormHobbies, onSubmitFormInfo, onSubmitPhoto, genders, religions, hobbiesKeys} from "../form_submits/QuestionnaireSubmitHandlers";
 // https://marmelab.com/react-admin/ImageInput.html
 
 const QuestionnaireForm = () => {

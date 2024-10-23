@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
-import DeleteAccountForm from '@/components/DeleteAccountForm';
+import DeleteAccountForm from '@/components/form_components/DeleteAccountForm';
 
 const SettingsPage: React.FC = () => (
 	<div className='w-full h-full flex flex-col justify-between items-center'>
