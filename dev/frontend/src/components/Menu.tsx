@@ -9,8 +9,8 @@ import logoutIcon from '../../ressources/icons/logout.png'
 const Menu: React.FC = () => {
 
     return(
-    <div className='w-full h-full'>
-       	<div className='flex w-full h-full justify-evenly  bg-green-600'>
+    <div className='w-full h-50'>
+       	<div className='flex w-full h-full justify-evenly  bg-greenflag-green'>
         <IconButton icon={matchingIcon} page="matching"/>
         <IconButton icon={messageIcon} page="chatrooms"/>
         <IconButton icon={settingsIcon} page="settings"/>

@@ -4,6 +4,7 @@ import Image from '../../../ressources/avatars/AdobeStock_222851624_Preview.jpeg
 import Image2 from '../../../ressources/avatars/charlesdeluvio-kVg2DQTAK7c-unsplash.jpg';
 import Image3 from '../../../ressources/avatars/oguz-yagiz-kara-uTlMt9o7SHE-unsplash.jpg';
 
+
 const PhotoCarousel: React.FC = () => {
 console.log('PhotoCarousel here');
     return (
