@@ -1,5 +1,4 @@
 import './App.css'
-import "flowbite/dist/flowbite.css";
 import TestConnection from './components/TestConnection'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

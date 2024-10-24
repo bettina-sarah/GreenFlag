@@ -14,8 +14,8 @@ const IconButton: React.FC<IconButtonProps> = ({icon, page}) => {
         navigate(`/${place}`);
     };
 return(
-	<button className='w-10 h-12 flex items-center justify-center p-1 border-none bg-green-600
-    hover:bg-green-900 rounded' onClick={() => handleClick(page)}>
+	<button className='w-10 h-12 flex items-center justify-center p-1 border-none
+    hover:bg-teal-500 rounded' onClick={() => handleClick(page)}>
         <Icon icon={icon} />
     </button>
     );    

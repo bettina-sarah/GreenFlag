@@ -3,14 +3,15 @@ import React from 'react';
 import Menu from '@/components/Menu';
 import ProfileCard from '@/components/ProfileCard';
 
-const MatchingPage: React.FC = () => (
-	<div bg-green-300>
+const MatchingPage: React.FC = () => {
+
+	return(
+	<div className="w-full h-full flex flex-col justify-evenly items-center">
 		<Menu/>
 		<ProfileCard/>
 
-		<h1>MatchingPage</h1>
-
 	</div>
 );
+};
 
 export default MatchingPage;
