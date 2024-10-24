@@ -1,8 +1,12 @@
 import React from 'react';
+import PhotoCarousel from './profile_card_components/PhotoCarousel';
 
-const ProfileCard: React.FC = () => (
+const ProfileCard: React.FC = () => {
+
+    return(
 	<div>
 		<h1>ProfileCard</h1>
+        <PhotoCarousel/>
 
 		<div>Carousel photos</div>
         <div>Basic info</div>
@@ -16,6 +20,7 @@ const ProfileCard: React.FC = () => (
         </div>
         
 	</div>
-);
+    );
+};
 
 export default ProfileCard;

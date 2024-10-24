@@ -3,9 +3,9 @@ import Menu from '@/components/Menu';
 
 const ChatroomsPage: React.FC = () => (
 	<div>
+		<Menu />
 		<h1>Chatrooms</h1>
 
-		<Menu />
 	</div>
 );
 
