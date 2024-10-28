@@ -17,13 +17,12 @@ class MatchingDAO(DAO):
         return False
 
     @staticmethod
-    def create_suggestion(user_id, prospect_id) -> str:
+    def create_suggestion(user_id, prospect_ids) -> str:
         query = 'SELECT create_suggestion(%s,%s);'
-        params = (user_id,prospect_id)
+        params = (user_id,prospect_ids)
         response = MatchingDAO._prepare_statement('select',query,params)
         if response:
-            if response[0] != 'match created':
-                return response
+            return response
     
     @staticmethod
     def update_suggestion() -> bool:
