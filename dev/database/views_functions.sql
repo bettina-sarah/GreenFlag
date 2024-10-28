@@ -173,33 +173,12 @@ CREATE OR REPLACE FUNCTION create_suggestion
 (user_id INTEGER, prospect_id INTEGER)
 RETURNS VARCHAR AS $$
 DECLARE
-  reversed_suggestion_id INT;
   new_suggestion_id INT;
 BEGIN
-  SELECT id INTO reversed_suggestion_id
-  FROM suggestion
-  WHERE member_id_1 = prospect_id
-    AND member_id_2 = user_id
-    AND situation = 'pending';
 
   INSERT INTO suggestion (member_id_1, member_id_2, situation, date_creation)
     VALUES (user_id, prospect_id, 'pending', CURRENT_DATE)
     RETURNING id INTO new_suggestion_id;
-  
-  IF reversed_suggestion_id IS NOT NULL THEN
-    INSERT INTO member_match (suggestion_id, chatroom_name)
-    VALUES( reversed_suggestion_id, CONCAT('chat_', reversed_suggestion_id));
-
-    UPDATE suggestion
-    SET situation = 'yes'
-    WHERE id = reversed_suggestion_id;
-
-    UPDATE suggestion
-    SET situation = 'yes'
-    WHERE id = new_suggestion_id;
-
-    RETURN 'match created';
-  END IF;
 
   RETURN new_suggestion_id::VARCHAR;
 END;
