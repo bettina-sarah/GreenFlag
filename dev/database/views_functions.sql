@@ -171,7 +171,7 @@ $$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION create_suggestion
 (user_id INTEGER, prospect_id INTEGER)
-RETURNS INT AS $$
+RETURNS VARCHAR AS $$
 DECLARE
   reversed_suggestion_id INT;
   new_suggestion_id INT;
@@ -180,7 +180,7 @@ BEGIN
   FROM suggestion
   WHERE member_id_1 = prospect_id
     AND member_id_2 = user_id
-    AND situation = "pending";
+    AND situation = 'pending';
 
   INSERT INTO suggestion (member_id_1, member_id_2, situation, date_creation)
     VALUES (user_id, prospect_id, 'pending', CURRENT_DATE)
@@ -197,8 +197,10 @@ BEGIN
     UPDATE suggestion
     SET situation = 'yes'
     WHERE id = new_suggestion_id;
+
+    RETURN 'match created';
   END IF;
 
-  RETURN new_suggestion_id;
+  RETURN new_suggestion_id::VARCHAR;
 END;
 $$ LANGUAGE PLPGSQL;
