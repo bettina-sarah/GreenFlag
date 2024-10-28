@@ -18,6 +18,7 @@ export default {
 			'h2-yellow' : '#BDDF7B',
 			'hobby-green': '#4D8076',
 			'greenflag-green': '#00B297',
+			'hobby-green': '#4D8076',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
