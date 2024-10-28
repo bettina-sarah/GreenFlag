@@ -25,14 +25,20 @@ class MatchingManager(Observer):
                 prospects_ids = MatchingManager.find_suggestions(user_id,response)
                 
             if prospects_ids:
-                MatchingManager.create_suggestions(user_id,prospects_ids)
+                suggestion = ()
+                
+                for prospect_id in prospects_ids:
+                    new_suggestion_id = MatchingDAO.create_suggestions(user_id,prospect_id)
+                    suggestion.append(new_suggestion_id)
+                    info = MatchingDAO.get_user_infos(prospect_id)
+                    for i in info:
+                        suggestion.append(i)
+                    
+                    MatchingManager.suggestions.append(suggestion)
             
         except Exception as error:
             print(error)
             
-    @staticmethod
-    def create_suggestions(user_id,prospects_ids) -> bool:
-        pass
 
     @staticmethod
     def check_suggestion_for_match(suggestions:list) -> list:

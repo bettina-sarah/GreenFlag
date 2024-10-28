@@ -9,13 +9,22 @@ class MatchingDAO(DAO):
 
     @staticmethod
     def get_eligible_members(user_id)-> List[tuple]: # return not good? more dcomplex
-        query = 'SELECT * FROM find_eligible_members_activities(%s)'
+        query = 'SELECT * FROM find_eligible_members_activities(%s);'
         params = (user_id,)
         reponse = MatchingDAO._prepare_statement('select',query,params)
         if reponse:
             return reponse
         return False
 
+    @staticmethod
+    def create_suggestion(user_id, prospect_id) -> str:
+        query = 'SELECT create_suggestion(%s,%s);'
+        params = (user_id,prospect_id)
+        response = MatchingDAO._prepare_statement('select',query,params)
+        if response:
+            if response[0] != 'match created':
+                return response
+    
     @staticmethod
     def update_suggestion() -> bool:
         return True
