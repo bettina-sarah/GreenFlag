@@ -117,10 +117,88 @@ BEGIN
         WHERE id = user_id
       )
   )
+
+  SELECT user_id AS member_id, ARRAY_AGG(activity_id) AS aggregated_id_activities
+  FROM member_activities
+  WHERE member_id = user_id
+  GROUP BY user_id;
+
+  UNION ALL
+
   SELECT m.id AS member_id, ARRAY_AGG(ma.activity_id) AS aggregated_id_activities
 	FROM member_activities ma
   JOIN eligible_members em ON ma.member_id = em.id
   JOIN member m ON ma.member_id = m.id
   GROUP BY m.id;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION get_user_info
+(user_id INTEGER)
+RETURNS TABLE(
+  first_name VARCHAR,
+  last_name VARCHAR,
+  age INT,
+  gender gender,
+  religion VARCHAR,
+  want_kids BOOLEAN,
+  city VARCHAR,
+  activities TEXT[]
+) AS $$
+BEGIN
+  RETURN QUERY
+  SELECT
+    m.first_name,
+    m.last_name,
+    EXTRACT(YEAR FROM AGE(m.date_of_birth))::INT AS age,
+    m.gender,
+    m.religion,
+    m.want_kids,
+    m.city
+    ARRAY_AGG(a.activity_name) AS activities
+  FROM
+    member m
+  LEFT JOIN
+    member_activities ma on m.id = ma.member_id
+  LEFT JOIN
+    activity a ON ma.activity_id = a.id
+  WHERE
+    m.id = user_id
+  GROUP BY
+    m.id;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION create_suggestion
+(user_id INTEGER, prospect_id INTEGER)
+RETURNS INT AS $$
+DECLARE
+  reversed_suggestion_id INT;
+  new_suggestion_id INT;
+BEGIN
+  SELECT id INTO reversed_suggestion_id
+  FROM suggestion
+  WHERE member_id_1 = prospect_id
+    AND member_id_2 = user_id
+    AND situation = "pending";
+
+  INSERT INTO suggestion (member_id_1, member_id_2, situation, date_creation)
+    VALUES (user_id, prospect_id, 'pending', CURRENT_DATE)
+    RETURNING id INTO new_suggestion_id;
+  
+  IF reversed_suggestion_id IS NOT NULL THEN
+    INSERT INTO member_match (suggestion_id, chatroom_name)
+    VALUES( reversed_suggestion_id, CONCAT('chat_', reversed_suggestion_id));
+
+    UPDATE suggestion
+    SET situation = 'yes'
+    WHERE id = reversed_suggestion_id;
+
+    UPDATE suggestion
+    SET situation = 'yes'
+    WHERE id = new_suggestion_id;
+  END IF;
+
+  RETURN new_suggestion_id;
 END;
 $$ LANGUAGE PLPGSQL;

@@ -3,6 +3,7 @@ from util_classes.observer import Observer
 from DAOs.matching_dao import MatchingDAO
 from Algorithms.algo_strategy import AlgoContext
 from Algorithms.meanshift import MeanShift
+import numpy as np
 
 NUMBER_ACTIVITIES = 20
 
@@ -21,10 +22,17 @@ class MatchingManager(Observer):
             user_id = '1'
             response = MatchingDAO.get_suggestions(user_id)
             if response:
-                MatchingManager.find_suggestions(user_id,response)
+                prospects_ids = MatchingManager.find_suggestions(user_id,response)
+                
+            if prospects_ids:
+                MatchingManager.create_suggestions(user_id,prospects_ids)
             
         except Exception as error:
             print(error)
+            
+    @staticmethod
+    def create_suggestions(user_id,prospects_ids) -> bool:
+        pass
 
     @staticmethod
     def check_suggestion_for_match(suggestions:list) -> list:
@@ -48,10 +56,15 @@ class MatchingManager(Observer):
     
     @staticmethod
     def find_suggestions(user_id, members_activities):
+        user_activities = np.zeros((1, NUMBER_ACTIVITIES))
         counter = 0
         members_index = []
         data = np.zeros((len(members_activities) - 1, NUMBER_ACTIVITIES))
+        
         for member in members_activities:
+            if member[0] == user_id:
+                user_activities[0,member[1]] += 1
+            
             if member[0] != user_id:
                 members_index.append(member[0])
                 
@@ -63,3 +76,19 @@ class MatchingManager(Observer):
         
             Algo.fit(data)
             
+            user_label = Algo.predict(user_activities)
+        
+            labels = Algo.get_labels()
+        
+            prospects = []
+        
+            index = 0
+            for label in labels:
+                if label == user_label:
+                    prospects.append(index)
+                    
+                index += 1
+            
+            prospects_ids = [members_index[i] for i in prospects]
+            
+            return prospects_ids

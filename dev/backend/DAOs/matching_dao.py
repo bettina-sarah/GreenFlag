@@ -34,7 +34,12 @@ class MatchingDAO(DAO):
 
     @staticmethod
     def get_user_infos(user_id) -> List[tuple]:
-        pass
+        query = "SELECT * from get_user_info(%s)"
+        params = (user_id,)
+        response = MatchingDAO._prepare_statement("select",query,params)
+        if response:
+            return response
+        return False
 
     @staticmethod
     def flag_user(user_id, reason) -> bool:
