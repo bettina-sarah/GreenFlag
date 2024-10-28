@@ -17,28 +17,34 @@ class MatchingManager(Observer):
         pass
     
     @staticmethod
-    def get_eligible_members():
+    def create_suggestions():
         try:
             user_id = '1'
-            response = MatchingDAO.get_suggestions(user_id)
+            response = MatchingDAO.get_eligible_members(user_id)
             if response:
                 prospects_ids = MatchingManager.find_suggestions(user_id,response)
                 
             if prospects_ids:
-                suggestion = ()
+                MatchingDAO.create_suggestions(user_id,prospects_ids)
                 
-                for prospect_id in prospects_ids:
-                    new_suggestion_id = MatchingDAO.create_suggestions(user_id,prospect_id)
-                    suggestion.append(new_suggestion_id)
-                    info = MatchingDAO.get_user_infos(prospect_id)
-                    for i in info:
-                        suggestion.append(i)
+                # suggestion = ()
+                
+                # for prospect_id in prospects_ids:
+                #     new_suggestion_id = MatchingDAO.create_suggestions(user_id,prospect_id)
+                #     suggestion.append(new_suggestion_id)
+                #     info = MatchingDAO.get_user_infos(prospect_id)
+                #     for i in info:
+                #         suggestion.append(i)
                     
-                    MatchingManager.suggestions.append(suggestion)
+                #     MatchingManager.suggestions.append(suggestion)
             
         except Exception as error:
             print(error)
             
+    @staticmethod
+    def get_suggestion(user_id):
+        try:
+            user_id = '1'
 
     @staticmethod
     def check_suggestion_for_match(suggestions:list) -> list:
@@ -86,7 +92,7 @@ class MatchingManager(Observer):
         
             labels = Algo.get_labels()
         
-            prospects = []
+            prospects = ()
         
             index = 0
             for label in labels:
