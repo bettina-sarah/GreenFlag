@@ -9,6 +9,12 @@ class MeanShift(AlgoStrategy):
         self.clusters_centers = None
         self.labels = None
         #getters setters and private
+        
+    def get_cluster_centers(self)->np.ndarray:
+        return self.cluster_centers
+    
+    def get_labels(self)->np.ndarray:
+        return self.labels
 
     def fit(self, np_array:np.ndarray) -> None:
         origin = np_array
