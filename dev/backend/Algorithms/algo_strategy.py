@@ -13,6 +13,13 @@ class AlgoStrategy(Strategy):
     
 class AlgoContext(Context):
     
+    
+    def get_cluster_centers(self)->np.ndarray:
+        return self._strategy.get_cluster_centers()
+    
+    def get_labels(self)->np.ndarray:
+        return self._strategy.get_labels()
+    
     def fit(self, np_array:np.ndarray)->tuple:
         return self._strategy.fit(np_array)
 

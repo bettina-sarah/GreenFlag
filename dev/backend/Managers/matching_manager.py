@@ -1,28 +1,106 @@
 from user import User
 from util_classes.observer import Observer
 from DAOs.matching_dao import MatchingDAO
+from Algorithms.algo_strategy import AlgoContext
+from Algorithms.meanshift import MeanShift
+import numpy as np
+
+NUMBER_ACTIVITIES = 20
+
 
 class MatchingManager(Observer):
-    def __init__(self) -> None:
-        self.suggestions = [] # Users
-        self.matches = []
+    suggestions = [] # Users
+    matches = []
 
-    def process(self) -> bool: #observer method
+    @staticmethod
+    def process() -> bool: #observer method
         pass
+    
+    @staticmethod
+    def create_suggestions():
+        try:
+            user_id = '1'
+            response = MatchingDAO.get_eligible_members(user_id)
+            if response:
+                prospects_ids = MatchingManager.find_suggestions(user_id,response)
+                
+            if prospects_ids:
+                MatchingDAO.create_suggestions(user_id,prospects_ids)
+                
+                # suggestion = ()
+                
+                # for prospect_id in prospects_ids:
+                #     new_suggestion_id = MatchingDAO.create_suggestions(user_id,prospect_id)
+                #     suggestion.append(new_suggestion_id)
+                #     info = MatchingDAO.get_user_infos(prospect_id)
+                #     for i in info:
+                #         suggestion.append(i)
+                    
+                #     MatchingManager.suggestions.append(suggestion)
+            
+        except Exception as error:
+            print(error)
+            
+    @staticmethod
+    def get_suggestion(user_id):
+        #try:
+            user_id = '1'
 
-    def check_suggestion_for_match(self, suggestions:list) -> list:
+    @staticmethod
+    def check_suggestion_for_match(suggestions:list) -> list:
         return []
 
-    def create_match(self, matches:list) -> bool:
+    @staticmethod
+    def create_match(matches:list) -> bool:
         pass
 
-    def flag_user(self, user_id) -> bool:
+    @staticmethod
+    def flag_user(user_id) -> bool:
         return True
     
     # do we want to be able to unflag someone?
 
-    def unmatch(self, user_id) -> bool:
+    @staticmethod
+    def unmatch(user_id) -> bool:
         return True
 
 
     
+    @staticmethod
+    def find_suggestions(user_id, members_activities):
+        user_activities = np.zeros((1, NUMBER_ACTIVITIES))
+        counter = 0
+        members_index = []
+        data = np.zeros((len(members_activities) - 1, NUMBER_ACTIVITIES))
+        
+        for member in members_activities:
+            if member[0] == user_id:
+                user_activities[0,member[1]] += 1
+            
+            if member[0] != user_id:
+                members_index.append(member[0])
+                
+                data[counter,member[1]] += 1
+                counter += 1
+        
+        if np.sum(data) > 0:
+            Algo = AlgoContext(MeanShift(0.3,100,0.001))
+        
+            Algo.fit(data)
+            
+            user_label = Algo.predict(user_activities)
+        
+            labels = Algo.get_labels()
+        
+            prospects = ()
+        
+            index = 0
+            for label in labels:
+                if label == user_label:
+                    prospects.append(index)
+                    
+                index += 1
+            
+            prospects_ids = [members_index[i] for i in prospects]
+            
+            return prospects_ids

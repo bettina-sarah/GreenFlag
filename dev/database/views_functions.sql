@@ -20,13 +20,22 @@ CREATE VIEW member_activities_view AS
 SELECT 
   m.id AS member_id, 
   m.first_name, 
-  m.last_name, 
-  a.id AS activity_id, 
-  a.activity_name
+  m.last_name,
+  EXTRACT(YEAR FROM AGE(m.date_of_birth))::INT AS age,
+  m.bio,
+  m.religion,
+  m.want_kids,
+  m.city,
+  -- a.id AS activity_id, 
+  ARRAY_AGG(a.activity_name) as activities
 FROM 
   member AS m
-INNER JOIN member_activities AS ma ON m.id = ma.member_id
-INNER JOIN activity AS a ON ma.activity_id = a.id;
+-- INNER JOIN member_activities AS ma ON m.id = ma.member_id
+-- INNER JOIN activity AS a ON ma.activity_id = a.id;
+LEFT JOIN member_activities AS ma ON m.id = ma.member_id
+LEFT JOIN activity AS a ON ma.activity_id = a.id
+GROUP BY m.id
+ORDER BY m.id;
 
 
 ------- FUNCTIONS
@@ -86,3 +95,98 @@ BEGIN
   END LOOP;
   RETURN TRUE;
 END$$;
+
+CREATE OR REPLACE FUNCTION find_eligible_members_activities
+(user_id INTEGER)
+RETURNS TABLE(member_id INT, aggregated_id_activities INT[])
+AS $$
+BEGIN
+	RETURN QUERY
+  WITH eligible_members AS (
+    SELECT m.id
+    FROM member m
+    WHERE m.gender = ANY (
+        SELECT UNNEST(preferred_genders)
+        FROM member
+        WHERE id = user_id
+      )
+      AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, m.date_of_birth)) BETWEEN (
+        SELECT min_age
+        FROM member
+        WHERE id = user_id
+      )
+      AND (
+        SELECT max_age
+        FROM member
+        WHERE id = user_id
+      )
+      AND m.relationship_type = (
+        SELECT relationship_type
+        FROM member
+        WHERE id = user_id
+      )
+  )
+
+  SELECT user_id AS member_id, ARRAY_AGG(activity_id) AS aggregated_id_activities
+  FROM member_activities
+  WHERE member_id = user_id
+  GROUP BY user_id;
+
+  UNION ALL
+
+  SELECT m.id AS member_id, ARRAY_AGG(ma.activity_id) AS aggregated_id_activities
+	FROM member_activities ma
+  JOIN eligible_members em ON ma.member_id = em.id
+  JOIN member m ON ma.member_id = m.id
+  GROUP BY m.id;
+END;
+$$ LANGUAGE PLPGSQL;
+
+-- CREATE OR REPLACE FUNCTION get_user_info
+-- (user_id INTEGER)
+-- RETURNS TABLE(
+--   first_name VARCHAR,
+--   last_name VARCHAR,
+--   age INT,
+--   gender gender,
+--   bio 
+--   religion VARCHAR,
+--   want_kids BOOLEAN,
+--   city VARCHAR,
+--   activities VARCHAR[]
+-- ) AS $$
+-- BEGIN
+--   RETURN QUERY
+--   SELECT
+--     m.first_name,
+--     m.last_name,
+--     EXTRACT(YEAR FROM AGE(m.date_of_birth))::INT AS age,
+--     m.gender,
+--     m.religion,
+--     m.want_kids,
+--     m.city
+--     ARRAY_AGG(ma.activity_name) AS activities
+--   FROM
+--     member m
+--   LEFT JOIN
+--     member_activities_view ma on m.id = ma.member_id
+--   WHERE
+--     m.id = user_id
+--   GROUP BY
+--     m.id;
+-- END;
+-- $$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION create_suggestions
+(user_id INTEGER, prospect_ids INTEGER[])
+RETURNS BOOLEAN AS $$
+BEGIN
+  FOREACH prospect_id IN ARRAY prospect_ids LOOP
+    INSERT INTO suggestion (member_id_1, member_id_2, situation, date_creation)
+      VALUES (user_id, prospect_id, 'pending', CURRENT_DATE)
+      RETURNING id INTO new_suggestion_id;
+  END LOOP;
+
+  RETURN 1;
+END;
+$$ LANGUAGE PLPGSQL;
