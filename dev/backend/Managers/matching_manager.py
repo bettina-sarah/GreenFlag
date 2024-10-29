@@ -43,7 +43,7 @@ class MatchingManager(Observer):
             
     @staticmethod
     def get_suggestion(user_id):
-        try:
+        #try:
             user_id = '1'
 
     @staticmethod
