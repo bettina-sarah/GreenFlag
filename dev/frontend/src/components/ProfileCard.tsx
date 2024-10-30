@@ -8,33 +8,35 @@ import Bio from './profile_card_components/Bio';
 
     
 interface ProfileProps {
-    user: {
-        basic_info: {
-            firstname: string,
-            age: number,
-            city: string,
-            location: number
-        },
-        relationship: string,
-        wants_kids: boolean,
-        hobby_array: string[],
-        bio: string
-    }
+    // user: {
+    //     basic_info: {
+    //         firstname: string,
+    //         age: number,
+    //         city: string,
+    //         location: number
+    //     },
+    //     relationship: string,
+    //     wants_kids: boolean,
+    //     hobby_array: string[],
+    //     bio: string
+    // },
+    photos: any
     // photos: ImageBitmap[]
     // hobby_array: string[]
     // bio: string
+
 }
 
-
-const ProfileCard: React.FC<ProfileProps> = ({user}) => {
-
+// ({user})
+const ProfileCard: React.FC<ProfileProps> = ({photos}) => {
+    console.log(photos)
     return(
 	<div className='w-96 bg-greenflag-green p-1 rounded'>
-        <PhotoCarousel/>
-        <BasicInfo basic_info={user.basic_info}/>
+        <PhotoCarousel images = {photos}/>
+        {/* <BasicInfo basic_info={user.basic_info}/>
         <RelationshipGoals relationship={user.relationship} wants_kids={user.wants_kids}/>
         <Hobbies hobbies={user.hobby_array}/>
-        <Bio bio={user.bio}/>
+        <Bio bio={user.bio}/> */}
         
 	</div>
     );
