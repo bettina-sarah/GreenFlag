@@ -1,21 +1,26 @@
+@import 'flowbite/dist/flowbite.css';
+/* title fonts: */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
 
 
 /* index.css */
 html, body {
   margin: 0;
   padding: 0;
+  background-color: rgb(200 255 237);
 }
 
 html, body, #root, .App {
   height: 100%;
 }
-
-/* .App {
-  overflow: scroll;
-} */
 
 
 #root {
@@ -44,6 +49,9 @@ html, body, #root, .App {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+
+
 
 @layer base {
   :root {
@@ -101,6 +109,7 @@ html, body, #root, .App {
   }
 }
 
+/* tinder-like font for titles */
 @layer base {
   * {
     @apply border-border;
@@ -108,4 +117,40 @@ html, body, #root, .App {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer base {
+
+  .font-nunito-extrabold {
+    @apply font-nunito font-bold;
+  }
+
+  .font-nunito-semibold {
+    @apply font-nunito font-semibold;
+  }
+
+  .font-nunito-regular {
+    @apply font-nunito font-normal;
+  }
+  
+  .font-nunito-light {
+    @apply font-nunito font-light;
+  }
+
+
+  h1 {
+    @apply font-nunito font-bold text-3xl; 
+  }
+
+  h2 {
+    @apply font-nunito font-semibold text-xl; 
+  }
+
+  h3 {
+    @apply font-nunito font-semibold text-lg; 
+  }
+  p {
+    @apply font-nunito font-light text-lg; 
+  }
+
 }
