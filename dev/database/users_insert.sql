@@ -25,9 +25,9 @@ VALUES
 
 INSERT INTO suggestion (date_creation, member_id_1, member_id_2, situation)
 VALUES
-  (CURRENT_DATE, 1, 2, 'pending'),
-  (CURRENT_DATE, 1, 3, 'pending'),
-  (CURRENT_DATE, 1, 4, 'pending'),
+  (CURRENT_DATE, 1, 2, 'yes'),
+  (CURRENT_DATE, 1, 3, 'yes'),
+  (CURRENT_DATE, 1, 4, 'yes'),
   (CURRENT_DATE, 1, 5, 'pending'),
   (CURRENT_DATE, 1, 6, 'pending'),
   (CURRENT_DATE, 1, 7, 'pending'),
@@ -37,12 +37,14 @@ VALUES
   (CURRENT_DATE, 1, 11, 'pending'),
   (CURRENT_DATE, 1, 12, 'pending'),
   (CURRENT_DATE, 1, 13, 'pending'),
-  (CURRENT_DATE, 2, 1, 'pending'),
-  (CURRENT_DATE, 3, 1, 'pending'),
-  (CURRENT_DATE, 4, 1, 'pending');
+  (CURRENT_DATE, 2, 1, 'yes'),
+  (CURRENT_DATE, 3, 1, 'yes'),
+  (CURRENT_DATE, 4, 1, 'yes');
 
 INSERT INTO member_match (suggestion_id, chatroom_name)
 VALUES
   (1, 'chatroom_1_2'),
   (2, 'chatroom_1_3'),
   (3, 'chatroom_1_4');
+
+INSERT INTO msg(match_id,sender_id,msg,date_sent) VALUES(1,2,'Hello',CURRENT_DATE);
