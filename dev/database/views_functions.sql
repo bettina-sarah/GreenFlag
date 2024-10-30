@@ -222,3 +222,37 @@ AFTER UPDATE OF situation ON suggestion
 FOR EACH ROW
 WHEN (NEW.situation = 'yes')
 EXECUTE FUNCTION create_match_if_mutual();
+
+DROP FUNCTION IF EXISTS unmatch;
+
+CREATE OR REPLACE FUNCTION unmatch
+(user_id INTEGER, unmatched_id INTEGER)
+RETURNS BOOLEAN AS $$
+DECLARE
+  match_to_delete_id INTEGER;
+  suggestion_id_1 INTEGER;
+  suggestion_id_2 INTEGER;
+BEGIN
+  
+  UPDATE suggestion SET situation = 'no' 
+  WHERE (member_id_1 = user_id AND member_id_2 = unmatched_id)
+    OR (member_id_1 = unmatched_id AND member_id_2 = user_id);
+  
+  
+  SELECT id INTO suggestion_id_1 FROM suggestion
+  WHERE member_id_1 = user_id AND member_id_2 = unmatched_id;
+
+  SELECT id INTO suggestion_id_1 FROM suggestion
+  WHERE member_id_1 = unmatched_id AND member_id_2 = user_id;
+
+  SELECT id INTO match_to_delete_id FROM member_match
+  WHERE suggestion_id = suggestion_id_1 OR suggestion_id = suggestion_id_2;
+
+  DELETE FROM msg WHERE match_id = match_to_delete_id;
+  
+  DELETE FROM member_match WHERE id = match_to_delete_id;
+
+  RETURN TRUE;
+
+END;
+$$ LANGUAGE PLPGSQL;

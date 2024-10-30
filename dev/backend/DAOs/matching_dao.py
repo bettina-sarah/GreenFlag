@@ -63,7 +63,7 @@ class MatchingDAO(DAO):
 
     @staticmethod
     def get_user_infos(user_id) -> List[tuple]:
-        query = "SELECT * from member_activities_view WHERE member_id = %s;"
+        query = "SELECT * FROM member_activities_view WHERE member_id = %s;"
         params = (user_id,)
         response = MatchingDAO._prepare_statement("select",query,params)
         if response:
@@ -71,16 +71,21 @@ class MatchingDAO(DAO):
         return False
 
     @staticmethod
-    def flag_user(user_id, reason) -> bool:
-        MatchingDAO.unmatch(user_id)
-        params = (reason, user_id)
-        return True
+    def flag_user(user_id,unmatched_id, reason) -> bool:
+        unmatched = MatchingDAO.unmatch(user_id, unmatched_id)
+        print(f'unmatched: {unmatched}')
+        query = "INSERT INTO flagged (member_id, reporter_id, reason) VALUES(%s,%s,%s);"
+        params = (unmatched_id, user_id, reason)
+        response = MatchingDAO._prepare_statement('insert',query,params)
+        if response and unmatched:
+            return response
+        return False
 
     @staticmethod
-    def unmatch(user_id) -> bool:
-        return True
-
-
-   
-        
-        
+    def unmatch(user_id,unmatched_id) -> bool:
+        query = "SELECT * FROM unmatch(%s,%s);"
+        params = (user_id,unmatched_id)
+        response = MatchingDAO._prepare_statement('select',query,params)
+        if response:
+            return response
+        return False
