@@ -1,4 +1,5 @@
-
+# sorry - Vincent
+# DB_NAME = "greenflag"
 DB_NAME = "postgres"
 DB_PASSWORD = "AAAaaa123"
 #DB_PASSWORD = "920808"

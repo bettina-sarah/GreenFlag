@@ -105,11 +105,11 @@ CREATE TABLE member_photo (
 );
 
 CREATE TABLE suggestion (
-  id                SERIAL PRIMARY KEY,
   date_creation     DATE NOT NULL,
   member_id_1       INTEGER  NOT NULL,
   member_id_2       INTEGER  NOT NULL,
-  situation         SUGGESTION_STATUS DEFAULT 'pending'
+  situation         SUGGESTION_STATUS DEFAULT 'pending',
+  PRIMARY KEY (member_id_1, member_id_2)
 );
 
 CREATE TABLE member_match (

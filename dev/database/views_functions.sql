@@ -96,6 +96,9 @@ BEGIN
   RETURN TRUE;
 END$$;
 
+
+DROP FUNCTION IF EXISTS find_eligible_members_activities;
+
 CREATE OR REPLACE FUNCTION find_eligible_members_activities
 (user_id INTEGER)
 RETURNS TABLE(member_id INT, aggregated_id_activities INT[])
@@ -131,8 +134,6 @@ BEGIN
   FROM member_activities
   WHERE member_id = user_id
   GROUP BY user_id;
-
-  UNION ALL
 
   SELECT m.id AS member_id, ARRAY_AGG(ma.activity_id) AS aggregated_id_activities
 	FROM member_activities ma
@@ -177,16 +178,47 @@ $$ LANGUAGE PLPGSQL;
 -- END;
 -- $$ LANGUAGE PLPGSQL;
 
+DROP FUNCTION IF EXISTS create_suggestions;
+
 CREATE OR REPLACE FUNCTION create_suggestions
 (user_id INTEGER, prospect_ids INTEGER[])
 RETURNS BOOLEAN AS $$
+DECLARE
+	prospect_id INTEGER;
 BEGIN
   FOREACH prospect_id IN ARRAY prospect_ids LOOP
     INSERT INTO suggestion (member_id_1, member_id_2, situation, date_creation)
-      VALUES (user_id, prospect_id, 'pending', CURRENT_DATE)
-      RETURNING id INTO new_suggestion_id;
+      VALUES (user_id, prospect_id, 'pending', CURRENT_DATE);
   END LOOP;
 
   RETURN 1;
 END;
 $$ LANGUAGE PLPGSQL;
+
+DROP TRIGGER IF EXISTS trigger_create_match ON suggestion;
+DROP FUNCTION IF EXISTS create_match_if_mutual;
+
+CREATE OR REPLACE FUNCTION create_match_if_mutual()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.situation = 'yes' THEN
+    PERFORM id FROM suggestion
+    WHERE member_id_1 = NEW.member_id_2
+    AND member_id_2 = NEW.member_id_1
+    AND situation = 'yes';
+
+    IF FOUND THEN
+      INSERT INTO member_match(suggestion_id, chatroom_name)
+      VALUES (NEW.id, CONCAT('chatroom_',NEW.member_id_1, '_' , NEW.member_id_2));
+    END IF;
+  END IF;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE TRIGGER trigger_create_match
+AFTER UPDATE OF situation ON suggestion
+FOR EACH ROW
+WHEN (NEW.situation = 'yes')
+EXECUTE FUNCTION create_match_if_mutual();

@@ -119,7 +119,10 @@ if __name__ == '__main__':
     #app.run(debug=True, host="0.0.0.0", port=5000)
 
 
-    MatchingDAO.get_suggestions('1')
+    print(MatchingDAO.update_suggestion(5,1,'yes'))
+    #print(MatchingDAO.get_matches(1))
+    #print(MatchingDAO.get_user_infos(1))
+    #MatchingDAO.create_suggestions(5,[1])
     # AccountManager.get_profile(json)
     # AccountManager.delete_account(json_delete)
 
