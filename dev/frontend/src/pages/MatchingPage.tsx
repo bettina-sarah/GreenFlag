@@ -2,6 +2,8 @@ import React from "react";
 import Menu from "@/components/Menu";
 import ProfileCard from "@/components/ProfileCard";
 import useFetch from "@/api/useFetch";
+import fetchData from "@/api/fetchData";
+import { useState } from "react";
 
 const hobby_array = ["Hiking", "Yoga", "Photography", "Cooking", "Traveling"];
 const bio =
@@ -28,12 +30,15 @@ interface IProfileData {
 }
 
 interface IPhotoData {
-  id: string;
+  key: string;
 }
 
-
 const MatchingPage: React.FC = () => {
-  const {data: profileData, loading: profileLoading, error: profileError } = useFetch<IProfileData>({
+  const {
+    data: profileData,
+    loading: profileLoading,
+    error: profileError,
+  } = useFetch<IProfileData>({
     url: "//get-profile",
     data: { id: "11" },
   });
@@ -43,31 +48,28 @@ const MatchingPage: React.FC = () => {
   }
 
   if (!profileData && !profileLoading && profileError) {
-    return <div>Error: {profileError}</div>;
+    return (
+      <div>
+        <div>Error: {profileError}</div>
+      </div>
+    );
   }
 
   if (profileData && !profileLoading && !profileError) {
-    // i now search photo after photo
-    const { data, loading, error } = useFetch<IPhotoData>({
+    // [ [] , [ keys]    ]
+    const [photoData, setPhotoData] = useState([]);
+
+    const { path: photoPath, data: photoData } = fetchData<IPhotoData>({
       url: "//get-photo",
-      data: { id: "11" },
+      key: profileData[1][0],
     });
 
-    if (!data && loading) {
-      return <div>Loading...</div>;
-    }
-  
-    if (!data && !loading && error) {
-      return <div>Error: {error}</div>;
-    }
-    if (data && !loading && !error) {
-      return (
-        <div className="w-full h-full flex flex-col justify-evenly items-center">
-          <Menu />
-          <ProfileCard user={user} />
-        </div>
-      );
-    }
+    return (
+      <div className="w-full h-full flex flex-col justify-evenly items-center">
+        <Menu />
+        <ProfileCard user={user} />
+      </div>
+    );
   }
 
   return null;

@@ -1,10 +1,7 @@
 
 from flask import Flask, jsonify, request, make_response, send_file
 from flask_cors import CORS
-from file_tree import create_file_tree
 import json_tests
-
-# create_file_tree()
 
 from DAOs.matching_dao import MatchingDAO
 
@@ -20,24 +17,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}},
 def test_connection():
     return jsonify(message="Hello React this is Flask")
 
-
-@app.route('/login', methods=['POST'])
-def login() -> bool:
-    response = AccountManager.login(request.json)
-    # call middleware to generate token; send it to frontend
-    # make sure database gets it !!!!
-    return jsonify(response)
-    # return jsonify(True)
-
-
-@app.route('/settings', methods=['POST'])
-def settings() -> bool:
-    print(request.json)
-    response = AccountManager.delete_account(request.json)
-    # call middleware to generate token; send it to frontend
-    # make sure database gets it !!!!
-    return jsonify(response)
-    # return jsonify(True)
+# -------- ACCOUNTS ------------
 
 
 @app.route('/create-account', methods=['POST'])
@@ -46,12 +26,37 @@ def create_account() -> bool:
     return jsonify(True) if response else jsonify(False)
 
 
+@app.route('/login', methods=['POST'])
+def login() -> bool:
+    response = AccountManager.login(request.json)
+    # call middleware to generate token; send it to frontend
+    # make sure database gets it !!!!
+    return jsonify(response)
+
 @app.route('/get-profile', methods=['POST'])
 def get_profile() -> bool:
     # if authentication_middleware.check_session_validity():
     #     return account_manager.get_profile()
     response = AccountManager.get_profile(request.json)
     return jsonify(response) if response else jsonify(False)
+
+# PAS UTLISÉ ENCORE!!
+
+@app.route('/modify-profile', methods=['POST'])
+def modify_profile() -> bool:
+    response = AccountManager.modify_profile(request.json)
+    return jsonify(True) if response else jsonify(False)
+
+
+
+@app.route('/delete-account', methods=['POST'])
+def settings() -> bool:
+    print(request.json)
+    response = AccountManager.delete_account(request.json)
+    # call middleware to generate token; send it to frontend
+    # make sure database gets it !!!!
+    return jsonify(response)
+
 
 # -------- PHOTOS ------------
 
@@ -61,17 +66,15 @@ def get_photo() -> bool:
     #     return account_manager.get_profile()
     print("frontend sent this:", request.json)
     photos = AccountManager.get_photo(request.json)
-
-    print(photos, photos[0])
-    # return jsonify(response) if response else jsonify(False)
-    return send_file(photos[0], mimetype='image/png', as_attachment=False)
+    print(photos)
+    # if len(photos) > 0:
+    #     return send_file(photos[0], mimetype='image/png', as_attachment=False)
+    return send_file(photos[0], mimetype='image/png', as_attachment=False) if len(photos) > 0 else jsonify(False)
 
 @app.route('/upload-photo', methods=['POST'])
 def upload_photos() -> bool:
     print(request.files)
     files = request.files
-    # #info = request.json
-    # #response = AccountManager.modify_photos(info, files)
     response = AccountManager.modify_photos(files)
     return jsonify(True) if response else jsonify(False)
 
@@ -92,6 +95,7 @@ def update_hobbies() -> bool:
     response = AccountManager.update_hobbies(request.json)
     return jsonify(response)
 
+# -------- CHATROOMS ------------
 
 @app.route('/chatrooms', methods=['GET'])
 def fetch_chatroom_list() -> list:  # send JSON jsonify ...
@@ -101,12 +105,6 @@ def fetch_chatroom_list() -> list:  # send JSON jsonify ...
 @app.route('/chat', methods=['GET'])
 def connect_chatroom() -> list:  # send JSON jsonify ...
     pass
-
-
-@app.route('/modify_profile', methods=['POST'])
-def modify_profile() -> bool:
-    response = AccountManager.modify_profile(request.json)
-    return jsonify(True) if response else jsonify(False)
 
 
 
