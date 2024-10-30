@@ -8,7 +8,7 @@ import numpy as np
 class MatchingDAO(DAO):
 
     @staticmethod
-    def get_eligible_members(user_id)-> List[tuple]: # return not good? more dcomplex
+    def get_eligible_members(user_id:int)-> List[tuple]: # return not good? more dcomplex
         query = 'SELECT * FROM find_eligible_members_activities(%s);'
         params = (user_id,)
         reponse = MatchingDAO._prepare_statement('select',query,params)
@@ -17,24 +17,45 @@ class MatchingDAO(DAO):
         return False
 
     @staticmethod
-    def create_suggestion(user_id, prospect_ids) -> str:
-        query = 'SELECT create_suggestion(%s,%s);'
+    def create_suggestions(user_id:int, prospect_ids:list[int]) -> str:
+        query = 'SELECT create_suggestions(%s,%s);'
         params = (user_id,prospect_ids)
         response = MatchingDAO._prepare_statement('select',query,params)
         if response:
             return response
     
     @staticmethod
-    def update_suggestion() -> bool:
-        return True
+    def get_suggestions(user_id:int) -> List[tuple]:
+        query = "SELECT id, member_id_2 FROM suggestion WHERE member_id_1 = %s and situation = 'pending';"
+        params = (user_id,)
+        response = MatchingDAO._prepare_statement('select',query,params)
+        if response:
+            return response
+        return False
+    
+    @staticmethod
+    def update_suggestion(user_id,prospect_id,situation) -> bool:
+        query = 'UPDATE suggestion SET situation = %s WHERE member_id_1 = %s and member_id_2 = %s;'
+        params = (situation,user_id,prospect_id)
+        # query = 'UPDATE suggestion SET situation = %s WHERE id = %s'
+        # params = (situation,suggestion_id)
+        response = MatchingDAO._prepare_statement('update',query,params)
+        if response:
+            return response
+        return False
 
     @staticmethod
     def create_matches(matches:list) -> bool:
-        return True
+        pass
 
     @staticmethod
     def get_matches(user_id) -> bool:
-        pass
+        query = 'SELECT m.chatroom_name, s.member_id_2 FROM member_match as m INNER JOIN suggestion as s ON m.suggestion_id = s.id WHERE member_id_1 = %s;'
+        params = (user_id,)
+        response = MatchingDAO._prepare_statement('select',query,params)
+        if response:
+            return response
+        return False
 
     @staticmethod
     def update_matches() -> bool:
@@ -42,7 +63,7 @@ class MatchingDAO(DAO):
 
     @staticmethod
     def get_user_infos(user_id) -> List[tuple]:
-        query = "SELECT * from get_user_info(%s)"
+        query = "SELECT * FROM member_activities_view WHERE member_id = %s;"
         params = (user_id,)
         response = MatchingDAO._prepare_statement("select",query,params)
         if response:
@@ -50,16 +71,21 @@ class MatchingDAO(DAO):
         return False
 
     @staticmethod
-    def flag_user(user_id, reason) -> bool:
-        MatchingDAO.unmatch(user_id)
-        params = (reason, user_id)
-        return True
+    def flag_user(user_id,unmatched_id, reason) -> bool:
+        unmatched = MatchingDAO.unmatch(user_id, unmatched_id)
+        print(f'unmatched: {unmatched}')
+        query = "INSERT INTO flagged (member_id, reporter_id, reason) VALUES(%s,%s,%s);"
+        params = (unmatched_id, user_id, reason)
+        response = MatchingDAO._prepare_statement('insert',query,params)
+        if response and unmatched:
+            return response
+        return False
 
     @staticmethod
-    def unmatch(user_id) -> bool:
-        return True
-
-
-   
-        
-        
+    def unmatch(user_id,unmatched_id) -> bool:
+        query = "SELECT * FROM unmatch(%s,%s);"
+        params = (user_id,unmatched_id)
+        response = MatchingDAO._prepare_statement('select',query,params)
+        if response:
+            return response
+        return False

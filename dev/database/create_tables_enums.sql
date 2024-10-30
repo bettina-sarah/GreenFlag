@@ -17,7 +17,6 @@ DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
 
 
-
 CREATE TYPE GENDER AS ENUM (
 'Non-Binary', 'Male', 'Female', 'Other'
 );
@@ -85,10 +84,11 @@ CREATE TABLE member_activities (
 );
 
 CREATE TABLE flagged (
-  id                INTEGER PRIMARY KEY,
+  --id                SERIAL PRIMARY KEY,
   member_id         INTEGER NOT NULL,
   reporter_id       INTEGER NOT NULL,
-  reason            REASON_FLAGGED NOT NULL 
+  reason            REASON_FLAGGED NOT NULL
+  PRIMARY KEY (member_id, reporter_id)
 );
 
 CREATE TABLE alert_notification (
@@ -105,11 +105,12 @@ CREATE TABLE member_photo (
 );
 
 CREATE TABLE suggestion (
-  id                SERIAL PRIMARY KEY,
+  id 				        SERIAL NOT NULL UNIQUE,
   date_creation     DATE NOT NULL,
   member_id_1       INTEGER  NOT NULL,
   member_id_2       INTEGER  NOT NULL,
-  situation         SUGGESTION_STATUS DEFAULT 'pending'
+  situation         SUGGESTION_STATUS DEFAULT 'pending',
+  PRIMARY KEY (member_id_1, member_id_2)
 );
 
 CREATE TABLE member_match (

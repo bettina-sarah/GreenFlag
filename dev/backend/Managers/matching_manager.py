@@ -42,9 +42,15 @@ class MatchingManager(Observer):
             print(error)
             
     @staticmethod
-    def get_suggestion(user_id):
-        #try:
+    def get_suggestions(user_id):
+        try:
             user_id = '1'
+            response = MatchingDAO.get_suggestions(user_id)
+            if response:
+                return response
+            
+        except Exception as error:
+            print(error)
 
     @staticmethod
     def check_suggestion_for_match(suggestions:list) -> list:
