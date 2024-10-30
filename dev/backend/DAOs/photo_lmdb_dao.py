@@ -55,7 +55,7 @@ class PhotoDAO:
         try:
             with self.env.begin() as txn:
                 # key is a single tuple here with a string inside !!!
-                photo_data = txn.get(key[0].encode('utf-8'))
+                photo_data = txn.get(key.encode('utf-8'))
                 image = self.decode_image(photo_data)
                 # self.env.close()
             return image

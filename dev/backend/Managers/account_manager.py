@@ -2,6 +2,8 @@ from DAOs.account_dao import AccountDAO
 #from account_dao import AccountDAO
 from DAOs.photo_lmdb_dao import PhotoDAO
 from datetime import datetime
+import mimetypes
+from PIL import Image
 
 
 class AccountManager:
@@ -165,14 +167,31 @@ class AccountManager:
     
     @staticmethod
     def get_photo(data) -> bool:
-        key = data.get('key')
+        # key = data.get('key')
+        print('in get photo manager: data is ', data)
         photo_dao = PhotoDAO()
         try:
-            photo = photo_dao.get_photo(key)
-            return photo
+            photo = photo_dao.get_photo(data)
+            mime_type = AccountManager.guess_mime_type(photo)
+            return photo, mime_type
         except Exception as error:
             print(error)
             print('account manager')
+            
+    @staticmethod
+    def guess_mime_type(photo):
+        try:
+            image = Image.open(photo)
+            image_format = image.format.lower()  # Example: 'jpeg', 'png'
+        except Exception as e:
+            print(e)
+
+        # Reset the BytesIO pointer to the beginning
+        photo.seek(0)
+
+        # Determine the correct MIME type based on the image format
+        mime_type = f"image/{image_format}" if image_format in ['jpeg', 'png', 'gif', 'bmp', 'webp'] else 'application/octet-stream'
+        return mime_type
     
     
     @staticmethod

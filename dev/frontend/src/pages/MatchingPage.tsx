@@ -3,7 +3,7 @@ import Menu from "@/components/Menu";
 import ProfileCard from "@/components/ProfileCard";
 import useFetch from "@/api/useFetch";
 import fetchData from "@/api/fetchData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const hobby_array = ["Hiking", "Yoga", "Photography", "Cooking", "Traveling"];
 const bio =
@@ -30,10 +30,12 @@ interface IProfileData {
 }
 
 interface IPhotoData {
-  key: string;
+  path: string;
+  key: string
 }
 
 const MatchingPage: React.FC = () => {
+
   const {
     data: profileData,
     loading: profileLoading,
@@ -42,6 +44,35 @@ const MatchingPage: React.FC = () => {
     url: "//get-profile",
     data: { id: "11" },
   });
+  const [photoData, setPhotoData] = useState<IPhotoData[]>([]);
+
+
+
+  useEffect(() => {
+    if (profileData && !profileLoading && !profileError) {
+      const userInfo = profileData[0];
+      const photoKeys = profileData[1];
+
+      // Fetch all photos based on photo keys
+      const fetchPhotos = async () => {
+        try {
+          const fetchedPhotos = await Promise.all(
+            photoKeys.map((key: string) =>{
+              fetchData<IPhotoData>("/get-photo", key[0]);
+              console.log('key', key);
+            }
+            )
+          );
+          setPhotoData(fetchedPhotos);
+        } catch (error) {
+          console.error("Error fetching photos:", error);
+        }
+      };
+
+      fetchPhotos();
+    }
+  }, [profileData, profileLoading, profileError]);
+
 
   if (!profileData && profileLoading) {
     return <div>Loading...</div>;
@@ -55,15 +86,6 @@ const MatchingPage: React.FC = () => {
     );
   }
 
-  if (profileData && !profileLoading && !profileError) {
-    // [ [] , [ keys]    ]
-    const [photoData, setPhotoData] = useState([]);
-
-    const { path: photoPath, data: photoData } = fetchData<IPhotoData>({
-      url: "//get-photo",
-      key: profileData[1][0],
-    });
-
     return (
       <div className="w-full h-full flex flex-col justify-evenly items-center">
         <Menu />
@@ -72,7 +94,30 @@ const MatchingPage: React.FC = () => {
     );
   }
 
-  return null;
-};
+  // return null;
+// };
 
 export default MatchingPage;
+
+
+
+
+  // if (profileData && !profileLoading && !profileError) {
+    // [ [] , [ keys]    ]
+    // userInfo = profileData[0];
+    // photoKeys = profileData[1];
+
+    // console.log(profileData[1][0]);
+
+    // for (let i = 0; i < photoKeys.length; i++) {
+    //   fetchData<IPhotoData>('/get-photo',photoKeys[i])
+    //   //path: string, data: any
+
+      
+    // }
+    
+
+    // const { path: photoPath, data: photoData } = fetchData<IPhotoData>({
+    //   url: "//get-photo",
+    //   key: profileData[1][0],
+    // });
