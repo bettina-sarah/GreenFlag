@@ -17,7 +17,6 @@ DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
 
 
-
 CREATE TYPE GENDER AS ENUM (
 'Non-Binary', 'Male', 'Female', 'Other'
 );
@@ -105,6 +104,7 @@ CREATE TABLE member_photo (
 );
 
 CREATE TABLE suggestion (
+  id 				        SERIAL NOT NULL UNIQUE,
   date_creation     DATE NOT NULL,
   member_id_1       INTEGER  NOT NULL,
   member_id_2       INTEGER  NOT NULL,
