@@ -6,7 +6,6 @@ import Image3 from '../../../ressources/avatars/oguz-yagiz-kara-uTlMt9o7SHE-unsp
 
 
 const PhotoCarousel: React.FC = () => {
-console.log('PhotoCarousel here');
     return (
         <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
             <Carousel slide={false}>

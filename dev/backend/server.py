@@ -64,12 +64,13 @@ def settings() -> bool:
 def get_photo() -> bool:
     # if authentication_middleware.check_session_validity():
     #     return account_manager.get_profile()
+    print(request)
     print("frontend sent this:", request.json)
-    photos = AccountManager.get_photo(request.json)
-    print(photos)
+    photo, mimetype = AccountManager.get_photo(request.json)
+    print(photo, mimetype)
     # if len(photos) > 0:
     #     return send_file(photos[0], mimetype='image/png', as_attachment=False)
-    return send_file(photos[0], mimetype='image/png', as_attachment=False) if len(photos) > 0 else jsonify(False)
+    return send_file(photo, mimetype=mimetype, as_attachment=False) if len(photo) > 0 else jsonify(False)
 
 @app.route('/upload-photo', methods=['POST'])
 def upload_photos() -> bool:
@@ -129,7 +130,9 @@ def update_suggestion() -> bool:
 # undo():json - plus necessaire ? juste affiché dans le frontend?
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    # app.run(debug=True, host="0.0.0.0", port=5000)
+    key = 'pngtree-image-of-cute-radish-vector-or-color-illustration-png-image_2040180.jpg'
+    AccountManager.get_photo(key)
     # json = {'id': '11'}
     # AccountManager.get_profile(json)
 

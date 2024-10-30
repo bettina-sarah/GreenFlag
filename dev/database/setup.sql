@@ -87,7 +87,7 @@ CREATE TABLE flagged (
   --id                SERIAL PRIMARY KEY,
   member_id         INTEGER NOT NULL,
   reporter_id       INTEGER NOT NULL,
-  reason            REASON_FLAGGED NOT NULL
+  reason            REASON_FLAGGED NOT NULL,
   PRIMARY KEY (member_id, reporter_id)
 );
 
@@ -169,7 +169,7 @@ VALUES
   ('playingsports'),
   ('crafting'),
   ('petlover'),
-  ('learningnewlanguage')
+  ('learningnewlanguage');
 
 DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
