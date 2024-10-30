@@ -68,11 +68,10 @@ class AccountManager:
             profile_response = AccountDAO.get_profile(params)
             if profile_response:
                 responses.append(profile_response)
-                photos_response = AccountManager.get_photos(data)
-                if photos_response:
-                    responses.append(photos_response)
+                photokeys_response = AccountManager.get_photo_keys(id)
+                if photokeys_response:
+                    responses.append(photokeys_response)
                     return tuple(responses)
-                    # email sequence here
         except Exception as error:
             print(error)
             print('account manager')
@@ -128,11 +127,9 @@ class AccountManager:
 
     @staticmethod
     def modify_photos(files, info=None) -> bool:
-
         #token = info.get('token')
         # we verify if token is valid here ... and return right user id to put in params !
         user_id = '11'
-
         # by now we assume Frontend knows which photos were changed ??? overwrites them all ?
         try:
             images = files.get('image')
@@ -154,19 +151,25 @@ class AccountManager:
             return False
     
     @staticmethod
-    def get_photos(data) -> bool:
-        user_id = data.get('id')
+    def get_photo_keys(id) -> bool:
         # tokens ... 
         # user_id = '11'
-        params = (user_id,)
+        params = (id,)
+        try:
+            encryption_keys = AccountDAO.get_photos(params)
+            return encryption_keys
+        except Exception as error:
+            print(error)
+    
+    
+    
+    @staticmethod
+    def get_photo(data) -> bool:
+        key = data.get('key')
         photo_dao = PhotoDAO()
         try:
-            photos = []
-            encryption_keys = AccountDAO.get_photos(params)
-            for key in encryption_keys:
-                photo = photo_dao.get_photo(key)
-                photos.append(photo)
-            return photos
+            photo = photo_dao.get_photo(key)
+            return photo
         except Exception as error:
             print(error)
             print('account manager')

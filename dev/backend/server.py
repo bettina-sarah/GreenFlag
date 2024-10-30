@@ -60,7 +60,7 @@ def get_photo() -> bool:
     # if authentication_middleware.check_session_validity():
     #     return account_manager.get_profile()
     print("frontend sent this:", request.json)
-    response, photos = AccountManager.get_profile(request.json)
+    photos = AccountManager.get_profile(request.json)
 
     print(photos, photos[0])
     # return jsonify(response) if response else jsonify(False)
