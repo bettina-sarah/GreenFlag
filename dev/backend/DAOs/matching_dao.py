@@ -54,15 +54,6 @@ class MatchingDAO(DAO):
         return False
 
     @staticmethod
-    def get_user_infos(user_id:int) -> List[tuple]:
-        query = "SELECT * FROM member_activities_view WHERE member_id = %s;"
-        params = (user_id,)
-        response = MatchingDAO._prepare_statement("select",query,params)
-        if response:
-            return response
-        return False
-
-    @staticmethod
     def flag_user(user_id:int,unmatched_id:int, reason:str) -> bool:
         unmatched = MatchingDAO.unmatch(user_id, unmatched_id)
         query = "INSERT INTO flagged (member_id, reporter_id, reason) VALUES(%s,%s,%s);"

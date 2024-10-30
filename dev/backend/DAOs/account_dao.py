@@ -29,6 +29,12 @@ class AccountDAO(DAO):
         response = AccountDAO._prepare_statement("delete", query, params)
         return response
 
+    @staticmethod
+    def get_user_infos(user_id:int) -> List[tuple]:
+        query = "SELECT * FROM member_activities_view WHERE member_id = %s;"
+        params = (user_id,)
+        response = AccountDAO._prepare_statement("select",query,params)
+        return response
     
     @staticmethod
     def get_profile(params:tuple) -> List[tuple]:
