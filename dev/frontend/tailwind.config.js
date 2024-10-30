@@ -14,6 +14,11 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+			'h1-yellow': '#EEE683',
+			'h2-yellow' : '#BDDF7B',
+			'hobby-green': '#4D8076',
+			'greenflag-green': '#00B297',
+			'hobby-green': '#4D8076',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -54,7 +59,10 @@ export default {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			}
-  		}
+  		},
+		  fontFamily: {
+			nunito: ['"Nunito"', 'sans-serif'],
+		  }
   	}
   },
   plugins: [
