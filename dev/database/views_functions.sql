@@ -30,8 +30,6 @@ SELECT
   ARRAY_AGG(a.activity_name) as activities
 FROM 
   member AS m
--- INNER JOIN member_activities AS ma ON m.id = ma.member_id
--- INNER JOIN activity AS a ON ma.activity_id = a.id;
 LEFT JOIN member_activities AS ma ON m.id = ma.member_id
 LEFT JOIN activity AS a ON ma.activity_id = a.id
 GROUP BY m.id
@@ -143,41 +141,6 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
--- CREATE OR REPLACE FUNCTION get_user_info
--- (user_id INTEGER)
--- RETURNS TABLE(
---   first_name VARCHAR,
---   last_name VARCHAR,
---   age INT,
---   gender gender,
---   bio 
---   religion VARCHAR,
---   want_kids BOOLEAN,
---   city VARCHAR,
---   activities VARCHAR[]
--- ) AS $$
--- BEGIN
---   RETURN QUERY
---   SELECT
---     m.first_name,
---     m.last_name,
---     EXTRACT(YEAR FROM AGE(m.date_of_birth))::INT AS age,
---     m.gender,
---     m.religion,
---     m.want_kids,
---     m.city
---     ARRAY_AGG(ma.activity_name) AS activities
---   FROM
---     member m
---   LEFT JOIN
---     member_activities_view ma on m.id = ma.member_id
---   WHERE
---     m.id = user_id
---   GROUP BY
---     m.id;
--- END;
--- $$ LANGUAGE PLPGSQL;
-
 DROP FUNCTION IF EXISTS create_suggestions;
 
 CREATE OR REPLACE FUNCTION create_suggestions
@@ -191,7 +154,7 @@ BEGIN
       VALUES (user_id, prospect_id, 'pending', CURRENT_DATE);
   END LOOP;
 
-  RETURN 1;
+  RETURN TRUE;
 END;
 $$ LANGUAGE PLPGSQL;
 

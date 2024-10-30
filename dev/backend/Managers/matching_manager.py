@@ -11,40 +11,26 @@ NUMBER_ACTIVITIES = 20
 class MatchingManager(Observer):
     suggestions = [] # Users
     matches = []
-
-    @staticmethod
-    def process() -> bool: #observer method
-        pass
     
     @staticmethod
-    def create_suggestions():
+    def create_suggestions(user_id:int) -> bool:
         try:
-            user_id = '1'
             response = MatchingDAO.get_eligible_members(user_id)
             if response:
                 prospects_ids = MatchingManager.find_suggestions(user_id,response)
                 
             if prospects_ids:
-                MatchingDAO.create_suggestions(user_id,prospects_ids)
+                response_2 = MatchingDAO.create_suggestions(user_id,prospects_ids)
                 
-                # suggestion = ()
-                
-                # for prospect_id in prospects_ids:
-                #     new_suggestion_id = MatchingDAO.create_suggestions(user_id,prospect_id)
-                #     suggestion.append(new_suggestion_id)
-                #     info = MatchingDAO.get_user_infos(prospect_id)
-                #     for i in info:
-                #         suggestion.append(i)
-                    
-                #     MatchingManager.suggestions.append(suggestion)
+            if response:
+                return response_2
             
         except Exception as error:
             print(error)
             
     @staticmethod
-    def get_suggestions(user_id):
+    def get_suggestions(user_id:int) -> bool:
         try:
-            user_id = '1'
             response = MatchingDAO.get_suggestions(user_id)
             if response:
                 return response
@@ -53,27 +39,26 @@ class MatchingManager(Observer):
             print(error)
 
     @staticmethod
-    def check_suggestion_for_match(suggestions:list) -> list:
-        return []
+    def flag_user(user_id:int, flagged_id:int, reason:str) -> bool:
+        try:
+            response = MatchingDAO.flag_user(user_id,flagged_id,reason)
+            if response:
+                return response
+        
+        except Exception as error:
+            print(error)        
 
     @staticmethod
-    def create_match(matches:list) -> bool:
-        pass
-
-    @staticmethod
-    def flag_user(user_id) -> bool:
-        return True
+    def unmatch(user_id:int, unmatched_id:int) -> bool:
+        try:
+            response = MatchingDAO.unmatch(user_id,unmatched_id)
+            if response:
+                return response
+        except Exception as error:
+            print(error)
     
-    # do we want to be able to unflag someone?
-
     @staticmethod
-    def unmatch(user_id) -> bool:
-        return True
-
-
-    
-    @staticmethod
-    def find_suggestions(user_id, members_activities):
+    def find_suggestions(user_id:int, members_activities:int) -> list[int]:
         user_activities = np.zeros((1, NUMBER_ACTIVITIES))
         counter = 0
         members_index = []
