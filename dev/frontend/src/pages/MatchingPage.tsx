@@ -13,7 +13,7 @@ const basic_info = {
   location: 10,
 };
 const relationship = "short term relationship";
-const wants_kids = true;
+const wants_kids = false;
 
 const user = {
   basic_info: basic_info,
@@ -27,28 +27,47 @@ interface IProfileData {
   id: string;
 }
 
+interface IPhotoData {
+  id: string;
+}
+
+
 const MatchingPage: React.FC = () => {
-  const { data, loading, error } = useFetch<IProfileData>({
-    url: "/profile",
+  const {data: profileData, loading: profileLoading, error: profileError } = useFetch<IProfileData>({
+    url: "//get-profile",
     data: { id: "11" },
   });
 
-  if (!data && loading) {
+  if (!profileData && profileLoading) {
     return <div>Loading...</div>;
   }
 
-  if (!data && !loading && error) {
-    return <div>Error: {error}</div>;
+  if (!profileData && !profileLoading && profileError) {
+    return <div>Error: {profileError}</div>;
   }
 
-  if (data && !loading && !error) {
-    return (
-      <div className="w-full h-full flex flex-col justify-evenly items-center">
-        <Menu />
-        <ProfileCard user={user} />
-        <div>{data.id}</div>
-      </div>
-    );
+  if (profileData && !profileLoading && !profileError) {
+    // i now search photo after photo
+    const { data, loading, error } = useFetch<IPhotoData>({
+      url: "//get-photo",
+      data: { id: "11" },
+    });
+
+    if (!data && loading) {
+      return <div>Loading...</div>;
+    }
+  
+    if (!data && !loading && error) {
+      return <div>Error: {error}</div>;
+    }
+    if (data && !loading && !error) {
+      return (
+        <div className="w-full h-full flex flex-col justify-evenly items-center">
+          <Menu />
+          <ProfileCard user={user} />
+        </div>
+      );
+    }
   }
 
   return null;

@@ -46,8 +46,17 @@ def create_account() -> bool:
     return jsonify(True) if response else jsonify(False)
 
 
-@app.route('/profile', methods=['POST'])
+@app.route('/get-profile', methods=['POST'])
 def get_profile() -> bool:
+    # if authentication_middleware.check_session_validity():
+    #     return account_manager.get_profile()
+    response = AccountManager.get_profile(request.json)
+    return jsonify(response) if response else jsonify(False)
+
+# -------- PHOTOS ------------
+
+@app.route('/get-photo', methods=['POST'])
+def get_photo() -> bool:
     # if authentication_middleware.check_session_validity():
     #     return account_manager.get_profile()
     print("frontend sent this:", request.json)
@@ -56,6 +65,15 @@ def get_profile() -> bool:
     print(photos, photos[0])
     # return jsonify(response) if response else jsonify(False)
     return send_file(photos[0], mimetype='image/png', as_attachment=False)
+
+@app.route('/upload-photo', methods=['POST'])
+def upload_photos() -> bool:
+    print(request.files)
+    files = request.files
+    # #info = request.json
+    # #response = AccountManager.modify_photos(info, files)
+    response = AccountManager.modify_photos(files)
+    return jsonify(True) if response else jsonify(False)
 
 
 # ------ QUESTIONNAIRE -------
@@ -91,21 +109,14 @@ def modify_profile() -> bool:
     return jsonify(True) if response else jsonify(False)
 
 
-@app.route('/photo', methods=['POST'])
-def modify_photos() -> bool:
-    print(request.files)
-    files = request.files
-    # #info = request.json
-    # #response = AccountManager.modify_photos(info, files)
-    response = AccountManager.modify_photos(files)
-    return jsonify(True) if response else jsonify(False)
 
 
-@app.route('/photo', methods=['GET'])
-def get_photos() -> list:
-    # i need user_id here!
-    response = AccountManager.get_photos(request.json)
-    return response
+
+# @app.route('/photo', methods=['GET'])
+# def get_photos() -> list:
+#     # i need user_id here!
+#     response = AccountManager.get_photos(request.json)
+#     return response
 
 
 @app.route('/suggestions', methods=['GET'])
