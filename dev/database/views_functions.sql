@@ -242,7 +242,7 @@ BEGIN
   SELECT id INTO suggestion_id_1 FROM suggestion
   WHERE member_id_1 = user_id AND member_id_2 = unmatched_id;
 
-  SELECT id INTO suggestion_id_1 FROM suggestion
+  SELECT id INTO suggestion_id_2 FROM suggestion
   WHERE member_id_1 = unmatched_id AND member_id_2 = user_id;
 
   SELECT id INTO match_to_delete_id FROM member_match
