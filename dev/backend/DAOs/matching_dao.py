@@ -34,7 +34,7 @@ class MatchingDAO(DAO):
         return False
     
     @staticmethod
-    def update_suggestion(user_id:int,prospect_id:int,situation:str) -> bool:
+    def update_suggestion(user_id:int, prospect_id:int, situation:str) -> bool:
         query = 'UPDATE suggestion SET situation = %s WHERE member_id_1 = %s and member_id_2 = %s;'
         params = (situation,user_id,prospect_id)
         # query = 'UPDATE suggestion SET situation = %s WHERE id = %s'
@@ -54,7 +54,7 @@ class MatchingDAO(DAO):
         return False
 
     @staticmethod
-    def get_user_infos(user_id) -> List[tuple]:
+    def get_user_infos(user_id:int) -> List[tuple]:
         query = "SELECT * FROM member_activities_view WHERE member_id = %s;"
         params = (user_id,)
         response = MatchingDAO._prepare_statement("select",query,params)
@@ -63,7 +63,7 @@ class MatchingDAO(DAO):
         return False
 
     @staticmethod
-    def flag_user(user_id,unmatched_id, reason) -> bool:
+    def flag_user(user_id:int,unmatched_id:int, reason:str) -> bool:
         unmatched = MatchingDAO.unmatch(user_id, unmatched_id)
         query = "INSERT INTO flagged (member_id, reporter_id, reason) VALUES(%s,%s,%s);"
         params = (unmatched_id, user_id, reason)
@@ -73,7 +73,7 @@ class MatchingDAO(DAO):
         return False
 
     @staticmethod
-    def unmatch(user_id,unmatched_id) -> bool:
+    def unmatch(user_id:int, unmatched_id:int) -> bool:
         query = "SELECT * FROM unmatch(%s,%s);"
         params = (user_id,unmatched_id)
         response = MatchingDAO._prepare_statement('select',query,params)
