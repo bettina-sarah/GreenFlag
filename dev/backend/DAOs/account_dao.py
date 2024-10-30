@@ -32,7 +32,7 @@ class AccountDAO(DAO):
     
     @staticmethod
     def get_profile(params:tuple) -> List[tuple]:
-        query = 'SELECT * FROM member where email = %s;'
+        query = 'SELECT * FROM member where id = %s;'
         response = AccountDAO._prepare_statement("select", query, params)
         return response
     

@@ -1,6 +1,6 @@
 import numpy as np
-import sklearn.cluster._mean_shift as ms
-from algo_strategy import AlgoStrategy
+# import sklearn.cluster._mean_shift as ms
+from Algorithms.algo_strategy import AlgoStrategy
 class MeanShift(AlgoStrategy):
     def __init__(self, bandwidth:int,max_iteration:int, tolerance:int):
         self.bandwidth = bandwidth
@@ -141,7 +141,7 @@ if __name__ == "__main__":
     
     import matplotlib.pyplot as plt
 
-# Plot the points and clusters
-plt.scatter(origin[:, 0], origin[:, 1], c=meanshift.labels)
-plt.scatter(meanshift.clusters_centers[:, 0], meanshift.clusters_centers[:, 1], color='red', marker='x')
-plt.show()
+# # Plot the points and clusters
+# plt.scatter(origin[:, 0], origin[:, 1], c=meanshift.labels)
+# plt.scatter(meanshift.clusters_centers[:, 0], meanshift.clusters_centers[:, 1], color='red', marker='x')
+# plt.show()

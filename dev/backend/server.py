@@ -1,5 +1,5 @@
 
-from flask import Flask, jsonify, request, make_response
+from flask import Flask, jsonify, request, make_response, send_file
 from flask_cors import CORS
 from file_tree import create_file_tree
 import json_tests
@@ -50,8 +50,12 @@ def create_account() -> bool:
 def get_profile() -> bool:
     # if authentication_middleware.check_session_validity():
     #     return account_manager.get_profile()
-    response = AccountManager.get_profile(request.json)
-    return jsonify(True) if response else jsonify(False)
+    print("frontend sent this:", request.json)
+    response, photos = AccountManager.get_profile(request.json)
+
+    print(photos, photos[0])
+    # return jsonify(response) if response else jsonify(False)
+    return send_file(photos[0], mimetype='image/png', as_attachment=False)
 
 
 # ------ QUESTIONNAIRE -------
@@ -116,10 +120,11 @@ def update_suggestion() -> bool:
 # undo():json - plus necessaire ? juste affiché dans le frontend?
 
 if __name__ == '__main__':
-    #app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5000)
+    # json = {'id': '11'}
+    # AccountManager.get_profile(json)
 
-
-    MatchingDAO.get_suggestions('1')
+    # MatchingDAO.get_suggestions('1')
     # AccountManager.get_profile(json)
     # AccountManager.delete_account(json_delete)
 

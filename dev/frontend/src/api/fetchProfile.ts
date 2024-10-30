@@ -1,20 +1,14 @@
 import { IP_SERVER } from "@/config/constants";
-import axios from 'axios';
+import axios from "axios";
 
-interface FetchProfileData {
-    email: string;
-    // You can add other fields as necessary
-}
+const fetchData = async <T>(path: string, data: any) => {
+  try {
+    const response = await axios.post(`${IP_SERVER}${path}`, data);
+    return response.data as T;
+  } catch (error) {
+    console.error("Error during fetching profile:", error);
+    throw error;
+  }
+};
 
-//data any
-const fetchProfile = (async (data:FetchProfileData) => {
-    try {
-        const response = await axios.post(`${IP_SERVER}/profile`, data);
-        return response.data;
-    } catch (error) {
-        console.error('Error during fetching profile:', error);
-        throw error; 
-    }
-});
-
-export default fetchProfile;
+export default fetchData;
