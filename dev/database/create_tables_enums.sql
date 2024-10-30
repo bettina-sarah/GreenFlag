@@ -84,7 +84,7 @@ CREATE TABLE member_activities (
 );
 
 CREATE TABLE flagged (
-  id                INTEGER PRIMARY KEY,
+  id                SERIAL PRIMARY KEY,
   member_id         INTEGER NOT NULL,
   reporter_id       INTEGER NOT NULL,
   reason            REASON_FLAGGED NOT NULL 
