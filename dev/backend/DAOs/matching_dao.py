@@ -17,8 +17,8 @@ class MatchingDAO(DAO):
         return False
 
     @staticmethod
-    def create_suggestion(user_id:int, prospect_ids:list[int]) -> str:
-        query = 'SELECT create_suggestion(%s,%s);'
+    def create_suggestions(user_id:int, prospect_ids:list[int]) -> str:
+        query = 'SELECT create_suggestions(%s,%s);'
         params = (user_id,prospect_ids)
         response = MatchingDAO._prepare_statement('select',query,params)
         if response:
@@ -26,7 +26,7 @@ class MatchingDAO(DAO):
     
     @staticmethod
     def get_suggestions(user_id:int) -> List[tuple]:
-        query = 'SELECT id, member_id_2 FROM suggestion WHERE member_id_1 = %s and situation = "pending"'
+        query = "SELECT id, member_id_2 FROM suggestion WHERE member_id_1 = %s and situation = 'pending';"
         params = (user_id,)
         response = MatchingDAO._prepare_statement('select',query,params)
         if response:
@@ -35,7 +35,7 @@ class MatchingDAO(DAO):
     
     @staticmethod
     def update_suggestion(user_id,prospect_id,situation) -> bool:
-        query = 'UPDATE suggestion SET situation = %s WHERE member_id_1 = %s and member_id_2 = %s'
+        query = 'UPDATE suggestion SET situation = %s WHERE member_id_1 = %s and member_id_2 = %s;'
         params = (situation,user_id,prospect_id)
         # query = 'UPDATE suggestion SET situation = %s WHERE id = %s'
         # params = (situation,suggestion_id)
@@ -50,7 +50,7 @@ class MatchingDAO(DAO):
 
     @staticmethod
     def get_matches(user_id) -> bool:
-        query = 'SELECT m.chatroom_name, s.member_id_2 suggestion. FROM member_match as m INNER JOIN suggestion as s ON m.suggestion_id = suggestion.id WHERE member_id_1 = %s'
+        query = 'SELECT m.chatroom_name, s.member_id_2 FROM member_match as m INNER JOIN suggestion as s ON m.suggestion_id = s.id WHERE member_id_1 = %s;'
         params = (user_id,)
         response = MatchingDAO._prepare_statement('select',query,params)
         if response:
@@ -63,7 +63,7 @@ class MatchingDAO(DAO):
 
     @staticmethod
     def get_user_infos(user_id) -> List[tuple]:
-        query = "SELECT * from member_activities_view WHERE member_id = user_id"
+        query = "SELECT * from member_activities_view WHERE member_id = %s;"
         params = (user_id,)
         response = MatchingDAO._prepare_statement("select",query,params)
         if response:

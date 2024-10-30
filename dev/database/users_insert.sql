@@ -20,3 +20,29 @@ VALUES
 ('Joshua', 'Rodriguez', 'password123', 'joshua.rodriguez18@example.com', '1987-02-15', 'Male'::GENDER, ARRAY['Female', 'Non-Binary']::GENDER[], 26, 50, 'shortterm'::RELATIONSHIP, 188, NULL, FALSE, 'Seattle', 'token12362', FALSE),
 ('Amelia', 'Lopez', 'password123', 'amelia.lopez19@example.com', '1993-09-30', 'Female'::GENDER, ARRAY['Female']::GENDER[], 22, 38, 'fun'::RELATIONSHIP, 164, NULL, TRUE, 'Denver', 'token12363', TRUE),
 ('Ethan', 'Gonzalez', 'password123', 'ethan.gonzalez20@example.com', '1983-12-07', 'Male'::GENDER, ARRAY['Male']::GENDER[], 30, 55, 'longterm'::RELATIONSHIP, 183, NULL, TRUE, 'Washington', 'token12364', FALSE);
+
+
+
+INSERT INTO suggestion (date_creation, member_id_1, member_id_2, situation)
+VALUES
+  (CURRENT_DATE, 1, 2, 'pending'),
+  (CURRENT_DATE, 1, 3, 'pending'),
+  (CURRENT_DATE, 1, 4, 'pending'),
+  (CURRENT_DATE, 1, 5, 'pending'),
+  (CURRENT_DATE, 1, 6, 'pending'),
+  (CURRENT_DATE, 1, 7, 'pending'),
+  (CURRENT_DATE, 1, 8, 'pending'),
+  (CURRENT_DATE, 1, 9, 'pending'),
+  (CURRENT_DATE, 1, 10, 'pending'),
+  (CURRENT_DATE, 1, 11, 'pending'),
+  (CURRENT_DATE, 1, 12, 'pending'),
+  (CURRENT_DATE, 1, 13, 'pending'),
+  (CURRENT_DATE, 2, 1, 'pending'),
+  (CURRENT_DATE, 3, 1, 'pending'),
+  (CURRENT_DATE, 4, 1, 'pending');
+
+INSERT INTO member_match (suggestion_id, chatroom_name)
+VALUES
+  (1, 'chatroom_1_2'),
+  (2, 'chatroom_1_3'),
+  (3, 'chatroom_1_4');

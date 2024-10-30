@@ -1,6 +1,6 @@
 import numpy as np
 import sklearn.cluster._mean_shift as ms
-from algo_strategy import AlgoStrategy
+from Algorithms.algo_strategy import AlgoStrategy
 class MeanShift(AlgoStrategy):
     def __init__(self, bandwidth:int,max_iteration:int, tolerance:int):
         self.bandwidth = bandwidth
@@ -119,29 +119,29 @@ class MeanShift(AlgoStrategy):
             return self.labels[closest_cluster]
         
         
-if __name__ == "__main__":
-    np.random.seed(17)
-    data = np.random.rand(100, 2) * 20
-    print(data)
+# if __name__ == "__main__":
+#     np.random.seed(17)
+#     data = np.random.rand(100, 2) * 20
+#     print(data)
     
-    skms = ms.MeanShift(bandwidth=5, max_iter=10000)
-    skms.fit(data)
+#     skms = ms.MeanShift(bandwidth=5, max_iter=10000)
+#     skms.fit(data)
     
-    meanshift = MeanShift(bandwidth=3, max_iteration=100, tolerance=0.001)
-    old, origin = meanshift.fit(data)
+#     meanshift = MeanShift(bandwidth=3, max_iteration=100, tolerance=0.001)
+#     old, origin = meanshift.fit(data)
     
-    point = np.array([3, 3])
+#     point = np.array([3, 3])
     
-    print(skms.labels_)
-    print(skms.predict(point.reshape(1, -1)))
+#     print(skms.labels_)
+#     print(skms.predict(point.reshape(1, -1)))
     
     
-    print(meanshift.labels)
-    print(meanshift.predict(point))
+#     print(meanshift.labels)
+#     print(meanshift.predict(point))
     
-    import matplotlib.pyplot as plt
+#     import matplotlib.pyplot as plt
 
-# Plot the points and clusters
-plt.scatter(origin[:, 0], origin[:, 1], c=meanshift.labels)
-plt.scatter(meanshift.clusters_centers[:, 0], meanshift.clusters_centers[:, 1], color='red', marker='x')
-plt.show()
+# # Plot the points and clusters
+#     plt.scatter(origin[:, 0], origin[:, 1], c=meanshift.labels)
+#     plt.scatter(meanshift.clusters_centers[:, 0], meanshift.clusters_centers[:, 1], color='red', marker='x')
+#     plt.show()
