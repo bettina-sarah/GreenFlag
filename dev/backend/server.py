@@ -122,7 +122,8 @@ if __name__ == '__main__':
     print(MatchingDAO.update_suggestion(5,1,'yes'))
     #print(MatchingDAO.get_matches(1))
     #print(MatchingDAO.get_user_infos(1))
-    #MatchingDAO.create_suggestions(5,[1])
+    #MatchingDAO.create_suggestions(4,[1]) # suppose to and does throw an error because primary key already exists
+    #MatchingDAO.create_suggestions(1,[5])
     # AccountManager.get_profile(json)
     # AccountManager.delete_account(json_delete)
 
