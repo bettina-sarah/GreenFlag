@@ -52,23 +52,27 @@ const MatchingPage: React.FC = () => {
     if (profileData && !profileLoading && !profileError) {
       const userInfo = profileData[0];
       const photoKeys = profileData[1];
-
+  
       // Fetch all photos based on photo keys
       const fetchPhotos = async () => {
         try {
-          const fetchedPhotos = await Promise.all(
-            photoKeys.map((key: string) =>{
-              fetchData<IPhotoData>("/get-photo", key[0]);
-              console.log('key', key);
-            }
-            )
+          //Promise.all ensures that all the promises (in this case, each fetchData call for each key) are resolved before it moves to the next line. 
+          //This means that once all the photo fetches are completed, the resulting array of fetched photos will be passed into setPhotoData.
+          const fetchedPhotos: IPhotoData[] = await Promise.all(
+            photoKeys.map(async (key: string) => {
+              const photo = await fetchData<IPhotoData>("/get-photo", key);
+              return {
+                key,
+                data: photo.path, // Assuming photo.path is a URL or Base64 string
+              };
+            })
           );
           setPhotoData(fetchedPhotos);
         } catch (error) {
           console.error("Error fetching photos:", error);
         }
       };
-
+  
       fetchPhotos();
     }
   }, [profileData, profileLoading, profileError]);
@@ -89,7 +93,8 @@ const MatchingPage: React.FC = () => {
     return (
       <div className="w-full h-full flex flex-col justify-evenly items-center">
         <Menu />
-        <ProfileCard user={user} />
+        <ProfileCard photos = {photoData} /> 
+        {/* user={user} */}
       </div>
     );
   }
