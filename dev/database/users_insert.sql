@@ -20,3 +20,24 @@ VALUES
 ('Joshua', 'Rodriguez', 'password123', 'joshua.rodriguez18@example.com', '1987-02-15', 'Male'::GENDER, ARRAY['Female', 'Non-Binary']::GENDER[], 26, 50, 'shortterm'::RELATIONSHIP, 188, NULL, FALSE, 'Seattle', 'token12362', FALSE),
 ('Amelia', 'Lopez', 'password123', 'amelia.lopez19@example.com', '1993-09-30', 'Female'::GENDER, ARRAY['Female']::GENDER[], 22, 38, 'fun'::RELATIONSHIP, 164, NULL, TRUE, 'Denver', 'token12363', TRUE),
 ('Ethan', 'Gonzalez', 'password123', 'ethan.gonzalez20@example.com', '1983-12-07', 'Male'::GENDER, ARRAY['Male']::GENDER[], 30, 55, 'longterm'::RELATIONSHIP, 183, NULL, TRUE, 'Washington', 'token12364', FALSE);
+
+INSERT INTO member_activities (member_id, activity_id)
+VALUES
+  (1, 1), (1, 3), (1, 4),
+  (2, 2), (2, 6),
+  (3, 5), (3, 20),
+  (4, 13), (4, 14),
+  (5, 15), (5, 12),
+  (6, 8), (6, 17),
+  (7, 4), (7, 5),
+  (8, 9), (8, 11),
+  (9, 18), (9, 19),
+  (10, 16), (10, 7),
+  (11, 2), (11, 19),
+  (12, 12), (12, 10),
+  (13, 7), (13, 15),
+  (14, 1), (14, 18),
+  (15, 10), (15, 13),
+  (16, 14), (16, 6),
+  (17, 11), (17, 16),
+  (18, 17), (18, 20);

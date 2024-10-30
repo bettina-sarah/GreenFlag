@@ -54,13 +54,22 @@ class PhotoDAO:
     def get_photo(self, key) -> str | bool:
         try:
             with self.env.begin() as txn:
-                photo_data = txn.get(key.encode('utf-8'))
-                self.env.close()
-                return photo_data
+                # key is a single tuple here with a string inside !!!
+                photo_data = txn.get(key[0].encode('utf-8'))
+                image = self.decode_image(photo_data)
+                # self.env.close()
+            return image
         except Exception as e:
             print(e)
             return False
-        
-        
-    # def update_photo(self):
-    #     pass
+    
+
+    def decode_image(self, byte_array):
+        img_byte_arr = io.BytesIO(byte_array)
+        image = Image.open(img_byte_arr)
+
+
+        output_stream = io.BytesIO()
+        image.save(output_stream, format=image.format)  # Use the image format from the decoded image
+        output_stream.seek(0)  # Reset the stream position
+        return output_stream
