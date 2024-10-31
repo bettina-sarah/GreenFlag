@@ -8,7 +8,7 @@ import Bio from "./profile_card_components/Bio";
 interface ProfileProps {
   user: {
     basic_info: {
-      firstname: string;
+      first_name: string;
       age: number;
       city: string;
       location: number;
