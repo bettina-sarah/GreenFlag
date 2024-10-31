@@ -64,12 +64,14 @@ class AccountManager:
     def get_profile(data) -> bool:
         id = data.get('id')
         # normally here we get token or verify it
-        params = (id,)
+        # params = (id,)
         responses = []
         try:
-            profile_response = AccountDAO.get_profile(params)
+            # profile_response = AccountDAO.get_profile(params)
+            profile_response = AccountDAO.get_user_infos(id)
             if profile_response:
-                responses.append(profile_response)
+                jsonified_response = AccountManager.jsonify_response(profile_response)
+                responses.append(jsonified_response)
                 photokeys_response = AccountManager.get_photo_keys(id)
                 if photokeys_response:
                     responses.append(photokeys_response)
@@ -77,6 +79,31 @@ class AccountManager:
         except Exception as error:
             print(error)
             print('account manager')
+            return False
+    
+    @staticmethod
+    def jsonify_response(list):
+        try:
+            result=list[0]
+            # {'basic_info': {'first_name': 'Emma', 'age': 19, 'city': 'Montreal', 'location': 10}, 
+            #  'relationship': ['hiking', 'yoga', 'photography', 'cooking', 'traveling'], 
+            #  'wants_kids': True, 'hobby_array': 'fun', 
+            #  'bio': 'Hello this is user 11 !!!!'}
+            profile_data= {  
+            "basic_info": {
+            "first_name": result[1],
+            "age": result[3],
+            "city": result[7],
+            "location": 10
+                },
+            "relationship":result[8],
+            "wants_kids": result[6],
+            "hobby_array": result[9],
+            "bio": result[4]}
+            print(profile_data)
+            return profile_data
+        except Exception as error:
+            print(error)
             return False
     
     @staticmethod
