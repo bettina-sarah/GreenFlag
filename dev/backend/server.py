@@ -40,7 +40,7 @@ def get_profile() -> bool:
     response = AccountManager.get_profile(request.json)
     return jsonify(response) if response else jsonify(False)
 
-# PAS UTLISÉ ENCORE!!
+# ---- PAS UTLISÉ ENCORE!!
 
 @app.route('/modify-profile', methods=['POST'])
 def modify_profile() -> bool:
@@ -67,9 +67,7 @@ def get_photo() -> bool:
     print("frontend sent this:", request.json)
     photo, mimetype = AccountManager.get_photo(request.json[0])
     print(photo, mimetype)
-    # if len(photos) > 0:
-    #     return send_file(photos[0], mimetype='image/png', as_attachment=False)
-    return send_file(photo, mimetype=mimetype, as_attachment=False) if photo else jsonify(False)
+    return send_file(photo, mimetype=mimetype, as_attachment=False) if not isinstance(photo, bool) else jsonify(False)
 
 @app.route('/upload-photo', methods=['POST'])
 def upload_photos() -> bool:
@@ -107,15 +105,7 @@ def connect_chatroom() -> list:  # send JSON jsonify ...
     pass
 
 
-
-
-
-# @app.route('/photo', methods=['GET'])
-# def get_photos() -> list:
-#     # i need user_id here!
-#     response = AccountManager.get_photos(request.json)
-#     return response
-
+# -------- MATCHING ------------
 
 @app.route('/suggestions', methods=['GET'])
 def get_suggestions() -> list:
