@@ -94,8 +94,10 @@ const QuestionnaireForm = () => {
 
         <label>Select Your Gender:</label>
         <Select {...registerInfo("gender", { required: true })}>
-          {genders.map((gender) => (
-            <option value={gender}>{gender}</option>
+          {genders.map((gender, index) => (
+            <option value={gender} key={index}>
+              {gender}
+            </option>
           ))}
         </Select>
         {errorsInfo.gender && errorsInfo.gender.type === "required" && (
@@ -114,8 +116,10 @@ const QuestionnaireForm = () => {
 
         <label>Select Your Religion or Belief:</label>
         <Select {...registerInfo("religion", { required: true })}>
-          {religions.map((religion) => (
-            <option value={religion}>{religion}</option>
+          {religions.map((religion, index) => (
+            <option value={religion} key={index}>
+              {religion}
+            </option>
           ))}
         </Select>
         {errorsInfo.religion && errorsInfo.religion.type === "required" && (
