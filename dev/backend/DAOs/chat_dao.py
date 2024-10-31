@@ -2,22 +2,6 @@ from dao import DAO
 from typing import List
 
 class ChatDAO(DAO):
-
-    def __init__(self) -> None:
-        pass
-
-    @staticmethod   
-    def _create_connection(params: dict ) -> None:
-        pass    
-
-    # all dao methods need to be redefined here?
-
-    def create_chat(self) -> bool:
-        pass
-
-    def update_chat(self) -> bool:
-        pass
-
     def delete_chat(self) -> bool:
         pass
 

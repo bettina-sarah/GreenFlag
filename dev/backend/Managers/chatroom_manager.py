@@ -13,9 +13,6 @@ class ChatroomManager:
     def get_chatroom_messages(self, chatroom_id) -> list:
         return []
 
-    def add_chatroom(self, chatroom) -> None:
-        pass
-
     def delete_chatroom(self, chatroom) -> None:
         self.chatrooms.remove(chatroom)
         pass
