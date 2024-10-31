@@ -6,7 +6,7 @@ class ChatDAO(DAO):
         pass
 
     def get_chatroom_id(self, user_id):
-        pass
+        query = "SELECT * from;"
 
     def send_message(self, chat_id, message) -> bool:
         pass

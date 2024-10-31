@@ -14,6 +14,10 @@ class MatchingManager(Observer):
     
     @staticmethod
     def create_suggestions(user_id:int) -> bool:
+        """
+        Create suggestions for a given user_id, given that the user has not interacted with them before.
+        Returns True if the suggestions were created successfully, False otherwise
+        """
         try:
             response = MatchingDAO.get_eligible_members(user_id)
             if response:
@@ -40,6 +44,10 @@ class MatchingManager(Observer):
 
     @staticmethod
     def flag_user(user_id:int, flagged_id:int, reason:str) -> bool:
+        """
+        Flag a user, given the user_id of the user doing the flagging, the user_id of the user being flagged, and the reason for the flagging.
+        Returns True if the flagging was successful, False otherwise
+        """
         try:
             response = MatchingDAO.flag_user(user_id,flagged_id,reason)
             if response:
@@ -59,6 +67,10 @@ class MatchingManager(Observer):
     
     @staticmethod
     def find_suggestions(user_id:int, members_activities:int) -> list[int]:
+        """
+        Find suggestions for a given user_id, given a list of members and their respective activities.
+        Returns a list of user_ids of the suggestions.
+        """
         user_activities = np.zeros((1, NUMBER_ACTIVITIES))
         counter = 0
         members_index = []
