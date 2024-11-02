@@ -1,5 +1,5 @@
 from DAOs.dao import DAO
-
+from Managers.account_manager import AccountManager
 from typing import List
 import numpy as np
 
@@ -25,12 +25,21 @@ class MatchingDAO(DAO):
             return response
     
     @staticmethod
-    def get_suggestions(user_id:int) -> List[tuple]:
-        query = "SELECT id, member_id_2 FROM suggestion WHERE member_id_1 = %s and situation = 'pending';"
+    def get_suggestions(user_id:int) -> List[dict]:
+        query = "SELECT id, member_id_2 FROM suggestion WHERE member_id_1 = %s and situation = 'pending' LIMIT 5;" # LIMIT 20
         params = (user_id,)
         response = MatchingDAO._prepare_statement('select',query,params)
         if response:
-            return response
+            suggestions = []
+            for suggestion in response:
+                infos = AccountManager.get_profile(suggestion[1])
+                sugg = {
+                    "id": suggestion[0],
+                    "user_infos": infos
+                }
+                suggestions.append(sugg)
+            
+            return suggestions
         return False
     
     @staticmethod

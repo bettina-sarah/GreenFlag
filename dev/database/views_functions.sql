@@ -26,7 +26,7 @@ SELECT
   m.religion,
   m.want_kids,
   m.city,
-  m.relationship_type
+  m.relationship_type,
   -- a.id AS activity_id, 
   ARRAY_AGG(a.activity_name) as activities
 FROM 
