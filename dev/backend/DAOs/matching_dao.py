@@ -43,11 +43,18 @@ class MatchingDAO(DAO):
         return False
     
     @staticmethod
-    def update_suggestion(user_id:int, prospect_id:int, situation:str) -> bool:
+    def update_suggestion_from_user_ids(user_id:int, prospect_id:int, situation:str) -> bool:
         query = 'UPDATE suggestion SET situation = %s WHERE member_id_1 = %s and member_id_2 = %s;'
         params = (situation,user_id,prospect_id)
-        # query = 'UPDATE suggestion SET situation = %s WHERE id = %s'
-        # params = (situation,suggestion_id)
+        response = MatchingDAO._prepare_statement('update',query,params)
+        if response:
+            return response
+        return False
+
+    @staticmethod
+    def update_suggestion(suggestion_id:int, situation:str) -> bool:
+        query = 'UPDATE suggestion SET situation = %s WHERE id = %s'
+        params = (situation,suggestion_id)
         response = MatchingDAO._prepare_statement('update',query,params)
         if response:
             return response
