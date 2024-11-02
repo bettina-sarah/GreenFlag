@@ -107,9 +107,12 @@ def connect_chatroom() -> list:  # send JSON jsonify ...
 
 # -------- MATCHING ------------
 
-@app.route('/suggestions', methods=['GET'])
+@app.route('/suggestions', methods=['POST'])
 def get_suggestions() -> list:
-    response = MatchingManager.get_suggestions()
+    response = MatchingManager.get_suggestions(request.json)
+    if not response:
+        MatchingManager.create_suggestions(request.json)
+        response = MatchingManager.get_suggestions(request.json)
     return jsonify(True) if response else jsonify(False)
 
 @app.route('/update-suggestion', methods=['POST'])
@@ -119,6 +122,9 @@ def update_suggestion() -> bool:
 # undo():json - plus necessaire ? juste affiché dans le frontend?
 
 if __name__ == '__main__':
+    
+    #print(MatchingManager.get_suggestions(1))
+    
     app.run(debug=True, host="0.0.0.0", port=5000)
     # key = 'pngtree-image-of-cute-radish-vector-or-color-illustration-png-image_2040180.jpg'
     # AccountManager.get_photo(key)

@@ -61,25 +61,31 @@ class AccountManager:
     
 
     @staticmethod
-    def get_profile(data) -> bool:
-        id = data.get('id')
-        # normally here we get token or verify it
-        # params = (id,)
-        responses = []
+    def get_profile(data:any) -> bool:
+        if not isinstance(data,int):
+            id = data.get('id')
+            # normally here we get token or verify it
+            # params = (id,)
+        else:
+            id = data
+        responses = {}
         try:
             # profile_response = AccountDAO.get_profile(params)
             profile_response = AccountDAO.get_user_infos(id)
             if profile_response:
                 jsonified_response = AccountManager.jsonify_response(profile_response)
-                responses.append(jsonified_response)
+                responses["profile_info"] = jsonified_response
                 photokeys_response = AccountManager.get_photo_keys(id)
                 if photokeys_response:
-                    responses.append(photokeys_response)
-                    return tuple(responses)
+                    responses["photo_keys"] = photokeys_response
+                else:
+                    responses["photo_keys"] = None
+            return responses
         except Exception as error:
             print(error)
             print('account manager')
             return False
+        
     
     @staticmethod
     def jsonify_response(list):

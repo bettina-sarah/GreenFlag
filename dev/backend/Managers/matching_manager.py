@@ -13,8 +13,9 @@ class MatchingManager(Observer):
     matches = []
     
     @staticmethod
-    def create_suggestions(user_id:int) -> bool:
+    def create_suggestions(data:dict) -> bool:
         try:
+            user_id = data.get("id")
             response = MatchingDAO.get_eligible_members(user_id)
             if response:
                 prospects_ids = MatchingManager.find_suggestions(user_id,response)
@@ -22,15 +23,16 @@ class MatchingManager(Observer):
             if prospects_ids:
                 response_2 = MatchingDAO.create_suggestions(user_id,prospects_ids)
                 
-            if response:
+            if response and response_2:
                 return response_2
             
         except Exception as error:
             print(error)
-            
+    
     @staticmethod
-    def get_suggestions(user_id:int) -> bool:
+    def get_suggestions(data:dict) -> bool:
         try:
+            user_id = data.get("id")
             response = MatchingDAO.get_suggestions(user_id)
             if response:
                 return response
@@ -39,8 +41,11 @@ class MatchingManager(Observer):
             print(error)
 
     @staticmethod
-    def flag_user(user_id:int, flagged_id:int, reason:str) -> bool:
+    def flag_user(data:dict) -> bool:
         try:
+            user_id = data.get("id")
+            flagged_id = data.get("flagged_id")
+            reason = data.get("reason")
             response = MatchingDAO.flag_user(user_id,flagged_id,reason)
             if response:
                 return response
@@ -49,8 +54,10 @@ class MatchingManager(Observer):
             print(error)        
 
     @staticmethod
-    def unmatch(user_id:int, unmatched_id:int) -> bool:
+    def unmatch(data:dict) -> bool:
         try:
+            user_id = data.get("id")
+            unmatched_id = data.get("unmatched_id")
             response = MatchingDAO.unmatch(user_id,unmatched_id)
             if response:
                 return response
