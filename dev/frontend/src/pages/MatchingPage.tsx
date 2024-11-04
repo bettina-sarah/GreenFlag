@@ -4,7 +4,6 @@ import ProfileCard from "@/components/ProfileCard";
 import useFetch from "@/api/useFetch";
 import fetchData from "@/api/fetchData";
 import { useState, useEffect } from "react";
-import { userInfo } from "os";
 
 const hobby_array = ["Hiking", "Yoga", "Photography", "Cooking", "Traveling"];
 const bio =
@@ -41,14 +40,20 @@ const MatchingPage: React.FC = () => {
     loading: profileLoading,
     error: profileError,
   } = useFetch<IProfileData>({
-    url: "//get-profile",
-    data: { id: "11" },
+    url: "//suggestions",
+    data: { id: "1" },
   });
   const [photoData, setPhotoData] = useState<IPhotoData[]>([]);
 
   useEffect(() => {
     if (profileData && !profileLoading && !profileError) {
       const photoKeys = profileData[1];
+
+      if (!photoKeys) {
+        // If photoKeys is NULL, set photoData to an empty array and exit
+        setPhotoData([]);
+        return;
+      }
 
       // Fetch all photos based on photo keys
       const fetchPhotos = async () => {

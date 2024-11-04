@@ -87,7 +87,7 @@ CREATE TABLE flagged (
   --id                SERIAL PRIMARY KEY,
   member_id         INTEGER NOT NULL,
   reporter_id       INTEGER NOT NULL,
-  reason            REASON_FLAGGED NOT NULL,
+  reason            REASON_FLAGGED NOT NULL
   PRIMARY KEY (member_id, reporter_id)
 );
 
@@ -169,7 +169,7 @@ VALUES
   ('playingsports'),
   ('crafting'),
   ('petlover'),
-  ('learningnewlanguage');
+  ('learningnewlanguage')
 
 DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
@@ -199,12 +199,11 @@ SELECT
   m.religion,
   m.want_kids,
   m.city,
+  m.relationship_type,
   -- a.id AS activity_id, 
   ARRAY_AGG(a.activity_name) as activities
 FROM 
   member AS m
--- INNER JOIN member_activities AS ma ON m.id = ma.member_id
--- INNER JOIN activity AS a ON ma.activity_id = a.id;
 LEFT JOIN member_activities AS ma ON m.id = ma.member_id
 LEFT JOIN activity AS a ON ma.activity_id = a.id
 GROUP BY m.id
@@ -227,9 +226,10 @@ DECLARE
     position_counter INTEGER := 1;    -- Counter to track position in the array, starting at 1
 BEGIN
   --delete all photos
-  DELETE from member_photo USING member 
-  WHERE member_photo.member_id = member.id AND member.id = user_id;
-  DELETE from photo WHERE photo.encryption_key = key;
+-- !!! FOR NOW, we dont delete anymore since we submit 1 photo at a time. to be corrected!!
+  -- DELETE from member_photo USING member 
+  -- WHERE member_photo.member_id = member.id AND member.id = user_id;
+  -- DELETE from photo WHERE photo.encryption_key = key;
   -- here we loop through the keys if multiple
   FOREACH key IN ARRAY photo_keys
   LOOP
@@ -316,41 +316,6 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
--- CREATE OR REPLACE FUNCTION get_user_info
--- (user_id INTEGER)
--- RETURNS TABLE(
---   first_name VARCHAR,
---   last_name VARCHAR,
---   age INT,
---   gender gender,
---   bio 
---   religion VARCHAR,
---   want_kids BOOLEAN,
---   city VARCHAR,
---   activities VARCHAR[]
--- ) AS $$
--- BEGIN
---   RETURN QUERY
---   SELECT
---     m.first_name,
---     m.last_name,
---     EXTRACT(YEAR FROM AGE(m.date_of_birth))::INT AS age,
---     m.gender,
---     m.religion,
---     m.want_kids,
---     m.city
---     ARRAY_AGG(ma.activity_name) AS activities
---   FROM
---     member m
---   LEFT JOIN
---     member_activities_view ma on m.id = ma.member_id
---   WHERE
---     m.id = user_id
---   GROUP BY
---     m.id;
--- END;
--- $$ LANGUAGE PLPGSQL;
-
 DROP FUNCTION IF EXISTS create_suggestions;
 
 CREATE OR REPLACE FUNCTION create_suggestions
@@ -364,7 +329,7 @@ BEGIN
       VALUES (user_id, prospect_id, 'pending', CURRENT_DATE);
   END LOOP;
 
-  RETURN 1;
+  RETURN TRUE;
 END;
 $$ LANGUAGE PLPGSQL;
 

@@ -113,7 +113,7 @@ def get_suggestions() -> list:
     if not response:
         MatchingManager.create_suggestions(request.json)
         response = MatchingManager.get_suggestions(request.json)
-    return jsonify(True) if response else jsonify(False)
+    return response if response else jsonify(False)
 
 @app.route('/update-suggestion', methods=['POST'])
 def update_suggestion() -> bool:
