@@ -17,7 +17,6 @@ DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
 
 
-
 CREATE TYPE GENDER AS ENUM (
 'Non-Binary', 'Male', 'Female', 'Other'
 );
@@ -85,10 +84,11 @@ CREATE TABLE member_activities (
 );
 
 CREATE TABLE flagged (
-  id                INTEGER PRIMARY KEY,
+  --id                SERIAL PRIMARY KEY,
   member_id         INTEGER NOT NULL,
   reporter_id       INTEGER NOT NULL,
-  reason            REASON_FLAGGED NOT NULL 
+  reason            REASON_FLAGGED NOT NULL,
+  PRIMARY KEY (member_id, reporter_id)
 );
 
 CREATE TABLE alert_notification (
@@ -105,11 +105,12 @@ CREATE TABLE member_photo (
 );
 
 CREATE TABLE suggestion (
-  id                SERIAL PRIMARY KEY,
+  id 				        SERIAL NOT NULL UNIQUE,
   date_creation     DATE NOT NULL,
-  member_id_1       INTEGER UNIQUE NOT NULL,
-  member_id_2       INTEGER UNIQUE NOT NULL,
-  situation         SUGGESTION_STATUS DEFAULT 'pending'
+  member_id_1       INTEGER  NOT NULL,
+  member_id_2       INTEGER  NOT NULL,
+  situation         SUGGESTION_STATUS DEFAULT 'pending',
+  PRIMARY KEY (member_id_1, member_id_2)
 );
 
 CREATE TABLE member_match (
@@ -168,7 +169,7 @@ VALUES
   ('playingsports'),
   ('crafting'),
   ('petlover'),
-  ('learningnewlanguage')
+  ('learningnewlanguage');
 
 DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
@@ -192,13 +193,22 @@ CREATE VIEW member_activities_view AS
 SELECT 
   m.id AS member_id, 
   m.first_name, 
-  m.last_name, 
-  a.id AS activity_id, 
-  a.activity_name
+  m.last_name,
+  EXTRACT(YEAR FROM AGE(m.date_of_birth))::INT AS age,
+  m.bio,
+  m.religion,
+  m.want_kids,
+  m.city,
+  -- a.id AS activity_id, 
+  ARRAY_AGG(a.activity_name) as activities
 FROM 
   member AS m
-INNER JOIN member_activities AS ma ON m.id = ma.member_id
-INNER JOIN activity AS a ON ma.activity_id = a.id;
+-- INNER JOIN member_activities AS ma ON m.id = ma.member_id
+-- INNER JOIN activity AS a ON ma.activity_id = a.id;
+LEFT JOIN member_activities AS ma ON m.id = ma.member_id
+LEFT JOIN activity AS a ON ma.activity_id = a.id
+GROUP BY m.id
+ORDER BY m.id;
 
 
 ------- FUNCTIONS
@@ -259,8 +269,8 @@ BEGIN
   RETURN TRUE;
 END$$;
 
-INSERT INTO member (first_name, last_name, member_password, email, date_of_birth, gender, preferred_genders, min_age, max_age, relationship_type, height, religion, want_kids, city, token, email_confirmed) 
 
+DROP FUNCTION IF EXISTS find_eligible_members_activities;
 
 CREATE OR REPLACE FUNCTION find_eligible_members_activities
 (user_id INTEGER)
@@ -272,7 +282,7 @@ BEGIN
     SELECT m.id
     FROM member m
     WHERE m.gender = ANY (
-        SELECT preferred_genders
+        SELECT UNNEST(preferred_genders)
         FROM member
         WHERE id = user_id
       )
@@ -286,15 +296,140 @@ BEGIN
         FROM member
         WHERE id = user_id
       )
+      AND m.relationship_type = (
+        SELECT relationship_type
+        FROM member
+        WHERE id = user_id
+      )
   )
+
+  SELECT user_id AS member_id, ARRAY_AGG(activity_id) AS aggregated_id_activities
+  FROM member_activities
+  WHERE member_id = user_id
+  GROUP BY user_id;
+
   SELECT m.id AS member_id, ARRAY_AGG(ma.activity_id) AS aggregated_id_activities
 	FROM member_activities ma
   JOIN eligible_members em ON ma.member_id = em.id
   JOIN member m ON ma.member_id = m.id
   GROUP BY m.id;
 END;
-$$ LANGUAGE PLPGSQL;INSERT INTO member (first_name, last_name, member_password, email, date_of_birth, gender, preferred_genders, min_age, max_age, relationship_type, height, religion, want_kids, city, token, email_confirmed) 
+$$ LANGUAGE PLPGSQL;
 
+-- CREATE OR REPLACE FUNCTION get_user_info
+-- (user_id INTEGER)
+-- RETURNS TABLE(
+--   first_name VARCHAR,
+--   last_name VARCHAR,
+--   age INT,
+--   gender gender,
+--   bio 
+--   religion VARCHAR,
+--   want_kids BOOLEAN,
+--   city VARCHAR,
+--   activities VARCHAR[]
+-- ) AS $$
+-- BEGIN
+--   RETURN QUERY
+--   SELECT
+--     m.first_name,
+--     m.last_name,
+--     EXTRACT(YEAR FROM AGE(m.date_of_birth))::INT AS age,
+--     m.gender,
+--     m.religion,
+--     m.want_kids,
+--     m.city
+--     ARRAY_AGG(ma.activity_name) AS activities
+--   FROM
+--     member m
+--   LEFT JOIN
+--     member_activities_view ma on m.id = ma.member_id
+--   WHERE
+--     m.id = user_id
+--   GROUP BY
+--     m.id;
+-- END;
+-- $$ LANGUAGE PLPGSQL;
+
+DROP FUNCTION IF EXISTS create_suggestions;
+
+CREATE OR REPLACE FUNCTION create_suggestions
+(user_id INTEGER, prospect_ids INTEGER[])
+RETURNS BOOLEAN AS $$
+DECLARE
+	prospect_id INTEGER;
+BEGIN
+  FOREACH prospect_id IN ARRAY prospect_ids LOOP
+    INSERT INTO suggestion (member_id_1, member_id_2, situation, date_creation)
+      VALUES (user_id, prospect_id, 'pending', CURRENT_DATE);
+  END LOOP;
+
+  RETURN 1;
+END;
+$$ LANGUAGE PLPGSQL;
+
+DROP TRIGGER IF EXISTS trigger_create_match ON suggestion;
+DROP FUNCTION IF EXISTS create_match_if_mutual;
+
+CREATE OR REPLACE FUNCTION create_match_if_mutual()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.situation = 'yes' THEN
+    PERFORM id FROM suggestion
+    WHERE member_id_1 = NEW.member_id_2
+    AND member_id_2 = NEW.member_id_1
+    AND situation = 'yes';
+
+    IF FOUND THEN
+      INSERT INTO member_match(suggestion_id, chatroom_name)
+      VALUES (NEW.id, CONCAT('chatroom_',NEW.member_id_1, '_' , NEW.member_id_2));
+    END IF;
+  END IF;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE TRIGGER trigger_create_match
+AFTER UPDATE OF situation ON suggestion
+FOR EACH ROW
+WHEN (NEW.situation = 'yes')
+EXECUTE FUNCTION create_match_if_mutual();
+
+DROP FUNCTION IF EXISTS unmatch;
+
+CREATE OR REPLACE FUNCTION unmatch
+(user_id INTEGER, unmatched_id INTEGER)
+RETURNS BOOLEAN AS $$
+DECLARE
+  match_to_delete_id INTEGER;
+  suggestion_id_1 INTEGER;
+  suggestion_id_2 INTEGER;
+BEGIN
+  
+  UPDATE suggestion SET situation = 'no' 
+  WHERE (member_id_1 = user_id AND member_id_2 = unmatched_id)
+    OR (member_id_1 = unmatched_id AND member_id_2 = user_id);
+  
+  
+  SELECT id INTO suggestion_id_1 FROM suggestion
+  WHERE member_id_1 = user_id AND member_id_2 = unmatched_id;
+
+  SELECT id INTO suggestion_id_2 FROM suggestion
+  WHERE member_id_1 = unmatched_id AND member_id_2 = user_id;
+
+  SELECT id INTO match_to_delete_id FROM member_match
+  WHERE suggestion_id = suggestion_id_1 OR suggestion_id = suggestion_id_2;
+
+  DELETE FROM msg WHERE match_id = match_to_delete_id;
+  
+  DELETE FROM member_match WHERE id = match_to_delete_id;
+
+  RETURN TRUE;
+
+END;
+$$ LANGUAGE PLPGSQL;
+INSERT INTO member (first_name, last_name, member_password, email, date_of_birth, gender, preferred_genders, min_age, max_age, relationship_type, height, religion, want_kids, city, token, email_confirmed) 
 VALUES
 ('John', 'Doe', 'password123', 'john.doe1@example.com', '1990-05-12', 'Male'::GENDER, ARRAY['Female', 'Non-Binary']::GENDER[], 20, 35, 'longterm'::RELATIONSHIP, 180, NULL, TRUE, 'New York', 'token12345', TRUE),
 ('Jane', 'Smith', 'password123', 'jane.smith2@example.com', '1988-11-22', 'Female'::GENDER, ARRAY['Male']::GENDER[], 25, 40, 'shortterm'::RELATIONSHIP, 165, NULL, FALSE, 'Los Angeles', 'token12346', FALSE),
@@ -316,3 +451,51 @@ VALUES
 ('Joshua', 'Rodriguez', 'password123', 'joshua.rodriguez18@example.com', '1987-02-15', 'Male'::GENDER, ARRAY['Female', 'Non-Binary']::GENDER[], 26, 50, 'shortterm'::RELATIONSHIP, 188, NULL, FALSE, 'Seattle', 'token12362', FALSE),
 ('Amelia', 'Lopez', 'password123', 'amelia.lopez19@example.com', '1993-09-30', 'Female'::GENDER, ARRAY['Female']::GENDER[], 22, 38, 'fun'::RELATIONSHIP, 164, NULL, TRUE, 'Denver', 'token12363', TRUE),
 ('Ethan', 'Gonzalez', 'password123', 'ethan.gonzalez20@example.com', '1983-12-07', 'Male'::GENDER, ARRAY['Male']::GENDER[], 30, 55, 'longterm'::RELATIONSHIP, 183, NULL, TRUE, 'Washington', 'token12364', FALSE);
+
+
+INSERT INTO member_activities (member_id, activity_id)
+VALUES
+  (1, 1), (1, 3), (1, 4),
+  (2, 2), (2, 6),
+  (3, 5), (3, 20),
+  (4, 13), (4, 14),
+  (5, 15), (5, 12),
+  (6, 8), (6, 17),
+  (7, 4), (7, 5),
+  (8, 9), (8, 11),
+  (9, 18), (9, 19),
+  (10, 16), (10, 7),
+  (11, 2), (11, 19),
+  (12, 12), (12, 10),
+  (13, 7), (13, 15),
+  (14, 1), (14, 18),
+  (15, 10), (15, 13),
+  (16, 14), (16, 6),
+  (17, 11), (17, 16),
+  (18, 17), (18, 20);
+
+INSERT INTO suggestion (date_creation, member_id_1, member_id_2, situation)
+VALUES
+  (CURRENT_DATE, 1, 2, 'yes'),
+  (CURRENT_DATE, 1, 3, 'yes'),
+  (CURRENT_DATE, 1, 4, 'yes'),
+  (CURRENT_DATE, 1, 5, 'pending'),
+  (CURRENT_DATE, 1, 6, 'pending'),
+  (CURRENT_DATE, 1, 7, 'pending'),
+  (CURRENT_DATE, 1, 8, 'pending'),
+  (CURRENT_DATE, 1, 9, 'pending'),
+  (CURRENT_DATE, 1, 10, 'pending'),
+  (CURRENT_DATE, 1, 11, 'pending'),
+  (CURRENT_DATE, 1, 12, 'pending'),
+  (CURRENT_DATE, 1, 13, 'pending'),
+  (CURRENT_DATE, 2, 1, 'yes'),
+  (CURRENT_DATE, 3, 1, 'yes'),
+  (CURRENT_DATE, 4, 1, 'yes');
+
+INSERT INTO member_match (suggestion_id, chatroom_name)
+VALUES
+  (1, 'chatroom_1_2'),
+  (2, 'chatroom_1_3'),
+  (3, 'chatroom_1_4');
+
+INSERT INTO msg(match_id,sender_id,msg,date_sent) VALUES(1,2,'Hello',CURRENT_DATE);

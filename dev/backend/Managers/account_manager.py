@@ -2,6 +2,8 @@ from DAOs.account_dao import AccountDAO
 #from account_dao import AccountDAO
 from DAOs.photo_lmdb_dao import PhotoDAO
 from datetime import datetime
+import mimetypes
+from PIL import Image
 
 
 class AccountManager:
@@ -59,23 +61,55 @@ class AccountManager:
     
 
     @staticmethod
-    def get_profile(data) -> bool:
-        id = data.get('id')
-        # normally here we get token or verify it
-        params = (id,)
-        responses = []
+    def get_profile(data:any) -> bool:
+        if not isinstance(data,int):
+            id = data.get('id')
+            # normally here we get token or verify it
+            # params = (id,)
+        else:
+            id = data
+        responses = {}
         try:
-            profile_response = AccountDAO.get_profile(params)
+            # profile_response = AccountDAO.get_profile(params)
+            profile_response = AccountDAO.get_user_infos(id)
             if profile_response:
-                responses.append(profile_response)
-                photos_response = AccountManager.get_photos(data)
-                if photos_response:
-                    responses.append(photos_response)
-                    return tuple(responses)
-                    # email sequence here
+                jsonified_response = AccountManager.jsonify_response(profile_response)
+                responses["profile_info"] = jsonified_response
+                photokeys_response = AccountManager.get_photo_keys(id)
+                if photokeys_response:
+                    responses["photo_keys"] = photokeys_response
+                else:
+                    responses["photo_keys"] = None
+            return responses
         except Exception as error:
             print(error)
             print('account manager')
+            return False
+        
+    
+    @staticmethod
+    def jsonify_response(list):
+        try:
+            result=list[0]
+            # {'basic_info': {'first_name': 'Emma', 'age': 19, 'city': 'Montreal', 'location': 10}, 
+            #  'relationship': ['hiking', 'yoga', 'photography', 'cooking', 'traveling'], 
+            #  'wants_kids': True, 'hobby_array': 'fun', 
+            #  'bio': 'Hello this is user 11 !!!!'}
+            profile_data= {  
+            "basic_info": {
+            "first_name": result[1],
+            "age": result[3],
+            "city": result[7],
+            "location": 10
+                },
+            "relationship":result[8],
+            "wants_kids": result[6],
+            "hobby_array": result[9],
+            "bio": result[4]}
+            print(profile_data)
+            return profile_data
+        except Exception as error:
+            print(error)
             return False
     
     @staticmethod
@@ -128,11 +162,9 @@ class AccountManager:
 
     @staticmethod
     def modify_photos(files, info=None) -> bool:
-
         #token = info.get('token')
         # we verify if token is valid here ... and return right user id to put in params !
         user_id = '11'
-
         # by now we assume Frontend knows which photos were changed ??? overwrites them all ?
         try:
             images = files.get('image')
@@ -154,22 +186,45 @@ class AccountManager:
             return False
     
     @staticmethod
-    def get_photos(data) -> bool:
-        user_id = data.get('id')
+    def get_photo_keys(id) -> bool:
         # tokens ... 
         # user_id = '11'
-        params = (user_id,)
+        params = (id,)
+        try:
+            encryption_keys = AccountDAO.get_photos(params)
+            return encryption_keys
+        except Exception as error:
+            print(error)
+    
+    
+    
+    @staticmethod
+    def get_photo(data) -> bool:
+        # key = data.get('key')
+        print('in get photo manager: data is ', data)
         photo_dao = PhotoDAO()
         try:
-            photos = []
-            encryption_keys = AccountDAO.get_photos(params)
-            for key in encryption_keys:
-                photo = photo_dao.get_photo(key)
-                photos.append(photo)
-            return photos
+            photo = photo_dao.get_photo(data)
+            mime_type = AccountManager.guess_mime_type(photo)
+            return photo, mime_type
         except Exception as error:
             print(error)
             print('account manager')
+            
+    @staticmethod
+    def guess_mime_type(photo):
+        try:
+            image = Image.open(photo)
+            image_format = image.format.lower()  # Example: 'jpeg', 'png'
+        except Exception as e:
+            print(e)
+
+        # Reset the BytesIO pointer to the beginning
+        photo.seek(0)
+
+        # Determine the correct MIME type based on the image format
+        mime_type = f"image/{image_format}" if image_format in ['jpeg', 'png', 'gif', 'bmp', 'webp'] else 'application/octet-stream'
+        return mime_type
     
     
     @staticmethod

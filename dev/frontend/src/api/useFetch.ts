@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import fetchData from "./fetchProfile";
+import fetchData from "./fetchData";
 
 interface IUseFetch {
   url: string;
@@ -9,7 +9,7 @@ interface IUseFetch {
 const useFetch = <T>({ url, data: incomingData }: IUseFetch) => {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState<boolean>(false); // this is how you use a generic, useState can accept a generic type to help type hint
+  const [loading, setLoading] = useState<boolean>(true); // this is how you use a generic, useState can accept a generic type to help type hint
 
   useEffect(() => {
     setLoading(true);
