@@ -1,9 +1,9 @@
 from DAOs.chat_dao import ChatDAO
-
+from util_classes.discharged_list import DischargedList
 # another class that manages the websocket chatroom? 
 class ChatroomManager:
     def __init__(self, chatroom) -> None:
-        self.chatrooms = []
+        self.request = DischargedList(5,5)
         self.chatroom_messages = {chatroom: ['messages']}   #{chatroom:[messages]}
     
     def get_chatrooms(self, user_id) -> list:
