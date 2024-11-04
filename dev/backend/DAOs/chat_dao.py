@@ -5,7 +5,27 @@ class ChatDAO(DAO):
     @staticmethod
     def get_chatroom_names(user_id:int):
         # need to returns the chatroom_names, the other user id, firstname and profile picture  and the last_message
-        pass
+        query = "SELECT * FROM get_chatrooms(%s)"
+        params = (user_id,)
+        response = ChatDAO._prepare_statement('select', query, params)
+        if response:
+            chatrooms = []
+            for chat in response:
+                # get subject first_name and profile photo from id
+                
+                
+                chatroom = {
+                    "name": chat[1],
+                    "subject_id": chat[0],
+                    "last_message":{
+                        "sender_id": chat[2],
+                        "sender_first_name": chat[3],
+                        "content": chat[4],
+                        "date_sent": chat[5]
+                    }
+                }
+                chatrooms.append(chatroom)
+        return chatrooms
 
     @staticmethod
     def send_message(chat_name:str, sender_id:int, message:str, date:str) -> bool:
