@@ -33,10 +33,9 @@ class MatchingDAO(DAO):
             suggestions = []
             for suggestion in response:
                 infos = AccountManager.get_profile(suggestion[1])
-                sugg = {"user" : {
+                sugg = {
                     "suggestion_id": suggestion[0],
                     "user_infos": infos}
-                }
                 suggestions.append(sugg)
             
             return suggestions
