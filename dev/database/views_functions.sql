@@ -1,5 +1,6 @@
 DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
+DROP VIEW IF EXISTS chatroom_messages_view;
 
 ------- VIEWS 
 
@@ -34,6 +35,23 @@ LEFT JOIN member_activities AS ma ON m.id = ma.member_id
 LEFT JOIN activity AS a ON ma.activity_id = a.id
 GROUP BY m.id
 ORDER BY m.id;
+
+CREATE OR REPLACE VIEW chatroom_messages_view AS
+SELECT
+  m.chatroom_name AS chatroom_name,
+  ms.id AS message_id,
+  ms.sender_id AS sender_id,
+  send.first_name AS sender_first_name,
+  m.msg AS message_content,
+  m.date_sent AS date_sent
+from
+  msg ms
+JOIN
+  member_match m ON ms.match_id = m.id
+JOIN
+  member sender ON ms.sender_id = sender.id
+ORDER Binary
+  m.chatroom_name,ms.date_sent
 
 
 ------- FUNCTIONS
@@ -127,12 +145,6 @@ BEGIN
         WHERE id = user_id
       )
   )
-
-  SELECT user_id AS member_id, ARRAY_AGG(activity_id) AS aggregated_id_activities
-  FROM member_activities
-  WHERE member_id = user_id
-  GROUP BY user_id;
-
   SELECT m.id AS member_id, ARRAY_AGG(ma.activity_id) AS aggregated_id_activities
 	FROM member_activities ma
   JOIN eligible_members em ON ma.member_id = em.id
@@ -219,3 +231,8 @@ BEGIN
 
 END;
 $$ LANGUAGE PLPGSQL;
+
+
+CREATE OR REPLACE FUNCTION get_chatrooms
+(user_id INTEGER)
+RETURNS TABLE AS $$

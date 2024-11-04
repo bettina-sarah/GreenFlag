@@ -1,9 +1,11 @@
 
 from flask import Flask, jsonify, request, make_response, send_file
 from flask_cors import CORS
+from flask_socketio import SocketIO
 from file_tree import create_file_tree
 import json_tests
-
+from Managers.websocket_manager import WebSocketManager
+from Managers.chatroom_manager import ChatroomManager
 # create_file_tree()
 
 from DAOs.matching_dao import MatchingDAO
@@ -15,6 +17,12 @@ app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}},
             methods=["GET", "POST", "OPTIONS"],
             allow_headers=["Content-Type", "Authorization", "X-Requested-With", "Access-Control-Allow-Origin"])
+
+socketio = SocketIO(app, cors_allowed_origins="*")
+
+
+chatroomManager = ChatroomManager() # need to be an object because contains a discharged list
+websocketManager = WebSocketManager(socketio,chatroomManager)
 
 @app.route('/test', methods=['GET'])
 def test_connection():
