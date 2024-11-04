@@ -1,12 +1,16 @@
 
 from flask import Flask, jsonify, request, make_response, send_file
 from flask_cors import CORS
+<<<<<<< HEAD
 from flask_socketio import SocketIO
 from file_tree import create_file_tree
 import json_tests
 from Managers.websocket_manager import WebSocketManager
 from Managers.chatroom_manager import ChatroomManager
 # create_file_tree()
+=======
+import json_tests
+>>>>>>> main
 
 from DAOs.matching_dao import MatchingDAO
 
@@ -28,24 +32,7 @@ websocketManager = WebSocketManager(socketio,chatroomManager)
 def test_connection():
     return jsonify(message="Hello React this is Flask")
 
-
-@app.route('/login', methods=['POST'])
-def login() -> bool:
-    response = AccountManager.login(request.json)
-    # call middleware to generate token; send it to frontend
-    # make sure database gets it !!!!
-    return jsonify(response)
-    # return jsonify(True)
-
-
-@app.route('/settings', methods=['POST'])
-def settings() -> bool:
-    print(request.json)
-    response = AccountManager.delete_account(request.json)
-    # call middleware to generate token; send it to frontend
-    # make sure database gets it !!!!
-    return jsonify(response)
-    # return jsonify(True)
+# -------- ACCOUNTS ------------
 
 
 @app.route('/create-account', methods=['POST'])
@@ -54,16 +41,55 @@ def create_account() -> bool:
     return jsonify(True) if response else jsonify(False)
 
 
-@app.route('/profile', methods=['POST'])
+@app.route('/login', methods=['POST'])
+def login() -> bool:
+    response = AccountManager.login(request.json)
+    # call middleware to generate token; send it to frontend
+    # make sure database gets it !!!!
+    return jsonify(response)
+
+@app.route('/get-profile', methods=['POST'])
 def get_profile() -> bool:
     # if authentication_middleware.check_session_validity():
     #     return account_manager.get_profile()
-    print("frontend sent this:", request.json)
-    response, photos = AccountManager.get_profile(request.json)
+    response = AccountManager.get_profile(request.json)
+    return jsonify(response) if response else jsonify(False)
 
-    print(photos, photos[0])
-    # return jsonify(response) if response else jsonify(False)
-    return send_file(photos[0], mimetype='image/png', as_attachment=False)
+# ---- PAS UTLISÉ ENCORE!!
+
+@app.route('/modify-profile', methods=['POST'])
+def modify_profile() -> bool:
+    response = AccountManager.modify_profile(request.json)
+    return jsonify(True) if response else jsonify(False)
+
+
+
+@app.route('/delete-account', methods=['POST'])
+def settings() -> bool:
+    print(request.json)
+    response = AccountManager.delete_account(request.json)
+    # call middleware to generate token; send it to frontend
+    # make sure database gets it !!!!
+    return jsonify(response)
+
+
+# -------- PHOTOS ------------
+
+@app.route('/get-photo', methods=['POST'])
+def get_photo() -> bool:
+    # if authentication_middleware.check_session_validity():
+    #     return account_manager.get_profile()
+    print("frontend sent this:", request.json)
+    photo, mimetype = AccountManager.get_photo(request.json[0])
+    print(photo, mimetype)
+    return send_file(photo, mimetype=mimetype, as_attachment=False) if not isinstance(photo, bool) else jsonify(False)
+
+@app.route('/upload-photo', methods=['POST'])
+def upload_photos() -> bool:
+    print(request.files)
+    files = request.files
+    response = AccountManager.modify_photos(files)
+    return jsonify(True) if response else jsonify(False)
 
 
 # ------ QUESTIONNAIRE -------
@@ -82,6 +108,7 @@ def update_hobbies() -> bool:
     response = AccountManager.update_hobbies(request.json)
     return jsonify(response)
 
+# -------- CHATROOMS ------------
 
 @app.route('/chatrooms', methods=['GET'])
 def fetch_chatroom_list() -> list:  # send JSON jsonify ...
@@ -93,32 +120,14 @@ def connect_chatroom() -> list:  # send JSON jsonify ...
     pass
 
 
-@app.route('/modify_profile', methods=['POST'])
-def modify_profile() -> bool:
-    response = AccountManager.modify_profile(request.json)
-    return jsonify(True) if response else jsonify(False)
+# -------- MATCHING ------------
 
-
-@app.route('/photo', methods=['POST'])
-def modify_photos() -> bool:
-    print(request.files)
-    files = request.files
-    # #info = request.json
-    # #response = AccountManager.modify_photos(info, files)
-    response = AccountManager.modify_photos(files)
-    return jsonify(True) if response else jsonify(False)
-
-
-@app.route('/photo', methods=['GET'])
-def get_photos() -> list:
-    # i need user_id here!
-    response = AccountManager.get_photos(request.json)
-    return response
-
-
-@app.route('/suggestions', methods=['GET'])
+@app.route('/suggestions', methods=['POST'])
 def get_suggestions() -> list:
-    response = MatchingManager.get_suggestions()
+    response = MatchingManager.get_suggestions(request.json)
+    if not response:
+        MatchingManager.create_suggestions(request.json)
+        response = MatchingManager.get_suggestions(request.json)
     return jsonify(True) if response else jsonify(False)
 
 @app.route('/update-suggestion', methods=['POST'])
@@ -128,7 +137,12 @@ def update_suggestion() -> bool:
 # undo():json - plus necessaire ? juste affiché dans le frontend?
 
 if __name__ == '__main__':
+    
+    #print(MatchingManager.get_suggestions(1))
+    
     app.run(debug=True, host="0.0.0.0", port=5000)
+    # key = 'pngtree-image-of-cute-radish-vector-or-color-illustration-png-image_2040180.jpg'
+    # AccountManager.get_photo(key)
     # json = {'id': '11'}
     # AccountManager.get_profile(json)
 

@@ -1,5 +1,5 @@
 from DAOs.dao import DAO
-
+from Managers.account_manager import AccountManager
 from typing import List
 import numpy as np
 
@@ -25,20 +25,36 @@ class MatchingDAO(DAO):
             return response
     
     @staticmethod
-    def get_suggestions(user_id:int) -> List[tuple]:
-        query = "SELECT id, member_id_2 FROM suggestion WHERE member_id_1 = %s and situation = 'pending';"
+    def get_suggestions(user_id:int) -> List[dict]:
+        query = "SELECT id, member_id_2 FROM suggestion WHERE member_id_1 = %s and situation = 'pending' LIMIT 5;" # LIMIT 20
         params = (user_id,)
         response = MatchingDAO._prepare_statement('select',query,params)
         if response:
-            return response
+            suggestions = []
+            for suggestion in response:
+                infos = AccountManager.get_profile(suggestion[1])
+                sugg = {
+                    "id": suggestion[0],
+                    "user_infos": infos
+                }
+                suggestions.append(sugg)
+            
+            return suggestions
         return False
     
     @staticmethod
-    def update_suggestion(user_id:int, prospect_id:int, situation:str) -> bool:
+    def update_suggestion_from_user_ids(user_id:int, prospect_id:int, situation:str) -> bool:
         query = 'UPDATE suggestion SET situation = %s WHERE member_id_1 = %s and member_id_2 = %s;'
         params = (situation,user_id,prospect_id)
-        # query = 'UPDATE suggestion SET situation = %s WHERE id = %s'
-        # params = (situation,suggestion_id)
+        response = MatchingDAO._prepare_statement('update',query,params)
+        if response:
+            return response
+        return False
+
+    @staticmethod
+    def update_suggestion(suggestion_id:int, situation:str) -> bool:
+        query = 'UPDATE suggestion SET situation = %s WHERE id = %s'
+        params = (situation,suggestion_id)
         response = MatchingDAO._prepare_statement('update',query,params)
         if response:
             return response
@@ -49,15 +65,6 @@ class MatchingDAO(DAO):
         query = 'SELECT m.chatroom_name, s.member_id_2 FROM member_match as m INNER JOIN suggestion as s ON m.suggestion_id = s.id WHERE member_id_1 = %s;'
         params = (user_id,)
         response = MatchingDAO._prepare_statement('select',query,params)
-        if response:
-            return response
-        return False
-
-    @staticmethod
-    def get_user_infos(user_id:int) -> List[tuple]:
-        query = "SELECT * FROM member_activities_view WHERE member_id = %s;"
-        params = (user_id,)
-        response = MatchingDAO._prepare_statement("select",query,params)
         if response:
             return response
         return False

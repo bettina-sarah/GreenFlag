@@ -27,6 +27,7 @@ SELECT
   m.religion,
   m.want_kids,
   m.city,
+  m.relationship_type,
   -- a.id AS activity_id, 
   ARRAY_AGG(a.activity_name) as activities
 FROM 
@@ -70,9 +71,10 @@ DECLARE
     position_counter INTEGER := 1;    -- Counter to track position in the array, starting at 1
 BEGIN
   --delete all photos
-  DELETE from member_photo USING member 
-  WHERE member_photo.member_id = member.id AND member.id = user_id;
-  DELETE from photo WHERE photo.encryption_key = key;
+-- !!! FOR NOW, we dont delete anymore since we submit 1 photo at a time. to be corrected!!
+  -- DELETE from member_photo USING member 
+  -- WHERE member_photo.member_id = member.id AND member.id = user_id;
+  -- DELETE from photo WHERE photo.encryption_key = key;
   -- here we loop through the keys if multiple
   FOREACH key IN ARRAY photo_keys
   LOOP
