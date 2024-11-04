@@ -17,7 +17,7 @@ class ChatDAO(DAO):
 
     @staticmethod
     def get_messages(chat_name:str) -> List[str]:
-        query = "SELECT sender_id, sender_first_name, message_content, date_sent FROM chatroom_messages_view WHERE chatroom_name = %s ORDER BY date_sent DESC"
+        query = "SELECT sender_id, sender_first_name, message_content, date_sent FROM chatroom_messages_view WHERE chatroom_name = %s ORDER BY date_sent"
         params = (chat_name,)
         response = ChatDAO._prepare_statement('select',query,params)
         if response:
