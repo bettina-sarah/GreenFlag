@@ -49,7 +49,7 @@ const MatchingPage: React.FC = () => {
         fetchPhotos();
       }
     }
-  }, [profileData, profileLoading, profileError]);
+  }, []); //[profileData, profileLoading, profileError]
 
   if (!profileData && profileLoading) {
     return <div>Loading...</div>;
