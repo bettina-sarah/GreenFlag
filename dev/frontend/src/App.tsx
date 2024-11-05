@@ -12,6 +12,7 @@ import SettingsPage from './pages/SettingsPage';
 import ProfilePage from './pages/ProfilePage';
 
 import '@mantine/core/styles.css';
+import PrivateChatroomPage from './pages/PrivateChatroomPage';
 
 
 
@@ -30,6 +31,7 @@ const App: React.FC = () => {
           <Route path="/create-account" element={<CreateAccount/>}/>
           <Route path="/matching" element={<MatchingPage/>}/>
           <Route path="/chatrooms" element={<ChatroomsPage/>}/>
+          <Route path='/chatroom/:chatroom_name' element={<PrivateChatroomPage/>} />
           <Route path="/questionnaire" element={<QuestionnairePage/>}/>
           <Route path="/settings" element={<SettingsPage/>}/>
           <Route path="/profile" element={<ProfilePage/>}/>

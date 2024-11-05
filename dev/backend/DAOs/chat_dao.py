@@ -1,4 +1,5 @@
 from dao import DAO
+from account_dao import AccountDAO
 from typing import List
 
 class ChatDAO(DAO):
@@ -12,7 +13,8 @@ class ChatDAO(DAO):
             chatrooms = []
             for chat in response:
                 subject_firstname = ChatDAO.get_subject_firstname(chat[0])
-                profile_photo = ChatDAO.get_profile_photo(chat[0])
+                params = (chat[0],)
+                profile_photo = AccountDAO.get_photos(params, extraquery=' ORDER BY position LIMIT 1;')
                 chatroom = {
                     "name": chat[1],
                     "subject": {
@@ -43,6 +45,8 @@ class ChatDAO(DAO):
         query = "SELECT encryption_key from member_photos_view where member_id = %s ORDER BY position LIMIT 1;"
         params = (subjct_id,)
         response = ChatDAO._prepare_statement('select', query, params)
+        if response:
+            return response
 
     @staticmethod
     def send_message(chat_name:str, sender_id:int, message:str, date:str) -> bool:
