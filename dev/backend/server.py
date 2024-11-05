@@ -1,16 +1,13 @@
 
 from flask import Flask, jsonify, request, make_response, send_file
 from flask_cors import CORS
-<<<<<<< HEAD
 from flask_socketio import SocketIO
 from file_tree import create_file_tree
 import json_tests
 from Managers.websocket_manager import WebSocketManager
 from Managers.chatroom_manager import ChatroomManager
 # create_file_tree()
-=======
 import json_tests
->>>>>>> main
 
 from DAOs.matching_dao import MatchingDAO
 
