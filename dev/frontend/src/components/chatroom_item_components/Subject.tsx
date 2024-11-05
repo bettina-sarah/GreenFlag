@@ -14,8 +14,9 @@ interface SubjectProps {
   const Subject: React.FC<SubjectProps> = ({ subject }) => {
     return (
       <div className="flex flex-row items-baseline pl-4 pt-1">
-        <Avatar img={subject.profile_photo.path} rounded />
-        <h1>{subject.firstname}</h1>
+        <Avatar img={subject.profile_photo.path} rounded>
+          <h1>{subject.firstname}</h1>
+        </Avatar>
       </div>
     );
   };
