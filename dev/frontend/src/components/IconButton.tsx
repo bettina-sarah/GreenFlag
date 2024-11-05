@@ -12,7 +12,7 @@ interface IconButtonProps {
 
 const IconButton: React.FC<IconButtonProps> = ({
   icon,
-  page = null,
+  page,
   onClick,
   toggleState,
 }) => {
@@ -20,12 +20,16 @@ const IconButton: React.FC<IconButtonProps> = ({
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (page) {
+    if (page !== null) {
+      console.log('i have a page clearly')
       navigate(`/${page}`);
     }
 
     // If a custom onClick function is provided, execute it
     if (onClick) {
+      console.log(
+        "onclick"
+      );
       onClick(); // !! when i define my button, i can provide it any function i want !!!
     }
 
@@ -42,9 +46,9 @@ const IconButton: React.FC<IconButtonProps> = ({
 
   return (
     <button
-      className="w-10 h-12 flex items-center justify-center p-1 border-none
+      className="w-15 h-12 flex items-center justify-center p-1 border-none
     hover:bg-teal-500 rounded"
-      onClick={() => handleClick}
+      onClick={handleClick}
     >
       <Icon icon={icon} />
     </button>

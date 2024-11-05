@@ -4,6 +4,10 @@ import BasicInfo from "./profile_card_components/BasicInfo";
 import RelationshipGoals from "./profile_card_components/RelationshipGoals";
 import Hobbies from "./profile_card_components/Hobbies";
 import Bio from "./profile_card_components/Bio";
+import IconButton from "./IconButton";
+import RedFlag from "../../ressources/icons/FlagButton_left.png"
+import GreenFlag from "../../ressources/icons/FlagButton_right.png"
+import Undo from "../../ressources/icons/undo.png"
 
 interface ProfileProps {
   user: {
@@ -23,7 +27,6 @@ interface ProfileProps {
 
 // ({user})
 const ProfileCard: React.FC<ProfileProps> = ({ user, photos }) => {
-  console.log(photos);
   return (
     <div className="w-96 bg-greenflag-green p-1 rounded">
       <PhotoCarousel images={photos} />
@@ -34,6 +37,12 @@ const ProfileCard: React.FC<ProfileProps> = ({ user, photos }) => {
       />
       <Hobbies hobbies={user.hobby_array} />
       <Bio bio={user.bio} />
+      <div className="flex items-center justify-evenly p-3">
+      <IconButton icon={RedFlag} page="swipe_left"/>
+      <IconButton icon={Undo} page="undo"/>
+      <IconButton icon={GreenFlag} page="swipe_right"/>
+      </div>
+
     </div>
   );
 };
