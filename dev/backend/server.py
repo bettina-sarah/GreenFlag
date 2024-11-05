@@ -107,7 +107,7 @@ def update_hobbies() -> bool:
 
 # -------- CHATROOMS ------------
 
-@app.route('/chatrooms', methods=['GET'])
+@app.route('/get-chatrooms', methods=['GET'])
 def fetch_chatroom_list() -> list:  # send JSON jsonify ...
     pass
 
