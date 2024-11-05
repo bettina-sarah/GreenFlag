@@ -16,7 +16,7 @@ interface ProfileProps {
     relationship: string;
     wants_kids: boolean;
     hobby_array: string[];
-    bio: string;
+    bio: string | null;
   };
   photos: any;
 }
