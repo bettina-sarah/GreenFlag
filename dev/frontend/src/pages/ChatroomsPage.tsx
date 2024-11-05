@@ -2,6 +2,7 @@ import React, {useEffect, useState } from 'react';
 import Menu from '@/components/Menu';
 import useFetch from "@/api/useFetch";
 import fetchData from "@/api/fetchData";
+import ChatroomItem from '@/components/ChatroomItem';
 
 const ChatroomsPage: React.FC = () => {
 
@@ -10,7 +11,7 @@ const ChatroomsPage: React.FC = () => {
 		subject: {
 			id:number;
 			firstname:string;
-			profile_photo:any;
+			profile_photo: any;
 		};
 		last_message: {
 			sender_id: number;
@@ -29,39 +30,41 @@ const ChatroomsPage: React.FC = () => {
 		data: profileData,
 		loading: profileLoading,
 		error: profileError,
-	  } = useFetch<IProfileData>({
+	  } = useFetch<IProfileData[]>({
 		url: "//get-chatrooms",
 		data: { id: "1" },
 	  });
-	  const [photoData, setPhotoData] = useState<IPhotoData[]>([]);
 
+	  const [modifiedProfileData, setModifiedProfileData] = useState<IProfileData[]>([]);
 	  
 	  useEffect(() => {
 		if (profileData && !profileLoading && !profileError) {
-		  const photoKeys = profileData[1];
-	
-		  // Fetch all photos based on photo keys
-		  const fetchPhotos = async () => {
-			try {
-			  //Promise.all ensures that all the promises (in this case, each fetchData call for each key) are resolved before it moves to the next line.
-			  //This means that once all the photo fetches are completed, the resulting array of fetched photos will be passed into setPhotoData.
-			  const fetchedPhotos: IPhotoData[] = await Promise.all(
-				photoKeys.map(async (key: string) => {
-				  const photo = await fetchData<IPhotoData>("/get-photo", key);
-				  return {
-					key,
-					data: photo.path, // Assuming photo.path is a URL or Base64 string
-				  };
-				})
-			  );
-			  setPhotoData(fetchedPhotos);
-			} catch (error) {
-			  console.error("Error fetching photos:", error);
-			}
-		  };
-	
-		  fetchPhotos();
-		}
+			const updatedProfileData = [...profileData];
+			console.log(updatedProfileData)
+	  
+			const fetchPhoto = async () => {
+				try {
+				  const updatedProfiles = await Promise.all(updatedProfileData.map(async (profile) => {
+					const photoKey = profile.subject.profile_photo;
+		
+					// If there are photos, fetch them
+					if (photoKey) {
+					  const fetchedPhoto: IPhotoData = await fetchData<IPhotoData>("/get-photo", photoKey[0]);
+					  profile.subject.profile_photo = fetchedPhoto; // Update profile photo data
+					} else {
+					  profile.subject.profile_photo = null; // No photos, set to null
+					}
+					return profile;
+				  }));
+		
+				  setModifiedProfileData(updatedProfiles); // Update state with modified profiles
+				} catch (error) {
+				  console.error("Error fetching photos:", error);
+				}
+			};
+			fetchPhoto();
+			
+		  }
 	  }, [profileData, profileLoading, profileError]);
 	
 	  if (!profileData && profileLoading) {
@@ -80,8 +83,11 @@ const ChatroomsPage: React.FC = () => {
 	return(
 		<div>
 			<Menu />
-			
-
+			<div>
+				{modifiedProfileData.map((profile) => (
+					<ChatroomItem key={profile.name} name={profile.name} subject={profile.subject} last_message={profile.last_message} />
+				))}
+			</div>
 		</div>
 	);
 	

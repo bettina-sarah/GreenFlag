@@ -173,6 +173,7 @@ VALUES
 
 DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
+DROP VIEW IF EXISTS chatroom_messages_view;
 
 ------- VIEWS 
 
@@ -208,6 +209,23 @@ LEFT JOIN member_activities AS ma ON m.id = ma.member_id
 LEFT JOIN activity AS a ON ma.activity_id = a.id
 GROUP BY m.id
 ORDER BY m.id;
+
+CREATE OR REPLACE VIEW chatroom_messages_view AS
+SELECT
+  mm.chatroom_name AS chatroom_name,
+  msg.id AS message_id,
+  msg.sender_id AS sender_id,
+  sender.first_name AS sender_first_name,
+  msg.msg AS message_content,
+  msg.date_sent AS date_sent
+from
+  msg
+JOIN
+  member_match AS mm ON msg.match_id = mm.id
+JOIN
+  member AS sender ON msg.sender_id = sender.id
+ORDER BY
+  mm.chatroom_name, msg.date_sent
 
 
 ------- FUNCTIONS
@@ -302,12 +320,6 @@ BEGIN
         WHERE id = user_id
       )
   )
-
-  SELECT user_id AS member_id, ARRAY_AGG(activity_id) AS aggregated_id_activities
-  FROM member_activities
-  WHERE member_id = user_id
-  GROUP BY user_id;
-
   SELECT m.id AS member_id, ARRAY_AGG(ma.activity_id) AS aggregated_id_activities
 	FROM member_activities ma
   JOIN eligible_members em ON ma.member_id = em.id
@@ -391,6 +403,33 @@ BEGIN
   DELETE FROM member_match WHERE id = match_to_delete_id;
 
   RETURN TRUE;
+
+END;
+$$ LANGUAGE PLPGSQL;
+
+DROP FUNCTION IF EXISTS get_chatrooms;
+
+CREATE OR REPLACE FUNCTION get_chatrooms
+(user_id INTEGER)
+RETURNS TABLE(subject_id INTEGER,chatroom_name VARCHAR(50), sender_id INTEGER, sender_first_name VARCHAR, message_content TEXT, date_sent TEXT) AS $$
+BEGIN
+  RETURN QUERY
+  SELECT
+    CASE
+      WHEN suggestion.member_id_1 = user_id THEN suggestion.member_id_2
+      ELSE suggestion.member_id_1
+    END AS subject_id,
+    member_match.chatroom_name AS chatroom_name,
+    chatroom_messages.sender_id AS sender_id,
+    chatroom_messages.sender_first_name AS sender_first_name,
+    chatroom_messages.message_content AS message_content,
+    TO_CHAR(chatroom_messages.date_sent, 'YYYY-MM-DD') AS date_sent
+  FROM suggestion 
+  JOIN member_match ON member_match.suggestion_id = suggestion.id
+  LEFT JOIN chatroom_messages_view AS chatroom_messages ON chatroom_messages.chatroom_name = member_match.chatroom_name
+  WHERE (member_id_1 = user_id OR member_id_2 = user_id)
+  ORDER BY chatroom_messages.date_sent
+  LIMIT 1;
 
 END;
 $$ LANGUAGE PLPGSQL;

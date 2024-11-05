@@ -66,7 +66,7 @@ def modify_profile() -> bool:
 def settings() -> bool:
     print(request.json)
     response = AccountManager.delete_account(request.json)
-    # call middleware to generate token; send it to frontend
+    # call middleware to generate token; send i to frontend
     # make sure database gets it !!!!
     return jsonify(response)
 
@@ -108,9 +108,10 @@ def update_hobbies() -> bool:
 
 # -------- CHATROOMS ------------
 
-@app.route('/get-chatrooms', methods=['GET'])
+@app.route('/get-chatrooms', methods=['POST'])
 def fetch_chatroom_list() -> list:  # send JSON jsonify ...
-    pass
+    response = chatroomManager.get_chatrooms(request.json)
+    return jsonify(response)
 
 
 @app.route('/chat', methods=['GET'])
