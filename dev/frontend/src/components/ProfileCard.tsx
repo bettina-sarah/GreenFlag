@@ -6,23 +6,18 @@ import Hobbies from "./profile_card_components/Hobbies";
 import Bio from "./profile_card_components/Bio";
 
 interface ProfileProps {
-  user:
-    | {
-        profile_info: {
-          basic_info: {
-            first_name: string;
-            age: number;
-            city: string;
-            location: number;
-          };
-          relationship: string;
-          wants_kids: boolean;
-          hobby_array: string[];
-          bio: string | null;
-        };
-      }
-    | any
-    | undefined;
+  user: {
+    basic_info: {
+      first_name: string;
+      age: number;
+      city: string;
+      location: number;
+    };
+    relationship: string;
+    wants_kids: boolean;
+    hobby_array: string[];
+    bio: string | null;
+  };
   photos: any;
 }
 
@@ -32,13 +27,13 @@ const ProfileCard: React.FC<ProfileProps> = ({ user, photos }) => {
   return (
     <div className="w-96 bg-greenflag-green p-1 rounded">
       <PhotoCarousel images={photos} />
-      <BasicInfo basic_info={user.profile_info.basic_info} />
+      <BasicInfo basic_info={user.basic_info} />
       <RelationshipGoals
-        relationship={user.profile_info.relationship}
-        wants_kids={user.profile_info.wants_kids}
+        relationship={user.relationship}
+        wants_kids={user.wants_kids}
       />
-      <Hobbies hobbies={user.profile_info.hobby_array} />
-      <Bio bio={user.profile_info.bio} />
+      <Hobbies hobbies={user.hobby_array} />
+      <Bio bio={user.bio} />
     </div>
   );
 };
