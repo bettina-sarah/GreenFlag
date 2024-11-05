@@ -45,11 +45,10 @@ const MatchingPage: React.FC = () => {
     loading: profileLoading,
     error: profileError,
   } = useFetch<IProfileData>({
-    url: "//suggestions",
+    url: "/suggestions", // /suggestions
     data: { id: "1" },
   });
 
-  // const [suggestions, setSuggestions] = useState<UserData[]>([]);
   const [photoData, setPhotoData] = useState<IPhotoData[]>([]);
 
   useEffect(() => {
