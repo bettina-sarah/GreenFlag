@@ -25,7 +25,18 @@ interface ProfileProps {
   photos: any;
 }
 
-// ({user})
+const SwipeRight = () => {
+  console.log('swiped right')
+}
+
+const SwipeLeft = () => {
+  console.log('swiped left')
+}
+
+const UndoSwipe = () => {
+  console.log('undo')
+}
+
 const ProfileCard: React.FC<ProfileProps> = ({ user, photos }) => {
   return (
     <div className="w-96 bg-greenflag-green p-1 rounded">
@@ -38,9 +49,9 @@ const ProfileCard: React.FC<ProfileProps> = ({ user, photos }) => {
       <Hobbies hobbies={user.hobby_array} />
       <Bio bio={user.bio} />
       <div className="flex items-center justify-evenly p-3">
-      <IconButton icon={RedFlag} page="swipe_left"/>
-      <IconButton icon={Undo} page="undo"/>
-      <IconButton icon={GreenFlag} page="swipe_right"/>
+      <IconButton icon={RedFlag} onClick={SwipeRight}/>
+      <IconButton icon={Undo} onClick={UndoSwipe}/>
+      <IconButton icon={GreenFlag} onClick={SwipeLeft} />
       </div>
 
     </div>

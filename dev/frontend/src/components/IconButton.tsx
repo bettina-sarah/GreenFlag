@@ -20,8 +20,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (page !== null) {
-      console.log('i have a page clearly')
+    if (page) {
       navigate(`/${page}`);
     }
 
