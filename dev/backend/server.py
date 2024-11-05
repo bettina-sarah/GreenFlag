@@ -50,6 +50,7 @@ def get_profile() -> bool:
     # if authentication_middleware.check_session_validity():
     #     return account_manager.get_profile()
     response = AccountManager.get_profile(request.json)
+    print('get profile: ', response)
     return jsonify(response) if response else jsonify(False)
 
 # ---- PAS UTLISÉ ENCORE!!
@@ -122,10 +123,11 @@ def connect_chatroom() -> list:  # send JSON jsonify ...
 @app.route('/suggestions', methods=['POST'])
 def get_suggestions() -> list:
     response = MatchingManager.get_suggestions(request.json)
+    print ('suggestions: ', response)
     if not response:
         MatchingManager.create_suggestions(request.json)
         response = MatchingManager.get_suggestions(request.json)
-    return jsonify(True) if response else jsonify(False)
+    return jsonify(response) if response else jsonify(False)
 
 @app.route('/update-suggestion', methods=['POST'])
 def update_suggestion() -> bool:

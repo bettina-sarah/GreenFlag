@@ -1,5 +1,5 @@
 interface BioProps {
-  bio: string;
+  bio: string | null;
 }
 
 const Bio: React.FC<BioProps> = ({ bio }) => {
