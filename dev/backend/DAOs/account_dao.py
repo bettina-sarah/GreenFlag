@@ -90,8 +90,8 @@ class AccountDAO(DAO):
         return False
     
     @staticmethod
-    def get_photos(params:tuple) -> List[tuple]:   
-        query = 'SELECT encryption_key from member_photos_view where member_id = %s;'
+    def get_photos(params:tuple, extraquery=';') -> List[tuple]:   
+        query = 'SELECT encryption_key from member_photos_view where member_id = %s' + extraquery
         response = AccountDAO._prepare_statement("select", query, params)
         if response:
             return response

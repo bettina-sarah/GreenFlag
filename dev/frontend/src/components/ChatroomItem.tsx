@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import PhotoCarousel from "./profile_card_components/PhotoCarousel";
-import BasicInfo from "./profile_card_components/BasicInfo";
-import RelationshipGoals from "./profile_card_components/RelationshipGoals";
-import Hobbies from "./profile_card_components/Hobbies";
-import Bio from "./profile_card_components/Bio";
+import React from "react";
+import LastMessage from "./chatroom_item_components/LastMessage";
+import Subject from "./chatroom_item_components/Subject";
+import { useNavigate } from "react-router-dom";
 
 interface ChatroomProps {
   name: string;
@@ -20,16 +18,19 @@ interface ChatroomProps {
   };
 }
 
-// ({user})
 const ChatroomItem: React.FC<ChatroomProps> = ({ name, subject, last_message }) => {
-  const chatroom_name = name;
+  const navigate = useNavigate();
+
+  function handleClick() {
+    navigate(`/chatroom/${name}`);
+  }
 
   return (
-    <div className="w-96 bg-greenflag-green p-1 rounded">
+    <div className="w-96 bg-greenflag-green p-1 rounded" onClick={handleClick}>
       <Subject subject={subject}/>
-      <LastMessage lastmessage={last_message}/>
+      <LastMessage last_message={last_message}/>
     </div>
   );
 };
 
-export default ProfileCard;
+export default ChatroomItem;
