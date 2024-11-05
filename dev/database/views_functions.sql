@@ -52,7 +52,7 @@ JOIN
 JOIN
   member AS sender ON msg.sender_id = sender.id
 ORDER BY
-  mm.chatroom_name, msg.date_sent
+  mm.chatroom_name, msg.date_sent;
 
 
 ------- FUNCTIONS

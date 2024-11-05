@@ -1,16 +1,15 @@
-from dao import DAO
-from account_dao import AccountDAO
+from DAOs.dao import DAO
+from DAOs.account_dao import AccountDAO
 from typing import List
 
 class ChatDAO(DAO):
     @staticmethod
-    def get_chatroom_names(user_id:int):
+    def get_chatroom_names(params):
         # need to returns the chatroom_names, the other user id, firstname and profile picture  and the last_message
         query = "SELECT * FROM get_chatrooms(%s)"
-        params = (user_id,)
         response = ChatDAO._prepare_statement('select', query, params)
+        chatrooms = []
         if response:
-            chatrooms = []
             for chat in response:
                 subject_firstname = ChatDAO.get_subject_firstname(chat[0])
                 params = (chat[0],)
@@ -20,7 +19,7 @@ class ChatDAO(DAO):
                     "subject": {
                         "id": chat[0],
                         "firstname": subject_firstname[0],
-                        "profile_photo": profile_photo[0]
+                        "profile_photo": profile_photo
                     },
                     "last_message":{
                         "sender_id": chat[2],
