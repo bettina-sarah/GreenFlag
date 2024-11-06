@@ -19,7 +19,7 @@ const MatchingPage: React.FC = () => {
     data: profileData,
     loading: profileLoading,
     error: profileError,
-  } = useFetch<IProfileData>({
+  } = useFetch<IProfileData[]>({
     url: "/suggestions",
     data: { id: "1" },
   });
