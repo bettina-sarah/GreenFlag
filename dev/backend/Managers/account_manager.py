@@ -164,7 +164,7 @@ class AccountManager:
     def modify_photos(files, info=None) -> bool:
         #token = info.get('token')
         # we verify if token is valid here ... and return right user id to put in params !
-        user_id = '11'
+        user_id = '1'
         # by now we assume Frontend knows which photos were changed ??? overwrites them all ?
         try:
             images = files.get('image')
