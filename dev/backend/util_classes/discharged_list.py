@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, Callable
+from typing import List, Callable, Any
 from time import perf_counter, sleep
 import threading
 from util_classes.observer import Observer
@@ -7,7 +7,7 @@ from util_classes.observer import Observer
 class DischargedList:
     def __init__(self,limit: int, max_time: float):
         self._observers: List[Callable[[], None]] = []
-        self._items: List = []
+        self._items: list[tuple[Any,...]] = []
         self._limit = limit
         self._max_time = max_time
         self._start_time = None
@@ -53,12 +53,12 @@ class DischargedList:
     def get_items(self):
         return self._items
     
-    def clear_list(self):
+    def clear_items(self):
         self._items = []
         
     def discharge(self):
         self._notify_observers()
-        self.clear_list()
+        self.clear_items()
         
 
 class Printing(Observer):

@@ -4,7 +4,7 @@ from typing import List
 
 class ChatDAO(DAO):
     @staticmethod
-    def get_chatroom_names(params):
+    def get_chatroom_names(params:tuple) -> list:
         # need to returns the chatroom_names, the other user id, firstname and profile picture  and the last_message
         query = "SELECT * FROM get_chatrooms(%s)"
         response = ChatDAO._prepare_statement('select', query, params)
@@ -56,9 +56,8 @@ class ChatDAO(DAO):
             return response
 
     @staticmethod
-    def get_messages(chat_name:str) -> List[str]:
+    def get_messages(params:tuple) -> List[str]:
         query = "SELECT sender_id, sender_first_name, message_content, date_sent FROM chatroom_messages_view WHERE chatroom_name = %s ORDER BY date_sent;"
-        params = (chat_name,)
         response = ChatDAO._prepare_statement('select', query, params)
         if response:
             return response
