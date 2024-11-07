@@ -260,3 +260,33 @@ BEGIN
 
 END;
 $$ LANGUAGE PLPGSQL;
+
+DROP FUNCTION IF EXISTS insert_messages;
+
+CREATE OR REPLACE FUNCTION insert_messages(
+    new_messages JSONB[]
+)
+RETURNS VOID AS $$
+DECLARE
+    message JSONB;
+    match_id INTEGER;
+BEGIN
+    FOREACH message IN ARRAY new_messages LOOP
+        SELECT id INTO match_id
+        FROM member_match
+        WHERE chatroom_name = message->>'chatroom_name';
+
+        IF match_id IS NOT NULL THEN
+            INSERT INTO msg (match_id, sender_id, msg, date_sent)
+            VALUES (
+                match_id,
+                (message->>'sender_id')::INTEGER,
+                message->>'msg',
+                (message->>'date_sent')::TIMESTAMP
+            );
+        ELSE
+            RAISE NOTICE 'Chatroom name not found: %', message->>'chatroom_name';
+        END IF;
+    END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;

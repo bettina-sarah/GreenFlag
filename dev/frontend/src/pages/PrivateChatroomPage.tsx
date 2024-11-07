@@ -1,12 +1,10 @@
 import React from 'react';
 import Menu from '@/components/Menu';
-import { useParams } from 'react-router-dom';
+import Chat from '@/components/Chat';
 
 const PrivateChatroomPage: React.FC = () => {
-    let {chatroom_name} = useParams()
-    
-    return (
 
+    return (
         <div>
             <Menu />
             <Chat />
