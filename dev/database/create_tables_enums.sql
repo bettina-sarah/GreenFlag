@@ -124,7 +124,7 @@ CREATE TABLE msg (
   match_id          INTEGER NOT NULL,
   sender_id         INTEGER NOT NULL,
   msg               TEXT NOT NULL,
-  date_sent         DATE NOT NULL
+  date_sent         TIMESTAMP NOT NULL
 );
 
 ALTER TABLE member_activities ADD FOREIGN KEY (activity_id) REFERENCES activity (id);

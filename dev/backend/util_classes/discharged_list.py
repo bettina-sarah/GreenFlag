@@ -5,6 +5,12 @@ import threading
 from util_classes.observer import Observer
 
 class DischargedList:
+    
+    class Observer(ABC):
+        @abstractmethod
+        def __call__(self,list):
+            pass
+    
     def __init__(self,limit: int, max_time: float):
         self._observers: List[Callable[[], None]] = []
         self._items: list[tuple[Any,...]] = []
@@ -61,31 +67,31 @@ class DischargedList:
         self.clear_items()
         
 
-class Printing(Observer):
-    def __call__(self,list):
-        for i in list:
-            print(i)
+# class Printing(Observer):
+#     def __call__(self,list):
+#         for i in list:
+#             print(i)
 
-class Printing_index(Observer):
-    def __call__(self,list):
-        for index, i in enumerate(list):
-            print(index, i)
+# class Printing_index(Observer):
+#     def __call__(self,list):
+#         for index, i in enumerate(list):
+#             print(index, i)
             
-if __name__ == "__main__":
-    diss = DischargedList(5,5)
+# if __name__ == "__main__":
+#     diss = DischargedList(5,5)
     
-    p = Printing()
-    pi = Printing_index()
+#     p = Printing()
+#     pi = Printing_index()
     
-    diss.add_observer(p)
-    diss.add_observer(pi)
+#     diss.add_observer(p)
+#     diss.add_observer(pi)
     
-    diss.add_item("Hello")
-    sleep(1)
-    diss.add_item("World")
-    sleep(1)
-    diss.add_item("!")
-    sleep(1)
-    diss.add_item("!")
-    diss.add_item("!")
-    diss.add_item("!")
+#     diss.add_item("Hello")
+#     sleep(1)
+#     diss.add_item("World")
+#     sleep(1)
+#     diss.add_item("!")
+#     sleep(1)
+#     diss.add_item("!")
+#     diss.add_item("!")
+#     diss.add_item("!")

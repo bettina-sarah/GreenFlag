@@ -1,23 +1,57 @@
-import React from "react";
-import { Avatar } from "flowbite-react";
+import { userInfo } from "os";
+import React, {useState} from "react";
+import { useParams } from 'react-router-dom';
+import io from 'socket.io-client';
 
-
-
-interface ChatProps {
-    subject: {
-        id:number;
-        firstname:string;
-        profile_photo:any;
-      };
-  }
+const socket = io('http://localhost:5000');
   
-  const Chat: React.FC<ChatProps> = ({ subject }) => {
+interface Message {
+  content: string;
+  sender_id: number;
+}
+
+
+
+  const Chat: React.FC = () => {
+    const {chatroom_name} = useParams();
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [newMessage,setNewMessage] = useState<string>('');
+    const currentUserId = localStorage.getItem('id') ? Number(localStorage.getItem('id')) : 0;
+    
+    socket.emit('join_chatroom',{chatroom_name});
+    
+    socket.on('message', (message: { content: string; sender_id: number }) => {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { content: message.content, sender_id: message.sender_id }
+      ]);
+    });
+    
+    const sendMessage = () => {
+      socket.emit('message', { chatroom_name, message: newMessage, sender_id: currentUserId });
+
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { content: newMessage, sender_id: currentUserId}
+      ]);
+
+      setNewMessage('');
+    };
+
     return (
-      <div className="flex flex-row items-baseline pl-4 pt-1">
-        <Avatar img={subject.profile_photo} rounded />
-        <h1>{subject.firstname}</h1>
-      </div>
-    );
+    <div>
+      {messages.map((msg, index) => (
+        <p key={index}>{msg.content}</p>
+      ))}
+      <input 
+        type="text" 
+        value={newMessage} 
+        onChange={(e) => setNewMessage(e.target.value)} 
+        placeholder="Type a message"
+      />
+      <button onClick={sendMessage}>Send</button>
+    </div>
+  );
   };
   
   export default Chat;

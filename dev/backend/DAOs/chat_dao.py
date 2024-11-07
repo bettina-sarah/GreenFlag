@@ -56,6 +56,15 @@ class ChatDAO(DAO):
             return response
 
     @staticmethod
+    def send_messages(messages:list[dict[str, int]]) -> bool:
+        query = "SELECT * FROM insert_messages(%s)"
+        params = (messages,)
+        response = ChatDAO._prepare_statement('select',query,params)
+        if response:
+            return response
+        return False
+
+    @staticmethod
     def get_messages(params:tuple) -> List[str]:
         query = "SELECT sender_id, sender_first_name, message_content, date_sent FROM chatroom_messages_view WHERE chatroom_name = %s ORDER BY date_sent;"
         response = ChatDAO._prepare_statement('select', query, params)
