@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List, Callable, Any
 from time import perf_counter, sleep
 import threading
-from util_classes.observer import Observer
+
 
 class DischargedList:
     

@@ -1,6 +1,5 @@
 from DAOs.chat_dao import ChatDAO
 from util_classes.discharged_list import DischargedList
-from util_classes.observer import Observer
 # another class that manages the websocket chatroom? 
 class ChatroomManager(DischargedList.Observer):
     def __init__(self) -> None:
