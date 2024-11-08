@@ -38,6 +38,19 @@ class MatchingManager():
             
         except Exception as error:
             print(error)
+            
+            
+    @staticmethod
+    def update_suggestion(data:dict) -> bool:
+        try:
+            suggestion_id = data.get("suggestion_id")
+            situation = data.get("choice")
+            params = (suggestion_id, situation)
+            response = MatchingDAO.update_suggestion(params)
+            if response:
+                return response
+        except Exception as error:
+            print(error)
 
     @staticmethod
     def flag_user(data:dict) -> bool:

@@ -132,7 +132,8 @@ def get_suggestions() -> list:
 
 @app.route('/update-suggestion', methods=['POST'])
 def update_suggestion() -> bool:
-    pass
+    response = MatchingManager.update_suggestion(request.json)
+    return jsonify(response)
 
 # undo():json - plus necessaire ? juste affiché dans le frontend?
 
