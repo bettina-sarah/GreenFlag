@@ -6,7 +6,7 @@ class ChatDAO(DAO):
     @staticmethod
     def get_chatroom_names(params:tuple) -> list:
         # need to returns the chatroom_names, the other user id, firstname and profile picture  and the last_message
-        query = "SELECT * FROM get_chatrooms(%s)"
+        query = "SELECT * FROM get_chatrooms_intricate(%s)"
         response = ChatDAO._prepare_statement('select', query, params)
         chatrooms = []
         if response:
@@ -56,10 +56,11 @@ class ChatDAO(DAO):
             return response
 
     @staticmethod
-    def send_messages(messages:list[dict[str, int]]) -> bool:
-        query = "SELECT * FROM insert_messages(%s)"
+    def send_messages(messages:list[tuple[str, int]]) -> bool:
+        query = "SELECT insert_message(%s)"
+        print(messages)
         params = (messages,)
-        response = ChatDAO._prepare_statement('select',query,params)
+        response = ChatDAO._prepare_statement('select',query,params,many=True)
         if response:
             return response
         return False

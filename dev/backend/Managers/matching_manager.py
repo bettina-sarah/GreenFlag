@@ -1,5 +1,4 @@
 from user import User
-from util_classes.observer import Observer
 from DAOs.matching_dao import MatchingDAO
 from Algorithms.algo_strategy import AlgoContext
 from Algorithms.meanshift import MeanShift
@@ -8,7 +7,7 @@ import numpy as np
 NUMBER_ACTIVITIES = 20
 
 
-class MatchingManager(Observer):
+class MatchingManager():
     suggestions = [] # Users
     matches = []
     

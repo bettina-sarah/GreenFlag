@@ -124,7 +124,7 @@ CREATE TABLE msg (
   match_id          INTEGER NOT NULL,
   sender_id         INTEGER NOT NULL,
   msg               TEXT NOT NULL,
-  date_sent         DATE NOT NULL
+  date_sent         TIMESTAMP NOT NULL
 );
 
 ALTER TABLE member_activities ADD FOREIGN KEY (activity_id) REFERENCES activity (id);
@@ -433,7 +433,36 @@ BEGIN
 
 END;
 $$ LANGUAGE PLPGSQL;
-INSERT INTO member (first_name, last_name, member_password, email, date_of_birth, gender, preferred_genders, min_age, max_age, relationship_type, height, religion, want_kids, city, token, email_confirmed) 
+
+DROP FUNCTION IF EXISTS insert_messages;
+
+CREATE OR REPLACE FUNCTION insert_messages(
+    new_messages JSONB[]
+)
+RETURNS VOID AS $$
+DECLARE
+    message JSONB;
+    match_id INTEGER;
+BEGIN
+    FOREACH message IN ARRAY new_messages LOOP
+        SELECT id INTO match_id
+        FROM member_match
+        WHERE chatroom_name = message->>'chatroom_name';
+
+        IF match_id IS NOT NULL THEN
+            INSERT INTO msg (match_id, sender_id, msg, date_sent)
+            VALUES (
+                match_id,
+                (message->>'sender_id')::INTEGER,
+                message->>'msg',
+                (message->>'date_sent')::TIMESTAMP
+            );
+        ELSE
+            RAISE NOTICE 'Chatroom name not found: %', message->>'chatroom_name';
+        END IF;
+    END LOOP;
+END;
+$$ LANGUAGE PLPGSQL;INSERT INTO member (first_name, last_name, member_password, email, date_of_birth, gender, preferred_genders, min_age, max_age, relationship_type, height, religion, want_kids, city, token, email_confirmed) 
 VALUES
 ('John', 'Doe', 'password123', 'john.doe1@example.com', '1990-05-12', 'Male'::GENDER, ARRAY['Female', 'Non-Binary']::GENDER[], 20, 35, 'longterm'::RELATIONSHIP, 180, NULL, TRUE, 'New York', 'token12345', TRUE),
 ('Jane', 'Smith', 'password123', 'jane.smith2@example.com', '1988-11-22', 'Female'::GENDER, ARRAY['Male']::GENDER[], 25, 40, 'shortterm'::RELATIONSHIP, 165, NULL, FALSE, 'Los Angeles', 'token12346', FALSE),

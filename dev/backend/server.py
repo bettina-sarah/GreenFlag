@@ -4,7 +4,7 @@ from flask_cors import CORS
 from flask_socketio import SocketIO
 from file_tree import create_file_tree
 import json_tests
-from dev.backend.Managers.chatroom_socket_manager import ChatroomSocketManager
+from Managers.chatroom_socket_manager import ChatroomSocketManager
 from Managers.chatroom_manager import ChatroomManager
 # create_file_tree()
 import json_tests
