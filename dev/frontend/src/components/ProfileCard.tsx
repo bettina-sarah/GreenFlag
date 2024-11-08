@@ -16,23 +16,29 @@ interface IProfileProps {
   photos: string[];
 }
 
-const SwipeRight = () => {
-  console.log("swiped right");
-};
-
-const SwipeLeft = () => {
-  console.log("swiped left");
-};
 
 const UndoSwipe = () => {
   console.log("undo");
 };
 
+
+const SwipeRight = () => {
+  onSwipe('right'); // Calls swipe logic as if swiped right
+};
+
+const SwipeLeft = () => {
+  onSwipe('left'); // Calls swipe logic as if swiped left
+};
+
+const onSwipe = (direction: string) => {
+  console.log('You swiped: ' + direction)
+}
+
 const ProfileCard: React.FC<IProfileProps> = ({ profile_info, photos }) => {
   console.log(photos);
   return (
     <div>
-      <TinderCard preventSwipe={["right", "left"]}>
+      <TinderCard onSwipe={onSwipe} preventSwipe={["right", "left"]}>
         <div className="w-96 bg-greenflag-green p-1 rounded">
           <PhotoCarousel images={photos} />
           <BasicInfo basic_info={profile_info.basic_info} />

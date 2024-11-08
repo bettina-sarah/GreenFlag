@@ -2,6 +2,7 @@ import React from "react";
 import Menu from "@/components/Menu";
 import ProfileCard from "@/components/ProfileCard";
 import useFetch from "@/api/useFetch";
+import { profile } from "console";
 // import fetchData from "@/api/fetchData";
 // import { useState, useEffect } from "react";
 
@@ -38,7 +39,7 @@ const MatchingPage: React.FC = () => {
     error: profileError,
   } = useFetch<IProfileData[]>({
     url: "/suggestions",
-    data: { id: "8" },
+    data: { id: "1" },
   });
 
   if (!profileData && profileLoading) {
@@ -56,12 +57,13 @@ const MatchingPage: React.FC = () => {
   return (
     <div className="w-full h-full flex flex-col justify-evenly items-center">
       <Menu />
-      {profileData && (
+      {profileData?.map((profile, index) => (
         <ProfileCard
-          profile_info={profileData[0].user_infos.profile_info}
-          photos={profileData[0].user_infos.photo_keys}
+        key={index}
+          profile_info={profile.user_infos.profile_info}
+          photos={profile.user_infos.photo_keys}
         />
-      )}
+      ))}
     </div>
   );
 };
