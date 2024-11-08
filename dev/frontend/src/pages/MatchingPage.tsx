@@ -21,7 +21,7 @@ const MatchingPage: React.FC = () => {
     error: profileError,
   } = useFetch<IProfileData>({
     url: "/suggestions",
-    data: { id: "1" },
+    data: { id: "8" },
   });
 
   const [photoData, setPhotoData] = useState<IPhotoData[]>([]);
