@@ -17,11 +17,6 @@ interface IProfileProps {
 }
 
 
-const UndoSwipe = () => {
-  console.log("undo");
-};
-
-
 const SwipeRight = () => {
   onSwipe('right'); // Calls swipe logic as if swiped right
 };
@@ -50,7 +45,6 @@ const ProfileCard: React.FC<IProfileProps> = ({ profile_info, photos }) => {
           <Bio bio={profile_info.bio} />
           <div className="flex items-center justify-evenly p-3">
             <IconButton icon={RedFlag} onClick={SwipeRight} />
-            <IconButton icon={Undo} onClick={UndoSwipe} />
             <IconButton icon={GreenFlag} onClick={SwipeLeft} />
           </div>
         </div>
