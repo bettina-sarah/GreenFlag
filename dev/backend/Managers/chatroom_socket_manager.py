@@ -12,17 +12,18 @@ class ChatroomSocketManager:
         self.socketio.on_event('message', self.handle_message)
 
     def handle_join_chatroom(self, room):
-        join_room(room)
-        self.current_room = room
+        room_name = room["chatroom_name"]
+        join_room(room_name)
+        self.current_room = room_name
 
     def handle_message(self, data):
         message = data['message']
         sender_id = data['sender_id']
-        new_message = {
-            "chatroom_name": self.current_room,
-            "sender_id": sender_id,
-            "msg": message,
-            "date_sent": datetime.datetime.now()
-        }
+        new_message = (
+            self.current_room,
+            sender_id,
+            message,
+            datetime.datetime.now()
+        )
         self.chatroom_manager.add_chatroom_message(new_message)
         self.socketio.emit('message', {'chatroom': self.current_room, 'sender_id':sender_id, 'message': message}, room=self.current_room)

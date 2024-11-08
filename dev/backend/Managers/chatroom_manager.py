@@ -1,13 +1,12 @@
 from DAOs.chat_dao import ChatDAO
 from util_classes.discharged_list import DischargedList
-from util_classes.observer import Observer
 # another class that manages the websocket chatroom? 
 class ChatroomManager(DischargedList.Observer):
     def __init__(self) -> None:
         self.requests = DischargedList(5,5)
         self.requests.add_observer(self)
     
-    def __call__(self, list:list[dict[str,int]]):
+    def __call__(self, list:list[tuple[str,int]]):
         response = ChatDAO.send_messages(list)
         if response:
             return response
