@@ -319,7 +319,7 @@ DECLARE
 BEGIN
   SELECT id INTO match_id
   FROM member_match
-  WHERE chatroom_name = message->>'chatroom_name';
+  WHERE chatroom_name = new_message.chatroom_name;
 
   IF match_id IS NOT NULL THEN
       INSERT INTO msg (match_id, sender_id, msg, date_sent)

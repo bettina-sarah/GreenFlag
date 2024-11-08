@@ -19,11 +19,13 @@ class ChatroomSocketManager:
     def handle_message(self, data):
         message = data['message']
         sender_id = data['sender_id']
+        now = datetime.datetime.now()
+        datetime_string = now.strftime('%Y-%m-%d %H:%M:%S')
         new_message = (
             self.current_room,
             sender_id,
             message,
-            datetime.datetime.now()
+            datetime_string
         )
         self.chatroom_manager.add_chatroom_message(new_message)
         self.socketio.emit('message', {'chatroom': self.current_room, 'sender_id':sender_id, 'message': message}, room=self.current_room)

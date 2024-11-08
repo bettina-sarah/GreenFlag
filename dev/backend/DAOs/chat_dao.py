@@ -57,10 +57,9 @@ class ChatDAO(DAO):
 
     @staticmethod
     def send_messages(messages:list[tuple[str, int]]) -> bool:
-        query = "SELECT insert_message(%s)"
+        query = "WITH match_data AS(SELECT id AS match_id FROM member_match WHERE chatroom_name = %s) INSERT INTO msg(match_id, sender_id, msg, date_sent) SELECT match_id, %s, %s, %s FROM match_data;"
         print(messages)
-        params = (messages,)
-        response = ChatDAO._prepare_statement('select',query,params,many=True)
+        response = ChatDAO._prepare_statement('select',query,messages,many=True)
         if response:
             return response
         return False

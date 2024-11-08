@@ -16,7 +16,7 @@ interface Message {
     const {chatroom_name} = useParams();
     const [messages, setMessages] = useState<Message[]>([]);
     const [newMessage,setNewMessage] = useState<string>('');
-    const currentUserId = localStorage.getItem('id') ? Number(localStorage.getItem('id')) : 0;
+    const currentUserId = localStorage.getItem('id') ? Number(localStorage.getItem('id')) : 1;
     
     socket.emit('join_chatroom',{chatroom_name});
     
