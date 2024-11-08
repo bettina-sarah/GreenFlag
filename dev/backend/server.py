@@ -7,8 +7,6 @@ from flask_socketio import SocketIO
 from Managers.chatroom_socket_manager import ChatroomSocketManager
 from Managers.chatroom_manager import ChatroomManager
 
-from DAOs.matching_dao import MatchingDAO
-
 from Managers.account_manager import AccountManager
 from Managers.matching_manager import MatchingManager
 
