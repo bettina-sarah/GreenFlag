@@ -78,9 +78,11 @@ def get_photo() -> bool:
 
 @app.route('/upload-photo', methods=['POST'])
 def upload_photos() -> bool:
-    print(request.files)
-    files = request.files
-    response = AccountManager.modify_photos(files)
+    print("id : " + request.form['id'])
+    print("image : " , request.files['image'])
+    id = request.form['id']
+    files = request.files['image']
+    response = AccountManager.modify_photos(id,files)
     return jsonify(True) if response else jsonify(False)
 
 

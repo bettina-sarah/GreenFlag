@@ -43,6 +43,8 @@ export const religions = [
   "Other",
 ];
 
+const userId = sessionStorage.getItem('id')
+
 export type FormDataHobbies = {
   // Activities
   hiking: boolean;
@@ -88,14 +90,18 @@ export type FormDataPhoto = {
 };
 
 export const onSubmitFormHobbies = async (
-  data: FormDataHobbies,
+  hobbies: FormDataHobbies,
   navigate: NavigateFunction
 ) => {
   try {
+    const data = {
+      id: userId,
+      hobbies: hobbies,
+    }
+    console.log('hobbies' + userId)
     const answer = await axios.post(IP_SERVER + "/hobbies", data);
     if (answer.data) {
       console.log(answer);
-      navigate("/matching");
     }
   } catch (error) {
     console.error("Error during account modification:", error);
@@ -103,14 +109,18 @@ export const onSubmitFormHobbies = async (
 };
 
 export const onSubmitFormInfo = async (
-  data: FormDataInfo,
+  info: FormDataInfo,
   navigate: NavigateFunction
 ) => {
   try {
+    const data = {
+      id: userId,
+      info: info,
+    }
+    console.log('info : ' + userId)
     const answer = await axios.post(IP_SERVER + "/questionnaire", data);
     if (answer.data) {
       console.log(answer);
-      navigate("/matching");
     }
   } catch (error) {
     console.error("Error during account modification:", error);
@@ -121,6 +131,11 @@ export const onSubmitPhoto = async (data: FormDataPhoto) => {
   try {
     const formData = new FormData();
     if (data.image) {
+      if (userId === null)
+        formData.append('id', '');
+      else
+        formData.append('id', userId);
+
       formData.append("image", data.image);
       const answer = await axios.post(IP_SERVER + "/upload-photo", formData);
       if (answer.data) {
