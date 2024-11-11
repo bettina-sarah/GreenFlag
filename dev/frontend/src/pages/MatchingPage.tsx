@@ -32,13 +32,16 @@ export interface ProfileProps {
 }
 
 const MatchingPage: React.FC = () => {
+
+  
+
   const {
     data: profileData,
     loading: profileLoading,
     error: profileError,
   } = useFetch<IProfileData[]>({
     url: "/suggestions",
-    data: { id: "1" },
+    data: { id: sessionStorage.getItem("id") },
   });
 
   if (!profileData && profileLoading) {

@@ -132,9 +132,9 @@ class AccountManager:
 
     @staticmethod
     def update_preferences(data) -> bool:
-        columns, values = AccountManager.validate_preference_fields(data)
+        columns, values = AccountManager.validate_preference_fields(data.get('info'))
 
-        user_id = '11'
+        user_id = data.get('id')
         try:
             response = AccountDAO.update_preferences(columns,values, user_id)
             return response
@@ -161,19 +161,20 @@ class AccountManager:
         return columns, values
 
     @staticmethod
-    def modify_photos(files, info=None) -> bool:
+    def modify_photos(user_id,files, info=None) -> bool:
         #token = info.get('token')
         # we verify if token is valid here ... and return right user id to put in params !
-        user_id = '11'
+        # user_id = '11'
         # by now we assume Frontend knows which photos were changed ??? overwrites them all ?
-        try:
-            images = files.get('image')
-            # images = files.get('image').getlist()
-        except Exception as error:
-            print(error)
-            return False
+        # try:
+        #     images = files.get('image')
+        #     # images = files.get('image').getlist()
+        # except Exception as error:
+        #     print(error)
+        #     return False
         photo_dao = PhotoDAO()
-        keys = photo_dao.add_photos(images)
+        keys = photo_dao.add_photos(files)
+        # keys = photo_dao.add_photos(images)
         formatted_keys = '{' + ','.join(keys) + '}'
         params = (user_id,formatted_keys)
         try:
@@ -230,12 +231,13 @@ class AccountManager:
     @staticmethod
     def update_hobbies(data) -> bool:
         hobbies = []
-        for key, value in data.items():
+        user_id = data.get('id')
+        for key, value in data.get('hobbies').items():
             if value:
                 hobbies.append(key)
 
         # token verification yo
-        user_id = '11'
+        #user_id = '11'
         # postgres approved way of an array !!
         formatted_hobbies = '{' + ','.join(hobbies) + '}'
         params = (user_id,formatted_hobbies)
