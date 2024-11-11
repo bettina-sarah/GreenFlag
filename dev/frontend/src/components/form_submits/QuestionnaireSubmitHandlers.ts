@@ -1,6 +1,6 @@
 import { IP_SERVER } from "@/config/constants";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { NavigateFunction } from "react-router-dom";
 
 export const genders = ["Male", "Female", "Non-Binary", "Other"];
 export const hobbiesKeys = [
@@ -43,7 +43,7 @@ export const religions = [
   "Other",
 ];
 
-const userId = sessionStorage.getItem('id')
+const userId = sessionStorage.getItem("id");
 
 export type FormDataHobbies = {
   // Activities
@@ -89,38 +89,58 @@ export type FormDataPhoto = {
   image: File | null;
 };
 
-export const onSubmitFormHobbies = async (
-  hobbies: FormDataHobbies,
-  navigate: NavigateFunction
+const NavigateMatching = (
+  hobbyForm: string | null,
+  preferenceForm: string | null,
+  photoForm: string | null
 ) => {
+  const navigate = useNavigate();
+  if (hobbyForm && preferenceForm && photoForm) {
+    localStorage.removeItem("preferencesComplete");
+    localStorage.removeItem("hobbiesComplete");
+    localStorage.removeItem("photoComplete");
+    localStorage.removeItem("fillQuestionnaire");
+    navigate("/matching");
+  }
+};
+
+export const onSubmitFormHobbies = async (hobbies: FormDataHobbies) => {
   try {
     const data = {
       id: userId,
       hobbies: hobbies,
-    }
-    console.log('hobbies' + userId)
+    };
+    console.log("hobbies" + userId);
     const answer = await axios.post(IP_SERVER + "/hobbies", data);
     if (answer.data) {
+      localStorage.setItem("hobbiesComplete", "true");
       console.log(answer);
+      NavigateMatching(
+        localStorage.getItem("preferencesComplete"),
+        localStorage.getItem("hobbiesComplete"),
+        localStorage.getItem("photoComplete")
+      );
     }
   } catch (error) {
     console.error("Error during account modification:", error);
   }
 };
 
-export const onSubmitFormInfo = async (
-  info: FormDataInfo,
-  navigate: NavigateFunction
-) => {
+export const onSubmitFormInfo = async (info: FormDataInfo) => {
   try {
     const data = {
       id: userId,
       info: info,
-    }
-    console.log('info : ' + userId)
+    };
+    console.log("info : " + userId);
     const answer = await axios.post(IP_SERVER + "/questionnaire", data);
     if (answer.data) {
-      console.log(answer);
+      localStorage.setItem("preferencesComplete", "true");
+      NavigateMatching(
+        localStorage.getItem("preferencesComplete"),
+        localStorage.getItem("hobbiesComplete"),
+        localStorage.getItem("photoComplete")
+      );
     }
   } catch (error) {
     console.error("Error during account modification:", error);
@@ -131,14 +151,13 @@ export const onSubmitPhoto = async (data: FormDataPhoto) => {
   try {
     const formData = new FormData();
     if (data.image) {
-      if (userId === null)
-        formData.append('id', '');
-      else
-        formData.append('id', userId);
+      if (userId === null) formData.append("id", "");
+      else formData.append("id", userId);
 
       formData.append("image", data.image);
       const answer = await axios.post(IP_SERVER + "/upload-photo", formData);
       if (answer.data) {
+        localStorage.setItem("photoComplete", "true");
         console.log(answer);
         console.log(data);
       }
