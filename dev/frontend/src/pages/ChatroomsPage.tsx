@@ -11,7 +11,7 @@ const ChatroomsPage: React.FC = () => {
 		subject: {
 			id:number;
 			firstname:string;
-			profile_photo: any;
+			profile_photo: any; // string | IPhotoData | null;
 		};
 		last_message: {
 			sender_id: number;
