@@ -2,7 +2,6 @@ import React from "react";
 import Menu from "@/components/Menu";
 import ProfileCard from "@/components/ProfileCard";
 import useFetch from "@/api/useFetch";
-import { profile } from "console";
 // import fetchData from "@/api/fetchData";
 // import { useState, useEffect } from "react";
 
