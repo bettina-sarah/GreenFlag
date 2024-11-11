@@ -54,7 +54,7 @@ interface CarouselProps {
   images: string[] | null;
 }
 
-interface IPhotoData {
+export interface IPhotoData {
   path: string;
   key: string;
 }

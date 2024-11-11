@@ -10,7 +10,7 @@ import useFetch from "@/api/useFetch";
 //   key: string;
 // }
 
-interface IProfileData {
+export interface IProfileData {
   suggestion_id: string;
   user_infos: {
     profile_info: ProfileProps;
