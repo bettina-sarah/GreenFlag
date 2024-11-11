@@ -63,7 +63,8 @@ bio TEXT,
   last_lat          DOUBLE PRECISION DEFAULT NULL,
   last_long         DOUBLE PRECISION DEFAULT NULL,
   token             VARCHAR(255),
-  email_confirmed   BOOL DEFAULT FALSE
+  email_confirmed   BOOL DEFAULT FALSE,
+  profile_completed BOOL DEFAULT FALSE
 );
 
 CREATE TABLE activity (
