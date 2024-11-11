@@ -88,10 +88,13 @@ class DAO():
 
     # this can be in DAO directly 
     @staticmethod
-    def _prepare_statement(request_type, query, params) -> bool:
+    def _prepare_statement(request_type, query, params,many=False) -> bool:
         try:
             connection = DAO._get_connection()
-            response = DAO._send_request(request_type, connection, query, params)
+            if many:
+                response = DAO._send_requests(request_type, connection, query, params)    
+            else:
+                response = DAO._send_request(request_type, connection, query, params)
             connection.commit() # possibly necessary for an insert request
             # connection.close()
             return response
@@ -100,8 +103,16 @@ class DAO():
         return False
 
     @staticmethod
-    def send_requests(requests: list) -> None:
-        pass
+    def _send_requests(connection_type, connection, query: str, params: tuple | list) -> None:
+        try:
+            pg_cursor = connection.cursor()
+            pg_cursor.executemany(query, params)
+            response = DAO.request_type[connection_type](pg_cursor) # tuple OR bool!
+            pg_cursor.close()
+            return response
+        except Exception as e:
+            print(e)
+            return False
 
 
     # def __next__(self):

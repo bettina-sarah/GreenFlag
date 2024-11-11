@@ -2,11 +2,8 @@
 from flask import Flask, jsonify, request, make_response, send_file
 from flask_cors import CORS
 from flask_socketio import SocketIO
-
-# import json_tests
 from Managers.chatroom_socket_manager import ChatroomSocketManager
 from Managers.chatroom_manager import ChatroomManager
-
 from Managers.account_manager import AccountManager
 from Managers.matching_manager import MatchingManager
 
@@ -14,6 +11,7 @@ app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}},
             methods=["GET", "POST", "OPTIONS"],
             allow_headers=["Content-Type", "Authorization", "X-Requested-With", "Access-Control-Allow-Origin"])
+
 
 socketio = SocketIO(app, cors_allowed_origins="*")
 
@@ -110,9 +108,11 @@ def fetch_chatroom_list() -> list:  # send JSON jsonify ...
     return jsonify(response)
 
 
-@app.route('/chat', methods=['GET'])
+@app.route('/get-messages', methods=['POST'])
 def connect_chatroom() -> list:  # send JSON jsonify ...
-    pass
+    response = chatroomManager.get_chatroom_messages(request.json)
+    print(response)
+    return jsonify(response)
 
 
 # -------- MATCHING ------------
@@ -128,29 +128,9 @@ def get_suggestions() -> list:
 
 @app.route('/update-suggestion', methods=['POST'])
 def update_suggestion() -> bool:
-    pass
-
-# undo():json - plus necessaire ? juste affiché dans le frontend?
+    response = MatchingManager.update_suggestion(request.json)
+    return jsonify(response)
 
 if __name__ == '__main__':
-    
-    #print(MatchingManager.get_suggestions(1))
-    
-    app.run(debug=True, host="0.0.0.0", port=5000)
-    # key = 'pngtree-image-of-cute-radish-vector-or-color-illustration-png-image_2040180.jpg'
-    # AccountManager.get_photo(key)
-    # json = {'id': '11'}
-    # AccountManager.get_profile(json)
-
-    # MatchingDAO.get_suggestions('1')
-
-    #print(MatchingDAO.update_suggestion(5,1,'yes'))
-    #print(MatchingDAO.get_matches(1))
-    #print(MatchingDAO.get_user_infos(1))
-    #MatchingDAO.create_suggestions(4,[1]) # suppose to and does throw an error because primary key already exists
-    #MatchingDAO.create_suggestions(1,[5])
-    #MatchingDAO.flag_user(1,2,'Harassment or bullying')
-    # AccountManager.get_profile(json)
-    # AccountManager.delete_account(json_delete)
-
-    # AccountManager.modify_profile(json_tests.json_modify)
+    socketio.run(app, debug=True, host="0.0.0.0", port=5000)
+    #app.run(debug=True, host="0.0.0.0", port=5000)
