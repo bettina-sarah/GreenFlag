@@ -1,3 +1,4 @@
 flask_cors
 lmdb
 scikit-learn
+flask_socketio

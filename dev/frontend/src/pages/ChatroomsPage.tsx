@@ -1,30 +1,33 @@
-import React, {useEffect, useState } from 'react';
-import Menu from '@/components/Menu';
+import React, { useEffect, useState } from "react";
+import Menu from "@/components/Menu";
 import useFetch from "@/api/useFetch";
 import fetchData from "@/api/fetchData";
-import ChatroomItem from '@/components/ChatroomItem';
+import ChatroomItem from "@/components/ChatroomItem";
+
+
+interface IProfileData {
+  name: string;
+  subject: {
+    id:number;
+    firstname:string;
+    profile_photo: any; // string | IPhotoData | null;
+  };
+  last_message: {
+    sender_id: number;
+    sender_first_name: string;
+    content: string;
+    date_sent: string;
+  };
+  }
+
+  interface IPhotoData {
+  path: string;
+  key: string;
+  }
 
 const ChatroomsPage: React.FC = () => {
 
-	interface IProfileData {
-		name: string;
-		subject: {
-			id:number;
-			firstname:string;
-			profile_photo: any; // string | IPhotoData | null;
-		};
-		last_message: {
-			sender_id: number;
-			sender_first_name: string;
-			content: string;
-			date_sent: string;
-		};
-	  }
 
-	  interface IPhotoData {
-		path: string;
-		key: string;
-	  }
 
 	const {
 		data: profileData,
@@ -93,3 +96,4 @@ const ChatroomsPage: React.FC = () => {
 	
 }
 export default ChatroomsPage;
+

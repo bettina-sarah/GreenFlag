@@ -20,11 +20,11 @@ const RegisterForm = () => {
     } = useForm<FormData>();
 
     const authenticate = () => {
-        console.log('Account created successfully');
+        localStorage.setItem('accountCreated', 'true');
         navigate('/login');
     };
 
-    const onSubmit = handleSubmit(async (data) => {
+    const onSubmit = handleSubmit(async (data:any) => {
         try {
             const response = await axios.post(IP_SERVER + '/create-account', data);
             if (response.data) {

@@ -6,6 +6,7 @@ import numpy as np
 
 NUMBER_ACTIVITIES = 20
 
+# observer inherit ?
 
 class MatchingManager():
     suggestions = [] # Users
