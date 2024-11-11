@@ -22,7 +22,7 @@ const ChatroomItem: React.FC<ChatroomProps> = ({ name, subject, last_message }) 
   const navigate = useNavigate();
 
   function handleClick() {
-    navigate(`/chatroom/${name}`);
+    navigate(`/chatroom/${name}/${subject.id}`);
   }
 
   return (

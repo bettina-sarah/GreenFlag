@@ -42,7 +42,7 @@ html, body, #root, .App {
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  //background-color: #486d96;
+  /* background-color: #486d96; */
   background-color: rgb(200 255 237);
 
   font-synthesis: none;
