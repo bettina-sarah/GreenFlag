@@ -98,6 +98,7 @@ export const onSubmitFormHobbies = async (
       id: userId,
       hobbies: hobbies,
     }
+    console.log('hobbies' + userId)
     const answer = await axios.post(IP_SERVER + "/hobbies", data);
     if (answer.data) {
       console.log(answer);
@@ -116,6 +117,7 @@ export const onSubmitFormInfo = async (
       id: userId,
       info: info,
     }
+    console.log('info : ' + userId)
     const answer = await axios.post(IP_SERVER + "/questionnaire", data);
     if (answer.data) {
       console.log(answer);
