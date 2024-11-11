@@ -434,33 +434,77 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-DROP FUNCTION IF EXISTS insert_messages;
 
-CREATE OR REPLACE FUNCTION insert_messages(
-    new_messages JSONB[]
+-- INTRICATE FUNCTION BY CHATGEPETO
+CREATE OR REPLACE FUNCTION get_chatrooms_intricate(user_id INTEGER)
+RETURNS TABLE(
+    subject_id INTEGER,
+    chatroom_name VARCHAR(50),
+    sender_id INTEGER,
+    sender_first_name VARCHAR,
+    message_content TEXT,
+    date_sent TEXT
+) AS $$
+BEGIN
+  RETURN QUERY
+  WITH LastMessages AS (
+    SELECT
+      CASE
+        WHEN suggestion.member_id_1 = user_id THEN suggestion.member_id_2
+        ELSE suggestion.member_id_1
+      END AS subject_id,
+      member_match.chatroom_name AS chatroom_name,
+      chatroom_messages.sender_id AS sender_id,
+      chatroom_messages.sender_first_name AS sender_first_name,
+      chatroom_messages.message_content AS message_content,
+      TO_CHAR(chatroom_messages.date_sent, 'YYYY-MM-DD') AS date_sent,
+      ROW_NUMBER() OVER (PARTITION BY member_match.chatroom_name ORDER BY chatroom_messages.date_sent DESC NULLS LAST) AS rn
+    FROM suggestion
+    JOIN member_match ON member_match.suggestion_id = suggestion.id
+    LEFT JOIN chatroom_messages_view AS chatroom_messages 
+      ON chatroom_messages.chatroom_name = member_match.chatroom_name
+  )
+  SELECT
+    LastMessages.subject_id,  
+    LastMessages.chatroom_name,
+    LastMessages.sender_id,
+    LastMessages.sender_first_name,
+    LastMessages.message_content,
+    LastMessages.date_sent
+  FROM LastMessages
+  WHERE LastMessages.rn = 1
+  ORDER BY LastMessages.chatroom_name;
+
+END;
+$$ LANGUAGE PLPGSQL;
+
+
+
+
+DROP FUNCTION IF EXISTS insert_message;
+
+CREATE OR REPLACE FUNCTION insert_message(
+    new_message RECORD
 )
 RETURNS VOID AS $$
 DECLARE
-    message JSONB;
     match_id INTEGER;
 BEGIN
-    FOREACH message IN ARRAY new_messages LOOP
-        SELECT id INTO match_id
-        FROM member_match
-        WHERE chatroom_name = message->>'chatroom_name';
+  SELECT id INTO match_id
+  FROM member_match
+  WHERE chatroom_name = new_message.chatroom_name;
 
-        IF match_id IS NOT NULL THEN
-            INSERT INTO msg (match_id, sender_id, msg, date_sent)
-            VALUES (
-                match_id,
-                (message->>'sender_id')::INTEGER,
-                message->>'msg',
-                (message->>'date_sent')::TIMESTAMP
-            );
-        ELSE
-            RAISE NOTICE 'Chatroom name not found: %', message->>'chatroom_name';
-        END IF;
-    END LOOP;
+  IF match_id IS NOT NULL THEN
+      INSERT INTO msg (match_id, sender_id, msg, date_sent)
+      VALUES (
+          match_id,
+          new_message.sender_id,
+          new_message.msg,
+          new_message.date_sent
+      );
+  ELSE
+      RAISE NOTICE 'Chatroom name not found: %', message->>'chatroom_name';
+  END IF;
 END;
 $$ LANGUAGE PLPGSQL;INSERT INTO member (first_name, last_name, member_password, email, date_of_birth, gender, preferred_genders, min_age, max_age, relationship_type, height, religion, want_kids, city, token, email_confirmed) 
 VALUES

@@ -38,8 +38,6 @@ const Chat: React.FC = () => {
 
     useEffect(() => {
 		  if (messageData && !messageLoading && !messageError) {
-        console.log("messageData : " + messageData)
-
         if (firstLoad) {
           messageData.map( (message) =>{
             setMessages((prevMessages) => [
@@ -69,7 +67,6 @@ const Chat: React.FC = () => {
 
     const sendMessage = () => {
       socket.emit('message', { chatroom_name, message: newMessage, sender_id: currentUserId });
-      console.log("new message sent")
       setMessages((prevMessages) => [
         ...prevMessages,
         { message_content: newMessage, sender_id: currentUserId}
@@ -85,17 +82,6 @@ const Chat: React.FC = () => {
             <Message key={index} content={msg.message_content} sender_id={msg.sender_id}/>
           ))}
         </div>
-        {/* <input 
-          className="bg-greenflag-green rounded-xl"
-          type="text" 
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)} 
-          placeholder="Type a message"
-          onKeyDown={(e)=>{ // https://www.geeksforgeeks.org/how-to-get-the-enter-key-in-reactjs/
-            if (e.key === "Enter")
-              sendMessage()
-          }}
-        /> */}
         <div className="p-4">
           <Textarea
             className="bg-greenflag-green"

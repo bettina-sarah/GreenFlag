@@ -1,5 +1,3 @@
-from gevent import monkey
-monkey.patch_all()
 
 from flask import Flask, jsonify, request, make_response, send_file
 from flask_cors import CORS
@@ -11,8 +9,6 @@ import json_tests
 
 # pour websocket
 from flask_socketio import SocketIO
-import os
-os.environ['GEVENT_SUPPORT'] = 'True'
 
 from DAOs.matching_dao import MatchingDAO
 
@@ -25,7 +21,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}},
             allow_headers=["Content-Type", "Authorization", "X-Requested-With", "Access-Control-Allow-Origin"])
 
 
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent')
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 
 chatroomManager = ChatroomManager() # need to be an object because contains a discharged list
