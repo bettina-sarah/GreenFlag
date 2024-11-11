@@ -3,7 +3,6 @@ from typing import List, Callable, Any
 from time import perf_counter, sleep
 import threading
 
-
 class DischargedList:
     
     class Observer(ABC):
@@ -65,33 +64,3 @@ class DischargedList:
     def discharge(self):
         self._notify_observers()
         self.clear_items()
-        
-
-# class Printing(Observer):
-#     def __call__(self,list):
-#         for i in list:
-#             print(i)
-
-# class Printing_index(Observer):
-#     def __call__(self,list):
-#         for index, i in enumerate(list):
-#             print(index, i)
-            
-# if __name__ == "__main__":
-#     diss = DischargedList(5,5)
-    
-#     p = Printing()
-#     pi = Printing_index()
-    
-#     diss.add_observer(p)
-#     diss.add_observer(pi)
-    
-#     diss.add_item("Hello")
-#     sleep(1)
-#     diss.add_item("World")
-#     sleep(1)
-#     diss.add_item("!")
-#     sleep(1)
-#     diss.add_item("!")
-#     diss.add_item("!")
-#     diss.add_item("!")

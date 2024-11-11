@@ -6,7 +6,7 @@ class ChatroomManager(DischargedList.Observer):
         self.requests = DischargedList(5,5)
         self.requests.add_observer(self)
     
-    def __call__(self, list:list[dict[str,int]]):
+    def __call__(self, list:list[tuple[str,int]]):
         response = ChatDAO.send_messages(list)
         if response:
             return response
@@ -22,7 +22,7 @@ class ChatroomManager(DischargedList.Observer):
 
     def get_chatroom_messages(self, data) -> list:
         chatroom_name = data.get("chatroom_name")
-        params = (chatroom_name)
+        params = (chatroom_name,)
         response = ChatDAO.get_messages(params)
         if response:
             return response
