@@ -23,11 +23,13 @@ const LoginForm = () => {
       const answer = await axios.post(IP_SERVER + "/login", data);
       if (answer.data) {
         console.log(answer.data[0]);
+        console.log(answer.data[1]);
         sessionStorage.setItem("id", answer.data[0]);
-        if (localStorage.getItem("fillQuestionnaire") === "true") {
-          navigate("/questionnaire");
-        } else {
+        sessionStorage.setItem("profileComplete", answer.data[1]);
+        if (sessionStorage.getItem("profileComplete") === "true") {
           navigate("/matching");
+        } else {
+          navigate("/questionnaire");
         }
       }
     } catch (error) {

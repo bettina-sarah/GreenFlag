@@ -99,7 +99,7 @@ const NavigateMatching = (
     localStorage.removeItem("preferencesComplete");
     localStorage.removeItem("hobbiesComplete");
     localStorage.removeItem("photoComplete");
-    localStorage.removeItem("fillQuestionnaire");
+    // FAUT FAIRE UNE ROUTE VERS BE pour completer profile_completed a true !!!!!
     navigate("/matching");
   }
 };
@@ -113,13 +113,15 @@ export const onSubmitFormHobbies = async (hobbies: FormDataHobbies) => {
     console.log("hobbies" + userId);
     const answer = await axios.post(IP_SERVER + "/hobbies", data);
     if (answer.data) {
-      localStorage.setItem("hobbiesComplete", "true");
+      if (!sessionStorage.getItem("profileComplete")) {
+        localStorage.setItem("hobbiesComplete", "true");
+        NavigateMatching(
+          localStorage.getItem("preferencesComplete"),
+          localStorage.getItem("hobbiesComplete"),
+          localStorage.getItem("photoComplete")
+        );
+      }
       console.log(answer);
-      NavigateMatching(
-        localStorage.getItem("preferencesComplete"),
-        localStorage.getItem("hobbiesComplete"),
-        localStorage.getItem("photoComplete")
-      );
     }
   } catch (error) {
     console.error("Error during account modification:", error);
@@ -135,12 +137,14 @@ export const onSubmitFormInfo = async (info: FormDataInfo) => {
     console.log("info : " + userId);
     const answer = await axios.post(IP_SERVER + "/questionnaire", data);
     if (answer.data) {
-      localStorage.setItem("preferencesComplete", "true");
-      NavigateMatching(
-        localStorage.getItem("preferencesComplete"),
-        localStorage.getItem("hobbiesComplete"),
-        localStorage.getItem("photoComplete")
-      );
+      if (!sessionStorage.getItem("profileComplete")) {
+        localStorage.setItem("preferencesComplete", "true");
+        NavigateMatching(
+          localStorage.getItem("preferencesComplete"),
+          localStorage.getItem("hobbiesComplete"),
+          localStorage.getItem("photoComplete")
+        );
+      }
     }
   } catch (error) {
     console.error("Error during account modification:", error);
@@ -157,9 +161,14 @@ export const onSubmitPhoto = async (data: FormDataPhoto) => {
       formData.append("image", data.image);
       const answer = await axios.post(IP_SERVER + "/upload-photo", formData);
       if (answer.data) {
-        localStorage.setItem("photoComplete", "true");
-        console.log(answer);
-        console.log(data);
+        if (!sessionStorage.getItem("profileComplete")) {
+          localStorage.setItem("photoComplete", "true");
+          NavigateMatching(
+            localStorage.getItem("preferencesComplete"),
+            localStorage.getItem("hobbiesComplete"),
+            localStorage.getItem("photoComplete")
+          );
+        }
       }
     }
   } catch (error) {
