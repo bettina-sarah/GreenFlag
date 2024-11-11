@@ -22,7 +22,7 @@ class ChatroomManager(DischargedList.Observer):
 
     def get_chatroom_messages(self, data) -> list:
         chatroom_name = data.get("chatroom_name")
-        params = (chatroom_name)
+        params = (chatroom_name,)
         response = ChatDAO.get_messages(params)
         if response:
             return response

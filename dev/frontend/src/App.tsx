@@ -20,7 +20,7 @@ const App: React.FC = () => {
  
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter >
         {/* <header>
           <Link to="/">Green Flag</Link>
         </header> */}
