@@ -28,6 +28,7 @@ const LoginForm = () => {
                 sessionStorage.setItem("id", answer.data[0]);
                 if(localStorage.getItem("fillQuestionnaire") === "true"){
                     navigate('/questionnaire')
+                    localStorage.removeItem("fillQuestionnaire");
                 }
                 else{
                     navigate('/matching')
