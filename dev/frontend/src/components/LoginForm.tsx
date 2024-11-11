@@ -25,7 +25,7 @@ const LoginForm = () => {
             const answer = await axios.post(IP_SERVER+'/login',data)
             if (answer.data){
                 console.log(answer);
-                sessionStorage.setItem("email", data.email);
+                sessionStorage.setItem("id", data.email);
                 if(localStorage.getItem("fillQuestionnaire") === "true"){
                     navigate('/questionnaire')
                 }
