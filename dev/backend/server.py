@@ -37,7 +37,7 @@ def login() -> bool:
     response = AccountManager.login(request.json)
     # call middleware to generate token; send it to frontend
     # make sure database gets it !!!!
-    return jsonify(response)
+    return jsonify(response) if response else jsonify(False)
 
 @app.route('/get-profile', methods=['POST'])
 def get_profile() -> bool:
