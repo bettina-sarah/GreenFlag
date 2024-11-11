@@ -9,9 +9,9 @@ class AccountDAO(DAO):
 
     @staticmethod
     def login(params:tuple) -> bool:
-        query = 'SELECT * FROM member WHERE email = %s and member_password = %s'
+        query = 'SELECT id FROM member WHERE email = %s and member_password = %s'
         response = AccountDAO._prepare_statement("select", query, params)
-        # user returned ici : 
+        print('login response:', response)
         return response
 
 
