@@ -161,7 +161,7 @@ class AccountManager:
         return columns, values
 
     @staticmethod
-    def modify_photos(files, info=None) -> bool:
+    def modify_photos(user_id,files, info=None) -> bool:
         #token = info.get('token')
         # we verify if token is valid here ... and return right user id to put in params !
         user_id = '11'
@@ -230,12 +230,13 @@ class AccountManager:
     @staticmethod
     def update_hobbies(data) -> bool:
         hobbies = []
-        for key, value in data.items():
+        user_id = data.get('id')
+        for key, value in data.get('hobbies').items():
             if value:
                 hobbies.append(key)
 
         # token verification yo
-        user_id = '11'
+        #user_id = '11'
         # postgres approved way of an array !!
         formatted_hobbies = '{' + ','.join(hobbies) + '}'
         params = (user_id,formatted_hobbies)
