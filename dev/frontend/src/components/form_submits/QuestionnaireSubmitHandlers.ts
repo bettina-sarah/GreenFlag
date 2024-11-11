@@ -95,7 +95,6 @@ export const onSubmitFormHobbies = async (
     const answer = await axios.post(IP_SERVER + "/hobbies", data);
     if (answer.data) {
       console.log(answer);
-      navigate("/matching");
     }
   } catch (error) {
     console.error("Error during account modification:", error);
@@ -110,7 +109,6 @@ export const onSubmitFormInfo = async (
     const answer = await axios.post(IP_SERVER + "/questionnaire", data);
     if (answer.data) {
       console.log(answer);
-      navigate("/matching");
     }
   } catch (error) {
     console.error("Error during account modification:", error);
