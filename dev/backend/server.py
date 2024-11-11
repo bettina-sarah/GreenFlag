@@ -1,3 +1,8 @@
+import os
+os.environ['GEVENT_SUPPORT'] = 'True'
+
+from gevent import monkey
+monkey.patch_all()
 
 from flask import Flask, jsonify, request, make_response, send_file
 from flask_cors import CORS
@@ -13,7 +18,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}},
             allow_headers=["Content-Type", "Authorization", "X-Requested-With", "Access-Control-Allow-Origin"])
 
 
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*",async_mode="gevent")
 
 
 chatroomManager = ChatroomManager() # need to be an object because contains a discharged list
@@ -30,7 +35,6 @@ def test_connection():
 def create_account() -> bool:
     response = AccountManager.create_account(request.json)
     return jsonify(True) if response else jsonify(False)
-
 
 @app.route('/login', methods=['POST'])
 def login() -> bool:
@@ -54,8 +58,6 @@ def modify_profile() -> bool:
     response = AccountManager.modify_profile(request.json)
     return jsonify(True) if response else jsonify(False)
 
-
-
 @app.route('/delete-account', methods=['POST'])
 def settings() -> bool:
     print(request.json)
@@ -63,7 +65,6 @@ def settings() -> bool:
     # call middleware to generate token; send i to frontend
     # make sure database gets it !!!!
     return jsonify(response)
-
 
 # -------- PHOTOS ------------
 
@@ -85,7 +86,6 @@ def upload_photos() -> bool:
     response = AccountManager.modify_photos(id,files)
     return jsonify(True) if response else jsonify(False)
 
-
 # ------ QUESTIONNAIRE -------
 # ATTENTION WE SHOULD KNOW IF NEW USER OR NOT. DIFFERENCE BETWEEN INSERT & UPDATE REQUEST
 @app.route('/questionnaire', methods=['POST'])
@@ -94,7 +94,6 @@ def questionnaire() -> bool:
     response = AccountManager.update_preferences(request.json)
     #response = AccountManager.modify_profile(request.json)
     return jsonify(response)
-
 
 @app.route('/hobbies', methods=['POST'])
 def update_hobbies() -> bool:
@@ -109,13 +108,11 @@ def fetch_chatroom_list() -> list:  # send JSON jsonify ...
     response = chatroomManager.get_chatrooms(request.json)
     return jsonify(response)
 
-
 @app.route('/get-messages', methods=['POST'])
 def connect_chatroom() -> list:  # send JSON jsonify ...
     response = chatroomManager.get_chatroom_messages(request.json)
     print(response)
     return jsonify(response)
-
 
 # -------- MATCHING ------------
 
