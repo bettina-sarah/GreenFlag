@@ -24,10 +24,11 @@ const LoginForm = () => {
         try{
             const answer = await axios.post(IP_SERVER+'/login',data)
             if (answer.data){
-                console.log(answer);
-                sessionStorage.setItem("id", data.email);
+                console.log(answer.data[0]);
+                sessionStorage.setItem("id", answer.data[0]);
                 if(localStorage.getItem("fillQuestionnaire") === "true"){
                     navigate('/questionnaire')
+                    localStorage.removeItem("fillQuestionnaire");
                 }
                 else{
                     navigate('/matching')
