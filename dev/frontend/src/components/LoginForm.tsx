@@ -38,18 +38,18 @@ const LoginForm = () => {
             <label>Email:</label>
             <input {...register("email",{required: true, pattern: /^[\w.]+@([\w-]+\.)+[\w-]{2,4}$/ })} />
             {errors.email && errors.email.type === "required" && (
-                <span>This is required</span>
+                <span className="text-red-500 text-xs">This is required</span>
             )}
             {errors.email && errors.email.type === "pattern" && (
-                <span>you need to give an email</span>
+                <span className="text-red-500 text-xs">you need to give an email</span>
             )}
             <label>Password:</label>
             <input {...register("password",{required: true, maxLength:20})} />
             {errors.password && errors.password.type === "required" && (
-                <span>This is required</span>
+                <span className="text-red-500 text-xs">This is required</span>
             )}
             {errors.password && errors.password.type === "maxLength" && (
-                <span>Max length exceeded</span>
+                <span className="text-red-500 text-xs">Max length exceeded</span>
             )}
             <button className="bg-teal-600 p-1 rounded-md text-white" type="submit">
                 Login

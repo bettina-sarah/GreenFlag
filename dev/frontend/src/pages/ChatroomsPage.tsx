@@ -92,9 +92,4 @@ const ChatroomsPage: React.FC = () => {
 	);
 	
 }
-
-	
-
-
-
 export default ChatroomsPage;

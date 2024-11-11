@@ -2,7 +2,7 @@ import useFetch from "@/api/useFetch";
 import React, {useState, useEffect} from "react";
 import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
-import Message from "@/components/Message"
+import Message from "@/components/chat_components/Message"
 import { Textarea } from "flowbite-react";
 
 
