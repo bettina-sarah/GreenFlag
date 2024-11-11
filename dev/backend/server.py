@@ -1,17 +1,9 @@
 
 from flask import Flask, jsonify, request, make_response, send_file
 from flask_cors import CORS
-from file_tree import create_file_tree
+from flask_socketio import SocketIO
 from Managers.chatroom_socket_manager import ChatroomSocketManager
 from Managers.chatroom_manager import ChatroomManager
-# create_file_tree()
-import json_tests
-
-# pour websocket
-from flask_socketio import SocketIO
-
-from DAOs.matching_dao import MatchingDAO
-
 from Managers.account_manager import AccountManager
 from Managers.matching_manager import MatchingManager
 
@@ -139,27 +131,6 @@ def update_suggestion() -> bool:
     response = MatchingManager.update_suggestion(request.json)
     return jsonify(response)
 
-# undo():json - plus necessaire ? juste affiché dans le frontend?
-
 if __name__ == '__main__':
-    
-    #print(MatchingManager.get_suggestions(1))
     socketio.run(app, debug=True, host="0.0.0.0", port=5000)
     #app.run(debug=True, host="0.0.0.0", port=5000)
-    # key = 'pngtree-image-of-cute-radish-vector-or-color-illustration-png-image_2040180.jpg'
-    # AccountManager.get_photo(key)
-    # json = {'id': '11'}
-    # AccountManager.get_profile(json)
-
-    # MatchingDAO.get_suggestions('1')
-
-    #print(MatchingDAO.update_suggestion(5,1,'yes'))
-    #print(MatchingDAO.get_matches(1))
-    #print(MatchingDAO.get_user_infos(1))
-    #MatchingDAO.create_suggestions(4,[1]) # suppose to and does throw an error because primary key already exists
-    #MatchingDAO.create_suggestions(1,[5])
-    #MatchingDAO.flag_user(1,2,'Harassment or bullying')
-    # AccountManager.get_profile(json)
-    # AccountManager.delete_account(json_delete)
-
-    # AccountManager.modify_profile(json_tests.json_modify)

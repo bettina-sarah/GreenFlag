@@ -1,6 +1,5 @@
 import React, {useEffect,useState} from 'react';
-import IconButton from './IconButton';
-import matchingIcon from '../../ressources/icons/matching.png'
+import IconButton from '../IconButton';
 import backIcon from '../../../ressources/icons/back_arrow.png'
 import useFetch from '@/api/useFetch';
 import { Avatar } from 'flowbite-react';

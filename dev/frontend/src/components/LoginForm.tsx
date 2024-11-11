@@ -20,13 +20,19 @@ const LoginForm = () => {
         handleSubmit,
         formState: { errors },
     } = useForm<FormData>()
-    const onSubmit = handleSubmit( async (data)=> {
+    const onSubmit = handleSubmit( async (data: any)=> {
         try{
             const answer = await axios.post(IP_SERVER+'/login',data)
             if (answer.data){
                 console.log(answer);
-                sessionStorage.setItem("email", data.email);
-                navigate('/matching')
+                sessionStorage.setItem("id", data.email);
+                if(localStorage.getItem("fillQuestionnaire") === "true"){
+                    navigate('/questionnaire')
+                }
+                else{
+                    navigate('/matching')
+                }
+                
             }
         } catch(error){
             console.error('Error during login:',error)

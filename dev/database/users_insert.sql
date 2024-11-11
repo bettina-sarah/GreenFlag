@@ -43,6 +43,9 @@ VALUES
   (17, 11), (17, 16),
   (18, 17), (18, 20);
 
+-- RESET SERIAL ID TO ZERO !!!
+-- ALTER SEQUENCE member_match_id_seq RESTART WITH 1;
+
 INSERT INTO suggestion (date_creation, member_id_1, member_id_2, situation)
 VALUES
   (CURRENT_DATE, 1, 2, 'yes'),
@@ -59,12 +62,17 @@ VALUES
   (CURRENT_DATE, 1, 13, 'pending'),
   (CURRENT_DATE, 2, 1, 'yes'),
   (CURRENT_DATE, 3, 1, 'yes'),
-  (CURRENT_DATE, 4, 1, 'yes');
+  (CURRENT_DATE, 4, 1, 'yes'),
+  (CURRENT_DATE, 8, 11, 'pending');
+  
 
 INSERT INTO member_match (suggestion_id, chatroom_name)
 VALUES
   (1, 'chatroom_1_2'),
   (2, 'chatroom_1_3'),
-  (3, 'chatroom_1_4');
+  (3, 'chatroom_1_4'),
+  (16, 'chatroom_8_11');
+  
 
-INSERT INTO msg(match_id,sender_id,msg,date_sent) VALUES(1,2,'Hello',CURRENT_DATE);
+INSERT INTO msg(match_id,sender_id,msg,date_sent) VALUES(1,2,'Hello',CURRENT_DATE),
+(4, 11, 'aaa', CURRENT_DATE);
