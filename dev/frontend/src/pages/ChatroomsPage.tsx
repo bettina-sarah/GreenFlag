@@ -35,7 +35,7 @@ const ChatroomsPage: React.FC = () => {
 		error: profileError,
 	  } = useFetch<IProfileData[]>({
 		url: "//get-chatrooms",
-		data: { id: "1" },
+		data: { id: sessionStorage.getItem("id") },
 	  });
 
 	  const [modifiedProfileData, setModifiedProfileData] = useState<IProfileData[]>([]);
