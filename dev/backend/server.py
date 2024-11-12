@@ -114,6 +114,12 @@ def connect_chatroom() -> list:  # send JSON jsonify ...
     print(response)
     return jsonify(response)
 
+@app.route('/get-chatroom-subject', methods=['POST'])
+def fetch_chatroom_subject() -> list:  # send JSON jsonify ...
+    response = chatroomManager.get_chatroom_subject(request.json)
+    print(response)
+    return jsonify(response)
+
 # -------- MATCHING ------------
 
 @app.route('/suggestions', methods=['POST'])

@@ -23,7 +23,7 @@ const Chat: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [newMessage,setNewMessage] = useState<string>('');
     const [firstLoad, setfirstLoad] = useState<boolean>(true);
-    const currentUserId = localStorage.getItem('id') ? Number(localStorage.getItem('id')) : 1;
+    const currentUserId = sessionStorage.getItem('id') ? Number(sessionStorage.getItem('id')) : 0;
     
     const socket = io('http://localhost:5000');
 
