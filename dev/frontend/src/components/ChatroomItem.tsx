@@ -26,7 +26,7 @@ const ChatroomItem: React.FC<ChatroomProps> = ({ name, subject, last_message }) 
   }
 
   return (
-    <div className="w-96 bg-greenflag-green p-1 rounded" onClick={handleClick}>
+    <div className="flex grow bg-greenflag-green p-1 rounded-lg m-1" onClick={handleClick}>
       <Subject subject={subject}/>
       <LastMessage last_message={last_message}/>
     </div>
