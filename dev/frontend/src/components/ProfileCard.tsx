@@ -66,9 +66,9 @@ const ProfileCard: React.FC<IProfileProps> = ({ suggestion_id, profile_info, pho
         <Hobbies hobbies={profile_info.hobby_array} />
         <Bio bio={profile_info.bio} />
         <div className="flex items-center justify-evenly p-3">
-          <IconButton icon={RedFlag} onClick={() => SwipeRight(suggestion_id)}  // Pass suggestion_id to the handler
+          <IconButton icon={RedFlag} onClick={() => SwipeLeft(suggestion_id)}  // Pass suggestion_id to the handler
             suggestion_id={suggestion_id} />
-          <IconButton icon={GreenFlag} onClick={() => SwipeLeft(suggestion_id)} suggestion_id={suggestion_id} />
+          <IconButton icon={GreenFlag} onClick={() => SwipeRight(suggestion_id)} suggestion_id={suggestion_id} />
         </div>
       </div>
     </TinderCard>
