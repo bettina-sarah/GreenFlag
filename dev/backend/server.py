@@ -39,6 +39,13 @@ def login() -> bool:
     # make sure database gets it !!!!
     return jsonify(response) if response else jsonify(False)
 
+@app.route('/complete-profile', methods=['POST'])
+def complete_profile() -> bool:
+    response = AccountManager.complete_profile(request.json)
+    # call middleware to generate token; send it to frontend
+    # make sure database gets it !!!!
+    return jsonify(response) if response else jsonify(False)
+
 @app.route('/get-profile', methods=['POST'])
 def get_profile() -> bool:
     # if authentication_middleware.check_session_validity():
