@@ -8,6 +8,7 @@ interface IconButtonProps {
   page?: string | null; // button can naviagate or execute custom function!
   onClick?: () => void;
   toggleState?: boolean; // optional turn on off !
+  suggestion_id?: string;
 }
 
 const IconButton: React.FC<IconButtonProps> = ({

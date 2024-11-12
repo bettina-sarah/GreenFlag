@@ -56,6 +56,7 @@ const MatchingPage: React.FC = () => {
               key={index}
               profile_info={profile.user_infos.profile_info}
               photos={profile.user_infos.photo_keys}
+              suggestion_id = {profile.suggestion_id}
             />
           ))}
         {!profileData && !profileLoading && !profileError && (

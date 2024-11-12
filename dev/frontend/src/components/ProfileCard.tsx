@@ -8,32 +8,36 @@ import { ProfileProps } from "@/pages/MatchingPage";
 import IconButton from "./IconButton";
 import RedFlag from "../../ressources/icons/FlagButton_left.png";
 import GreenFlag from "../../ressources/icons/FlagButton_right.png";
-import Undo from "../../ressources/icons/undo.png";
+// import Undo from "../../ressources/icons/undo.png";
 import TinderCard from "react-tinder-card";
 
 interface IProfileProps {
+  suggestion_id: string,
   profile_info: ProfileProps;
   photos: string[];
 }
 
-const SwipeRight = () => {
-  onSwipe("right"); // Calls swipe logic as if swiped right
+const SwipeRight = (suggestion_id: string) => {
+  console.log('right: ', suggestion_id)
 };
 
-const SwipeLeft = () => {
-  onSwipe("left"); // Calls swipe logic as if swiped left
+const SwipeLeft = (suggestion_id: string) => {
+  console.log('left: ', suggestion_id)
 };
 
-const onSwipe = (direction: string) => {
-  console.log("You swiped: " + direction);
-};
+// const onSwipe = (direction: string) => {
+//   if(direction=="left"){
+//     SwipeLeft
+//   }
+//   console.log("You swiped: " + direction);
+// };
 
-const ProfileCard: React.FC<IProfileProps> = ({ profile_info, photos }) => {
+const ProfileCard: React.FC<IProfileProps> = ({ suggestion_id, profile_info, photos }) => {
   console.log(photos);
   return (
     <TinderCard
       className="absolute"
-      onSwipe={onSwipe}
+      // onSwipe={onSwipe}
       preventSwipe={["right", "left"]}
     >
       <div className="w-96 bg-greenflag-green p-1 rounded relative">
@@ -46,8 +50,9 @@ const ProfileCard: React.FC<IProfileProps> = ({ profile_info, photos }) => {
         <Hobbies hobbies={profile_info.hobby_array} />
         <Bio bio={profile_info.bio} />
         <div className="flex items-center justify-evenly p-3">
-          <IconButton icon={RedFlag} onClick={SwipeRight} />
-          <IconButton icon={GreenFlag} onClick={SwipeLeft} />
+          <IconButton icon={RedFlag} onClick={() => SwipeRight(suggestion_id)}  // Pass suggestion_id to the handler
+            suggestion_id={suggestion_id} />
+          <IconButton icon={GreenFlag} onClick={() => SwipeLeft(suggestion_id)} suggestion_id={suggestion_id} />
         </div>
       </div>
     </TinderCard>

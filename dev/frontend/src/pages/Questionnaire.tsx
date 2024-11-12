@@ -1,5 +1,5 @@
 import React from "react";
-import Menu from "@/components/Menu";
+// import Menu from "@/components/Menu";
 import QuestionnaireForm from "@/components/form_components/QuestionnaireForm";
 
 const QuestionnairePage: React.FC = () => {
