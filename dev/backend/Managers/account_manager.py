@@ -18,7 +18,10 @@ class AccountManager:
         params = (email,password)
         try:
             response = AccountDAO.login(params)
-            return response
+            print('login response:', response)
+            json_response = {'id': response[0][0], 'profile_completed': response[0][1]}
+            print(json_response)
+            return json_response
             # CREAte token .... & SENT to the front
         except Exception as error:
             print(error)

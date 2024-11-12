@@ -1,5 +1,4 @@
 import { IP_SERVER } from "@/config/constants";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const genders = ["Male", "Female", "Non-Binary", "Other"];
@@ -42,8 +41,6 @@ export const religions = [
   "Agnostic",
   "Other",
 ];
-
-const userId = sessionStorage.getItem("id");
 
 export type FormDataHobbies = {
   // Activities
@@ -92,7 +89,7 @@ export type FormDataPhoto = {
 const completeProfile = async () => {
   try {
     const data = {
-      id: userId,
+      id: sessionStorage.getItem("id"),
     };
 
     const answer = await axios.post(IP_SERVER + "/complete-profile", data);
@@ -102,15 +99,7 @@ const completeProfile = async () => {
   }
 };
 
-const NavigateMatching = () => {
-  const navigate = useNavigate();
-  localStorage.removeItem("preferencesComplete");
-  localStorage.removeItem("hobbiesComplete");
-  localStorage.removeItem("photoComplete");
-  navigate("/matching");
-};
-
-const checkAndNavigate = async () => {
+export const checkAndCompleteProfile = async () => {
   const hobbiesComplete = localStorage.getItem("hobbiesComplete") === "true";
   const preferencesComplete =
     localStorage.getItem("preferencesComplete") === "true";
@@ -119,22 +108,25 @@ const checkAndNavigate = async () => {
   if (hobbiesComplete && preferencesComplete && photoComplete) {
     const profileCompleted = await completeProfile();
     if (profileCompleted) {
-      NavigateMatching();
+      localStorage.removeItem("preferencesComplete");
+      localStorage.removeItem("hobbiesComplete");
+      localStorage.removeItem("photoComplete");
+      return true;
     }
   }
+  return false;
 };
 
 export const onSubmitFormHobbies = async (hobbies: FormDataHobbies) => {
   try {
     const data = {
-      id: userId,
+      id: sessionStorage.getItem("id"),
       hobbies: hobbies,
     };
     const answer = await axios.post(IP_SERVER + "/hobbies", data);
     if (answer.data) {
-      if (!sessionStorage.getItem("profileComplete")) {
+      if (sessionStorage.getItem("profileComplete") === "false") {
         localStorage.setItem("hobbiesComplete", "true");
-        await checkAndNavigate();
       }
     }
   } catch (error) {
@@ -145,15 +137,14 @@ export const onSubmitFormHobbies = async (hobbies: FormDataHobbies) => {
 export const onSubmitFormInfo = async (info: FormDataInfo) => {
   try {
     const data = {
-      id: userId,
+      id: sessionStorage.getItem("id"),
       info: info,
     };
-    console.log("info : " + userId);
+    console.log("info : " + sessionStorage.getItem("id"));
     const answer = await axios.post(IP_SERVER + "/questionnaire", data);
     if (answer.data) {
-      if (!sessionStorage.getItem("profileComplete")) {
+      if (sessionStorage.getItem("profileComplete") === "false") {
         localStorage.setItem("preferencesComplete", "true");
-        await checkAndNavigate();
       }
     }
   } catch (error) {
@@ -165,15 +156,15 @@ export const onSubmitPhoto = async (data: FormDataPhoto) => {
   try {
     const formData = new FormData();
     if (data.image) {
+      const userId = sessionStorage.getItem("id");
       if (userId === null) formData.append("id", "");
       else formData.append("id", userId);
 
       formData.append("image", data.image);
       const answer = await axios.post(IP_SERVER + "/upload-photo", formData);
       if (answer.data) {
-        if (!sessionStorage.getItem("profileComplete")) {
+        if (sessionStorage.getItem("profileComplete") === "false") {
           localStorage.setItem("photoComplete", "true");
-          await checkAndNavigate();
         }
       }
     }

@@ -22,10 +22,18 @@ const LoginForm = () => {
     try {
       const answer = await axios.post(IP_SERVER + "/login", data);
       if (answer.data) {
-        console.log(answer.data[0]);
-        console.log(answer.data[1]);
-        sessionStorage.setItem("id", answer.data[0]);
-        sessionStorage.setItem("profileComplete", answer.data[1]);
+        console.log("login data: ", answer.data);
+        sessionStorage.setItem("id", answer.data.id);
+        sessionStorage.setItem(
+          "profileComplete",
+          answer.data.profile_completed
+        );
+        console.log(
+          "session storages: id",
+          sessionStorage.getItem("id"),
+          "profileComplete:",
+          sessionStorage.getItem("profileComplete")
+        );
         if (sessionStorage.getItem("profileComplete") === "true") {
           navigate("/matching");
         } else {
