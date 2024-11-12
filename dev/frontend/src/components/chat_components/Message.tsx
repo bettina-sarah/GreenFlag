@@ -5,7 +5,7 @@ interface MessageProps {
 }
 
 const Message: React.FC<MessageProps> = ({ content, sender_id }) => {
-  const currentUserId = localStorage.getItem('id') ? Number(localStorage.getItem('id')) : 1;
+  const currentUserId = sessionStorage.getItem('id') ? Number(sessionStorage.getItem('id')) : 0;
   return (
     <li className={`flex ${sender_id === currentUserId ? 'justify-end' : 'justify-start'}`}>
       <div
