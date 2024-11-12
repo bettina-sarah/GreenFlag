@@ -54,21 +54,23 @@ const MatchingPage: React.FC = () => {
   }
 
   return (
-    <div className="w-full h-full flex flex-col justify-evenly items-center">
+    <div className="w-full h-full flex flex-col items-center">
       <Menu />
-      {profileData &&
-        profileData?.map((profile, index) => (
-          <ProfileCard
-            key={index}
-            profile_info={profile.user_infos.profile_info}
-            photos={profile.user_infos.photo_keys}
-          />
-        ))}
-      {!profileData && !profileLoading && !profileError && (
-        <div>
-          <div>No matching profiles found.</div>
-        </div>
-      )}
+      <div className="relative w-96 pt-3">
+        {profileData &&
+          profileData?.map((profile, index) => (
+            <ProfileCard
+              key={index}
+              profile_info={profile.user_infos.profile_info}
+              photos={profile.user_infos.photo_keys}
+            />
+          ))}
+        {!profileData && !profileLoading && !profileError && (
+          <div>
+            <div>No matching profiles found.</div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
