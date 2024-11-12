@@ -1,12 +1,12 @@
 import React from 'react';
-import Menu from '@/components/Menu';
 import Chat from '@/components/Chat';
+import MenuChat from '@/components/chat_components/MenuChat';
+
 
 const PrivateChatroomPage: React.FC = () => {
-
     return (
         <div>
-            <Menu />
+            <MenuChat />
             <Chat />
         </div>
     );

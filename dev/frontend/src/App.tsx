@@ -11,7 +11,6 @@ import QuestionnairePage from './pages/Questionnaire';
 import SettingsPage from './pages/SettingsPage';
 import ProfilePage from './pages/ProfilePage';
 
-import '@mantine/core/styles.css';
 import PrivateChatroomPage from './pages/PrivateChatroomPage';
 
 
