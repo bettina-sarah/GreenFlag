@@ -32,9 +32,6 @@ export interface ProfileProps {
 }
 
 const MatchingPage: React.FC = () => {
-
-  
-
   const {
     data: profileData,
     loading: profileLoading,
@@ -59,13 +56,19 @@ const MatchingPage: React.FC = () => {
   return (
     <div className="w-full h-full flex flex-col justify-evenly items-center">
       <Menu />
-      {profileData?.map((profile, index) => (
-        <ProfileCard
-        key={index}
-          profile_info={profile.user_infos.profile_info}
-          photos={profile.user_infos.photo_keys}
-        />
-      ))}
+      {profileData &&
+        profileData?.map((profile, index) => (
+          <ProfileCard
+            key={index}
+            profile_info={profile.user_infos.profile_info}
+            photos={profile.user_infos.photo_keys}
+          />
+        ))}
+      {!profileData && !profileLoading && !profileError && (
+        <div>
+          <div>No matching profiles found.</div>
+        </div>
+      )}
     </div>
   );
 };

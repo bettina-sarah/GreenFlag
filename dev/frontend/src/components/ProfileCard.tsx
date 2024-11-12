@@ -16,40 +16,41 @@ interface IProfileProps {
   photos: string[];
 }
 
-
 const SwipeRight = () => {
-  onSwipe('right'); // Calls swipe logic as if swiped right
+  onSwipe("right"); // Calls swipe logic as if swiped right
 };
 
 const SwipeLeft = () => {
-  onSwipe('left'); // Calls swipe logic as if swiped left
+  onSwipe("left"); // Calls swipe logic as if swiped left
 };
 
 const onSwipe = (direction: string) => {
-  console.log('You swiped: ' + direction)
-}
+  console.log("You swiped: " + direction);
+};
 
 const ProfileCard: React.FC<IProfileProps> = ({ profile_info, photos }) => {
   console.log(photos);
   return (
-    <div>
-      <TinderCard onSwipe={onSwipe} preventSwipe={["right", "left"]}>
-        <div className="w-96 bg-greenflag-green p-1 rounded">
-          <PhotoCarousel images={photos} />
-          <BasicInfo basic_info={profile_info.basic_info} />
-          <RelationshipGoals
-            relationship={profile_info.relationship}
-            wants_kids={profile_info.wants_kids}
-          />
-          <Hobbies hobbies={profile_info.hobby_array} />
-          <Bio bio={profile_info.bio} />
-          <div className="flex items-center justify-evenly p-3">
-            <IconButton icon={RedFlag} onClick={SwipeRight} />
-            <IconButton icon={GreenFlag} onClick={SwipeLeft} />
-          </div>
+    <TinderCard
+      className="absolute"
+      onSwipe={onSwipe}
+      preventSwipe={["right", "left"]}
+    >
+      <div className="w-96 bg-greenflag-green p-1 rounded relative">
+        <PhotoCarousel images={photos} />
+        <BasicInfo basic_info={profile_info.basic_info} />
+        <RelationshipGoals
+          relationship={profile_info.relationship}
+          wants_kids={profile_info.wants_kids}
+        />
+        <Hobbies hobbies={profile_info.hobby_array} />
+        <Bio bio={profile_info.bio} />
+        <div className="flex items-center justify-evenly p-3">
+          <IconButton icon={RedFlag} onClick={SwipeRight} />
+          <IconButton icon={GreenFlag} onClick={SwipeLeft} />
         </div>
-      </TinderCard>
-    </div>
+      </div>
+    </TinderCard>
   );
 };
 
