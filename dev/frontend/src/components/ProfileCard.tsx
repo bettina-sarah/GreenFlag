@@ -25,20 +25,23 @@ const SwipeLeft = (suggestion_id: string) => {
   console.log('left: ', suggestion_id)
 };
 
-// const onSwipe = (direction: string) => {
-//   if(direction=="left"){
-//     SwipeLeft
-//   }
-//   console.log("You swiped: " + direction);
-// };
+const onSwipe = (direction: string, suggestion_id:string) => {
+  if(direction=="left"){
+    SwipeLeft(suggestion_id)
+  }
+  else if(direction=="right"){
+    SwipeRight(suggestion_id)
+  }
+  console.log("You swiped: " + direction);
+};
 
 const ProfileCard: React.FC<IProfileProps> = ({ suggestion_id, profile_info, photos }) => {
   console.log(photos);
   return (
     <TinderCard
       className="absolute"
-      // onSwipe={onSwipe}
-      preventSwipe={["right", "left"]}
+      onSwipe={(direction) => onSwipe(direction,suggestion_id)}
+      preventSwipe={["up", "down"]}
     >
       <div className="w-96 bg-greenflag-green p-1 rounded relative">
         <PhotoCarousel images={photos} />
