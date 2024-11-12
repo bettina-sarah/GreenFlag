@@ -53,10 +53,10 @@ const Chat: React.FC = () => {
 
       socket.emit('join_chatroom',{chatroom_name});
 
-      socket.on('message', (message: { message_content: string; sender_id: number; }) => {
+      socket.on('message', (message: { message: string; sender_id: number; }) => {
         setMessages((prevMessages) => [
           ...prevMessages,
-          { message_content: message.message_content, sender_id: message.sender_id }
+          { message_content: message.message, sender_id: message.sender_id }
         ]);
       });
 
@@ -82,7 +82,7 @@ const Chat: React.FC = () => {
           ...prevMessages,
           { message_content: newMessage, sender_id: currentUserId}
         ]);
-
+        console.log(messages)
         setNewMessage('');
       }
     };
