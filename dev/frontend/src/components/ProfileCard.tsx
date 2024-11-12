@@ -10,6 +10,7 @@ import RedFlag from "../../ressources/icons/FlagButton_left.png";
 import GreenFlag from "../../ressources/icons/FlagButton_right.png";
 // import Undo from "../../ressources/icons/undo.png";
 import TinderCard from "react-tinder-card";
+import { updateSuggestion } from "@/api/updateSuggestion";
 
 interface IProfileProps {
   suggestion_id: string,
@@ -18,10 +19,12 @@ interface IProfileProps {
 }
 
 const SwipeRight = (suggestion_id: string) => {
+  updateSuggestion(suggestion_id, "yes")
   console.log('right: ', suggestion_id)
 };
 
 const SwipeLeft = (suggestion_id: string) => {
+  updateSuggestion(suggestion_id, "no")
   console.log('left: ', suggestion_id)
 };
 
