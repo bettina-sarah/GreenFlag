@@ -1,5 +1,5 @@
 import useFetch from "@/api/useFetch";
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import Message from "@/components/chat_components/Message"
@@ -26,6 +26,8 @@ const Chat: React.FC = () => {
     const currentUserId = sessionStorage.getItem('id') ? Number(sessionStorage.getItem('id')) : 0;
     
     const socket = io('http://localhost:5000');
+
+    const chatContainerRef = useRef<HTMLDivElement>(null);
 
     const {
       data: messageData,
@@ -63,21 +65,31 @@ const Chat: React.FC = () => {
       };
 	  }, [messageData, messageLoading, messageError, chatroom_name, firstLoad, socket]);
     
+    const scrollToBottom = () => {
+      if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      }
+    };
 
+    useEffect(() => {
+      scrollToBottom();
+    }, [messages]);
 
     const sendMessage = () => {
-      socket.emit('message', { chatroom_name, message: newMessage, sender_id: currentUserId });
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { message_content: newMessage, sender_id: currentUserId}
-      ]);
+      if (newMessage.trim() !== "") {
+        socket.emit('message', { chatroom_name, message: newMessage, sender_id: currentUserId });
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { message_content: newMessage, sender_id: currentUserId}
+        ]);
 
-      setNewMessage('');
+        setNewMessage('');
+      }
     };
 
     return (
       <div className="flex flex-col h-screen">
-        <div className="flex-grow overflow-y-auto">
+        <div ref={chatContainerRef} className="flex-grow overflow-y-auto scroll-smooth">
           {messages.map((msg, index) => (
             <Message key={index} content={msg.message_content} sender_id={msg.sender_id}/>
           ))}
