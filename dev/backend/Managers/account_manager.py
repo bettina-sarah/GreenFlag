@@ -43,6 +43,18 @@ class AccountManager:
             print(error)
             print('account manager')
             return False
+    @staticmethod
+    def complete_profile(data) -> bool:
+        id = data.get('id')
+        params = (id,)
+        try:
+            response = AccountDAO.complete_profile(params)
+            return response
+                # email sequence here
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False
 
     @staticmethod
     def delete_account(data) -> bool:

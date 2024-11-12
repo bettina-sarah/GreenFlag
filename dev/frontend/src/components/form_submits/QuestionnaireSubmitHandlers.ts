@@ -89,18 +89,38 @@ export type FormDataPhoto = {
   image: File | null;
 };
 
-const NavigateMatching = (
-  hobbyForm: string | null,
-  preferenceForm: string | null,
-  photoForm: string | null
-) => {
+const completeProfile = async () => {
+  try {
+    const data = {
+      id: userId,
+    };
+
+    const answer = await axios.post(IP_SERVER + "/complete-profile", data);
+    return !!answer.data;
+  } catch (error) {
+    console.error("Error during account completion:", error);
+  }
+};
+
+const NavigateMatching = () => {
   const navigate = useNavigate();
-  if (hobbyForm && preferenceForm && photoForm) {
-    localStorage.removeItem("preferencesComplete");
-    localStorage.removeItem("hobbiesComplete");
-    localStorage.removeItem("photoComplete");
-    // FAUT FAIRE UNE ROUTE VERS BE pour completer profile_completed a true !!!!!
-    navigate("/matching");
+  localStorage.removeItem("preferencesComplete");
+  localStorage.removeItem("hobbiesComplete");
+  localStorage.removeItem("photoComplete");
+  navigate("/matching");
+};
+
+const checkAndNavigate = async () => {
+  const hobbiesComplete = localStorage.getItem("hobbiesComplete") === "true";
+  const preferencesComplete =
+    localStorage.getItem("preferencesComplete") === "true";
+  const photoComplete = localStorage.getItem("photoComplete") === "true";
+
+  if (hobbiesComplete && preferencesComplete && photoComplete) {
+    const profileCompleted = await completeProfile();
+    if (profileCompleted) {
+      NavigateMatching();
+    }
   }
 };
 
@@ -110,18 +130,12 @@ export const onSubmitFormHobbies = async (hobbies: FormDataHobbies) => {
       id: userId,
       hobbies: hobbies,
     };
-    console.log("hobbies" + userId);
     const answer = await axios.post(IP_SERVER + "/hobbies", data);
     if (answer.data) {
       if (!sessionStorage.getItem("profileComplete")) {
         localStorage.setItem("hobbiesComplete", "true");
-        NavigateMatching(
-          localStorage.getItem("preferencesComplete"),
-          localStorage.getItem("hobbiesComplete"),
-          localStorage.getItem("photoComplete")
-        );
+        await checkAndNavigate();
       }
-      console.log(answer);
     }
   } catch (error) {
     console.error("Error during account modification:", error);
@@ -139,11 +153,7 @@ export const onSubmitFormInfo = async (info: FormDataInfo) => {
     if (answer.data) {
       if (!sessionStorage.getItem("profileComplete")) {
         localStorage.setItem("preferencesComplete", "true");
-        NavigateMatching(
-          localStorage.getItem("preferencesComplete"),
-          localStorage.getItem("hobbiesComplete"),
-          localStorage.getItem("photoComplete")
-        );
+        await checkAndNavigate();
       }
     }
   } catch (error) {
@@ -163,11 +173,7 @@ export const onSubmitPhoto = async (data: FormDataPhoto) => {
       if (answer.data) {
         if (!sessionStorage.getItem("profileComplete")) {
           localStorage.setItem("photoComplete", "true");
-          NavigateMatching(
-            localStorage.getItem("preferencesComplete"),
-            localStorage.getItem("hobbiesComplete"),
-            localStorage.getItem("photoComplete")
-          );
+          await checkAndNavigate();
         }
       }
     }
