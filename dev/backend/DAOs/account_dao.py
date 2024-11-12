@@ -22,6 +22,13 @@ class AccountDAO(DAO):
             # si courriel existe deja, DB retorune erreur cle existe - faut gerer - envoyer au frontend 'account exists' 
             return response
     
+    @staticmethod
+    def complete_profile(params:tuple) -> bool:
+        query = 'UPDATE member SET profile_completed = true WHERE id = %s;'
+        response = AccountDAO._prepare_statement("update", query, params)
+        return response
+    
+    
     # rudimentaire: version finale faut que ca delete la personne des tables de suggestions de tout le monde, les match, les messages, les photos dans berkeleyDB
     @staticmethod
     def delete_account(params:tuple) -> bool:
