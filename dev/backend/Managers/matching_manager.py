@@ -46,7 +46,7 @@ class MatchingManager():
         try:
             suggestion_id = data.get("suggestion_id")
             situation = data.get("choice")
-            params = (suggestion_id, situation)
+            params = (situation, suggestion_id)
             response = MatchingDAO.update_suggestion(params)
             if response:
                 return response

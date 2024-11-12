@@ -2,15 +2,8 @@ import React from "react";
 import Menu from "@/components/Menu";
 import ProfileCard from "@/components/ProfileCard";
 import useFetch from "@/api/useFetch";
-// import fetchData from "@/api/fetchData";
-// import { useState, useEffect } from "react";
 
-// interface IPhotoData {
-//   path: string;
-//   key: string;
-// }
-
-interface IProfileData {
+export interface IProfileData {
   suggestion_id: string;
   user_infos: {
     profile_info: ProfileProps;

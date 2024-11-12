@@ -57,7 +57,7 @@ class ChatDAO(DAO):
         return False
 
     @staticmethod
-    def get_messages(params:tuple) -> List[str]:
+    def get_messages(params:tuple) -> List[dict[str]]:
         query = "SELECT sender_id, sender_first_name, message_content, date_sent FROM chatroom_messages_view WHERE chatroom_name = %s ORDER BY date_sent;"
         response = ChatDAO._prepare_statement('select', query, params)
         messages = []
@@ -79,3 +79,11 @@ class ChatDAO(DAO):
         response = ChatDAO._prepare_statement('select', query, params)
         if response:
             return response
+
+    @staticmethod
+    def get_chatroom_subject(params:tuple) -> List[str]:
+        query = "WITH chat_suggestion AS(SELECT suggestion_id FROM member_match WHERE chatroom_name = %s) SELECT member_id_1, member_id_2 FROM suggestion WHERE id IN (SELECT suggestion_id FROM chat_suggestion);"
+        response = ChatDAO._prepare_statement('select',query,params)
+        if response:
+            return response
+        
