@@ -35,10 +35,6 @@ const onSwipe = (direction: string, suggestion_id:string) => {
   console.log("You swiped: " + direction);
 };
 
-const outOfFrame = (name) => {
-  console.log(name + ' left the screen!')
-}
-
 const ProfileCard: React.FC<IProfileProps> = ({ suggestion_id, profile_info, photos }) => {
   const [hasSwiped, setHasSwiped] = useState<boolean>(false);
   console.log(photos);
