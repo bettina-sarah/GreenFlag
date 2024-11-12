@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PhotoCarousel from "./profile_card_components/PhotoCarousel";
 import BasicInfo from "./profile_card_components/BasicInfo";
 import RelationshipGoals from "./profile_card_components/RelationshipGoals";
@@ -35,13 +35,27 @@ const onSwipe = (direction: string, suggestion_id:string) => {
   console.log("You swiped: " + direction);
 };
 
+const outOfFrame = (name) => {
+  console.log(name + ' left the screen!')
+}
+
 const ProfileCard: React.FC<IProfileProps> = ({ suggestion_id, profile_info, photos }) => {
+  const [hasSwiped, setHasSwiped] = useState<boolean>(false);
   console.log(photos);
+
+
+  const handleCardLeftScreen = () => {
+    setHasSwiped(true); 
+    console.log(`Card with suggestion_id ${suggestion_id} was swiped out.`);
+  };
+
   return (
+    !hasSwiped && 
     <TinderCard
       className="absolute"
       onSwipe={(direction) => onSwipe(direction,suggestion_id)}
       preventSwipe={["up", "down"]}
+      onCardLeftScreen={() => handleCardLeftScreen()}
     >
       <div className="w-96 bg-greenflag-green p-1 rounded relative">
         <PhotoCarousel images={photos} />
