@@ -21,6 +21,7 @@ import {
   genders,
   religions,
   hobbiesKeys,
+  checkAndCompleteProfile,
 } from "../form_submits/QuestionnaireSubmitHandlers";
 // https://marmelab.com/react-admin/ImageInput.html
 
@@ -52,12 +53,20 @@ const QuestionnaireForm = () => {
 
   const { control, handleSubmit: handleSubmitPhoto } = useForm<FormDataPhoto>();
 
+  const completeProfileAndNavigate = async () => {
+    const complete = await checkAndCompleteProfile();
+    if (complete) {
+      navigate("/matching");
+    }
+  };
+
   return (
     <div className="flex flex-col justify-between m-2 overflow-visible">
       <form
-        onSubmit={handleSubmitHobbies((data) =>
-          onSubmitFormHobbies(data, navigate)
-        )}
+        onSubmit={handleSubmitHobbies(async (data) => {
+          await onSubmitFormHobbies(data);
+          await completeProfileAndNavigate();
+        })}
       >
         <div className="flex flex-col space-y-4 p-3 m-4">
           {hobbiesKeys.map((hobby, index) => (
@@ -73,7 +82,10 @@ const QuestionnaireForm = () => {
         </button>
       </form>
       <form
-        onSubmit={handleSubmitInfo((data) => onSubmitFormInfo(data, navigate))}
+        onSubmit={handleSubmitInfo(async (data) => {
+          await onSubmitFormInfo(data);
+          await completeProfileAndNavigate();
+        })}
       >
         <label>Select Your Date of Birth:</label>
         <Controller
@@ -251,7 +263,12 @@ const QuestionnaireForm = () => {
         </button>
       </form>
 
-      <form onSubmit={handleSubmitPhoto(onSubmitPhoto)}>
+      <form
+        onSubmit={handleSubmitPhoto(async (data) => {
+          await onSubmitPhoto(data);
+          await completeProfileAndNavigate();
+        })}
+      >
         <ImageInputCustom name="image" control={control} />
         <button className="bg-teal-600 p-1 rounded-md text-white" type="submit">
           Submit
