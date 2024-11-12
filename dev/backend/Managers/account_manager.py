@@ -50,7 +50,6 @@ class AccountManager:
         try:
             response = AccountDAO.complete_profile(params)
             return response
-                # email sequence here
         except Exception as error:
             print(error)
             print('account manager')
