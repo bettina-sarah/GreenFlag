@@ -12,8 +12,8 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div className='w-full h-full flex flex-col justify-between items-center'>
-      <h1 className='p-8 text-3xl font-extrabold text-teal-500'>GreenFlag</h1>
+    <div className='w-full h-full flex flex-col justify-between items-center bg-home-bg bg-cover bg-center'>
+      <h1 className='p-8 text-3xl font-extrabold text-teal-500 -rotate-45'>GreenFlag</h1>
       <div>
         <img src={Logo} alt="" />
       </div>
