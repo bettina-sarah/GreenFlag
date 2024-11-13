@@ -1,5 +1,5 @@
 import useFetch from "@/api/useFetch";
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import Message from "@/components/chat_components/Message"
@@ -27,6 +27,8 @@ const Chat: React.FC = () => {
     
     const socket = io('http://localhost:5000');
 
+    const chatContainerRef = useRef<HTMLDivElement>(null);
+
     const {
       data: messageData,
       loading: messageLoading,
@@ -51,10 +53,10 @@ const Chat: React.FC = () => {
 
       socket.emit('join_chatroom',{chatroom_name});
 
-      socket.on('message', (message: { message_content: string; sender_id: number; }) => {
+      socket.on('message', (message: { message: string; sender_id: number; }) => {
         setMessages((prevMessages) => [
           ...prevMessages,
-          { message_content: message.message_content, sender_id: message.sender_id }
+          { message_content: message.message, sender_id: message.sender_id }
         ]);
       });
 
@@ -63,21 +65,31 @@ const Chat: React.FC = () => {
       };
 	  }, [messageData, messageLoading, messageError, chatroom_name, firstLoad, socket]);
     
+    const scrollToBottom = () => {
+      if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      }
+    };
 
+    useEffect(() => {
+      scrollToBottom();
+    }, [messages]);
 
     const sendMessage = () => {
-      socket.emit('message', { chatroom_name, message: newMessage, sender_id: currentUserId });
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { message_content: newMessage, sender_id: currentUserId}
-      ]);
-
-      setNewMessage('');
+      if (newMessage.trim() !== "") {
+        socket.emit('message', { chatroom_name, message: newMessage, sender_id: currentUserId });
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { message_content: newMessage, sender_id: currentUserId}
+        ]);
+        console.log(messages)
+        setNewMessage('');
+      }
     };
 
     return (
       <div className="flex flex-col h-screen">
-        <div className="flex-grow overflow-y-auto">
+        <div ref={chatContainerRef} className="flex-grow overflow-y-auto scroll-smooth">
           {messages.map((msg, index) => (
             <Message key={index} content={msg.message_content} sender_id={msg.sender_id}/>
           ))}
