@@ -290,7 +290,7 @@ BEGIN
     JOIN member_match ON member_match.suggestion_id = suggestion.id
     LEFT JOIN chatroom_messages_view AS chatroom_messages 
       ON chatroom_messages.chatroom_name = member_match.chatroom_name
-  )
+        )
   SELECT
     LastMessages.subject_id,  
     LastMessages.chatroom_name,
