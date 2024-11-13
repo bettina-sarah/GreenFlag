@@ -62,7 +62,12 @@ export default {
   		},
 		  fontFamily: {
 			nunito: ['"Nunito"', 'sans-serif'],
-		  }
+		  },
+		backgroundImage: {
+			'home-bg': "url('/ressources/bg/Background.svg')",
+			'home-bg2': "url('/ressources/bg/Background-2.svg')"
+
+		}
   	}
   },
   plugins: [
