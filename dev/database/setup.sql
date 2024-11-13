@@ -408,36 +408,8 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-DROP FUNCTION IF EXISTS get_chatrooms;
-
-CREATE OR REPLACE FUNCTION get_chatrooms
-(user_id INTEGER)
-RETURNS TABLE(subject_id INTEGER,chatroom_name VARCHAR(50), sender_id INTEGER, sender_first_name VARCHAR, message_content TEXT, date_sent TEXT) AS $$
-BEGIN
-  RETURN QUERY
-  SELECT
-    CASE
-      WHEN suggestion.member_id_1 = user_id THEN suggestion.member_id_2
-      ELSE suggestion.member_id_1
-    END AS subject_id,
-    member_match.chatroom_name AS chatroom_name,
-    chatroom_messages.sender_id AS sender_id,
-    chatroom_messages.sender_first_name AS sender_first_name,
-    chatroom_messages.message_content AS message_content,
-    TO_CHAR(chatroom_messages.date_sent, 'YYYY-MM-DD') AS date_sent
-  FROM suggestion 
-  JOIN member_match ON member_match.suggestion_id = suggestion.id
-  LEFT JOIN chatroom_messages_view AS chatroom_messages ON chatroom_messages.chatroom_name = member_match.chatroom_name
-  WHERE (member_id_1 = user_id OR member_id_2 = user_id)
-  ORDER BY chatroom_messages.date_sent
-  LIMIT 1;
-
-END;
-$$ LANGUAGE PLPGSQL;
-
-
 -- INTRICATE FUNCTION BY CHATGEPETO
-CREATE OR REPLACE FUNCTION get_chatrooms_intricate(user_id INTEGER)
+CREATE OR REPLACE FUNCTION get_chatrooms(user_id INTEGER)
 RETURNS TABLE(
     subject_id INTEGER,
     chatroom_name VARCHAR(50),
@@ -480,8 +452,6 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 
-
-
 DROP FUNCTION IF EXISTS insert_message;
 
 CREATE OR REPLACE FUNCTION insert_message(
@@ -504,7 +474,7 @@ BEGIN
           new_message.date_sent
       );
   ELSE
-      RAISE NOTICE 'Chatroom name not found: %', message->>'chatroom_name';
+      RAISE NOTICE 'Chatroom name not found: %', new_message.chatroom_name;
   END IF;
 END;
 $$ LANGUAGE PLPGSQL;INSERT INTO member (first_name, last_name, member_password, email, date_of_birth, gender, preferred_genders, min_age, max_age, relationship_type, height, religion, want_kids, city, token, email_confirmed, profile_completed) 
