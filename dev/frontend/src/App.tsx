@@ -12,6 +12,7 @@ import SettingsPage from './pages/SettingsPage';
 import ProfilePage from './pages/ProfilePage';
 
 import PrivateChatroomPage from './pages/PrivateChatroomPage';
+import AuthGuard from './components/AuthGuard';
 
 
 
@@ -28,12 +29,42 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login/>}/>
           <Route path="/test" element={<TestConnection/>}/>
           <Route path="/create-account" element={<CreateAccount/>}/>
-          <Route path="/matching" element={<MatchingPage/>}/>
-          <Route path="/chatrooms" element={<ChatroomsPage/>}/>
-          <Route path='/chatroom/:chatroom_name' element={<PrivateChatroomPage/>} />
-          <Route path="/questionnaire" element={<QuestionnairePage/>}/>
-          <Route path="/settings" element={<SettingsPage/>}/>
-          <Route path="/profile" element={<ProfilePage/>}/>
+
+
+          <Route path="/matching" element={
+            <AuthGuard>
+            <MatchingPage/>
+            </AuthGuard>
+          }/>
+          <Route path="/chatrooms" element={
+                    <AuthGuard>
+                    <ChatroomsPage/>
+                    </AuthGuard>
+        }/>
+          <Route path='/chatroom/:chatroom_name' element={
+          <AuthGuard>
+          <PrivateChatroomPage/>
+          </AuthGuard>
+          } />
+          <Route path="/questionnaire" element={
+          
+          <AuthGuard>
+          <QuestionnairePage/>
+          </AuthGuard>
+            }/>
+
+          <Route path="/settings" element={
+          
+          <AuthGuard>
+          <SettingsPage/>
+          </AuthGuard>
+          }/>
+          <Route path="/profile" element={
+          
+          <AuthGuard>
+          <ProfilePage/>
+          </AuthGuard>
+          }/>
           
         </Routes>
       </BrowserRouter>

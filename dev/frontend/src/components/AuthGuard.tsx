@@ -7,7 +7,7 @@ interface AuthGuardProps {
 }
 
 export interface TokenData {
-    valid: boolean
+    valid: boolean;
   }
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
