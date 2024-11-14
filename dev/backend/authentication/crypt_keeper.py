@@ -1,7 +1,3 @@
-
-# ? peut etre une classe abstraite et utilisé genre CryptKeeper.encode() 
-# dans middleware
-# pip install pyjwt
 import json
 import jwt
 from datetime import datetime, timezone
@@ -54,7 +50,7 @@ Verify that the token is issued by a trusted source (iss).
 
 class CryptKeeper:
     def __init__(self) -> None:
-        pass
+        self.__key = "secret"
     
     def decode(self,token: str) -> str:
         if self.validate_jwt(token):
@@ -68,9 +64,18 @@ class CryptKeeper:
         return None
         
 
-    def encode(self,json_information) -> str:
-        final_json = self.expiry_date(json_information)  
-        encoded_jwt = jwt.encode(final_json, "secret", algorithm="HS256")
+    def encode(self,user_id) -> str:
+        payload = {
+  "sub": user_id,
+  "iss": "GreenFlag flask server",
+  "aud": "GreenFlag frontend"
+}
+        
+
+        final_json = self.expiry_date(payload)  
+        print('json before encoding', final_json)
+        encoded_jwt = jwt.encode(final_json, self.__key, algorithm="HS256")
+        print('encoded jwt', encoded_jwt)   
         return encoded_jwt
     
     def expiry_date(self, json):

@@ -6,7 +6,7 @@ import axios from "axios";
 // FORM LIBRARY: React hook form
 
 const LoginForm = () => {
-  const navigate = useNavigate(); //hook
+  const navigate = useNavigate();
 
   type FormData = {
     email: string;

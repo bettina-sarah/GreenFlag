@@ -40,6 +40,11 @@ def create_account() -> bool:
 @app.route('/login', methods=['POST'])
 def login() -> bool:
     response = AccountManager.login(request.json)
+    print('login response:', response)
+    jsonified = jsonify(response)
+    print('jsonified: ', jsonified)
+    if response:
+        response['token'] = AuthenticationMiddleware().generate_token(response['id'])
     # call middleware to generate token; send it to frontend
     # make sure database gets it !!!!
     return jsonify(response) if response else jsonify(False)
