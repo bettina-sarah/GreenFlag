@@ -25,7 +25,7 @@ const LoginForm = () => {
         console.log("login data: ", answer.data);
         sessionStorage.setItem("id", answer.data.id);
         // should get token via login route here !
-        sessionStorage.setItem("authToken", answer.data.id);
+        sessionStorage.setItem("authToken", answer.data.token);
         sessionStorage.setItem(
           "profileComplete",
           answer.data.profile_completed
