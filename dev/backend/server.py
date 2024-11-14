@@ -44,6 +44,7 @@ def login() -> bool:
         response['token'] = AuthenticationMiddleware().generate_token(response['id'])
         print('login, token: ',response['token'])
         print('login, full response: ',response)
+        token_saved = AccountManager.save_token(response['id'], response['token'])
     # call middleware to generate token; send it to frontend
     # make sure database gets it !!!!
         return jsonify(response)

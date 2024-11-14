@@ -28,6 +28,12 @@ class AccountDAO(DAO):
         response = AccountDAO._prepare_statement("update", query, params)
         return response
     
+    @staticmethod
+    def save_token(params:tuple) -> bool:
+        query = 'UPDATE member SET token = %s WHERE id = %s;'
+        response = AccountDAO._prepare_statement("update", query, params)
+        return response
+    
     
     # rudimentaire: version finale faut que ca delete la personne des tables de suggestions de tout le monde, les match, les messages, les photos dans berkeleyDB
     @staticmethod
