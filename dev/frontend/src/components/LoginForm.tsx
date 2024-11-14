@@ -24,6 +24,8 @@ const LoginForm = () => {
       if (answer.data) {
         console.log("login data: ", answer.data);
         sessionStorage.setItem("id", answer.data.id);
+        // should get token via login route here !
+        sessionStorage.setItem("authToken", answer.data.id);
         sessionStorage.setItem(
           "profileComplete",
           answer.data.profile_completed
@@ -73,7 +75,6 @@ const LoginForm = () => {
       </button>
     </form>
   );
-
 };
 
 export default LoginForm;
