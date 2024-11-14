@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import fetchData from '@/api/fetchData';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import fetchData from "@/api/fetchData";
 
 interface AuthGuardProps {
   children: React.ReactNode;
 }
 
 export interface TokenData {
-    valid: boolean;
-  }
+  valid: boolean;
+}
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const navigate = useNavigate();
@@ -16,30 +16,37 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const token = sessionStorage.getItem('authToken');
+      const token = sessionStorage.getItem("authToken");
       if (!token) {
         // No token; redirect to login
         setIsAuthenticated(false);
-        navigate('/login');
+        navigate("/login");
         return;
-      }
-
-      try {
-        // Send the token to the backend for validation
-        const response = await fetchData<TokenData>('verify-token',{ token } );
-
-        if (response.valid) {
-          setIsAuthenticated(true);
-        } else {
+      } else {
+        try {
+          // Send the token to the backend for validation
+          console.log(
+            "auth session storage:",
+            sessionStorage.getItem("authToken")
+          );
+          const response = await fetchData<TokenData>(
+            "/verify-token",
+            sessionStorage.getItem("authToken")
+          );
+          console.log("apres fetch:", response);
+          if (response) {
+            setIsAuthenticated(true);
+          } else {
+            setIsAuthenticated(false);
+            sessionStorage.removeItem("authToken");
+            navigate("/");
+          }
+        } catch (error) {
+          console.error("Token verification failed:", error);
           setIsAuthenticated(false);
-          sessionStorage.removeItem('authToken');
-          navigate('/');
+          sessionStorage.removeItem("authToken");
+          navigate("/");
         }
-      } catch (error) {
-        console.error('Token verification failed:', error);
-        setIsAuthenticated(false);
-        sessionStorage.removeItem('authToken');
-        navigate('/');
       }
     };
 

@@ -11,6 +11,7 @@ from Managers.chatroom_socket_manager import ChatroomSocketManager
 from Managers.chatroom_manager import ChatroomManager
 from Managers.account_manager import AccountManager
 from Managers.matching_manager import MatchingManager
+from authentication.authentication_middleware import AuthenticationMiddleware
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}},
@@ -56,6 +57,17 @@ def get_profile() -> bool:
     #     return account_manager.get_profile()
     response = AccountManager.get_profile(request.json)
     print('get profile: ', response)
+    return jsonify(response) if response else jsonify(False)
+
+# --- TOKEN ROUTES ------
+
+@app.route('/verify-token', methods=['POST'])
+def verify_token() -> bool:
+    # if authentication_middleware.check_session_validity():
+    #     return account_manager.get_profile()
+    print(request.json)
+    response = True
+    # response = AuthenticationMiddleware().check_session_validity(request.json['token'])
     return jsonify(response) if response else jsonify(False)
 
 # ---- PAS UTLISÉ ENCORE!!
