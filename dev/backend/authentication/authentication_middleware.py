@@ -26,10 +26,10 @@ class AuthenticationMiddleware:
 
         return False    
 
-    def generate_token(self, user_id:str, user_password:str) -> str:
-        # make token
-        token = "1234"
-        encoded_token = CryptKeeper.encode(token)
+    def generate_token(self, user_id:str) -> str:
+        cryptkeeper = CryptKeeper()
+        encoded_token = cryptkeeper.encode(user_id)
+        print('encoded really?',encoded_token)
         return encoded_token
 
     
