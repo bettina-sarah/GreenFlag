@@ -1,27 +1,65 @@
 @import 'flowbite/dist/flowbite.css';
 /* title fonts: */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+.theme-emerald {
+  --bg-color: #CFFBE2;
+  --text-color: #CFFBE2;
+}
 
+.theme-autumn {
+  --bg-color: #EAE1DF;
+  --text-color: #B79492;
+  /* #917C78 */
+  /* #545E56 */
+  /* #667761 */
+}
 
+.theme-orange {
+  /* #BBB8B2 */
+  /* #BC5D2E */
+  /* #2E2E3A */
+  --text-color: #F34213;
+  --bg-color: #DE9151;
+}
 
+.theme-blue {
+  /* #25386A */
+  /* #5299D1 */
+  --bg-color: #71788C;
+  /* #51B2CC */
+  --text-color: #BCCEE4;
+}
+
+.theme-green {
+  /* #3FB34D */
+  --bg-color: #8DCF96;
+  /* #A7D9C2 */
+  /* #C6E0C4 */
+  --text-color: #FCFBFC;
+}
 
 /* index.css */
 html, body {
   margin: 0;
   padding: 0;
-  background-color: rgb(200 255 237);
+  background-color: var(--bg-color);
+  color: var(--bg-color);
 }
 
 html, body, #root, .App {
   height: 100%;
 }
 
+h1{
+  @apply text-h1-darkblue;
+}
 
 #root {
   display: contents;
