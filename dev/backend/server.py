@@ -71,8 +71,8 @@ def get_profile() -> bool:
 def verify_token() -> bool:
     # if authentication_middleware.check_session_validity():
     #     return account_manager.get_profile()
-    print(request.json)
-    response = True
+    response = AuthenticationMiddleware().check_session_validity(request.json)
+    print('verify token middleware response is:  '  , response)
     # response = AuthenticationMiddleware().check_session_validity(request.json['token'])
     return jsonify(response) if response else jsonify(False)
 
