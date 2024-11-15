@@ -17,14 +17,9 @@ class AuthenticationMiddleware:
     
     # @requires_token
     def check_session_validity(self, token:str) -> bool:
-        
-        decoded_token = CryptKeeper.decode(token)
-
-        # comment encode est utilisé? 
-        if decoded_token == "session_valid":
-            return True
-
-        return False    
+        cryptkeeper = CryptKeeper()
+        token_validity = cryptkeeper.decode(token)
+        return token_validity  
 
     def generate_token(self, user_id:str) -> str:
         cryptkeeper = CryptKeeper()
