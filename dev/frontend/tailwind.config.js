@@ -14,11 +14,39 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
-			'h1-yellow': '#EEE683',
-			'h2-yellow' : '#BDDF7B',
-			'hobby-green': '#4D8076',
-			'greenflag-green': '#00B297',
-			'hobby-green': '#4D8076',
+				'h1-yellow': '#EEE683',
+				'h2-yellow' : '#BDDF7B',
+				'hobby-green': '#4D8076',
+				'greenflag-green': '#00B297',
+				'hobby-green': '#4D8076',
+				'h1-darkblue': '#2F4858',
+				'button-light': '#CFFBE2',
+				'button-dark': '#00B297',
+				'theme-emerald': {
+					light: '#CFFBE2',
+					DEFAULT: '#00B297',
+					dark: '#00B297',
+				},
+				'theme-autumn': {
+					light:'#EAE1DF',
+					DEFAULT:'#917C78',
+					dark:'#667761',
+				},
+				'theme-orange': {
+					light:'#BBB8B2',
+					DEFAULT:'#BC5D2E',
+					dark:'#2E2E3A',
+				},
+				'theme-blue': {
+					light:'#5299D1',
+					DEFAULT:'#71788C',
+					dark:'#51B2CC */',
+				},
+				'theme-green': {
+					light:'#A7D9C2',
+					DEFAULT:'#8DCF96',
+					dark:'#3FB34D',
+				},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -62,7 +90,14 @@ export default {
   		},
 		  fontFamily: {
 			nunito: ['"Nunito"', 'sans-serif'],
-		  }
+			leckerli: ['Leckerli One', 'cursive'],
+			inter: ['Inter','sans-serif']
+		  },
+		backgroundImage: {
+			'home-bg': "url('/ressources/bg/Background.svg')",
+			'home-bg2': "url('/ressources/bg/Background-2.svg')"
+
+		}
   	}
   },
   plugins: [

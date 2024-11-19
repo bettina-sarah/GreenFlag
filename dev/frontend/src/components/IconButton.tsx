@@ -9,6 +9,7 @@ interface IconButtonProps {
   onClick?: () => void;
   toggleState?: boolean; // optional turn on off !
   suggestion_id?: string;
+  className?:string;
 }
 
 const IconButton: React.FC<IconButtonProps> = ({
@@ -16,8 +17,10 @@ const IconButton: React.FC<IconButtonProps> = ({
   page,
   onClick,
   toggleState,
+  className,
 }) => {
   const [isActive, setIsActive] = useState<boolean>(toggleState || false);
+  const [customClassName] = useState<string>(className || "");
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -43,13 +46,15 @@ const IconButton: React.FC<IconButtonProps> = ({
   };
 
   return (
-    <button
-      className="w-15 h-12 flex items-center justify-center p-1 border-none
-    hover:bg-teal-500 rounded"
-      onClick={handleClick}
-    >
-      <Icon icon={icon} />
-    </button>
+    <div className={customClassName}>
+      <button
+        className="w-15 h-12 flex items-center justify-center p-1 border-none
+      hover:bg-teal-500 rounded"
+        onClick={handleClick}
+      >
+        <Icon icon={icon} />
+      </button>
+    </div>
   );
 };
 
