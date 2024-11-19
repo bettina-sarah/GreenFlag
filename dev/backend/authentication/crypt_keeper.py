@@ -59,7 +59,7 @@ class CryptKeeper:
             try:
                 decoded_jwt = jwt.decode(token, self.__key, algorithms=["HS256"],
                                         audience="GreenFlag frontend", issuer="GreenFlag flask server")
-                is_valid = self.check_expiry_date(decoded_jwt['exp'])
+                is_valid = self.check_expiry_date(decoded_jwt['exp'], decoded_jwt['sub'])
                 return (is_valid, decoded_jwt['sub'])
             except jwt.ExpiredSignatureError as e:
                 print("token expired: ", e)
@@ -74,15 +74,13 @@ class CryptKeeper:
                 return False
         return None
     
-    def check_expiry_date(self, expiry_date):
+    def check_expiry_date(self, expiry_date, user_id = None):
         current_timestamp = int(time.time())
         remaining_time = expiry_date - current_timestamp
         print('remaining time: ', remaining_time)
         if expiry_date > current_timestamp:
             if remaining_time <= 120:
-                return True
-                #make new token and send it to FRONTEND AND DATABASE !
-                pass
+                return "expiring soon"
             return True
         return False
         
@@ -95,7 +93,6 @@ class CryptKeeper:
   "aud": "GreenFlag frontend"
 }
         final_json = self.expiry_date(payload)  
-        print('json before encoding', final_json)
         encoded_jwt = jwt.encode(final_json, self.__key, algorithm="HS256")
         print('encoded jwt', encoded_jwt)   
         return encoded_jwt
