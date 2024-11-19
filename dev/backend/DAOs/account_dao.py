@@ -34,6 +34,12 @@ class AccountDAO(DAO):
         response = AccountDAO._prepare_statement("update", query, params)
         return response
     
+    @staticmethod
+    def does_token_exist(params:tuple) -> bool:
+        query = 'SELECT * FROM member WHERE id = %s and token = %s;'
+        response = AccountDAO._prepare_statement("select", query, params)
+        return response
+    
     
     # rudimentaire: version finale faut que ca delete la personne des tables de suggestions de tout le monde, les match, les messages, les photos dans berkeleyDB
     @staticmethod
