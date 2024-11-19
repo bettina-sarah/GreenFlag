@@ -35,16 +35,20 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
             sessionStorage.getItem("authToken")
           );
           console.log("apres fetch:", response);
-          if (response) {
-            setIsAuthenticated(true);
-          } else if (!response) {
-            setIsAuthenticated(false);
-            sessionStorage.removeItem("authToken");
-            navigate("/");
+          if (typeof response === "boolean") {
+            if (response) {
+              setIsAuthenticated(true);
+            }
+            if (!response) {
+              setIsAuthenticated(false);
+              sessionStorage.removeItem("authToken");
+              navigate("/");
+            }
           } else {
             setIsAuthenticated(true);
             console.log("token:", response);
-            sessionStorage.setItem("authToken", response);
+            const newToken = response.token;
+            sessionStorage.setItem("authToken", newToken);
           }
         } catch (error) {
           console.error("Token verification failed:", error);
