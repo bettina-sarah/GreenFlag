@@ -13,10 +13,11 @@ class MatchingManager():
     matches = []
     
     @staticmethod
-    def create_suggestions(data:dict) -> bool:
+    def create_suggestions(user_id) -> bool:
         try:
-            user_id = data.get("id")
             response = MatchingDAO.get_eligible_members(user_id)
+            response_2 = None
+            prospects_ids = None
             if response:
                 prospects_ids = MatchingManager.find_suggestions(user_id,response)
                 
@@ -34,7 +35,12 @@ class MatchingManager():
         try:
             user_id = data.get("id")
             response = MatchingDAO.get_suggestions(user_id)
-            if response:
+            
+            if not response:
+                create = MatchingManager.create_suggestions(user_id)
+                print("create : ", create)
+                return create
+            elif response:
                 return response
             
         except Exception as error:

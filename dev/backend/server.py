@@ -133,9 +133,9 @@ def fetch_chatroom_subject() -> list:  # send JSON jsonify ...
 def get_suggestions() -> list:
     response = MatchingManager.get_suggestions(request.json)
     print ('suggestions: ', response)
-    if not response:
-        MatchingManager.create_suggestions(request.json)
-        response = MatchingManager.get_suggestions(request.json)
+    # if not response:
+    #     MatchingManager.create_suggestions(request.json)
+    #     response = MatchingManager.get_suggestions(request.json)
     return jsonify(response) if response else jsonify(False)
 
 @app.route('/update-suggestion', methods=['POST'])
