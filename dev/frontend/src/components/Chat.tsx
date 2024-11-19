@@ -4,9 +4,11 @@ import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import Message from "@/components/chat_components/Message"
 import { Textarea } from "flowbite-react";
+import IconButton from "./IconButton";
+import sendIcon from "../../ressources/icons/send.png"
+import MenuChat from '@/components/chat_components/MenuChat';
 
 
-  
 interface Message {
   sender_id: number;
   message_content: string;
@@ -89,15 +91,16 @@ const Chat: React.FC = () => {
 
     return (
       <div className="flex flex-col h-screen">
+        <MenuChat />
         <div ref={chatContainerRef} className="flex-grow overflow-y-auto scroll-smooth">
           {messages.map((msg, index) => (
             <Message key={index} content={msg.message_content} sender_id={msg.sender_id}/>
           ))}
         </div>
-        <div className="p-4">
+        <div className="relative p-4">
           <Textarea
-            className="bg-greenflag-green"
-            rows={3}
+            className="bg-greenflag-green resize-none overflow-y-auto border border-emerald-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 min-h-10 max-h-32"
+            rows={1}
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)} 
             placeholder="Type a message"
@@ -106,7 +109,7 @@ const Chat: React.FC = () => {
                 sendMessage()
             }}
           />
-          <button onClick={sendMessage}>Send</button>
+          <IconButton className="absolute right-3 bottom-2" onClick={sendMessage} icon={sendIcon} />
         </div>
       </div>
     );

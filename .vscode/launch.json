@@ -10,7 +10,10 @@
             "request": "launch",
             "program": "${workspaceFolder}/dev/backend/server.py",
             "cwd": "${workspaceFolder}/dev/backend",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "env":{
+                "GEVENT_SUPPORT": "True"
+            }
         },
         {
             "name": "Débogueur Python: Fichier actuel",

@@ -438,6 +438,7 @@ BEGIN
       ON chatroom_messages.chatroom_name = member_match.chatroom_name
     WHERE suggestion.member_id_1 = user_id OR suggestion.member_id_2 = user_id
   )
+
   SELECT
     LastMessages.subject_id,  
     LastMessages.chatroom_name,
