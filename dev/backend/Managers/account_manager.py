@@ -56,7 +56,15 @@ class AccountManager:
             return response
         except Exception as error:
             print(error)
-
+            
+    @staticmethod
+    def does_token_exist(user_id, token) -> bool:
+        params = (user_id, token)
+        try:
+            response = AccountDAO.does_token_exist(params)
+            return response
+        except Exception as error:
+            print(error)
             
     @staticmethod
     def complete_profile(data) -> bool:
