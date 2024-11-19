@@ -70,6 +70,7 @@ const LoginForm = () => {
         <img src={LockIcon} className="size-7"/>
         <input className="pl-3 w-80 text-button-light font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-button-light"
           placeholder="Password"
+          type="password"
           {...register("password", { required: true, maxLength: 20 })} />
         {errors.password && errors.password.type === "required" && (
           <span>This is required</span>
