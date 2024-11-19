@@ -28,8 +28,8 @@ SELECT
   m.want_kids,
   m.city,
   m.relationship_type,
-  ARRAY_AGG(a.id) as activities_id,
-  ARRAY_AGG(a.activity_name) as activities
+  ARRAY_AGG(a.activity_name) as activities,
+  ARRAY_AGG(a.id) as activities_id
 FROM 
   member AS m
 LEFT JOIN member_activities AS ma ON m.id = ma.member_id
