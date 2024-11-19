@@ -28,7 +28,7 @@ SELECT
   m.want_kids,
   m.city,
   m.relationship_type,
-  -- a.id AS activity_id, 
+  ARRAY_AGG(a.id) as activities_id,
   ARRAY_AGG(a.activity_name) as activities
 FROM 
   member AS m
@@ -154,6 +154,7 @@ BEGIN
   GROUP BY m.id;
 END;
 $$ LANGUAGE PLPGSQL;
+
 
 DROP FUNCTION IF EXISTS create_suggestions;
 
