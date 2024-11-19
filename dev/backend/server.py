@@ -72,7 +72,8 @@ def verify_token() -> bool:
     if isinstance(token_is_valid, bool):
         if token_is_valid:
             does_token_exist = AccountManager.does_token_exist(user_id, token)
-            return jsonify(does_token_exist)
+            response = does_token_exist[0][0]
+            return jsonify(response)
         return jsonify(False)
     else: # is_valid a string: new token
         new_token = token_is_valid

@@ -36,7 +36,7 @@ class AccountDAO(DAO):
     
     @staticmethod
     def does_token_exist(params:tuple) -> bool:
-        query = 'SELECT * FROM member WHERE id = %s and token = %s;'
+        query = 'SELECT EXISTS(SELECT 1 FROM member WHERE id = %s AND token = %s) AS is_valid;'
         response = AccountDAO._prepare_statement("select", query, params)
         return response
     
