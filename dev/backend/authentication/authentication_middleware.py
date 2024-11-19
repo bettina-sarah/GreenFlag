@@ -19,7 +19,12 @@ class AuthenticationMiddleware:
     def check_session_validity(self, token:str) -> bool:
         cryptkeeper = CryptKeeper()
         token_validity = cryptkeeper.decode(token)
-        return token_validity  
+        if isinstance(token_validity, bool):
+            return token_validity
+        print('generating new token: id is ', token_validity)
+        new_token = self.generate_token(token_validity)
+        print('new token: ', new_token)
+        return {'id': token_validity, 'token': new_token}
 
     def generate_token(self, user_id:str) -> str:
         cryptkeeper = CryptKeeper()

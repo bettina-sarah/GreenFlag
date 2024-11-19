@@ -8,6 +8,7 @@ interface AuthGuardProps {
 
 export interface TokenData {
   valid: boolean;
+  token?: string;
 }
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
@@ -36,10 +37,14 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
           console.log("apres fetch:", response);
           if (response) {
             setIsAuthenticated(true);
-          } else {
+          } else if (!response) {
             setIsAuthenticated(false);
             sessionStorage.removeItem("authToken");
             navigate("/");
+          } else {
+            setIsAuthenticated(true);
+            console.log("token:", response);
+            sessionStorage.setItem("authToken", response);
           }
         } catch (error) {
           console.error("Token verification failed:", error);
