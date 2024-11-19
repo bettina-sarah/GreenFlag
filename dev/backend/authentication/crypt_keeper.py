@@ -1,5 +1,5 @@
 import json
-import jwt
+from jwt import PyJWT
 from datetime import datetime, timezone
 import time
 import base64
@@ -54,24 +54,26 @@ class CryptKeeper:
         self.__expiry_time = 150 # 30 mins * 60 sec
     
     def decode(self,token: str) -> str:
-        print("decoding: ", token)
+        print("var type of token is: ", type(token), token)
+        jwt_instance = PyJWT()
         if self.validate_jwt(token):
             try:
-                decoded_jwt = jwt.decode(token, self.__key, algorithms=["HS256"],
+                
+                decoded_jwt = jwt_instance.decode(token, self.__key, algorithms=["HS256"],
                                         audience="GreenFlag frontend", issuer="GreenFlag flask server")
                 is_valid = self.check_expiry_date(decoded_jwt['exp'], decoded_jwt['sub'])
                 return (is_valid, decoded_jwt['sub'])
-            except jwt.ExpiredSignatureError as e:
+            except Exception as e:
                 print("token expired: ", e)
                 try:
-                    decoded_jwt = jwt.decode(token, self.__key, algorithms=["HS256"], audience="GreenFlag frontend",
+                    decoded_jwt = jwt_instance.decode(token, self.__key, algorithms=["HS256"], audience="GreenFlag frontend",
                                               issuer="GreenFlag flask server", options={"verify_exp": False} )
                     return False, decoded_jwt['sub']
                 except Exception as e:
                     print('Error: ',e)
-            except jwt.DecodeError as e:
-                print(f'Decoder Error: ',e)
-                return False
+            # except jwt.DecodeError as e:
+            #     print(f'Decoder Error: ',e)
+            #     return False
         return None
     
     def check_expiry_date(self, expiry_date, user_id = None):
@@ -91,9 +93,10 @@ class CryptKeeper:
   "sub": user_id,
   "iss": "GreenFlag flask server",
   "aud": "GreenFlag frontend"
-}
+}       
+        jwt_instance = PyJWT()
         final_json = self.expiry_date(payload)  
-        encoded_jwt = jwt.encode(final_json, self.__key, algorithm="HS256")
+        encoded_jwt = jwt_instance.encode(final_json, self.__key, algorithm="HS256")
         print('encoded jwt', encoded_jwt)   
         return encoded_jwt
     
@@ -144,15 +147,15 @@ class CryptKeeper:
     #     return True
 
 
-if __name__ == "__main__":
-    crypt = CryptKeeper()
-    jsonn = {"some": "payload"}
-    result = crypt.encode(jsonn)
-    print('encoded:', result)
-    decode = crypt.decode(result)
-    print('decoded', decode)
-    # decoded = crypt.decode(result)
-    # print(decoded)
+# if __name__ == "__main__":
+#     crypt = CryptKeeper()
+#     jsonn = {"some": "payload"}
+#     result = crypt.encode(jsonn)
+#     print('encoded:', result)
+#     decode = crypt.decode(result)
+#     print('decoded', decode)
+#     # decoded = crypt.decode(result)
+#     # print(decoded)
     
     
 
