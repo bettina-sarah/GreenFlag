@@ -12,13 +12,13 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div className='w-full h-full flex flex-col justify-between items-center bg-home-bg bg-cover bg-center'>
-      <h1 className='p-8 font-leckerli text-6xl font-extrabold' style={{ transform: 'translateX(-3rem) translateY(3rem) rotate(-25deg)' }}>GreenFlag</h1>
+    <div className='w-full h-full flex flex-col justify-between items-center bg-home-bg bg-cover bg-bottom'>
+      <h1 className='p-8 font-leckerli text-6xl font-extrabold' style={{ transform: 'translateX(-1rem) translateY(3rem) rotate(-20deg)' }}>GreenFlag</h1>
       <div>
         <img src={Logo} alt="" />
       </div>
       <div className='flex flex-col justify-between'>
-        <h2 className='text-align-left text-2xl text-button-light'>Emotional availability-based matching</h2>
+        <h2 className='text-align-left text-2xl text-h1-darkblue'>Emotional availability-based matching</h2>
         <p className='text-button-light'>Tired of traditional dating apps? We got you!</p>
         <div className='flex flex-col m-3 py-3'>
           <button onClick={handleLoginButtonClick} className='bg-button-light hover:bg-button-dark text-button-dark hover:text-button-light border-2 hover:border-button-light font-bold py-2 px-4 rounded my-2 mx-6'>
