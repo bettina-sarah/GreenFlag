@@ -3,6 +3,7 @@ import Menu from "@/components/Menu";
 import useFetch from "@/api/useFetch";
 import fetchData from "@/api/fetchData";
 import ChatroomItem from "@/components/ChatroomItem";
+import { Spinner } from "flowbite-react";
 
 
 interface IProfileData {
@@ -71,7 +72,7 @@ const ChatroomsPage: React.FC = () => {
 	  }, [profileData, profileLoading, profileError]);
 	
 	  if (!profileData && profileLoading) {
-		return <div>Loading...</div>;
+			return <div className="flex justify-center items-center"><Spinner color="success" size="lg"/></div>;
 	  }
 	
 	  if (!profileData && !profileLoading && profileError) {

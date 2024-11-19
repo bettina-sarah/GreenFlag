@@ -1,6 +1,8 @@
+import IconButton from '@/components/IconButton';
 import LoginForm from '@/components/LoginForm';
 import React from 'react';
 import { useState } from 'react';
+import BackArrowIcon from "@/../ressources/icons/back_arrow.png";
 
 
 const Login: React.FC = () => {
@@ -15,7 +17,8 @@ const Login: React.FC = () => {
 
 	return(
 	<div className='w-full h-full flex flex-col justify-between items-center bg-home-bg2 bg-cover bg-center'>
-		<h1 className='text-5xl font-bold text-h1-darkblue font-leckerli mt-72'>Welcome Back !</h1>
+		<IconButton icon={BackArrowIcon} page=" " className='place-self-start'/>
+		<h1 className='text-5xl font-bold text-h1-darkblue font-leckerli'>Welcome Back!</h1>
 		{showAccountCreatedMessage && (
         <div className="alert alert-success">
           Account created successfully! Please log in.

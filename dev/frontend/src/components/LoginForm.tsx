@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import EmailIcon from "@/../ressources/icons/email.png";
-import LockIcon from "@/../ressources/icons/lock.png"
+import LockIcon from "@/../ressources/icons/lock.png";
 
 // FORM LIBRARY: React hook form
 
