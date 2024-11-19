@@ -51,18 +51,22 @@ Verify that the token is issued by a trusted source (iss).
 class CryptKeeper:
     def __init__(self) -> None:
         self.__key = "secret"
-        self.__expiry_time = 1800 # 30 mins
+        self.__expiry_time = 150 # 30 mins * 60 sec
     
     def decode(self,token: str) -> str:
         print("decoding: ", token)
         if self.validate_jwt(token):
             try:
-                decoded_jwt = jwt.decode(token, self.__key, algorithms=["HS256"], audience="GreenFlag frontend", issuer="GreenFlag flask server")
+                decoded_jwt = jwt.decode(token, self.__key, algorithms=["HS256"],
+                                        audience="GreenFlag frontend", issuer="GreenFlag flask server")
                 return self.check_expiry_date(decoded_jwt['exp'])
-            except jwt.ExpiredSignatureError:
-                print("expired")
+            except jwt.ExpiredSignatureError as e:
+                print("token expired: ", e)
+                return decoded_jwt['sub']
+            # tis doesnt work ! bc jwt decode func refuses to decode it ... 
             except jwt.DecodeError as e:
                 print(f'Decoder Error: ',e)
+                return False
         return None
     
     def check_expiry_date(self, expiry_date):
@@ -70,7 +74,7 @@ class CryptKeeper:
         remaining_time = expiry_date - current_timestamp
         print('remaining time: ', remaining_time)
         if expiry_date > current_timestamp:
-            if remaining_time <= 150:
+            if remaining_time <= 120:
                 return True
                 #make new token and send it to FRONTEND AND DATABASE !
                 pass

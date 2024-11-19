@@ -45,8 +45,6 @@ def login() -> bool:
         print('login, token: ',response['token'])
         print('login, full response: ',response)
         token_saved = AccountManager.save_token(response['id'], response['token'])
-    # call middleware to generate token; send it to frontend
-    # make sure database gets it !!!!
         return jsonify(response)
     return jsonify(False)
 
@@ -69,12 +67,14 @@ def get_profile() -> bool:
 
 @app.route('/verify-token', methods=['POST'])
 def verify_token() -> bool:
-    # if authentication_middleware.check_session_validity():
-    #     return account_manager.get_profile()
     response = AuthenticationMiddleware().check_session_validity(request.json)
     print('verify token middleware response is:  '  , response)
-    # response = AuthenticationMiddleware().check_session_validity(request.json['token'])
-    return jsonify(response) if response else jsonify(False)
+    if isinstance(response, bool):
+        return jsonify(response)
+    # in this case, response is the new token:
+    print('saving new token and sending to FE')
+    AccountManager.save_token(response['id'], response['token'])
+    return jsonify({'token': response['token']})
 
 # ---- PAS UTLISÉ ENCORE!!
 
