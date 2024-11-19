@@ -66,6 +66,15 @@ class MatchingDAO(DAO):
         if response:
             return response
         return False
+    
+    @staticmethod
+    def get_user_activities(user_id:int):
+        query = "SELECT activities FROM member_activities_view WHERE member_id=%s"
+        params = (user_id,)
+        response = MatchingDAO._prepare_statement('select',query,params)
+        if response:
+            return response
+        return False
 
     @staticmethod
     def flag_user(user_id:int,unmatched_id:int, reason:str) -> bool:

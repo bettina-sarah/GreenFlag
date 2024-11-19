@@ -39,7 +39,8 @@ class MatchingManager():
             if not response:
                 create = MatchingManager.create_suggestions(user_id)
                 print("create : ", create)
-                return create
+                response = MatchingDAO.get_suggestions(user_id)
+                return response
             elif response:
                 return response
             
@@ -86,9 +87,13 @@ class MatchingManager():
     @staticmethod
     def find_suggestions(user_id:int, members_activities:int) -> list[int]:
         user_activities = np.zeros((1, NUMBER_ACTIVITIES))
-        counter = 0
+        index_counter = 0
         members_index = []
-        data = np.zeros((len(members_activities) - 1, NUMBER_ACTIVITIES))
+        data = np.zeros((len(members_activities), NUMBER_ACTIVITIES))
+        
+        user_data = MatchingDAO.get_user_activities(user_id)
+        user_activities[0,user_data[0]]
+        
         
         for member in members_activities:
             if member[0] == user_id:
@@ -97,8 +102,8 @@ class MatchingManager():
             if member[0] != user_id:
                 members_index.append(member[0])
                 
-                data[counter,member[1]] += 1
-                counter += 1
+                data[index_counter,member[1]] += 1
+                index_counter += 1
         
         if np.sum(data) > 0:
             Algo = AlgoContext(MeanShift(0.3,100,0.001))
@@ -109,7 +114,7 @@ class MatchingManager():
         
             labels = Algo.get_labels()
         
-            prospects = ()
+            prospects = []
         
             index = 0
             for label in labels:
