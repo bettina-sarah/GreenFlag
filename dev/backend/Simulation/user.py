@@ -1,12 +1,13 @@
 from enum import Enum
 
 class User:
-    def __init__(self,name:str, dob:int, gender:str, preferences:dict,interests:dict) -> None: # set[str]
+    def __init__(self,name:str, dob:int, gender:str, preferences:dict,interests:dict, bio: str) -> None: # set[str]
         self.name = name
         self.dob = dob
         self.gender = gender
         self.preferences = preferences
         self.interests = interests
+        self.bio = bio
 
 
     
@@ -36,17 +37,26 @@ class User:
         
     
     @property
-    def preferences(self) -> tuple:
+    def preferences(self) -> dict:
         return self.__preferences
     
     @preferences.setter
-    def preferences(self, preferences:tuple) -> None:
+    def preferences(self, preferences:dict) -> None:
         self.__preferences = preferences
     
     @property
-    def interests(self) -> tuple:
+    def interests(self) -> dict:
         return self.__interests
     
     @interests.setter
-    def interests(self, interests:tuple) -> None:
+    def interests(self, interests:dict) -> None:
         self.__interests = interests
+
+    @property
+    def bio(self) -> str:
+        return self.__bio
+    
+    @bio.setter
+    def bio(self, bio:str) -> None:
+        self.__bio = bio
+    
