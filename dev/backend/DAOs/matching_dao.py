@@ -69,11 +69,11 @@ class MatchingDAO(DAO):
     
     @staticmethod
     def get_user_activities(user_id:int):
-        query = "SELECT activities FROM member_activities_view WHERE member_id=%s"
+        query = "SELECT activities_id FROM member_activities_view WHERE member_id=%s"
         params = (user_id,)
         response = MatchingDAO._prepare_statement('select',query,params)
         if response:
-            return response
+            return response[0][0]
         return False
 
     @staticmethod

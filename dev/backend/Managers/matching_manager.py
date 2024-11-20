@@ -85,24 +85,29 @@ class MatchingManager():
             print(error)
     
     @staticmethod
-    def find_suggestions(user_id:int, members_activities:int) -> list[int]:
+    def find_suggestions(user_id:int, members:int) -> list[int]:
         user_activities = np.zeros((1, NUMBER_ACTIVITIES))
         index_counter = 0
         members_index = []
-        data = np.zeros((len(members_activities), NUMBER_ACTIVITIES))
+        data = np.zeros((len(members), NUMBER_ACTIVITIES))
+        
+        if len(members) <= 8:
+            prospects_ids = []
+            for member in members:
+                prospects_ids.append(member[0])
+            return prospects_ids
+        
         
         user_data = MatchingDAO.get_user_activities(user_id)
-        user_activities[0,user_data[0]]
+        user_data[:] = [x - 1 for x in user_data[:]]
+        user_activities[0,user_data[0]] += 1
         
-        
-        for member in members_activities:
-            if member[0] == user_id:
-                user_activities[0,member[1]] += 1
-            
+        for member in members:
             if member[0] != user_id:
-                members_index.append(member[0])
-                
-                data[index_counter,member[1]] += 1
+                member_id, member_activities = member
+                members_index.append(member_id)
+                member_activities[:] = [x-1 for x in member_activities]
+                data[index_counter,member_activities] += 1
                 index_counter += 1
         
         if np.sum(data) > 0:

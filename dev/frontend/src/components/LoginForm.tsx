@@ -48,7 +48,7 @@ const LoginForm = () => {
   });
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col justify-between w-full h-44">
+    <form onSubmit={onSubmit} className="flex flex-col justify-between items-center w-full h-44">
       <div className="flex items-center w-full max-w-sm border-b-2 border-button-light">
         <img src={EmailIcon} className="size-7"/>
         <input className="pl-3 w-80 text-button-light font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-button-light"
@@ -79,7 +79,7 @@ const LoginForm = () => {
           <span>Max length exceeded</span>
         )}
       </div>
-      <button className="bg-button-light text-button-dark max-w-sm py-2 rounded-md text-lg font-inter font-semibold" type="submit">
+      <button className="bg-button-light text-button-dark w-full max-w-sm py-2 rounded-md text-lg font-inter font-semibold" type="submit">
         Log in
       </button>
     </form>
