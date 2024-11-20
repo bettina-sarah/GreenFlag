@@ -2,7 +2,7 @@ from __future__ import annotations
 from user import User
 from abc import ABC, abstractmethod
 from faker import Faker
-# import random
+import random
 # import copy
 import numpy as np
 
@@ -28,6 +28,10 @@ ACTIVITY_TUPLE = ("hiking",
 "petlover",
 "learningnewlanguage"
 )
+
+RELATIONSHIP_TYPE = ("fun", "shortterm", "longterm")
+
+GENDER = ("Male", "Female", "Non-Binary")
 
 # ACTIVITY_DICT = {activity: False for activity in ACTIVITY_TUPLE}
 
@@ -79,10 +83,19 @@ class UserFactory(Factory):
         #return np.random.choice(ACTIVITY_TUPLE, 5, replace=False)
     
     def generate_preferences(self):
+        min_age = random.randint(18,59)
+        max_age = random.randint(min_age,60)
+
+        rel_type = random.randint(0,2)
+
+        relationship_type = RELATIONSHIP_TYPE[rel_type]
+
+        gender = random.randint(0,2)
+        preferred_gender = GENDER[gender]    
         
-        preferences = {'min_age': '29', 'max_age': '60',
-                       'relationship_type': 'shortterm',
-                       'preferred_genders': ['Female']}
+        preferences = {'min_age': str(min_age), 'max_age': str(max_age),
+                       'relationship_type': relationship_type,
+                       'preferred_genders': [preferred_gender]} # not good bc it only returnd one gender!
         return preferences
 
     def factory_method_young_men(self):
@@ -98,19 +111,15 @@ class UserFactory(Factory):
     
         user = User(self.__faker.name_male, self.__faker.date_of_birth(minimum_age=18,maximum_age=35),
                      gender='Male', preferences=preferences_dict,interests=activity_dict)
+        
+        return user
         # self.__faker.name_nonbinary
         # self.__faker.name_male
         # make women, non binary, males that have preferences also: 
         
     # old men, young old women, young old nb
     
-    
-    
-    
-    def create_user(self, id:int, dob:int, gender:User.Gender, preferences:tuple,interests:tuple) -> User:
-        # return User(id, dob, gender, preferences,interests)
-        pass
 
 if __name__ == "__main__":
     user_factory = UserFactory("men")
-    user_factory.factory_method_young_men()
+    user = user_factory.factory_method_young_men()
