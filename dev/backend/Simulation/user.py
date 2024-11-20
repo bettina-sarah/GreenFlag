@@ -1,7 +1,7 @@
 from enum import Enum
 
 class User:
-    def __init__(self,name:str, dob:int, gender:str, preferences:tuple,interests:dict) -> None: # set[str]
+    def __init__(self,name:str, dob:int, gender:str, preferences:dict,interests:dict) -> None: # set[str]
         self.name = name
         self.dob = dob
         self.gender = gender
