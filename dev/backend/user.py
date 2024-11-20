@@ -1,26 +1,23 @@
 from enum import Enum
 
-class Gender(Enum): # pas sure de ca 
-    MALE = 1
-    FEMALE = 2
-    NONBINARY = 3
-
 class User:
-    def __init__(self, id:int, dob:int, gender:Gender, preferences:tuple,interests:tuple) -> None:
-        self.id = id
+    def __init__(self,name:str, dob:int, gender:str, preferences:tuple,interests:set[str]) -> None:
+        self.name = name
         self.dob = dob
         self.gender = gender
         self.preferences = preferences
         self.interests = interests
 
-    @property
-    def id(self) -> int:
-        return self.__id
-    
-    @id.setter
-    def id(self, id:int) -> None:
-        self.__id = id
 
+    
+    @property
+    def name(self) -> str:
+        return self.__name
+    
+    @name.setter
+    def name(self, name:str) -> None:
+        self.__name = name
+    
     @property
     def dob(self) -> int:
         return self.__dob
@@ -30,11 +27,11 @@ class User:
         self.__dob = dob
     
     @property
-    def gender(self) -> Gender:
+    def gender(self) -> str:
         return self.__gender
     
     @gender.setter
-    def gender(self, gender:Gender) -> None:
+    def gender(self, gender:str) -> None:
         self.__gender = gender
         
     
