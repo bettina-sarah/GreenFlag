@@ -22,31 +22,13 @@ export default {
 				'h1-darkblue': '#2F4858',
 				'button-light': '#CFFBE2',
 				'button-dark': '#00B297',
-				'theme-emerald': {
-					light: '#CFFBE2',
-					DEFAULT: '#00B297',
-					dark: '#00B297',
-				},
-				'theme-autumn': {
-					light:'#EAE1DF',
-					DEFAULT:'#917C78',
-					dark:'#667761',
-				},
-				'theme-orange': {
-					light:'#BBB8B2',
-					DEFAULT:'#BC5D2E',
-					dark:'#2E2E3A',
-				},
-				'theme-blue': {
-					light:'#5299D1',
-					DEFAULT:'#71788C',
-					dark:'#51B2CC */',
-				},
-				'theme-green': {
-					light:'#A7D9C2',
-					DEFAULT:'#8DCF96',
-					dark:'#3FB34D',
-				},
+				
+				'bg-color': "rgba(--var(--bg-color))",
+				'text-color': "rgba(--var(--text-color))",
+				'primary-color': "rgba(--var(--primary-color)))",
+				'secondary-color': "rgba(--var(--secondary-color))",
+				'optional-color': "rgba(--var(--optional-color))",
+
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
