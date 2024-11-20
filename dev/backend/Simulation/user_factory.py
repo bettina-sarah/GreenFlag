@@ -109,9 +109,11 @@ class UserFactory(Factory):
         activity_dict = self.generate_activities()
         preferences_dict = self.generate_preferences()
     
-        user = User(self.__faker.name_male, self.__faker.date_of_birth(minimum_age=18,maximum_age=35),
+    # ajouter first last user name
+        user = User(self.__faker.first_name_male, self.__faker.last_name_male, self.__faker.date_of_birth(minimum_age=18,maximum_age=35),
                      gender='Male', preferences=preferences_dict,interests=activity_dict, bio = self.__faker.text(200))
         # ajouter email, password, ...
+        self.__faker.email()
         return user
         # self.__faker.name_nonbinary
         # self.__faker.name_male
