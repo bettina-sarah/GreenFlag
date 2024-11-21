@@ -1,10 +1,11 @@
 from enum import Enum
 
 class User:
-    def __init__(self,name:str, dob:int, gender:str, preferences:dict,interests:dict, bio: str) -> None: # set[str]
+    def __init__(self,name:str, dob:int, gender:str, email:str,preferences:dict,interests:dict, bio: str) -> None: # set[str]
         self.name = name
         self.dob = dob
         self.gender = gender
+        self.email = email
         self.preferences = preferences
         self.interests = interests
         self.bio = bio
@@ -34,6 +35,14 @@ class User:
     @gender.setter
     def gender(self, gender:str) -> None:
         self.__gender = gender
+
+    @property
+    def email(self) -> str:
+        return self.__email
+    
+    @email.setter
+    def email(self, email:str) -> None:
+        self.__email = email
         
     
     @property
