@@ -3,7 +3,6 @@ from user import User
 from abc import ABC, abstractmethod
 from faker import Faker
 import random
-# import copy
 import numpy as np
 
 
@@ -109,11 +108,10 @@ class UserFactory(Factory):
         activity_dict = self.generate_activities()
         preferences_dict = self.generate_preferences()
     
-    # ajouter first last user name
+        # password by default
         user = User(self.__faker.first_name_male, self.__faker.last_name_male, self.__faker.date_of_birth(minimum_age=18,maximum_age=35),
-                     gender='Male', preferences=preferences_dict,interests=activity_dict, bio = self.__faker.text(200))
-        # ajouter email, password, ...
-        self.__faker.email()
+                     gender='Male', email=self.__faker.email(),preferences=preferences_dict,interests=activity_dict, bio = self.__faker.text(200))
+        
         return user
         # self.__faker.name_nonbinary
         # self.__faker.name_male
