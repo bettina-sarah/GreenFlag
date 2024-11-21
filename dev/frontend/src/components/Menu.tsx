@@ -4,6 +4,7 @@ import matchingIcon from "../../ressources/icons/matching.png";
 import messageIcon from "../../ressources/icons/messages.png";
 import settingsIcon from "../../ressources/icons/settings.png";
 import logoutIcon from "../../ressources/icons/logout.png";
+import bellIcon from "../../ressources/icons/bell_notification.png";
 import ThemeSelector from "./ThemeSelector";
 
 const Menu: React.FC = () => {
@@ -14,6 +15,7 @@ const Menu: React.FC = () => {
         <IconButton icon={messageIcon} page="chatrooms" />
         {/* <ThemeSelector/> */}
         <IconButton icon={settingsIcon} page="settings" />
+        <IconButton icon={bellIcon} page="settings" />
         <IconButton
           icon={logoutIcon}
           onClick={() => {
