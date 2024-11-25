@@ -44,13 +44,13 @@ const MenuChat: React.FC = () => {
 
     return(
         <div className='w-full h-50'>
-            <div className='flex w-full h-full justify-between  bg-greenflag-green'>
+            <div className='flex w-full h-full justify-between  bg-primary-color'>
                 <div>
                     <IconButton icon={backIcon} page="chatrooms"/>
                 </div>
                 <div className='flex w-50'>
                     <Avatar key={avatarPhoto?.key} img={avatarPhoto?.path || undefined} rounded/>
-                    <h1 className='pl-2'>{subjectData?.subject_firstname}</h1>
+                    <h1 className='pl-2 text-base-text'>{subjectData?.subject_firstname}</h1>
                 </div>
                 <IconButton icon={flagButton}  onClick={() =>(console.log('future feature'))}/>
             </div> 
