@@ -9,7 +9,7 @@
 @tailwind utilities;
 
 .theme-emerald {
-  --bg-color: 168, 213, 186; /* Muted mint green */
+  --bg-color: 200, 255, 237; /* Muted mint green */
   --text-color: 51, 107, 84; /* Dark green */
   --primary-color: 0, 178, 151;
   --secondary-color: 207, 251, 226;
@@ -24,12 +24,20 @@
   --optional-color: 102, 119, 97;/* - Muted olive green */
 }
 
-.theme-orange {
+.theme-orange-old {
   --bg-color: 222, 145, 81; /* Muted orange-brown */
   --text-color: 243, 66, 19; /* Bright orange-red */
   --optional-color: 187, 184, 178; /* - Soft gray */
   --primary-color: 188, 93, 46; /* - Warm terracotta */
   --secondary-color: 46, 46, 58; /* - Deep charcoal */
+}
+
+.theme-orange{
+  --bg-color: 88,31,24;
+  --text-color:240,162,2;
+  --optional-color:241,136,5;
+  --primary-color:32,44,89;
+  --secondary-color:217,93,57;
 }
 
 .theme-blue {
@@ -42,18 +50,19 @@
 
 .theme-green {
   --bg-color: 140, 207, 150; /* Soft muted green */
-  --text-color: 252, 251, 252; /* Off-white */
+  --text-color: 32, 32, 32;
   --primary-color: 63, 179, 77; /* - Bright green */
   --secondary-color: 167, 217, 194; /* - Light seafoam */
   --optional-color: 198, 224, 196; /* - Pale green */
 }
 
+
 /* index.css */
 html, body {
   margin: 0;
   padding: 0;
-  background-color: var(--bg-color);
-  color: var(--bg-color);
+  background-color: rgba(var(--bg-color));
+  /* color: var(--bg-color); */
 }
 
 html, body, #root, .App {
@@ -82,9 +91,9 @@ h1{
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  /* color: rgba(255, 255, 255, 0.87); */
   /* background-color: #486d96; */
-  background-color: rgb(200 255 237);
+  background-color: rgba(var(--bg-color));
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
