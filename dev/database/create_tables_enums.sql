@@ -93,7 +93,8 @@ CREATE TABLE flagged (
 );
 
 CREATE TABLE alert_notification (
-  member_id         INTEGER PRIMARY KEY,
+  id                SERIAL PRIMARY KEY,
+  member_id         INTEGER,
   subject_id        INTEGER NOT NULL,
   msg               TEXT NOT NULL,
   is_read           BOOLEAN DEFAULT FALSE
