@@ -23,11 +23,18 @@ export default {
 				'button-light': '#CFFBE2',
 				'button-dark': '#00B297',
 				
-				'bg-color': "rgba(--var(--bg-color))",
-				'text-color': "rgba(--var(--text-color))",
-				'primary-color': "rgba(--var(--primary-color)))",
-				'secondary-color': "rgba(--var(--secondary-color))",
-				'optional-color': "rgba(--var(--optional-color))",
+				'theme-emerald': 'rgba(0,178,151)',
+				'theme-autumn': 'rgba(84,94,86)',
+				'theme-orange': 'rgba(241,136,5)',
+				'theme-blue': 'rgba(81,178,204)',
+				'theme-green': 'rgba(63,179,77)',
+				
+
+				'custom-bg': 'rgba(var(--bg-color))',
+				'base-text': 'rgba(var(--text-color))',
+				'primary-color': 'rgba(var(--primary-color))',
+				'secondary-color': 'rgba(var(--secondary-color))',
+				'complementary-color': 'rgba(var(--optional-color))',
 
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

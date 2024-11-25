@@ -28,9 +28,9 @@ const ChatroomItem: React.FC<ChatroomProps> = ({ name, subject, last_message }) 
   }
 
   return (
-    <div className="flex grow bg-emerald-100 p-1 m-1 border-b-2 border-button-dark" onClick={handleClick}>
+    <div className="flex grow bg-custom-bg p-1 m-1 border-b-2 border-secondary-color" onClick={handleClick}>
       <Avatar img={subject.profile_photo?.path || undefined} rounded size="lg">
-        <h2 className="font-inter text-h1-darkblue text-start">{subject.firstname}</h2>
+        <h2 className="font-inter text-base-text text-start">{subject.firstname}</h2>
         <LastMessage last_message={last_message} subject_first_name={subject.firstname}/>
       </Avatar>
       {/* <Subject subject={subject}/> */}

@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import IconButton from './IconButton';
+import PaletteIcon from '@/../ressources/icons/palette_bold_icon_white.png'
 
 const ThemeSelector = () => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'theme-emerald');
@@ -17,45 +19,57 @@ const ThemeSelector = () => {
   }, [theme]);
 
   return (
-    <div className="relative p-4">
+    <div className="relative pt-1">
+      
+      <IconButton icon={PaletteIcon} onClick={()=> setIsOpen(!isOpen)}/>
 
-      <button className="px-4 py-2 bg-gray-800 text-white rounded-md focus:outline-none" onClick={()=> setIsOpen(!isOpen)}>
+      {/* <button className="px-4 py-2 bg-gray-800 text-white rounded-md focus:outline-none" onClick={()=> setIsOpen(!isOpen)}>
         Select Theme
-      </button>
+      </button> */}
 
       {isOpen && (
-      <div className="flex absolute mt-2 w-48 bg-white border rounded-md shadow-lg z-10">
+      <div className="flex absolute mt-2 bg-primary-color rounded-md shadow-lg z-10">
         <ul className='space-y-2 p-2'>
           <li>
             <button
-              className="p-2 bg-theme-emerald text-white rounded"
+              className="w-full p-2 bg-theme-emerald text-black hover:bg-theme-emerald/50 rounded"
               onClick={() => changeTheme('theme-emerald')}
-            />
+            >
+              Emerald
+            </button>
           </li>
           <li>
             <button
-              className="p-2 bg-theme-autumn text-white rounded"
+              className="w-full p-2 bg-theme-autumn text-black hover:bg-theme-autumn/50 rounded-md"
               onClick={() => changeTheme('theme-autumn')}
-            />
+            >
+              Autumn
+            </button>
           </li>
-          <li>
-              <button
-                className="w-full text-left p-2 hover:bg-gray-100 rounded-md"
-                onClick={() => changeTheme('theme-orange')}
-              />
-            </li>
           <li>
             <button
-              className="p-2 bg-theme-blue text-white rounded"
-              onClick={() => changeTheme('theme-blue')}
-            />
+              className="w-full p-2 bg-theme-orange text-black hover:bg-theme-orange/50 rounded-md"
+              onClick={() => changeTheme('theme-orange')}
+            >
+              Orange
+            </button>
           </li>
           <li>
-              <button
-                className="w-full text-left p-2 hover:bg-gray-100 rounded-md"
-                onClick={() => changeTheme('theme-green')}
-              />
-            </li>
+            <button
+              className="w-full p-2 bg-theme-blue text-black hover:bg-theme-blue/50 rounded-md"
+              onClick={() => changeTheme('theme-blue')}
+            >
+              Ocean
+            </button>
+          </li>
+          <li>
+            <button
+              className="w-full p-2 bg-theme-green text-black hover:bg-theme-green/50 rounded-md"
+              onClick={() => changeTheme('theme-green')}
+            >
+              Forest
+            </button>
+          </li>
         </ul>
       </div>
       )}
