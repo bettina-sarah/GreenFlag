@@ -245,7 +245,7 @@ RETURNS TRIGGER AS $$
 BEGIN
   INSERT INTO alert_notification (member_id, subject_id, msg)
   VALUES (
-    (SELECT CASE WHEN sender_id = m1.member_id_1 THEN m1.member_id_2 ELSE m1.member_id_1 END
+    (SELECT CASE WHEN NEW.sender_id = m1.member_id_1 THEN m1.member_id_2 ELSE m1.member_id_1 END
      FROM member_match AS mm
      JOIN suggestion AS m1 ON mm.suggestion_id = m1.id
      WHERE mm.id = NEW.match_id),
@@ -267,15 +267,26 @@ DROP FUNCTION IF EXISTS notify_on_match;
 
 CREATE OR REPLACE FUNCTION notify_on_match()
 RETURNS TRIGGER AS $$
+DECLARE
+  member1 INT;
+  member2 INT;
 BEGIN
+  -- Retrieve member_id_1 and member_id_2 from the suggestion table
+  SELECT member_id_1, member_id_2
+  INTO member1, member2
+  FROM suggestion
+  WHERE id = NEW.suggestion_id;
+
+  -- Insert notifications into alert_notification table
   INSERT INTO alert_notification (member_id, subject_id, msg)
   VALUES
-  (NEW.member_id_1, NEW.member_id_2, 'You have a new match!'),
-  (NEW.member_id_2, NEW.member_id_1, 'You have a new match!');
+    (member1, member2, 'You have a new match!'),
+    (member2, member1, 'You have a new match!');
 
   RETURN NEW;
 END;
 $$ LANGUAGE PLPGSQL;
+
 
 CREATE TRIGGER trigger_notify_on_match
 AFTER INSERT ON member_match
