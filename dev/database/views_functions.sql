@@ -234,6 +234,66 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+
+-- NOTIFICATION TRIGGERS & FUNCTIONS
+
+DROP TRIGGER IF EXISTS trigger_notify_on_message ON msg;
+DROP FUNCTION IF EXISTS notify_on_message;
+
+CREATE OR REPLACE FUNCTION notify_on_message()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO alert_notification (member_id, subject_id, msg)
+  VALUES (
+    (SELECT CASE WHEN sender_id = m1.member_id_1 THEN m1.member_id_2 ELSE m1.member_id_1 END
+     FROM member_match AS mm
+     JOIN suggestion AS m1 ON mm.suggestion_id = m1.id
+     WHERE mm.id = NEW.match_id),
+    NEW.sender_id,
+    'You have a new message'
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE TRIGGER trigger_notify_on_message
+AFTER INSERT ON msg
+FOR EACH ROW
+EXECUTE FUNCTION notify_on_message();
+
+DROP TRIGGER IF EXISTS trigger_notify_on_match ON member_match;
+DROP FUNCTION IF EXISTS notify_on_match;
+
+
+CREATE OR REPLACE FUNCTION notify_on_match()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO alert_notification (member_id, subject_id, msg)
+  VALUES
+  (NEW.member_id_1, NEW.member_id_2, 'You have a new match!'),
+  (NEW.member_id_2, NEW.member_id_1, 'You have a new match!');
+
+  RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE TRIGGER trigger_notify_on_match
+AFTER INSERT ON member_match
+FOR EACH ROW
+EXECUTE FUNCTION notify_on_match();
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- INTRICATE FUNCTION BY CHATGEPETO
 CREATE OR REPLACE FUNCTION get_chatrooms(user_id INTEGER)
 RETURNS TABLE(
