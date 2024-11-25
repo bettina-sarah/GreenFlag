@@ -8,52 +8,72 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 .theme-emerald {
   --bg-color: 200, 255, 237; /* Muted mint green */
-  --text-color: 51, 107, 84; /* Dark green */
+  --text-color: 47, 72, 88; /* Dark green */
+  --text-muted: 51, 107, 84;
   --primary-color: 0, 178, 151;
-  --secondary-color: 207, 251, 226;
-  --optional-color: 47, 72, 88;
+  --secondary-color: 0, 78, 100;
+  --optional-color: 75, 181, 247;
+  --bg-image-1: url('../ressources/bg/Background.svg');
+  --bg-image-2: url('../ressources/bg/Background-2.svg');
 }
 
 .theme-autumn {
-  --bg-color: 234, 225, 223; /* Light neutral tan */
-  --text-color: 183, 148, 146; /* Soft muted pink */
-  --secondary-color: 145, 124, 120;/* - Muted brownish gray */
-  --primary-color: 84, 94, 86;/* - Dark earthy green */
-  --optional-color: 102, 119, 97;/* - Muted olive green */
+  --bg-color: 251, 249, 249; /* Light neutral tan */
+  --text-color: 17, 11, 12; /* Soft muted pink */
+  /* --text-muted:; */
+  --primary-color: 153, 107, 107;/* - Dark earthy green */
+  --secondary-color: 197, 195, 171;/* - Muted brownish gray */
+  --optional-color: 171, 177, 142;/* - Muted olive green */
+  --bg-image-1: url('../ressources/bg/autumn/Background.svg');
+  --bg-image-2: url('../ressources/bg/autumn/Background-2.svg');
 }
 
-.theme-orange-old {
-  --bg-color: 222, 145, 81; /* Muted orange-brown */
-  --text-color: 243, 66, 19; /* Bright orange-red */
-  --optional-color: 187, 184, 178; /* - Soft gray */
-  --primary-color: 188, 93, 46; /* - Warm terracotta */
-  --secondary-color: 46, 46, 58; /* - Deep charcoal */
+.theme-electric {
+  --bg-color: 254, 236, 240; /* Muted orange-brown */
+  --text-color: 20, 1, 5; /* Bright orange-red */
+  /* --text-muted:; */
+  --primary-color: 240, 29, 73; /* - Warm terracotta */
+  --secondary-color: 112, 246, 208; /* - Deep charcoal */
+  --optional-color: 81, 123, 243; /* - Soft gray */
+  --bg-image-1: url('../ressources/bg/electric/Background.svg');
+  --bg-image-2: url('../ressources/bg/electric/Background-2.svg');
 }
 
 .theme-orange{
-  --bg-color: 88,31,24;
-  --text-color:240,162,2;
-  --optional-color:241,136,5;
-  --primary-color:32,44,89;
-  --secondary-color:217,93,57;
-}
+  --bg-color: 253, 252, 250;
+  --text-color: 22, 19, 17;
+  --text-muted:242, 237, 111;
+  --primary-color:255, 143, 24;
+  --secondary-color:230, 186, 140;
+  --optional-color:237, 162, 83;
+  --bg-image-1: url('../ressources/bg/orange/Background.svg');
+  --bg-image-2: url('../ressources/bg/orange/Background-2.svg');
+} 
 
 .theme-blue {
-  --bg-color: 113, 120, 140; /* Muted blue-gray */
-  --text-color: 188, 206, 228; /* Light sky blue */
-  --optional-color: 37, 56, 106; /* - Deep navy blue */
-  --secondary-color: 82, 153, 209; /* - Medium bright blue */
-  --primary-color: 81, 178, 204; /* - Vibrant aqua */
+  --bg-color: 246, 248, 251; /* Muted blue-gray */
+  --text-color: 7, 10, 13; /* Light sky blue */
+  /* --text-muted:; */
+  --primary-color: 79, 136, 196; /* - Vibrant aqua */
+  --secondary-color: 133, 177, 224; /* - Medium bright blue */
+  --optional-color: 94, 158, 226; /* - Deep navy blue */
+  --bg-image-1: url('../ressources/bg/blue/Background.svg');
+  --bg-image-2: url('../ressources/bg/blue/Background-2.svg');
 }
 
 .theme-green {
-  --bg-color: 140, 207, 150; /* Soft muted green */
-  --text-color: 32, 32, 32;
-  --primary-color: 63, 179, 77; /* - Bright green */
-  --secondary-color: 167, 217, 194; /* - Light seafoam */
-  --optional-color: 198, 224, 196; /* - Pale green */
+  --bg-color: 251, 253, 250; /* Soft muted green */
+  --text-color: 18, 24, 12;
+  /* --text-muted:; */
+  --primary-color: 136, 195, 76; /* - Bright green */
+  --secondary-color: 182, 224, 138; /* - Light seafoam */
+  --optional-color: 155, 221, 89; /* - Pale green */
+  --bg-image-1: url('../ressources/bg/green/Background.svg');
+  --bg-image-2: url('../ressources/bg/green/Background-2.svg');
 }
 
 
@@ -106,6 +126,13 @@ h1{
 
 @layer base {
   :root {
+    --bg-color: 200, 255, 237;
+    --text-color: 47, 72, 88; /* Dark green */
+    --text-muted: 51, 107, 84;
+    --primary-color: 0, 178, 151;
+    --secondary-color: 0, 78, 100;
+    --bg-image-1: url('./../ressources/bg/Background.svg');
+    --bg-image-2: url('./../ressources/bg/Background-2.svg');
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
