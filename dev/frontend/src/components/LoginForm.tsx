@@ -49,9 +49,9 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col justify-between items-center w-full h-44">
-      <div className="flex items-center w-full max-w-sm border-b-2 border-button-light">
+      <div className="flex items-center w-full max-w-sm border-b-2 border-custom-bg">
         <img src={EmailIcon} className="size-7"/>
-        <input className="pl-3 w-80 text-button-light font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-button-light"
+        <input className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
           placeholder="Email"
           {...register("email", {
             required: true,
@@ -66,9 +66,9 @@ const LoginForm = () => {
         )}
       </div>
       
-      <div className="flex items-center w-full max-w-sm border-b-2 border-button-light">
+      <div className="flex items-center w-full max-w-sm border-b-2 border-custom-bg">
         <img src={LockIcon} className="size-7"/>
-        <input className="pl-3 w-80 text-button-light font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-button-light"
+        <input className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
           placeholder="Password"
           type="password"
           {...register("password", { required: true, maxLength: 20 })} />
@@ -79,7 +79,7 @@ const LoginForm = () => {
           <span>Max length exceeded</span>
         )}
       </div>
-      <button className="bg-button-light text-button-dark w-full max-w-sm py-2 rounded-md text-lg font-inter font-semibold" type="submit">
+      <button className="bg-custom-bg text-primary-color w-full max-w-sm py-2 rounded-md text-lg font-inter font-semibold" type="submit">
         Log in
       </button>
     </form>

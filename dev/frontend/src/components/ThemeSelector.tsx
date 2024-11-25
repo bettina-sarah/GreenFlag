@@ -14,7 +14,7 @@ const ThemeSelector = () => {
   };
 
   useEffect(() => {
-    document.documentElement.classList.remove('theme-emerald', 'theme-autumn', 'theme-orange', 'theme-blue', 'theme-green');
+    document.documentElement.classList.remove('theme-emerald', 'theme-autumn', 'theme-electric', 'theme-orange', 'theme-blue', 'theme-green');
     document.documentElement.classList.add(theme);
   }, [theme]);
 
@@ -44,6 +44,14 @@ const ThemeSelector = () => {
               onClick={() => changeTheme('theme-autumn')}
             >
               Autumn
+            </button>
+          </li>
+          <li>
+            <button
+              className="w-full p-2 bg-theme-electric text-black hover:bg-theme-orange/50 rounded-md"
+              onClick={() => changeTheme('theme-electric')}
+            >
+              Electric
             </button>
           </li>
           <li>

@@ -26,12 +26,14 @@ export default {
 				'theme-emerald': 'rgba(0,178,151)',
 				'theme-autumn': 'rgba(84,94,86)',
 				'theme-orange': 'rgba(241,136,5)',
+				'theme-electric': 'rgba(240, 29, 73)',
 				'theme-blue': 'rgba(81,178,204)',
 				'theme-green': 'rgba(63,179,77)',
 				
 
 				'custom-bg': 'rgba(var(--bg-color))',
 				'base-text': 'rgba(var(--text-color))',
+				'muted-text': 'rgba(var(--text-muted))',
 				'primary-color': 'rgba(var(--primary-color))',
 				'secondary-color': 'rgba(var(--secondary-color))',
 				'complementary-color': 'rgba(var(--optional-color))',
@@ -77,15 +79,14 @@ export default {
   				'5': 'hsl(var(--chart-5))'
   			}
   		},
-		  fontFamily: {
+		fontFamily: {
 			nunito: ['"Nunito"', 'sans-serif'],
 			leckerli: ['Leckerli One', 'cursive'],
 			inter: ['Inter','sans-serif']
 		  },
 		backgroundImage: {
-			'home-bg': "url('/ressources/bg/Background.svg')",
-			'home-bg2': "url('/ressources/bg/Background-2.svg')"
-
+			'home-bg': "var(--bg-image-1)",
+			'home-bg2': "var(--bg-image-2)",
 		}
   	}
   },
