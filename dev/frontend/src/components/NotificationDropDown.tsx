@@ -20,3 +20,90 @@ const NotificationDropDown: React.FC = () => {
 };
 
 export default NotificationDropDown;
+
+
+
+
+
+// import { useState, useEffect } from 'react';
+// import IconButton from './IconButton';
+// import bellIcon from "../../ressources/icons/bell_notification.png";
+// import PaletteIcon from '@/../ressources/icons/palette_bold_icon_white.png'
+
+// const NotificationDropDown = () => {
+//   // const [theme, setTheme] = useState(localStorage.getItem('theme') || 'theme-emerald');
+//   // const [isOpen, setIsOpen] = useState<boolean>(false);
+
+//   // // Change theme dynamically
+//   // const changeTheme = (newTheme:string) => {
+//   //   setTheme(newTheme);
+//   //   localStorage.setItem('theme', newTheme); // Save selected theme in localStorage
+//   //   setIsOpen(false);
+//   // };
+
+//   // useEffect(() => {
+//   //   document.documentElement.classList.remove('theme-emerald', 'theme-autumn', 'theme-orange', 'theme-blue', 'theme-green');
+//   //   document.documentElement.classList.add(theme);
+//   // }, [theme]);
+
+//   return (
+//     <div className="relative pt-1">
+      
+//       <IconButton icon={bellIcon} onClick={()=> setIsOpen(!isOpen)}/>
+
+//       {/* <button className="px-4 py-2 bg-gray-800 text-white rounded-md focus:outline-none" onClick={()=> setIsOpen(!isOpen)}>
+//         Select Theme
+//       </button> */}
+
+//       {isOpen && (
+//       <div className="flex absolute mt-2 bg-primary-color rounded-md shadow-lg z-10">
+//         <ul className='space-y-2 p-2'>
+//           <li>
+//             <button
+//               className="w-full p-2 bg-theme-emerald text-black hover:bg-theme-emerald/50 rounded"
+
+//             >
+//               Emerald
+//             </button>
+//           </li>
+//           <li>
+//             <button
+//               className="w-full p-2 bg-theme-autumn text-black hover:bg-theme-autumn/50 rounded-md"
+
+//             >
+//               Autumn
+//             </button>
+//           </li>
+//           <li>
+//             <button
+//               className="w-full p-2 bg-theme-orange text-black hover:bg-theme-orange/50 rounded-md"
+
+//             >
+//               Orange
+//             </button>
+//           </li>
+//           <li>
+//             <button
+//               className="w-full p-2 bg-theme-blue text-black hover:bg-theme-blue/50 rounded-md"
+
+//             >
+//               Ocean
+//             </button>
+//           </li>
+//           <li>
+//             <button
+//               className="w-full p-2 bg-theme-green text-black hover:bg-theme-green/50 rounded-md"
+
+//             >
+//               Forest
+//             </button>
+//           </li>
+//         </ul>
+//       </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default NotificationDropDown;
+
