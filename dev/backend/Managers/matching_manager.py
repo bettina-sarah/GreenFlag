@@ -1,4 +1,3 @@
-from user import User
 from DAOs.matching_dao import MatchingDAO
 from Algorithms.algo_strategy import AlgoContext
 from Algorithms.meanshift import MeanShift

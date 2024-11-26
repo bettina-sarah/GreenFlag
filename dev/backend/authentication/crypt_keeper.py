@@ -1,9 +1,5 @@
-
-# ? peut etre une classe abstraite et utilisé genre CryptKeeper.encode() 
-# dans middleware
-# pip install pyjwt
 import json
-import jwt
+from jwt import PyJWT
 from datetime import datetime, timezone
 import time
 import base64
@@ -54,29 +50,60 @@ Verify that the token is issued by a trusted source (iss).
 
 class CryptKeeper:
     def __init__(self) -> None:
-        pass
+        self.__key = "secret"
+        self.__expiry_time = 150 # 30 mins * 60 sec
     
     def decode(self,token: str) -> str:
+        print("var type of token is: ", type(token), token)
+        jwt_instance = PyJWT()
         if self.validate_jwt(token):
             try:
-                decoded_jwt = jwt.decode(token, "secret", algorithms=["HS256"])
-                return decoded_jwt
-            except jwt.ExpiredSignatureError:
-                print("expired")
-            except jwt.DecodeError as e:
-                print(f'Decoder Error: ',e)
+                
+                decoded_jwt = jwt_instance.decode(token, self.__key, algorithms=["HS256"],
+                                        audience="GreenFlag frontend", issuer="GreenFlag flask server")
+                is_valid = self.check_expiry_date(decoded_jwt['exp'], decoded_jwt['sub'])
+                return (is_valid, decoded_jwt['sub'])
+            except Exception as e:
+                print("token expired: ", e)
+                try:
+                    decoded_jwt = jwt_instance.decode(token, self.__key, algorithms=["HS256"], audience="GreenFlag frontend",
+                                              issuer="GreenFlag flask server", options={"verify_exp": False} )
+                    return False, decoded_jwt['sub']
+                except Exception as e:
+                    print('Error: ',e)
+            # except jwt.DecodeError as e:
+            #     print(f'Decoder Error: ',e)
+            #     return False
         return None
+    
+    def check_expiry_date(self, expiry_date, user_id = None):
+        current_timestamp = int(time.time())
+        remaining_time = expiry_date - current_timestamp
+        print('remaining time: ', remaining_time)
+        if expiry_date > current_timestamp:
+            if remaining_time <= 120:
+                return "expiring soon"
+            return True
+        return False
+        
         
 
-    def encode(self,json_information) -> str:
-        final_json = self.expiry_date(json_information)  
-        encoded_jwt = jwt.encode(final_json, "secret", algorithm="HS256")
+    def encode(self,user_id) -> str:
+        payload = {
+  "sub": user_id,
+  "iss": "GreenFlag flask server",
+  "aud": "GreenFlag frontend"
+}       
+        jwt_instance = PyJWT()
+        final_json = self.expiry_date(payload)  
+        encoded_jwt = jwt_instance.encode(final_json, self.__key, algorithm="HS256")
+        print('encoded jwt', encoded_jwt)   
         return encoded_jwt
     
     def expiry_date(self, json):
         current_timestamp = int(time.time())
         # 2 heures
-        expiry_timestamp = current_timestamp + 7200
+        expiry_timestamp = current_timestamp + self.__expiry_time
         json['exp'] = expiry_timestamp
         return json
 
@@ -120,15 +147,15 @@ class CryptKeeper:
     #     return True
 
 
-if __name__ == "__main__":
-    crypt = CryptKeeper()
-    jsonn = {"some": "payload"}
-    result = crypt.encode(jsonn)
-    print('encoded:', result)
-    decode = crypt.decode(result)
-    print('decoded', decode)
-    # decoded = crypt.decode(result)
-    # print(decoded)
+# if __name__ == "__main__":
+#     crypt = CryptKeeper()
+#     jsonn = {"some": "payload"}
+#     result = crypt.encode(jsonn)
+#     print('encoded:', result)
+#     decode = crypt.decode(result)
+#     print('decoded', decode)
+#     # decoded = crypt.decode(result)
+#     # print(decoded)
     
     
 
