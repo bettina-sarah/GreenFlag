@@ -31,11 +31,13 @@ const QuestionnaireForm = () => {
   const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
 
   const toggleGender = (gender: string) => {
-    setSelectedGenders((prev) =>
-      prev.includes(gender)
+    setSelectedGenders((prev) =>{
+      const updatedState = prev.includes(gender)
         ? prev.filter((g) => g !== gender)
-        : [...prev, gender]
-    );
+        : [...prev, gender];
+
+        return updatedState;
+    });
   };
 
   const {
@@ -63,7 +65,7 @@ const QuestionnaireForm = () => {
   return (
     <div className="flex flex-col justify-between m-2 overflow-visible">
       <form
-        onSubmit={handleSubmitHobbies(async (data) => {
+        onSubmit={handleSubmitHobbies(async (data:any) => {
           await onSubmitFormHobbies(data);
           await completeProfileAndNavigate();
         })}
@@ -82,7 +84,7 @@ const QuestionnaireForm = () => {
         </button>
       </form>
       <form
-        onSubmit={handleSubmitInfo(async (data) => {
+        onSubmit={handleSubmitInfo(async (data:any) => {
           await onSubmitFormInfo(data);
           await completeProfileAndNavigate();
         })}
@@ -96,6 +98,8 @@ const QuestionnaireForm = () => {
             <Datepicker
               {...field}
               onChange={(date: Date | null) => field.onChange(date)}
+              minDate={new Date(new Date(new Date().setFullYear(new Date().getFullYear() - 100)))}
+              maxDate={new Date(new Date(new Date().setFullYear(new Date().getFullYear() - 18)))}
             />
           )}
         />
@@ -245,7 +249,7 @@ const QuestionnaireForm = () => {
                         checked={selectedGenders.includes(gender)}
                         onChange={() => {
                           toggleGender(gender);
-                          onChange(selectedGenders); // Update react-hook-form state
+                          onChange([...selectedGenders, gender]); // Update react-hook-form state
                         }}
                         className="mr-2"
                       />
@@ -264,7 +268,7 @@ const QuestionnaireForm = () => {
       </form>
 
       <form
-        onSubmit={handleSubmitPhoto(async (data) => {
+        onSubmit={handleSubmitPhoto(async (data:any) => {
           await onSubmitPhoto(data);
           await completeProfileAndNavigate();
         })}

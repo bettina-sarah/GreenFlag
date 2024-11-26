@@ -56,7 +56,7 @@ const ProfileCard: React.FC<IProfileProps> = ({ suggestion_id, profile_info, pho
       preventSwipe={["up", "down"]}
       onCardLeftScreen={() => handleCardLeftScreen()}
     >
-      <div className="w-96 bg-greenflag-green p-1 rounded relative">
+      <div className="w-96 bg-primary-color p-1 rounded relative">
         <PhotoCarousel images={photos} />
         <BasicInfo basic_info={profile_info.basic_info} />
         <RelationshipGoals
