@@ -3,7 +3,7 @@ import IconButton from "./IconButton";
 import matchingIcon from "../../ressources/icons/matching.png";
 import messageIcon from "../../ressources/icons/messages.png";
 import settingsIcon from "../../ressources/icons/settings.png";
-import logoutIcon from "../../ressources/icons/logout.png";
+
 import ThemeSelector from "./ThemeSelector";
 import NotificationDropDown from "./NotificationDropDown";
 
