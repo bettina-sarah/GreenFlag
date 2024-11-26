@@ -1,6 +1,6 @@
 from DAOs.matching_dao import MatchingDAO
 from Algorithms.algo_strategy import AlgoContext
-from Algorithms.meanshift import MeanShift
+from dev.backend.Algorithms.algo_meanshift import MeanShift
 import numpy as np
 
 NUMBER_ACTIVITIES = 20
