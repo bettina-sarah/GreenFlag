@@ -49,7 +49,7 @@ const IconButton: React.FC<IconButtonProps> = ({
     <div className={customClassName}>
       <button
         className="w-15 h-12 flex items-center justify-center p-1 border-none
-      hover:bg-teal-500 rounded"
+      hover:bg-gray-500/30 rounded"
         onClick={handleClick}
       >
         <Icon icon={icon} />

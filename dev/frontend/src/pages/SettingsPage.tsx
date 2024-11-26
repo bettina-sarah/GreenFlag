@@ -14,7 +14,6 @@ const SettingsPage: React.FC = () => {
           icon={logoutIcon}
           onClick={() => {
             sessionStorage.clear();
-            localStorage.clear();
             //function to clear & post to BE 1st then clear
             // post to remove token from database!
           }}
