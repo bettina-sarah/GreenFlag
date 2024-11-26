@@ -25,7 +25,12 @@ import { useState, useEffect } from 'react';
 import IconButton from './IconButton';
 import bellIcon from "../../ressources/icons/bell_notification.png";
 
-const NotificationDropDown = () => {
+interface NotificationDropDownProps {
+  notifications: { notification: string; chatroom: string } | null;
+}
+
+
+const NotificationDropDown: React.FC<NotificationDropDownProps> = ({ notifications }) => {
   // const [theme, setTheme] = useState(localStorage.getItem('theme') || 'theme-emerald');
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -62,7 +67,7 @@ const NotificationDropDown = () => {
           <li>
             <button
               className="w-full p-2 text-black text-sm hover:bg-theme-autumn/50 rounded-md">
-              You have a new message from Jane
+              <p>{notifications.notification}</p>
             </button>
           </li>
         </ul>

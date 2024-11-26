@@ -3,11 +3,14 @@ import DeleteAccountForm from '@/components/form_components/DeleteAccountForm';
 import Menu from '@/components/Menu';
 import IconButton from '@/components/IconButton';
 import logoutIcon from "../../ressources/icons/logout.png";
+import { NotificationProvider } from '@/components/NotificationContext';
 
 const SettingsPage: React.FC = () => {
 	return(
 	<div className='w-full h-full flex flex-col justify-between items-center'>
-		<Menu />
+		  <NotificationProvider>
+        <Menu />
+      </NotificationProvider>
 		<h1>Logout</h1>
 		
         <IconButton

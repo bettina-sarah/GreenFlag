@@ -2,6 +2,7 @@ import React from "react";
 import Menu from "@/components/Menu";
 import ProfileCard from "@/components/ProfileCard";
 import useFetch from "@/api/useFetch";
+import { NotificationProvider } from "@/components/NotificationContext";
 
 export interface IProfileData {
   suggestion_id: string;
@@ -48,7 +49,9 @@ const MatchingPage: React.FC = () => {
 
   return (
     <div className="w-full h-full flex flex-col items-center">
-      <Menu />
+      		  <NotificationProvider>
+        <Menu />
+      </NotificationProvider>
       <div className="relative w-96 pt-3">
         {profileData &&
           profileData?.map((profile, index) => (

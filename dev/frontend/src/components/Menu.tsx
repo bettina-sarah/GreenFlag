@@ -6,6 +6,7 @@ import settingsIcon from "../../ressources/icons/settings.png";
 
 import ThemeSelector from "./ThemeSelector";
 import NotificationDropDown from "./NotificationDropDown";
+import { useNotifications } from "./NotificationContext";
 
 const Menu: React.FC = () => {
   // const [isVisible, setIsVisible] = useState(false);
@@ -14,12 +15,15 @@ const Menu: React.FC = () => {
   //   setIsVisible(!isVisible);
   // };
 
+  const { notifications } = useNotifications(); // Use the custom hook to get notifications
+
+
   return (
     <div className="w-full h-50">
       <div className="flex w-full h-full justify-evenly  bg-primary-color">
         <IconButton icon={matchingIcon} page="matching" />
         <IconButton icon={messageIcon} page="chatrooms" />
-        <NotificationDropDown />
+        <NotificationDropDown notifications={notifications} />
         <ThemeSelector/>
         <IconButton icon={settingsIcon} page="settings" />
 {/* 
