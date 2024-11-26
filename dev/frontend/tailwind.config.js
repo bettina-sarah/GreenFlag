@@ -22,31 +22,22 @@ export default {
 				'h1-darkblue': '#2F4858',
 				'button-light': '#CFFBE2',
 				'button-dark': '#00B297',
-				'theme-emerald': {
-					light: '#CFFBE2',
-					DEFAULT: '#00B297',
-					dark: '#00B297',
-				},
-				'theme-autumn': {
-					light:'#EAE1DF',
-					DEFAULT:'#917C78',
-					dark:'#667761',
-				},
-				'theme-orange': {
-					light:'#BBB8B2',
-					DEFAULT:'#BC5D2E',
-					dark:'#2E2E3A',
-				},
-				'theme-blue': {
-					light:'#5299D1',
-					DEFAULT:'#71788C',
-					dark:'#51B2CC */',
-				},
-				'theme-green': {
-					light:'#A7D9C2',
-					DEFAULT:'#8DCF96',
-					dark:'#3FB34D',
-				},
+				
+				'theme-emerald': 'rgba(0,178,151)',
+				'theme-autumn': 'rgba(84,94,86)',
+				'theme-orange': 'rgba(241,136,5)',
+				'theme-electric': 'rgba(240, 29, 73)',
+				'theme-blue': 'rgba(81,178,204)',
+				'theme-green': 'rgba(63,179,77)',
+				
+
+				'custom-bg': 'rgba(var(--bg-color))',
+				'base-text': 'rgba(var(--text-color))',
+				'muted-text': 'rgba(var(--text-muted))',
+				'primary-color': 'rgba(var(--primary-color))',
+				'secondary-color': 'rgba(var(--secondary-color))',
+				'complementary-color': 'rgba(var(--optional-color))',
+
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -88,15 +79,14 @@ export default {
   				'5': 'hsl(var(--chart-5))'
   			}
   		},
-		  fontFamily: {
+		fontFamily: {
 			nunito: ['"Nunito"', 'sans-serif'],
 			leckerli: ['Leckerli One', 'cursive'],
 			inter: ['Inter','sans-serif']
 		  },
 		backgroundImage: {
-			'home-bg': "url('/ressources/bg/Background.svg')",
-			'home-bg2': "url('/ressources/bg/Background-2.svg')"
-
+			'home-bg': "var(--bg-image-1)",
+			'home-bg2': "var(--bg-image-2)",
 		}
   	}
   },
