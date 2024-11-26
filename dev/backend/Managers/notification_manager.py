@@ -5,15 +5,16 @@ class NotificationManager:
         self.new_notifications = [] # [(notification.subject_id)]
         self.read_notifications = []      #[(notification.subject_id)]
 
-    def get_notifications(self, user_id) -> list:
+    @staticmethod
+    def get_notifications(self, user_id: str) -> list:
         #returns list of notifications and subjects
         pass
 
     def update_notification_status(self, notification_subject_id) -> None:
         pass
 
-    def add_notification(self, notification) -> None:
-        pass
+    # def add_notification(self, notification) -> None:
+    #     pass
 
     def delete_notification(self, notification) -> None:
         pass
