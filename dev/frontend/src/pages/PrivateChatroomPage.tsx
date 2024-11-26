@@ -99,7 +99,7 @@ const PrivateChatroomPage: React.FC = () => {
         </div>
         <div className="relative p-4">
           <Textarea
-            className="bg-greenflag-green resize-none overflow-y-auto border border-emerald-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 min-h-10 max-h-32"
+            className="bg-primary-color resize-none overflow-y-auto no-scrollbar border border-secondary-color rounded p-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 min-h-10 max-h-32"
             rows={1}
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)} 

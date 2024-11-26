@@ -204,8 +204,8 @@ SELECT
   m.want_kids,
   m.city,
   m.relationship_type,
-  -- a.id AS activity_id, 
-  ARRAY_AGG(a.activity_name) as activities
+  ARRAY_AGG(a.activity_name) as activities,
+  ARRAY_AGG(a.id) as activities_id
 FROM 
   member AS m
 LEFT JOIN member_activities AS ma ON m.id = ma.member_id
@@ -330,6 +330,7 @@ BEGIN
   GROUP BY m.id;
 END;
 $$ LANGUAGE PLPGSQL;
+
 
 DROP FUNCTION IF EXISTS create_suggestions;
 
@@ -554,7 +555,8 @@ BEGIN
       RAISE NOTICE 'Chatroom name not found: %', new_message.chatroom_name;
   END IF;
 END;
-$$ LANGUAGE PLPGSQL;INSERT INTO member (first_name, last_name, member_password, email, date_of_birth, gender, preferred_genders, min_age, max_age, relationship_type, height, religion, want_kids, city, token, email_confirmed, profile_completed) 
+$$ LANGUAGE PLPGSQL;
+INSERT INTO member (first_name, last_name, member_password, email, date_of_birth, gender, preferred_genders, min_age, max_age, relationship_type, height, religion, want_kids, city, token, email_confirmed, profile_completed) 
 VALUES
 ('John', 'Doe', 'password123', 'john.doe1@example.com', '1990-05-12', 'Male'::GENDER, ARRAY['Female', 'Non-Binary']::GENDER[], 20, 35, 'longterm'::RELATIONSHIP, 180, NULL, TRUE, 'New York', 'token12345', TRUE, TRUE),
 ('Jane', 'Smith', 'password123', 'jane.smith2@example.com', '1988-11-22', 'Female'::GENDER, ARRAY['Male']::GENDER[], 25, 40, 'shortterm'::RELATIONSHIP, 165, NULL, FALSE, 'Los Angeles', 'token12346', FALSE, TRUE),

@@ -16,10 +16,10 @@ const Menu: React.FC = () => {
 
   return (
     <div className="w-full h-50">
-      <div className="flex w-full h-full justify-evenly  bg-greenflag-green">
+      <div className="flex w-full h-full justify-evenly  bg-primary-color">
         <IconButton icon={matchingIcon} page="matching" />
         <IconButton icon={messageIcon} page="chatrooms" />
-        {/* <ThemeSelector/> */}
+        <ThemeSelector/>
         <IconButton icon={settingsIcon} page="settings" />
         <NotificationDropDown />
 
