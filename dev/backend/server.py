@@ -165,6 +165,16 @@ def update_suggestion() -> bool:
     response = MatchingManager.update_suggestion(request.json)
     return jsonify(response)
 
+# -------- NOTIFICATIONS ------------
+
+@app.route('/notifications', methods=['POST'])
+def notifications() -> bool:
+    print('notification route:', request.json)
+    # response = MatchingManager.update_suggestion(request.json)
+    json = {'notification': 'hello', 'chatroom': 'chatroom_8_11'}
+    return jsonify(json)
+
+
 if __name__ == '__main__':
     socketio.run(app, debug=True, host="0.0.0.0", port=5000)
     #app.run(debug=True, host="0.0.0.0", port=5000)
