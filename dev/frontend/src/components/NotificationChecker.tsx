@@ -11,7 +11,7 @@ interface NotificationProps {
 
 interface NotificationData {
     notification: string;
-    chatroom: string;
+    chatroom_name: string;
   }
 
 
@@ -28,18 +28,14 @@ const NotificationChecker: React.FC<NotificationProps> = ({ children }) => {
                 setNotifications(response);
               }
           }
-        }
-    );
+
+          fetchNotifications();
+        }, []);
 
 }
 
 
 export default NotificationChecker;
-
-
-
-
-
 
 
 
