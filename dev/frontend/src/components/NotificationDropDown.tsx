@@ -24,6 +24,7 @@
 import { useState, useEffect } from 'react';
 import IconButton from './IconButton';
 import bellIcon from "../../ressources/icons/bell_notification.png";
+import { useNavigate } from 'react-router-dom';
 
 interface NotificationDropDownProps {
   notifications: { notification: string; chatroom: string } | null;
@@ -46,6 +47,8 @@ const NotificationDropDown: React.FC<NotificationDropDownProps> = ({ notificatio
   //   document.documentElement.classList.add(theme);
   // }, [theme]);
 
+const navigate = useNavigate();
+
   return (
     <div className="relative pt-1">
       
@@ -66,8 +69,10 @@ const NotificationDropDown: React.FC<NotificationDropDownProps> = ({ notificatio
           </li>
           <li>
             <button
-              className="w-full p-2 text-black text-sm hover:bg-theme-autumn/50 rounded-md">
-              <p>{notifications.notification}</p>
+              className="w-full p-2 text-black text-sm hover:bg-theme-autumn/50 rounded-md"
+              onClick={() => {
+                navigate(`/chatroom/${notifications?.chatroom}`);}}>
+              <p>{notifications?.notification}</p>
             </button>
           </li>
         </ul>
