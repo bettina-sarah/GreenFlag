@@ -1,26 +1,3 @@
-// import { Dropdown } from "flowbite-react";
-// import bellIcon from "../../ressources/icons/bell_notification.png";
-// import IconButton from "./IconButton";
-
-// const NotificationDropDown: React.FC = () => {
-//   return (
-//     <Dropdown inline label={<IconButton icon={bellIcon} />}>
-//       <Dropdown.Item onClick={() => alert("Dashboard!")}>
-//         You have a new message from Jane
-//       </Dropdown.Item>
-//       <Dropdown.Item>Settings</Dropdown.Item>
-//       <Dropdown.Item>Earnings</Dropdown.Item>
-//       <Dropdown.Divider />
-//       <Dropdown.Item>Sign out</Dropdown.Item>
-//       <Dropdown.Item as="a" href="https://flowbite.com/" target="_blank">
-//         External link
-//       </Dropdown.Item>
-//     </Dropdown>
-//   );
-// };
-
-// export default NotificationDropDown;
-
 import { useState, useEffect } from 'react';
 import IconButton from './IconButton';
 import bellIcon from "../../ressources/icons/bell_notification.png";
@@ -32,20 +9,7 @@ interface NotificationDropDownProps {
 
 
 const NotificationDropDown: React.FC<NotificationDropDownProps> = ({ notifications }) => {
-  // const [theme, setTheme] = useState(localStorage.getItem('theme') || 'theme-emerald');
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  // // Change theme dynamically
-  // const changeTheme = (newTheme:string) => {
-  //   setTheme(newTheme);
-  //   localStorage.setItem('theme', newTheme); // Save selected theme in localStorage
-  //   setIsOpen(false);
-  // };
-
-  // useEffect(() => {
-  //   document.documentElement.classList.remove('theme-emerald', 'theme-autumn', 'theme-orange', 'theme-blue', 'theme-green');
-  //   document.documentElement.classList.add(theme);
-  // }, [theme]);
 
 const navigate = useNavigate();
 
@@ -73,6 +37,7 @@ const navigate = useNavigate();
               onClick={() => {
                 navigate(`/chatroom/${notifications?.chatroom}`);}}>
               <p>{notifications?.notification}</p>
+              {/* notification is read, HTTP vers BE here */}
             </button>
           </li>
         </ul>

@@ -11,6 +11,7 @@ from Managers.chatroom_socket_manager import ChatroomSocketManager
 from Managers.chatroom_manager import ChatroomManager
 from Managers.account_manager import AccountManager
 from Managers.matching_manager import MatchingManager
+from Managers.notification_manager import NotificationManager
 from authentication.authentication_middleware import AuthenticationMiddleware
 
 app = Flask(__name__)
@@ -170,7 +171,7 @@ def update_suggestion() -> bool:
 @app.route('/notifications', methods=['POST'])
 def notifications() -> bool:
     print('notification route:', request.json)
-    # response = MatchingManager.update_suggestion(request.json)
+    response = NotificationManager.get_notifications(request.json)
     json = {'notification': 'hello', 'chatroom': 'chatroom_8_11'}
     return jsonify(json)
 
