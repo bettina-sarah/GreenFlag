@@ -2,26 +2,33 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import fetchData from "@/api/fetchData";
 
-interface AuthGuardProps {
-  children: React.ReactNode;
-}
 
-export interface TokenData {
-  valid: boolean;
-  token?: string;
-}
 
 
 interface NotificationProps {
     children: React.ReactNode;
+}
+
+interface NotificationData {
+    notification: string;
+    chatroom: string;
   }
 
+
 const NotificationChecker: React.FC<NotificationProps> = ({ children }) => {
+    const [notifications, setNotifications] = useState<NotificationData | null>(null);
 
 
     useEffect(() => {
 
-    }
+        const fetchNotifications = async () => {
+            const response = await fetchData<NotificationData>( "/notifications", sessionStorage.getItem("id"));
+            console.log("apres fetch notification:", response);
+              if (response) {
+                setNotifications(response);
+              }
+          }
+        }
     );
 
 }
@@ -36,7 +43,14 @@ export default NotificationChecker;
 
 
 
-
+interface AuthGuardProps {
+    children: React.ReactNode;
+  }
+  
+  export interface TokenData {
+    valid: boolean;
+    token?: string;
+  }
 
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
