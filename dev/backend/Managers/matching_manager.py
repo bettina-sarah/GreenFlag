@@ -93,8 +93,9 @@ class MatchingManager():
         
         if len(members) <= 8:
             prospects_ids = []
-            for member in members:
-                prospects_ids.append(member[0])
+            for member in members: 
+                if member[0] != int(user_id):
+                    prospects_ids.append(member[0])
             return prospects_ids
         
         

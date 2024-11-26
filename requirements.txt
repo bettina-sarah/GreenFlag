@@ -3,3 +3,4 @@ lmdb
 scikit-learn
 flask_socketio
 gevent
+gevent-websocket
