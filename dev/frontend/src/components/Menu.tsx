@@ -4,7 +4,7 @@ import matchingIcon from "../../ressources/icons/matching.png";
 import messageIcon from "../../ressources/icons/messages.png";
 import settingsIcon from "../../ressources/icons/settings.png";
 import logoutIcon from "../../ressources/icons/logout.png";
-// import ThemeSelector from "./ThemeSelector";
+import ThemeSelector from "./ThemeSelector";
 import NotificationDropDown from "./NotificationDropDown";
 
 const Menu: React.FC = () => {
@@ -19,10 +19,10 @@ const Menu: React.FC = () => {
       <div className="flex w-full h-full justify-evenly  bg-primary-color">
         <IconButton icon={matchingIcon} page="matching" />
         <IconButton icon={messageIcon} page="chatrooms" />
+        <NotificationDropDown />
         <ThemeSelector/>
         <IconButton icon={settingsIcon} page="settings" />
-        <NotificationDropDown />
-
+{/* 
         <IconButton
           icon={logoutIcon}
           onClick={() => {
@@ -32,7 +32,7 @@ const Menu: React.FC = () => {
             // post to remove token from database!
           }}
           page="login"
-        />
+        /> */}
       </div>
     </div>
   );
