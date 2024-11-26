@@ -250,7 +250,7 @@ BEGIN
      JOIN suggestion AS m1 ON mm.suggestion_id = m1.id
      WHERE mm.id = NEW.match_id),
     NEW.sender_id,
-    'You have a new message',
+    'You have a new message from ' || (SELECT first_name FROM member WHERE id = NEW.sender_id),
     (SELECT mm.chatroom_name
      FROM member_match AS mm
      WHERE mm.id = NEW.match_id)
@@ -274,13 +274,12 @@ DECLARE
   member1 INT;
   member2 INT;
 BEGIN
-  -- Retrieve member_id_1 and member_id_2 from the suggestion table
+
   SELECT member_id_1, member_id_2
   INTO member1, member2
   FROM suggestion
   WHERE id = NEW.suggestion_id;
 
-  -- Insert notifications into alert_notification table
   INSERT INTO alert_notification (member_id, subject_id, msg, chatroom_name)
   VALUES
     (member1, member2, 'You matched with ' || (SELECT first_name FROM member WHERE id = member1) || '!', NEW.chatroom_name),
