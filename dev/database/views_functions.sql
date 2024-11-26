@@ -243,14 +243,17 @@ DROP FUNCTION IF EXISTS notify_on_message;
 CREATE OR REPLACE FUNCTION notify_on_message()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO alert_notification (member_id, subject_id, msg)
+  INSERT INTO alert_notification (member_id, subject_id, msg, chatroom_name)
   VALUES (
     (SELECT CASE WHEN NEW.sender_id = m1.member_id_1 THEN m1.member_id_2 ELSE m1.member_id_1 END
      FROM member_match AS mm
      JOIN suggestion AS m1 ON mm.suggestion_id = m1.id
      WHERE mm.id = NEW.match_id),
     NEW.sender_id,
-    'You have a new message'
+    'You have a new message',
+    (SELECT mm.chatroom_name
+     FROM member_match AS mm
+     WHERE mm.id = NEW.match_id)
   );
   RETURN NEW;
 END;
@@ -278,10 +281,10 @@ BEGIN
   WHERE id = NEW.suggestion_id;
 
   -- Insert notifications into alert_notification table
-  INSERT INTO alert_notification (member_id, subject_id, msg)
+  INSERT INTO alert_notification (member_id, subject_id, msg, chatroom_name)
   VALUES
-    (member1, member2, 'You have a new match!'),
-    (member2, member1, 'You have a new match!');
+    (member1, member2, 'You matched with ' || (SELECT first_name FROM member WHERE id = member1) || '!', NEW.chatroom_name),
+    (member2, member1, 'You matched with ' || (SELECT first_name FROM member WHERE id = member1) || '!', NEW.chatroom_name);
 
   RETURN NEW;
 END;
