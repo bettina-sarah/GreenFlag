@@ -29,6 +29,7 @@ console.log('notificationDropDown:', notifications)
                 <button
                   className="w-full p-2 text-black text-sm hover:bg-theme-autumn/50 rounded-md"
                   onClick={() => {
+                    
                     navigate(`/chatroom/${notificationItem.chatroom}`);
                   }}
                 >
