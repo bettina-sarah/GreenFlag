@@ -459,7 +459,7 @@ BEGIN
 
   INSERT INTO alert_notification (member_id, subject_id, msg, chatroom_name)
   VALUES
-    (member1, member2, 'You matched with ' || (SELECT first_name FROM member WHERE id = member1) || '!', NEW.chatroom_name),
+    (member1, member2, 'You matched with ' || (SELECT first_name FROM member WHERE id = member2) || '!', NEW.chatroom_name),
     (member2, member1, 'You matched with ' || (SELECT first_name FROM member WHERE id = member1) || '!', NEW.chatroom_name);
 
   RETURN NEW;
