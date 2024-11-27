@@ -1,27 +1,27 @@
 import React from 'react';
 import DeleteAccountForm from '@/components/form_components/DeleteAccountForm';
 import Menu from '@/components/Menu';
-import IconButton from '@/components/IconButton';
-import logoutIcon from "../../ressources/icons/logout.png";
 import { NotificationProvider } from '@/components/NotificationContext';
+import { useNavigate } from 'react-router-dom';
 
 const SettingsPage: React.FC = () => {
+  const navigate = useNavigate();
 	return(
 	<div className='w-full h-full flex flex-col justify-between items-center'>
 		  <NotificationProvider>
         <Menu />
       </NotificationProvider>
 		<h1>Logout</h1>
-		
-        <IconButton
-          icon={logoutIcon}
-          onClick={() => {
+    <button onClick={() => {
             sessionStorage.clear();
+            navigate("/");
+
             //function to clear & post to BE 1st then clear
             // post to remove token from database!
           }}
-          page="login"
-        />
+           className="bg-red-600 p-1 rounded-md text-white" type="submit">
+            Logout    
+      </button>
 		<h1 className='text-3xl font-bold text-teal-500'>Delete account !</h1>
 		<div className='flex flex-col m-2 py-3'>
 			<DeleteAccountForm />
