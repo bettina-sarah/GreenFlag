@@ -16,6 +16,7 @@ const Menu: React.FC = () => {
   // };
 
   const { notifications } = useNotifications(); // Use the custom hook to get notifications
+  console.log('menu notifications received are: ', notifications)
 
 
   return (

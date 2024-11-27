@@ -11,12 +11,31 @@ class NotificationManager:
         user_id = data.get('id')
         try:
             response = NotificationDAO.get_notifications(user_id)
-            return response
+            #[('You matched with John!', 'chatroom_1_2'), ('You matched with John!', 'chatroom_1_3'), ('You matched with John!', 'chatroom_1_4'), ('You have a new message from Jane', 'chatroom_1_2')]
+            jsonified_response = NotificationManager.jsonify_notification_response(response)
+            print('jsonified response is: ', jsonified_response)
+            return jsonified_response
 
                     # email sequence here
         except Exception as error:
             print(error)
             print('notification manager')
+            return False
+    
+    @staticmethod
+    def jsonify_notification_response(notification_list):
+        new_list = []
+        individual_json = {}
+        try:
+            # list of tuples
+            for notification in notification_list:
+                # individual_json['notification'] = notification[0]
+                # individual_json['chatroom'] = notification[1]
+                # print(individual_json)
+                new_list.append({'notification': notification[0], 'chatroom': notification[1]})
+            return new_list
+        except Exception as error:
+            print(error)
             return False
 
     @staticmethod
