@@ -170,10 +170,9 @@ def update_suggestion() -> bool:
 
 @app.route('/notifications', methods=['POST'])
 def notifications() -> bool:
-    print('notification route:', request.json)
     response = NotificationManager.get_notifications(request.json)
-    json = {'notification': 'hello', 'chatroom': 'chatroom_8_11'}
-    return jsonify(json)
+    print('response db is: ', response)
+    return jsonify(response)
 
 
 if __name__ == '__main__':

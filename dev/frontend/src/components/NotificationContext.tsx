@@ -34,7 +34,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      const response = await fetchData<NotificationData>("/notifications", sessionStorage.getItem("id"));
+      const response = await fetchData<NotificationData>("/notifications", {id: sessionStorage.getItem("id") });
       if (response) {
         setNotifications(response);
       }
