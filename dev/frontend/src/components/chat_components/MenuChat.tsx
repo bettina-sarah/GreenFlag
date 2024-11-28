@@ -48,9 +48,9 @@ const MenuChat: React.FC = () => {
                 <div>
                     <IconButton icon={backIcon} page="chatrooms"/>
                 </div>
-                <div className='flex w-50'>
+                <div className='flex w-50 items-center'>
                     <Avatar key={avatarPhoto?.key} img={avatarPhoto?.path || undefined} rounded/>
-                    <h1 className='pl-2 text-base-text'>{subjectData?.subject_firstname}</h1>
+                    <h1 className='pl-2 text-base-text text-2xl'>{subjectData?.subject_firstname}</h1>
                 </div>
                 <IconButton icon={flagButton}  onClick={() =>(console.log('future feature'))}/>
             </div> 

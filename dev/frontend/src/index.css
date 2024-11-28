@@ -143,6 +143,8 @@ h1{
     --bg-color: 200, 255, 237;
     --text-color: 47, 72, 88; /* Dark green */
     --text-muted: 51, 107, 84;
+    --custom-h1: 238, 230, 131;
+    --custom-h2: 189, 223, 123;
     --primary-color: 0, 178, 151;
     --secondary-color: 0, 78, 100;
     --bg-image-1: url('./../ressources/bg/Background.svg');
