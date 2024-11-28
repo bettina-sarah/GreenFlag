@@ -1,8 +1,8 @@
 import React from "react";
 import Menu from "@/components/Menu";
-import ProfileCard from "@/components/ProfileCard";
 import useFetch from "@/api/useFetch";
 import { NotificationProvider } from "@/components/NotificationContext";
+import CustomTinderCard from "@/components/CustomTinderCard";
 
 export interface IProfileData {
   suggestion_id?: string;
@@ -55,7 +55,7 @@ const MatchingPage: React.FC = () => {
       <div className="relative w-96 pt-3">
         {profileData &&
           profileData?.map((profile, index) => (
-            <ProfileCard
+            <CustomTinderCard
               key={index}
               profile_info={profile.user_infos.profile_info}
               photos={profile.user_infos.photo_keys}

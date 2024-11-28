@@ -44,10 +44,12 @@ const SettingsPage: React.FC = () => {
       </NotificationProvider>
 
       {profileData && (
-        <ProfileCard
-          profile_info={profileData.profile_info}
-          photos={profileData.photo_keys}
-        />
+        <div className="p-6">
+          <ProfileCard
+            profile_info={profileData.profile_info}
+            photos={profileData.photo_keys}
+          />
+        </div>
       )}
 
       <h1>Modify your profile</h1>
