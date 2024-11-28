@@ -174,8 +174,9 @@ def notifications() -> bool:
     print('response db is: ', response)
     return jsonify(response)
 
-@app.route('//update-notification', methods=['POST'])
-def notifications() -> bool:
+@app.route('/update-notification', methods=['POST'])
+def update_notification() -> bool:
+    print('update_notification JSON: ', request.json)
     response = NotificationManager.update_notification(request.json)
     print('response db is: ', response)
     return jsonify(response)
