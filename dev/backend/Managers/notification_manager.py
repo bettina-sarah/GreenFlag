@@ -34,8 +34,9 @@ class NotificationManager:
     @staticmethod
     def update_notification(data) -> None:
         notification_id = data.get('notification_id')
+        user_id = data.get('user_id')
         try:
-            response = NotificationDAO.update_notification(notification_id)
+            response = NotificationDAO.update_notification(notification_id, user_id)
             return response
                     # email sequence here
         except Exception as error:

@@ -13,10 +13,10 @@ class NotificationDAO(DAO):
         return response
     
     @staticmethod
-    def update_notification(notification_id:int) -> List[tuple]:
-        query = 'UPDATE alert_notification SET is_read = true WHERE chatroom_name = %s;'
+    def update_notification(notification_id:int, user_id:str) -> List[tuple]:
+        query = 'UPDATE alert_notification SET is_read = true WHERE chatroom_name = %s AND member_id = %s;'
         # chatroom name si what we keep in the FE 
-        params = (notification_id,)
+        params = (notification_id,user_id)
         response = NotificationDAO._prepare_statement("update",query,params)
         return response
 
