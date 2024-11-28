@@ -5,7 +5,7 @@ import useFetch from "@/api/useFetch";
 import { NotificationProvider } from "@/components/NotificationContext";
 
 export interface IProfileData {
-  suggestion_id: string;
+  suggestion_id?: string;
   user_infos: {
     profile_info: ProfileProps;
     photo_keys: string[];
@@ -49,7 +49,7 @@ const MatchingPage: React.FC = () => {
 
   return (
     <div className="w-full h-full flex flex-col items-center">
-      		  <NotificationProvider>
+      <NotificationProvider>
         <Menu />
       </NotificationProvider>
       <div className="relative w-96 pt-3">
@@ -59,7 +59,7 @@ const MatchingPage: React.FC = () => {
               key={index}
               profile_info={profile.user_infos.profile_info}
               photos={profile.user_infos.photo_keys}
-              suggestion_id = {profile.suggestion_id}
+              suggestion_id={profile.suggestion_id}
             />
           ))}
         {!profileData && !profileLoading && !profileError && (
