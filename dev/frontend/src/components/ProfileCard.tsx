@@ -13,7 +13,7 @@ import TinderCard from "react-tinder-card";
 import { updateSuggestion } from "@/api/updateSuggestion";
 
 interface IProfileProps {
-  suggestion_id: string;
+  suggestion_id?: string;
   profile_info: ProfileProps;
   photos: string[];
 }
