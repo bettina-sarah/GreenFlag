@@ -12,6 +12,13 @@ class NotificationDAO(DAO):
         response = NotificationDAO._prepare_statement("select",query,params)
         return response
     
+    @staticmethod
+    def update_notification(notification_id:int) -> List[tuple]:
+        query = 'UPDATE alert_notification SET is_read = true WHERE chatroom_name = %s;'
+        # chatroom name si what we keep in the FE 
+        params = (notification_id,)
+        response = NotificationDAO._prepare_statement("update",query,params)
+        return response
 
     @staticmethod
     def _create_connection(params: dict) -> None:

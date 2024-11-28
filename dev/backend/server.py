@@ -174,6 +174,13 @@ def notifications() -> bool:
     print('response db is: ', response)
     return jsonify(response)
 
+@app.route('//update-notification', methods=['POST'])
+def notifications() -> bool:
+    response = NotificationManager.update_notification(request.json)
+    print('response db is: ', response)
+    return jsonify(response)
+
+
 
 if __name__ == '__main__':
     socketio.run(app, debug=True, host="0.0.0.0", port=5000)

@@ -49,6 +49,7 @@ class DAO():
         try:
             if cursor.rowcount > 0:
                 return True
+            return False
         except Exception as e:
             print(e)
             return False 
