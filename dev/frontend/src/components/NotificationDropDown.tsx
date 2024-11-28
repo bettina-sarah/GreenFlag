@@ -14,6 +14,8 @@ const NotificationDropDown: React.FC<NotificationDropDownProps> = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [notificationRead, setNotificationRead] = useState<boolean>(false);
 
+  const hasNotifications = notifications && notifications.length > 0;
+
   // const handleClick = () => {
   //   setIsItalic((prev) => !prev); // Toggle bold/italic state
   // };
@@ -24,7 +26,11 @@ const NotificationDropDown: React.FC<NotificationDropDownProps> = ({
 
   return (
     <div className="relative pt-1">
-      <IconButton icon={bellIcon} onClick={() => setIsOpen(!isOpen)} />
+      <IconButton
+        icon={bellIcon}
+        onClick={() => setIsOpen(!isOpen)}
+        disabled={!hasNotifications}
+      />
 
       {isOpen && (
         <div className="flex absolute w-60 mt-2 bg-primary-color rounded-md shadow-lg z-10 left-1/2 transform -translate-x-1/2">
