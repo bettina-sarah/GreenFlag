@@ -21,14 +21,16 @@ import { updateData } from "./updateData";
 //     }
 //   };
 
-
 interface SuggestionData {
   suggestion_id: string;
   choice: string;
 }
 
-export const updateSuggestion = async (suggestion_id: string, choice: string) => {
+export const updateSuggestion = async (
+  suggestion_id: string,
+  choice: string
+) => {
   const data: SuggestionData = { suggestion_id, choice };
-  const endpoint = "/update-suggestion"; // Specify the correct route for suggestion update
+  const endpoint = "/update-suggestion";
   return await updateData<SuggestionData>(endpoint, data);
 };

@@ -32,8 +32,15 @@ class NotificationManager:
             return False
 
     @staticmethod
-    def update_notification_status(notification_subject_id) -> None:
-        pass
+    def update_notification(data) -> None:
+        notification_id = data.get('notification_id')
+        try:
+            response = NotificationDAO.update_notification(notification_id)
+            return response
+                    # email sequence here
+        except Exception as error:
+            print(error, __class__)
+            return False
 
     # def add_notification(self, notification) -> None:
     #     pass
