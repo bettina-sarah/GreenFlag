@@ -6,7 +6,7 @@ import random
 import numpy as np
 from DAOs.photo_lmdb_dao import PhotoDAO
 from Managers.account_manager import AccountManager
-from typing import List
+from datetime import datetime, timezone, timedelta
 
 
 ACTIVITY_TUPLE = ("hiking",
@@ -111,18 +111,25 @@ class UserFactory(Factory):
         
         if age_type == "young":
             dob = self.__faker.date_of_birth(minimum_age=18,maximum_age=39)
+            
         elif age_type == "middle":
             dob = self.__faker.date_of_birth(minimum_age=40,maximum_age=59)
         elif age_type == "old":
             self.__faker.date_of_birth(minimum_age=60,maximum_age=100)
         
+        dob_with_time = datetime.combine(dob, datetime.min.time(), tzinfo=timezone.utc)
+        
+        dob_with_ms = dob_with_time.isoformat(timespec='milliseconds')
+
+        if dob_with_time.tzinfo == timezone.utc:
+            dob_with_ms = dob_with_ms.replace("+00:00", "Z")
 
         activity_dict = self.generate_activities()
         preferences_dict = self.generate_preferences()
     
         photoDAO = PhotoDAO()
         # password by default
-        user = User(self.__faker.first_name_male(), self.__faker.last_name_male(), dob,
+        user = User(self.__faker.first_name_male(), self.__faker.last_name_male(), dob_with_ms,
                      gender='Male', email=self.__faker.email(),preferences=preferences_dict,interests=activity_dict, bio = self.__faker.text(200), photo_key=photoDAO.add_photos())
         
         return user
