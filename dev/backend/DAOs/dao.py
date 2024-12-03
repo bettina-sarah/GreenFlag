@@ -32,7 +32,7 @@ class DAO():
     def _insert_request(cursor) -> bool:
         try:
             if cursor.rowcount > 0: # we might want to know how much was inserted, return count later
-                return True
+                return cursor.fetchone()
         except Exception as e:
             print(e)
             return False

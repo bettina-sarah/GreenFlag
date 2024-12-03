@@ -48,7 +48,7 @@ class Factory(ABC):
     #     pass
 
     @abstractmethod
-    def factory_method_young_men(self):
+    def factory_method_men(self):
         pass
 
     
@@ -100,20 +100,29 @@ class UserFactory(Factory):
                        'preferred_genders': [preferred_gender]} # not good bc it only returnd one gender!
         return preferences
 
-    def factory_method_young_men(self):
+    def factory_method_men(self, age_type):
         
         # {'id': '1', 'info': {'gender': 'Male', 'height': '185', 'religion': 'Jewish', 'want_kids': True, 
         #                      'city': 'Montreal', 'bio': 'dfavsdf', 'min_age': '29', 'max_age': '60', 
         #                      'relationship_type': 'shortterm', 'date_of_birth': '2005-02-01T05:00:00.000Z', 
         #                      'preferred_genders': ['Female']}}    
         # & activties
+        
+        
+        if age_type == "young":
+            dob = self.__faker.date_of_birth(minimum_age=18,maximum_age=39)
+        elif age_type == "middle":
+            dob = self.__faker.date_of_birth(minimum_age=40,maximum_age=59)
+        elif age_type == "old":
+            self.__faker.date_of_birth(minimum_age=60,maximum_age=100)
+        
 
         activity_dict = self.generate_activities()
         preferences_dict = self.generate_preferences()
     
         photoDAO = PhotoDAO()
         # password by default
-        user = User(self.__faker.first_name_male(), self.__faker.last_name_male(), self.__faker.date_of_birth(minimum_age=18,maximum_age=35),
+        user = User(self.__faker.first_name_male(), self.__faker.last_name_male(), dob,
                      gender='Male', email=self.__faker.email(),preferences=preferences_dict,interests=activity_dict, bio = self.__faker.text(200), photo_key=photoDAO.add_photos())
         
         return user
@@ -126,19 +135,14 @@ class UserFactory(Factory):
     def add_to_database(self, user_list: list[User]):
         for user in user_list:
             user_id = AccountManager.create_account(user.basic_account_info)
-            # {'id': '1', 'hobbies': {'hiking': False, 'yoga': False, 'photography': False, 'cooking': False, 
-            #                         'traveling': False, 'reading': False, 'videogaming': False, 'biking': False, 'running': False, 
-            #                         'watchingmovies': False, 'workingout': False, 'dancing': False, 'playinginstrument': False, 'attendingconcerts': True, 
-            #                         'painting': True, 'volunteering': True, 'playingsports': True, 'crafting': True, 'petlover': False, 'learningnewlanguage': False}}
+            user_id = user_id[0]
+            hobbies = {'id': user_id, 'hobbies': user.interests}
+            AccountManager.update_hobbies(hobbies)
             
+            preferences = {'id':user_id, 'info': user.preferences}
+            AccountManager.update_preferences(preferences)
             
+            AccountManager.modify_photos(user_id=user_id,keys=user.photo_key)
             
             AccountManager.complete_profile({'id': user_id})
             
-        
-        
-    
-
-if __name__ == "__main__":
-    user_factory = UserFactory("men")
-    user = user_factory.factory_method_young_men()
