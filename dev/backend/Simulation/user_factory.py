@@ -139,7 +139,16 @@ class UserFactory(Factory):
             hobbies = {'id': user_id, 'hobbies': user.interests}
             AccountManager.update_hobbies(hobbies)
             
-            preferences = {'id':user_id, 'info': user.preferences}
+            info = user.preferences
+            info['gender'] = user.gender
+            info['height'] = random.randint(150,250)
+            info['want_kids'] = self.__faker.boolean()
+            info['religion'] = "Taoist"
+            info['city'] = self.__faker.city()
+            info['bio'] = user.bio
+            info['date_of_birth'] = user.dob
+            
+            preferences = {'id':user_id, 'info': info}
             AccountManager.update_preferences(preferences)
             
             AccountManager.modify_photos(user_id=user_id,keys=user.photo_key)
