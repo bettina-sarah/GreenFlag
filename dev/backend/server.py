@@ -184,9 +184,9 @@ def update_notification() -> bool:
 from Simulation.user_factory import UserFactory
 
 if __name__ == '__main__':
-    # user_factory = UserFactory("men")
-    # user = user_factory.factory_method_men(age_type="middle")
-    # user_factory.add_to_database([user])
-    # pass
-    socketio.run(app, debug=True, host="0.0.0.0", port=5000)
+    user_factory = UserFactory("men")
+    user = user_factory.factory_method_men(age_type="middle")
+    user_factory.add_to_database([user])
+    pass
+    # socketio.run(app, debug=True, host="0.0.0.0", port=5000)
     #app.run(debug=True, host="0.0.0.0", port=5000)
