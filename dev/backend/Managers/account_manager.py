@@ -46,6 +46,26 @@ class AccountManager:
             print(error)
             print('account manager')
             return False
+    
+
+    @staticmethod
+    def save_token(id, token) -> bool:
+        params = (token, id)
+        try:
+            response = AccountDAO.save_token(params)
+            return response
+        except Exception as error:
+            print(error)
+            
+    @staticmethod
+    def does_token_exist(user_id, token) -> bool:
+        params = (user_id, token)
+        try:
+            response = AccountDAO.does_token_exist(params)
+            return response
+        except Exception as error:
+            print(error)
+            
     @staticmethod
     def complete_profile(data) -> bool:
         id = data.get('id')

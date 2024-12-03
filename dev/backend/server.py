@@ -11,6 +11,8 @@ from Managers.chatroom_socket_manager import ChatroomSocketManager
 from Managers.chatroom_manager import ChatroomManager
 from Managers.account_manager import AccountManager
 from Managers.matching_manager import MatchingManager
+from Managers.notification_manager import NotificationManager
+from authentication.authentication_middleware import AuthenticationMiddleware
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}},
@@ -39,9 +41,13 @@ def create_account() -> bool:
 @app.route('/login', methods=['POST'])
 def login() -> bool:
     response = AccountManager.login(request.json)
-    # call middleware to generate token; send it to frontend
-    # make sure database gets it !!!!
-    return jsonify(response) if response else jsonify(False)
+    if response:
+        response['token'] = AuthenticationMiddleware().generate_token(response['id'])
+        print('login, token: ',response['token'])
+        print('login, full response: ',response)
+        token_saved = AccountManager.save_token(response['id'], response['token'])
+        return jsonify(response)
+    return jsonify(False)
 
 @app.route('/complete-profile', methods=['POST'])
 def complete_profile() -> bool:
@@ -57,6 +63,23 @@ def get_profile() -> bool:
     response = AccountManager.get_profile(request.json)
     print('get profile: ', response)
     return jsonify(response) if response else jsonify(False)
+
+# --- TOKEN ROUTES ------
+
+@app.route('/verify-token', methods=['POST'])
+def verify_token() -> bool:
+    token = request.json
+    token_is_valid, user_id = AuthenticationMiddleware().check_session_validity(token)
+    if isinstance(token_is_valid, bool):
+        if token_is_valid:
+            does_token_exist = AccountManager.does_token_exist(user_id, token)
+            response = does_token_exist[0][0]
+            return jsonify(response)
+        return jsonify(False)
+    else: # is_valid a string: new token
+        new_token = token_is_valid
+        AccountManager.save_token(user_id, new_token)
+        return jsonify({'token': new_token})
 
 # ---- PAS UTLISÉ ENCORE!!
 
@@ -142,6 +165,23 @@ def get_suggestions() -> list:
 def update_suggestion() -> bool:
     response = MatchingManager.update_suggestion(request.json)
     return jsonify(response)
+
+# -------- NOTIFICATIONS ------------
+
+@app.route('/notifications', methods=['POST'])
+def notifications() -> bool:
+    response = NotificationManager.get_notifications(request.json)
+    print('response db is: ', response)
+    return jsonify(response)
+
+@app.route('/update-notification', methods=['POST'])
+def update_notification() -> bool:
+    print('update_notification JSON: ', request.json)
+    response = NotificationManager.update_notification(request.json)
+    print('response db is: ', response)
+    return jsonify(response)
+
+
 
 if __name__ == '__main__':
     socketio.run(app, debug=True, host="0.0.0.0", port=5000)

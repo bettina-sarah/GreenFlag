@@ -1,26 +1,35 @@
-from utility_functions import requires_token
-from crypt_keeper import CryptKeeper
+from authentication.crypt_keeper import CryptKeeper
+from functools import wraps
+
+
+# def requires_token(my_function) -> function: 
+#     @wraps(my_function)
+#     def decorated(*args, **kwargs):
+#         print('i am wrapped')
+#             # retour des plusieurs param dans fonction
+#         return my_function(*args,**kwargs)
+#     return decorated
 
 
 class AuthenticationMiddleware:
     def __init__(self) -> None:
         pass
     
-    @requires_token
+    # @requires_token
     def check_session_validity(self, token:str) -> bool:
-        
-        decoded_token = CryptKeeper.decode(token)
+        cryptkeeper = CryptKeeper()
+        is_valid, user_id = cryptkeeper.decode(token)
+        if isinstance(is_valid, bool):
+            return is_valid, user_id
+        # we generate a new token if token is expired OR almost expiring!!
+        new_token = self.generate_token(user_id)
+        print('new token: ', new_token)
+        return new_token, user_id
 
-        # comment encode est utilisé? 
-        if decoded_token == "session_valid":
-            return True
-
-        return False    
-
-    def generate_token(self, user_id:str, user_password:str) -> str:
-        # make token
-        token = "1234"
-        encoded_token = CryptKeeper.encode(token)
+    def generate_token(self, user_id:str) -> str:
+        cryptkeeper = CryptKeeper()
+        encoded_token = cryptkeeper.encode(user_id)
         return encoded_token
 
     
+
