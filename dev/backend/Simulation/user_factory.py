@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from faker import Faker
 import random
 import numpy as np
+from DAOs.photo_lmdb_dao import PhotoDAO
 
 
 ACTIVITY_TUPLE = ("hiking",
@@ -108,9 +109,10 @@ class UserFactory(Factory):
         activity_dict = self.generate_activities()
         preferences_dict = self.generate_preferences()
     
+        photoDAO = PhotoDAO()
         # password by default
         user = User(self.__faker.first_name_male, self.__faker.last_name_male, self.__faker.date_of_birth(minimum_age=18,maximum_age=35),
-                     gender='Male', email=self.__faker.email(),preferences=preferences_dict,interests=activity_dict, bio = self.__faker.text(200))
+                     gender='Male', email=self.__faker.email(),preferences=preferences_dict,interests=activity_dict, bio = self.__faker.text(200), photo_key=)
         
         return user
         # self.__faker.name_nonbinary
