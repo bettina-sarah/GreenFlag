@@ -41,12 +41,12 @@ const PhotoCarousel: React.FC<CarouselProps> = ({ images }) => {
       <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
         <Carousel slide={false}>
           <img
-            className="w-full object-cover"
+            className="w-full object-cover rounded-3xl"
             src={unknown_photo}
             alt="First slide"
           />
           <img
-            className="w-full object-cover"
+            className="w-full object-cover rounded-3xl"
             src={unknown_photo}
             alt="unknown"
           />
@@ -60,7 +60,7 @@ const PhotoCarousel: React.FC<CarouselProps> = ({ images }) => {
           {photoData.map((image) => (
             <img
               key={image.key}
-              className="w-full object-cover"
+              className="w-full object-cover rounded-3xl"
               src={image.path}
               alt="unknown"
             />

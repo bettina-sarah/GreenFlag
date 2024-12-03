@@ -60,7 +60,7 @@ const CustomTinderCard: React.FC<IProfileProps> = ({
         preventSwipe={["up", "down"]}
         onCardLeftScreen={() => handleCardLeftScreen()}
       >
-        <div className="w-96 bg-greenflag-green p-1 rounded relative">
+        <div className="w-96 bg-primary-color p-1 rounded-3xl relative">
           <PhotoCarousel images={photos} />
           <BasicInfo basic_info={profile_info.basic_info} />
           <RelationshipGoals

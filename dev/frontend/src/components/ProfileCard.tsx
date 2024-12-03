@@ -18,7 +18,7 @@ interface IProfileProps {
 
 const ProfileCard: React.FC<IProfileProps> = ({ profile_info, photos }) => {
   return (
-    <div className="w-96 p-5 bg-primary-color p-1 rounded relative">
+    <div className="w-96 p-5 bg-primary-color rounded-lg relative">
       <PhotoCarousel images={photos} />
       <BasicInfo basic_info={profile_info.basic_info} />
       <RelationshipGoals
