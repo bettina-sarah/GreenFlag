@@ -15,10 +15,11 @@ const reasons = [
 ]
 
 interface FlagProps {
-  subject_id: number | null;
+  subject_id: number | undefined;
 }
 
 const FlagModal: React.FC<FlagProps> = ( subject_id ) => {
+
   const [openModal,setOpenModal] = useState<boolean>(true);
   const [reason,setReason] = useState<string>("");
 
@@ -63,7 +64,7 @@ const FlagModal: React.FC<FlagProps> = ( subject_id ) => {
 
 
   return (
-    <Modal show={openModal} onClose={() => setOpenModal(false)}>
+    <Modal show={openModal} onClose={() => setOpenModal(false)} className="bg-secondary-color/70">
       <Modal.Header>Flag </Modal.Header>
       <Modal.Body>
         <Select onChange={(event)=> setReason(event.target.value)}>

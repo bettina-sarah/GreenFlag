@@ -7,8 +7,10 @@ import useFetch from '@/api/useFetch';
 import { Avatar } from 'flowbite-react';
 import { IPhotoData } from '../profile_card_components/PhotoCarousel';
 import fetchData from '@/api/fetchData';
+import FlagModal from './FlagModal';
 
 interface SubjectInfos{
+    subject_id: number;
     subject_firstname: string;
     subject_avatar: string | null;
 }
@@ -54,6 +56,7 @@ const MenuChat: React.FC = () => {
                 </div>
                 <IconButton icon={flagButton}  onClick={() =>(console.log('future feature'))}/>
             </div> 
+            <FlagModal subject_id={subjectData?.subject_id}/>
         </div>
     );
 
