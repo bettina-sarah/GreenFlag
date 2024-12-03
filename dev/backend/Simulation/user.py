@@ -2,7 +2,7 @@ from enum import Enum
 
 class User:
     def __init__(self,first_name:str, last_name:str, dob:int, gender:str, email:str,
-                 preferences:dict,interests:dict, bio: str, password:str = 'password123') -> None: # set[str]
+                 preferences:dict,interests:dict, bio: str, photo_key: str, password:str = 'password123') -> None: # set[str]
         self.first_name = first_name
         self.last_name = last_name
         self.dob = dob
@@ -11,6 +11,7 @@ class User:
         self.preferences = preferences
         self.interests = interests
         self.bio = bio
+        self.photo_key = photo_key
         self.password = password
 
 
@@ -79,6 +80,14 @@ class User:
     @bio.setter
     def bio(self, bio:str) -> None:
         self.__bio = bio
+        
+    @property
+    def photo_key(self) -> str:
+        return self.__photo_key
+    
+    @photo_key.setter
+    def photo_key(self, photo_key:str) -> None:
+        self.__photo_key = photo_key
     
     @property
     def password(self) -> str:
