@@ -107,6 +107,7 @@ class UserFactory(Factory):
         #                      'relationship_type': 'shortterm', 'date_of_birth': '2005-02-01T05:00:00.000Z', 
         #                      'preferred_genders': ['Female']}}    
         # & activties
+        # ATTENTION PREFERRED GENDERS PAS BON 
         
         
         if age_type == "young":
