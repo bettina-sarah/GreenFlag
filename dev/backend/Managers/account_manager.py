@@ -125,10 +125,6 @@ class AccountManager:
     def jsonify_response(list):
         try:
             result=list[0]
-            # {'basic_info': {'first_name': 'Emma', 'age': 19, 'city': 'Montreal', 'location': 10}, 
-            #  'relationship': ['hiking', 'yoga', 'photography', 'cooking', 'traveling'], 
-            #  'wants_kids': True, 'hobby_array': 'fun', 
-            #  'bio': 'Hello this is user 11 !!!!'}
             profile_data= {  
             "basic_info": {
             "first_name": result[1],

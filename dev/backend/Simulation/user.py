@@ -13,8 +13,12 @@ class User:
         self.bio = bio
         self.photo_key = photo_key
         self.password = password
+        
+        
 
 
+
+    
     
     @property
     def first_name(self) -> str:
@@ -30,7 +34,7 @@ class User:
     
     @last_name.setter
     def last_name(self, last_name:str) -> None:
-        self.last_name = last_name
+        self.__last_name = last_name
     
     @property
     def dob(self) -> int:
@@ -96,3 +100,10 @@ class User:
     @password.setter
     def password(self, password:str) -> None:
         self.__password = password
+    
+    @property
+    def basic_account_info(self) -> None:
+        return {'first_name': self.first_name,
+                'last_name': self.last_name,
+                'email': self.email,
+                'password': self.password}

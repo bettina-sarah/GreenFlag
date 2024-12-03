@@ -25,7 +25,6 @@ class PhotoDAO:
                 elif photos is None:
                     key = self.encode_image(txn)
                     keys.append(key)
-                    self.env.close()
                     return keys
                 else:
                     key = self.encode_image(txn, photos)
@@ -43,9 +42,12 @@ class PhotoDAO:
             key = photo.filename.encode('utf-8')        
             image = Image.open(photo)
         else:
-            avatar = self.faker.image(width=200, height=200, category='avatar')
-            key = avatar.filename.encode('utf-8')        
-            image = Image.open(avatar)
+            avatar_bytes = self.faker.image((200,200)) # bytearray
+            key = self.faker.text(max_nb_chars=16)
+            key = key.encode('utf-8')        
+            # image = Image.open(avatar)
+            txn.put(key, avatar_bytes)
+            return key.decode('utf-8')
         img_byte_arr = io.BytesIO()
         image.save(img_byte_arr, format=image.format)
         img_bytes = img_byte_arr.getvalue()
