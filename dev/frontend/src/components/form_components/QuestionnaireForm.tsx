@@ -23,7 +23,7 @@ import {
   hobbiesKeys,
   checkAndCompleteProfile,
 } from "../form_submits/QuestionnaireSubmitHandlers";
-import { selectTheme, textAreaTheme, textInputTheme } from "../theme-flowbite/CustomTheme";
+import { datePickerTheme, selectTheme, textAreaTheme, textInputTheme } from "../theme-flowbite/CustomTheme";
 // https://marmelab.com/react-admin/ImageInput.html
 
 const QuestionnaireForm = () => {
@@ -106,6 +106,8 @@ const QuestionnaireForm = () => {
                 onChange={(date: Date | null) => field.onChange(date)}
                 minDate={new Date(new Date(new Date().setFullYear(new Date().getFullYear() - 100)))}
                 maxDate={new Date(new Date(new Date().setFullYear(new Date().getFullYear() - 18)))}
+                color="custom"
+                theme={datePickerTheme}
               />
             )}
           />
@@ -152,7 +154,10 @@ const QuestionnaireForm = () => {
 
         <div className="pt-10">
           <label className="text-h2-custom">Select Your Religion or Belief:</label>
-          <Select {...registerInfo("religion", { required: true })}>
+          <Select {...registerInfo("religion", { required: true })}
+          color="custom"
+          theme={selectTheme}
+          >
             {religions.map((religion, index) => (
               <option value={religion} key={index}>
                 {religion}
@@ -247,7 +252,10 @@ const QuestionnaireForm = () => {
         </div>
 
         <label className="text-h2-custom">Select The Relationship Type You Prefer:</label>
-        <Select {...registerInfo("relationship_type", { required: true })}>
+        <Select {...registerInfo("relationship_type", { required: true })}
+        color="custom"
+        theme={selectTheme}
+        >
           <option value="fun">Fun</option>
           <option value="shortterm">Shortterm</option>
           <option value="longterm">Longterm</option>
