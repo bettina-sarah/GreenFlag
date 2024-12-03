@@ -86,11 +86,11 @@ class User:
         self.__bio = bio
         
     @property
-    def photo_key(self) -> str:
+    def photo_key(self) -> list[str]:
         return self.__photo_key
     
     @photo_key.setter
-    def photo_key(self, photo_key:str) -> None:
+    def photo_key(self, photo_key:list[str]) -> None:
         self.__photo_key = photo_key
     
     @property
@@ -103,7 +103,7 @@ class User:
     
     @property
     def basic_account_info(self) -> None:
-        return {'first_name': self.first_name,
-                'last_name': self.last_name,
+        return {'firstname': self.first_name,
+                'lastname': self.last_name,
                 'email': self.email,
                 'password': self.password}

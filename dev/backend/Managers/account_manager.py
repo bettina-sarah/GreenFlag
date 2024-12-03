@@ -191,7 +191,7 @@ class AccountManager:
         return columns, values
 
     @staticmethod
-    def modify_photos(user_id,files, info=None) -> bool:
+    def modify_photos(user_id,files=None, info=None,keys=None) -> bool:
         #token = info.get('token')
         # we verify if token is valid here ... and return right user id to put in params !
         # user_id = '11'
@@ -202,8 +202,11 @@ class AccountManager:
         # except Exception as error:
         #     print(error)
         #     return False
-        photo_dao = PhotoDAO()
-        keys = photo_dao.add_photos(files)
+        if files:
+            photo_dao = PhotoDAO()
+            keys = photo_dao.add_photos(files)
+        else:
+            keys = keys
         # keys = photo_dao.add_photos(images)
         formatted_keys = '{' + ','.join(keys) + '}'
         params = (user_id,formatted_keys)
