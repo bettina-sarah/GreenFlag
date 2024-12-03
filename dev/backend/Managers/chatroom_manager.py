@@ -47,6 +47,7 @@ class ChatroomManager(DischargedList.Observer):
             profile_photo = AccountDAO.get_photos(params, extraquery=' ORDER BY position LIMIT 1;')
             
             return {
+                "subject_id": subject_id,
                 "subject_firstname": first_name,
                 "subject_avatar": profile_photo,
             }
