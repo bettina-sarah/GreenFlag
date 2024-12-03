@@ -4,6 +4,7 @@ import useFetch from "@/api/useFetch";
 import fetchData from "@/api/fetchData";
 import ChatroomItem from "@/components/ChatroomItem";
 import { Spinner } from "flowbite-react";
+import { NotificationProvider } from "@/components/NotificationContext";
 
 
 interface IProfileData {
@@ -86,7 +87,9 @@ const ChatroomsPage: React.FC = () => {
 
 	return(
 		<div>
-			<Menu />
+					  <NotificationProvider>
+        <Menu />
+      </NotificationProvider>
 			<div>
 				{modifiedProfileData.map((profile) => (
 					<ChatroomItem key={profile.name} name={profile.name} subject={profile.subject} last_message={profile.last_message} />

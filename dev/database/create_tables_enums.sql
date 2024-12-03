@@ -93,9 +93,11 @@ CREATE TABLE flagged (
 );
 
 CREATE TABLE alert_notification (
-  member_id         INTEGER PRIMARY KEY,
+  id                SERIAL PRIMARY KEY,
+  member_id         INTEGER,
   subject_id        INTEGER NOT NULL,
   msg               TEXT NOT NULL,
+  chatroom_name     VARCHAR(32) DEFAULT NULL,
   is_read           BOOLEAN DEFAULT FALSE
 );
 
