@@ -66,7 +66,7 @@ class UserFactory(Factory):
 
     RELATIONSHIP_TYPE = ("fun", "shortterm", "longterm")
 
-    GENDER = ("Male", "Female", "Non-Binary")
+    GENDER = ("Male", "Female", "Non-Binary", "Other")
     
     AGE_TYPE = ("young","middle", "old" )
     
@@ -120,12 +120,11 @@ class UserFactory(Factory):
         
         
         if age_type == "young":
-            dob = self.__faker.date_of_birth(minimum_age=18,maximum_age=39)
-            
+            dob = self.__faker.date_of_birth(minimum_age=18,maximum_age=39) 
         elif age_type == "middle":
             dob = self.__faker.date_of_birth(minimum_age=40,maximum_age=59)
         elif age_type == "old":
-            self.__faker.date_of_birth(minimum_age=60,maximum_age=100)
+            dob = self.__faker.date_of_birth(minimum_age=60,maximum_age=100)
         
         dob_with_time = datetime.combine(dob, datetime.min.time(), tzinfo=timezone.utc)
         
@@ -152,24 +151,25 @@ class UserFactory(Factory):
     def add_to_database(self, user: User):
         
         user_id = AccountManager.create_account(user.basic_account_info)
-        user_id = user_id[0]
-        user.user_id = user_id
-        hobbies = {'id': user_id, 'hobbies': user.interests}
-        AccountManager.update_hobbies(hobbies)
-        
-        info = user.preferences
-        info['gender'] = user.gender
-        info['height'] = random.randint(150,250)
-        info['want_kids'] = self.__faker.boolean()
-        info['religion'] = "Taoist"
-        info['city'] = self.__faker.city()
-        info['bio'] = user.bio
-        info['date_of_birth'] = user.dob
-        
-        preferences = {'id':user_id, 'info': info}
-        AccountManager.update_preferences(preferences)
-        
-        AccountManager.modify_photos(user_id=user_id,keys=user.photo_key)
-        
-        AccountManager.complete_profile({'id': user_id})
+        if user_id:
+            user_id = user_id[0]
+            user.user_id = user_id
+            hobbies = {'id': user_id, 'hobbies': user.interests}
+            AccountManager.update_hobbies(hobbies)
+            
+            info = user.preferences
+            info['gender'] = user.gender
+            info['height'] = random.randint(150,250)
+            info['want_kids'] = self.__faker.boolean()
+            info['religion'] = "Taoist"
+            info['city'] = self.__faker.city()
+            info['bio'] = user.bio
+            info['date_of_birth'] = user.dob
+            
+            preferences = {'id':user_id, 'info': info}
+            AccountManager.update_preferences(preferences)
+            
+            AccountManager.modify_photos(user_id=user_id,keys=user.photo_key)
+            
+            AccountManager.complete_profile({'id': user_id})
             
