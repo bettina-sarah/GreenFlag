@@ -13,6 +13,7 @@ class User:
         self.bio = bio
         self.photo_key = photo_key
         self.password = password
+        self.__user_id : int
         
         
 
@@ -100,6 +101,15 @@ class User:
     @password.setter
     def password(self, password:str) -> None:
         self.__password = password
+      
+    @property
+    def user_id(self) -> int:
+        return self.__user_id  
+    
+    @user_id.setter
+    def user_id(self, id: int) -> None:
+        self.__user_id = id
+    
     
     @property
     def basic_account_info(self) -> None:

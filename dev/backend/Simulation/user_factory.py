@@ -7,39 +7,17 @@ import numpy as np
 from DAOs.photo_lmdb_dao import PhotoDAO
 from Managers.account_manager import AccountManager
 from datetime import datetime, timezone, timedelta
+from enum import Enum
 
 
-ACTIVITY_TUPLE = ("hiking",
-"yoga",
-"photography",
-"cooking",
-"traveling",
-"reading",
-"videogaming",
-"biking",
-"running",
-"watchingmovies",
-"workingout",
-"dancing",
-"playinginstrument",
-"attendingconcerts",
-"painting",
-"volunteering",
-"playingsports",
-"crafting",
-"petlover",
-"learningnewlanguage"
-)
 
-RELATIONSHIP_TYPE = ("fun", "shortterm", "longterm")
 
-GENDER = ("Male", "Female", "Non-Binary")
 
 # ACTIVITY_DICT = {activity: False for activity in ACTIVITY_TUPLE}
 
 
 
-class Factory(ABC):
+class Factory(ABC):    
     def __init__(self) -> None:
         pass
     
@@ -48,7 +26,7 @@ class Factory(ABC):
     #     pass
 
     @abstractmethod
-    def factory_method_men(self):
+    def factory_method(self):
         pass
 
     
@@ -62,6 +40,37 @@ class Factory(ABC):
     #     pass
 
 class UserFactory(Factory):
+    
+    
+    ACTIVITY_TUPLE = ("hiking",
+    "yoga",
+    "photography",
+    "cooking",
+    "traveling",
+    "reading",
+    "videogaming",
+    "biking",
+    "running",
+    "watchingmovies",
+    "workingout",
+    "dancing",
+    "playinginstrument",
+    "attendingconcerts",
+    "painting",
+    "volunteering",
+    "playingsports",
+    "crafting",
+    "petlover",
+    "learningnewlanguage"
+    )
+
+    RELATIONSHIP_TYPE = ("fun", "shortterm", "longterm")
+
+    GENDER = ("Male", "Female", "Non-Binary")
+    
+    AGE_TYPE = ("young","middle", "old" )
+    
+    
     def __init__(self, name) -> None:
         self.__faker = Faker()
         self.__name = name
@@ -79,7 +88,7 @@ class UserFactory(Factory):
         activity_list = np.full(20,False,bool)
         activity_list[0:5] = True
         np.random.shuffle(activity_list)
-        zipped = zip(ACTIVITY_TUPLE,activity_list)
+        zipped = zip(UserFactory.ACTIVITY_TUPLE,activity_list)
         activity_dict = dict(zipped)
         return activity_dict
         #return np.random.choice(ACTIVITY_TUPLE, 5, replace=False)
@@ -90,17 +99,17 @@ class UserFactory(Factory):
 
         rel_type = random.randint(0,2)
 
-        relationship_type = RELATIONSHIP_TYPE[rel_type]
+        relationship_type = UserFactory.RELATIONSHIP_TYPE[rel_type]
 
         gender = random.randint(0,2)
-        preferred_gender = GENDER[gender]    
+        preferred_gender = UserFactory.GENDER[gender]    
         
         preferences = {'min_age': str(min_age), 'max_age': str(max_age),
                        'relationship_type': relationship_type,
                        'preferred_genders': [preferred_gender]} # not good bc it only returnd one gender!
         return preferences
 
-    def factory_method_men(self, age_type):
+    def factory_method(self, gender: str, age_type: str):
         
         # {'id': '1', 'info': {'gender': 'Male', 'height': '185', 'religion': 'Jewish', 'want_kids': True, 
         #                      'city': 'Montreal', 'bio': 'dfavsdf', 'min_age': '29', 'max_age': '60', 
@@ -131,7 +140,7 @@ class UserFactory(Factory):
         photoDAO = PhotoDAO()
         # password by default
         user = User(self.__faker.first_name_male(), self.__faker.last_name_male(), dob_with_ms,
-                     gender='Male', email=self.__faker.email(),preferences=preferences_dict,interests=activity_dict, bio = self.__faker.text(200), photo_key=photoDAO.add_photos())
+                     gender=gender, email=self.__faker.email(),preferences=preferences_dict,interests=activity_dict, bio = self.__faker.text(200), photo_key=photoDAO.add_photos())
         
         return user
         # self.__faker.name_nonbinary
@@ -140,26 +149,27 @@ class UserFactory(Factory):
         
     # old men, young old women, young old nb
 
-    def add_to_database(self, user_list: list[User]):
-        for user in user_list:
-            user_id = AccountManager.create_account(user.basic_account_info)
-            user_id = user_id[0]
-            hobbies = {'id': user_id, 'hobbies': user.interests}
-            AccountManager.update_hobbies(hobbies)
-            
-            info = user.preferences
-            info['gender'] = user.gender
-            info['height'] = random.randint(150,250)
-            info['want_kids'] = self.__faker.boolean()
-            info['religion'] = "Taoist"
-            info['city'] = self.__faker.city()
-            info['bio'] = user.bio
-            info['date_of_birth'] = user.dob
-            
-            preferences = {'id':user_id, 'info': info}
-            AccountManager.update_preferences(preferences)
-            
-            AccountManager.modify_photos(user_id=user_id,keys=user.photo_key)
-            
-            AccountManager.complete_profile({'id': user_id})
+    def add_to_database(self, user: User):
+        
+        user_id = AccountManager.create_account(user.basic_account_info)
+        user_id = user_id[0]
+        user.user_id = user_id
+        hobbies = {'id': user_id, 'hobbies': user.interests}
+        AccountManager.update_hobbies(hobbies)
+        
+        info = user.preferences
+        info['gender'] = user.gender
+        info['height'] = random.randint(150,250)
+        info['want_kids'] = self.__faker.boolean()
+        info['religion'] = "Taoist"
+        info['city'] = self.__faker.city()
+        info['bio'] = user.bio
+        info['date_of_birth'] = user.dob
+        
+        preferences = {'id':user_id, 'info': info}
+        AccountManager.update_preferences(preferences)
+        
+        AccountManager.modify_photos(user_id=user_id,keys=user.photo_key)
+        
+        AccountManager.complete_profile({'id': user_id})
             
