@@ -5,7 +5,7 @@ import { NotificationProvider } from "@/components/NotificationContext";
 import CustomTinderCard from "@/components/CustomTinderCard";
 
 export interface IProfileData {
-  suggestion_id?: string;
+  suggestion_id: string;
   user_infos: {
     profile_info: ProfileProps;
     photo_keys: string[];

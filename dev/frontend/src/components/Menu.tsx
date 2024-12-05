@@ -9,15 +9,8 @@ import NotificationDropDown from "./NotificationDropDown";
 import { useNotifications } from "./NotificationContext";
 
 const Menu: React.FC = () => {
-  // const [isVisible, setIsVisible] = useState(false);
-
-  // const toggleDropdown = () => {
-  //   setIsVisible(!isVisible);
-  // };
-
-  const { notifications } = useNotifications(); // Use the custom hook to get notifications
-  console.log('menu notifications received are: ', notifications)
-
+  const { notifications } = useNotifications();
+  console.log("menu notifications received are: ", notifications);
 
   return (
     <div className="w-full h-50">
@@ -25,19 +18,8 @@ const Menu: React.FC = () => {
         <IconButton icon={matchingIcon} page="matching" />
         <IconButton icon={messageIcon} page="chatrooms" />
         <NotificationDropDown notifications={notifications} />
-        <ThemeSelector/>
+        <ThemeSelector />
         <IconButton icon={settingsIcon} page="settings" />
-{/* 
-        <IconButton
-          icon={logoutIcon}
-          onClick={() => {
-            sessionStorage.clear();
-            localStorage.clear();
-            //function to clear & post to BE 1st then clear
-            // post to remove token from database!
-          }}
-          page="login"
-        /> */}
       </div>
     </div>
   );

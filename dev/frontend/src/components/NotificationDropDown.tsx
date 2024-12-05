@@ -16,16 +16,17 @@ const NotificationDropDown: React.FC<NotificationDropDownProps> = ({
 
   const hasNotifications = notifications && notifications.length > 0;
 
-  // const handleClick = () => {
-  //   setIsItalic((prev) => !prev); // Toggle bold/italic state
-  // };
-
   const navigate = useNavigate();
 
   console.log("notificationDropDown:", notifications);
 
   return (
     <div className="relative pt-1">
+      {notifications?.length > 0 && (
+        <div className="bg-red-700 rounded-full text-white text-sm font-semibold w-5 h-5 flex items-center justify-center absolute top-1 right-0">
+          {notifications?.length}
+        </div>
+      )}
       <IconButton
         icon={bellIcon}
         onClick={() => setIsOpen(!isOpen)}
