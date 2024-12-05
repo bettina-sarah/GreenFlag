@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { IP_SERVER } from "@/config/constants";
 import redFlagIcon from "@/../ressources/icons/FlagButton_right.png"
+import { modalTheme, selectTheme } from "../theme-flowbite/CustomTheme";
 
 const reasons = [
   'Inappropriate msgs',
@@ -16,11 +17,11 @@ const reasons = [
 
 interface FlagProps {
   subject_id: number | undefined;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-const FlagModal: React.FC<FlagProps> = ( subject_id ) => {
-
-  const [openModal,setOpenModal] = useState<boolean>(true);
+const FlagModal: React.FC<FlagProps> = ({ subject_id, isOpen, onClose }) => {
   const [reason,setReason] = useState<string>("");
 
   const sendFlag = async (reason:string) => {
@@ -31,7 +32,7 @@ const FlagModal: React.FC<FlagProps> = ( subject_id ) => {
         reason: reason
       }
       const answer = await axios.post(IP_SERVER + "/flag", data);
-      setOpenModal(false)
+      onClose();
       if (answer) {
         return (
           <Toast>
@@ -64,10 +65,14 @@ const FlagModal: React.FC<FlagProps> = ( subject_id ) => {
 
 
   return (
-    <Modal show={openModal} onClose={() => setOpenModal(false)} className="bg-secondary-color/70">
+    <Modal show={isOpen} onClose={onClose} className="bg-secondary-color/70" theme={modalTheme} position="bottom-center" size="sm">
       <Modal.Header>Flag </Modal.Header>
       <Modal.Body>
-        <Select onChange={(event)=> setReason(event.target.value)}>
+        <Select 
+          onChange={(event)=> setReason(event.target.value)}
+          theme={selectTheme}
+          color="custom"
+        >
           {reasons.map((reason, index) => (
             <option value={reason} key={index} className="bg-primary-color text-h2-custom">
               {reason}
@@ -76,8 +81,8 @@ const FlagModal: React.FC<FlagProps> = ( subject_id ) => {
         </Select>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={() => sendFlag(reason)}>I confirm</Button>
-        <Button onClick={() => setOpenModal(false)}>I abort</Button>
+        <Button onClick={() => sendFlag(reason)} color="green">I confirm</Button>
+        <Button onClick={onClose} color="red">I abort</Button>
       </Modal.Footer>
     </Modal>
   );

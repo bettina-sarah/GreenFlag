@@ -53,6 +53,19 @@ class ChatroomManager(DischargedList.Observer):
             }
             
         return {}
+    
+    def flag_user(self,data) -> bool:
+        reporter_id = data.get('id')
+        subject_id = data.get('subject_id')
+        reason = data.get('reason')
+        params = (subject_id, reporter_id, reason)
+        response = ChatDAO.flag_user(params)
+        if response:
+            return response
+        
+        return False
+    
+    
 
     def add_chatroom_message(self,data) -> None:
         self.requests.add_item(data)
