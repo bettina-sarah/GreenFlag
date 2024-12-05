@@ -125,10 +125,6 @@ class AccountManager:
     def jsonify_response(list):
         try:
             result=list[0]
-            # {'basic_info': {'first_name': 'Emma', 'age': 19, 'city': 'Montreal', 'location': 10}, 
-            #  'relationship': ['hiking', 'yoga', 'photography', 'cooking', 'traveling'], 
-            #  'wants_kids': True, 'hobby_array': 'fun', 
-            #  'bio': 'Hello this is user 11 !!!!'}
             profile_data= {  
             "basic_info": {
             "first_name": result[1],
@@ -195,7 +191,7 @@ class AccountManager:
         return columns, values
 
     @staticmethod
-    def modify_photos(user_id,files, info=None) -> bool:
+    def modify_photos(user_id,files=None, info=None,keys=None) -> bool:
         #token = info.get('token')
         # we verify if token is valid here ... and return right user id to put in params !
         # user_id = '11'
@@ -206,8 +202,11 @@ class AccountManager:
         # except Exception as error:
         #     print(error)
         #     return False
-        photo_dao = PhotoDAO()
-        keys = photo_dao.add_photos(files)
+        if files:
+            photo_dao = PhotoDAO()
+            keys = photo_dao.add_photos(files)
+        else:
+            keys = keys
         # keys = photo_dao.add_photos(images)
         formatted_keys = '{' + ','.join(keys) + '}'
         params = (user_id,formatted_keys)
