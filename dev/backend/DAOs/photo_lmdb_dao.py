@@ -9,7 +9,7 @@ import io
 
 class PhotoDAO:
     def __init__(self) -> None:
-        self.env = lmdb.open('my_lmdb_database', map_size=100 * 1024 * 1024)  # 100 MB au debut
+        self.env = lmdb.open('my_lmdb_database', map_size=48 * 1024 * 1024)
         self.faker = Faker()
 
     def add_photos(self, photos:List[str]= None) -> list | bool:
