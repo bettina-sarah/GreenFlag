@@ -42,7 +42,8 @@ class Factory(ABC):
 class UserFactory(Factory):
     
     
-    ACTIVITY_TUPLE = ("hiking",
+    ACTIVITY_TUPLE = (
+    "hiking",
     "yoga",
     "photography",
     "cooking",
@@ -70,54 +71,62 @@ class UserFactory(Factory):
     
     AGE_TYPE = ("young","middle", "old" )
     
+    RELIGION = (
+    "Atheist",
+    "Spiritual",
+    "Christian",
+    "Muslim",
+    "Jewish",
+    "Hindu",
+    "Buddhist",
+    "Sikh",
+    "Taoist",
+    "Shinto",
+    "Confucian",
+    "Bahai",
+    "Pagan",
+    "Agnostic",
+    "Other",
+    )
+    
     
     def __init__(self, name) -> None:
         self.__faker = Faker()
         self.__name = name
     
     def generate_activities(self):
-        '''SET & DICTIONNARY WAY'''
-        # activity_set = set()
-        # while len(activity_set) < 5:
-        #     activity = random.randint(0,19)
-        #     activity_set.add(ACTIVITY_TUPLE[activity])
-        # new_dict = copy.deepcopy(ACTIVITY_DICT)
-        # for activity in activity_set:
-        #     new_dict[activity] = True
-        '''NUMPY WAY'''
         activity_list = np.full(20,False,bool)
         activity_list[0:5] = True
         np.random.shuffle(activity_list)
         zipped = zip(UserFactory.ACTIVITY_TUPLE,activity_list)
         activity_dict = dict(zipped)
         return activity_dict
-        #return np.random.choice(ACTIVITY_TUPLE, 5, replace=False)
     
     def generate_preferences(self):
         min_age = random.randint(18,59)
         max_age = random.randint(min_age,60)
 
         rel_type = random.randint(0,2)
-
         relationship_type = UserFactory.RELATIONSHIP_TYPE[rel_type]
-
-        gender = random.randint(0,2)
-        preferred_gender = UserFactory.GENDER[gender]    
+        
+        nbr_pref_gender = random.randint(1,4)
+        preferred_gender = set(random.sample(list(UserFactory.GENDER), nbr_pref_gender))   # Select a random subset of genders
         
         preferences = {'min_age': str(min_age), 'max_age': str(max_age),
                        'relationship_type': relationship_type,
-                       'preferred_genders': [preferred_gender]} # not good bc it only returnd one gender!
+                       'preferred_genders': preferred_gender}
         return preferences
 
     def factory_method(self, gender: str, age_type: str):
-        
-        # {'id': '1', 'info': {'gender': 'Male', 'height': '185', 'religion': 'Jewish', 'want_kids': True, 
-        #                      'city': 'Montreal', 'bio': 'dfavsdf', 'min_age': '29', 'max_age': '60', 
-        #                      'relationship_type': 'shortterm', 'date_of_birth': '2005-02-01T05:00:00.000Z', 
-        #                      'preferred_genders': ['Female']}}    
-        # & activties
-        # ATTENTION PREFERRED GENDERS PAS BON 
-        
+        if gender == "Male":
+            first_name = self.__faker.first_name_male()
+            last_name = self.__faker.last_name_male()
+        elif gender == "Female":
+            first_name = self.__faker.first_name_female()
+            last_name = self.__faker.last_name_female()
+        else:
+            first_name = self.__faker.first_name_nonbinary()
+            last_name = self.__faker.last_name_nonbinary()
         
         if age_type == "young":
             dob = self.__faker.date_of_birth(minimum_age=18,maximum_age=39) 
@@ -125,11 +134,9 @@ class UserFactory(Factory):
             dob = self.__faker.date_of_birth(minimum_age=40,maximum_age=59)
         elif age_type == "old":
             dob = self.__faker.date_of_birth(minimum_age=60,maximum_age=100)
-        
+            
         dob_with_time = datetime.combine(dob, datetime.min.time(), tzinfo=timezone.utc)
-        
         dob_with_ms = dob_with_time.isoformat(timespec='milliseconds')
-
         if dob_with_time.tzinfo == timezone.utc:
             dob_with_ms = dob_with_ms.replace("+00:00", "Z")
 
@@ -137,39 +144,28 @@ class UserFactory(Factory):
         preferences_dict = self.generate_preferences()
     
         photoDAO = PhotoDAO()
-        # password by default
-        user = User(self.__faker.first_name_male(), self.__faker.last_name_male(), dob_with_ms,
-                     gender=gender, email=self.__faker.email(),preferences=preferences_dict,interests=activity_dict, bio = self.__faker.text(200), photo_key=photoDAO.add_photos())
+        user = User(first_name, last_name, dob_with_ms, 
+                    gender = gender,
+                    preferences=preferences_dict, 
+                    interests=activity_dict, 
+                    height = random.randint(150,250), 
+                    email=self.__faker.email(), 
+                    religion = random.choice(UserFactory.RELIGION),
+                    want_kids=self.__faker.boolean(), 
+                    city=self.__faker.city(), 
+                    bio = self.__faker.text(200), 
+                    photo_key=photoDAO.add_photos())
         
         return user
-        # self.__faker.name_nonbinary
-        # self.__faker.name_male
-        # make women, non binary, males that have preferences also: 
-        
-    # old men, young old women, young old nb
 
     def add_to_database(self, user: User):
-        
         user_id = AccountManager.create_account(user.basic_account_info)
         if user_id:
             user_id = user_id[0]
             user.user_id = user_id
-            hobbies = {'id': user_id, 'hobbies': user.interests}
-            AccountManager.update_hobbies(hobbies)
             
-            info = user.preferences
-            info['gender'] = user.gender
-            info['height'] = random.randint(150,250)
-            info['want_kids'] = self.__faker.boolean()
-            info['religion'] = "Taoist"
-            info['city'] = self.__faker.city()
-            info['bio'] = user.bio
-            info['date_of_birth'] = user.dob
-            
-            preferences = {'id':user_id, 'info': info}
-            AccountManager.update_preferences(preferences)
-            
+            AccountManager.update_hobbies({'id': user_id, 'hobbies': user.interests})
+            AccountManager.update_preferences({'id':user_id, 'info': user.info})
             AccountManager.modify_photos(user_id=user_id,keys=user.photo_key)
-            
             AccountManager.complete_profile({'id': user_id})
             

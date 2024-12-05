@@ -181,12 +181,11 @@ def update_notification() -> bool:
     print('response db is: ', response)
     return jsonify(response)
 
-from Simulation.user_factory import UserFactory
+from Simulation.test_simulator import TestSimulator
 
 if __name__ == '__main__':
-    user_factory = UserFactory("men")
-    user = user_factory.factory_method_men(age_type="middle")
-    user_factory.add_to_database([user])
+    sim = TestSimulator()
+    sim.create_random_users()
     pass
     # socketio.run(app, debug=True, host="0.0.0.0", port=5000)
     #app.run(debug=True, host="0.0.0.0", port=5000)
