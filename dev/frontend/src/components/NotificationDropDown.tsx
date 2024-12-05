@@ -16,10 +16,6 @@ const NotificationDropDown: React.FC<NotificationDropDownProps> = ({
 
   const hasNotifications = notifications && notifications.length > 0;
 
-  // const handleClick = () => {
-  //   setIsItalic((prev) => !prev); // Toggle bold/italic state
-  // };
-
   const navigate = useNavigate();
 
   console.log("notificationDropDown:", notifications);
