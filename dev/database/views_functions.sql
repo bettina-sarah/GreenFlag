@@ -235,6 +235,20 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION unmatch_on_flag()
+RETURNS TRIGGER AS $$
+BEGIN
+  PERFORM unmatch(NEW.reporter_id, NEW.member_id);
+
+  RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE TRIGGER trigger_unmatch_on_flag
+AFTER INSERT ON flagged
+FOR EACH ROW
+EXECUTE FUNCTION unmatch_on_flag();
+
 
 -- NOTIFICATION TRIGGERS & FUNCTIONS
 
@@ -295,18 +309,6 @@ CREATE TRIGGER trigger_notify_on_match
 AFTER INSERT ON member_match
 FOR EACH ROW
 EXECUTE FUNCTION notify_on_match();
-
-
-
-
-
-
-
-
-
-
-
-
 
 -- INTRICATE FUNCTION BY CHATGEPETO
 CREATE OR REPLACE FUNCTION get_chatrooms(user_id INTEGER)

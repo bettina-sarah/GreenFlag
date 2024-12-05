@@ -150,6 +150,12 @@ def fetch_chatroom_subject() -> list:  # send JSON jsonify ...
     print(response)
     return jsonify(response)
 
+@app.route('/flag',methods=['POST'])
+def flag_user() -> bool:
+    response = chatroomManager.flag_user(request.json)
+    print(response)
+    return jsonify(response)
+
 # -------- MATCHING ------------
 
 @app.route('/suggestions', methods=['POST'])
@@ -181,11 +187,6 @@ def update_notification() -> bool:
     print('response db is: ', response)
     return jsonify(response)
 
-from Simulation.test_simulator import TestSimulator
-
 if __name__ == '__main__':
-    # sim = TestSimulator()
-    # sim.create_random_users()
-    # pass
     socketio.run(app, debug=True, host="0.0.0.0", port=5000)
     #app.run(debug=True, host="0.0.0.0", port=5000)

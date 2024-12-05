@@ -40,7 +40,6 @@ export const datePickerTheme: CustomFlowbiteTheme["datepicker"] = {
   },
   popup:{
     root:{
-      
       inner: "inline-block rounded-lg bg-custom-bg p-4 shadow-lg dark:bg-gray-700"
     },
     header:{
@@ -92,4 +91,17 @@ export const datePickerTheme: CustomFlowbiteTheme["datepicker"] = {
     }
   }
   
+}
+
+export const modalTheme: CustomFlowbiteTheme["modal"] = {
+  content:{
+    inner: "relative flex max-h-[90dvh] flex-col rounded-lg bg-primary-color shadow dark:bg-gray-700",
+  },
+  header:{
+    base: "flex items-start justify-between rounded-t border-b border-complementary-color p-5 dark:border-gray-600",
+    title: "text-xl font-medium text-base-text",
+  },
+  footer:{
+    base: "flex items-center space-x-2 rounded-b border-complementary-color p-6 dark:border-gray-600"
+  }
 }

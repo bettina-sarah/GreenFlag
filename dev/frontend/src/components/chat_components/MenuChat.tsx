@@ -29,6 +29,7 @@ const MenuChat: React.FC = () => {
     });
 
     const [avatarPhoto,setAvatarPhoto] = useState<IPhotoData>()
+    const [isFlagModalOpen, setIsFlagModalOpen] = useState<boolean>(false)
 
     useEffect(() => {
         if (subjectData && !subjectLoading && !subjectError) {
@@ -54,9 +55,13 @@ const MenuChat: React.FC = () => {
                     <Avatar key={avatarPhoto?.key} img={avatarPhoto?.path || undefined} rounded/>
                     <h1 className='pl-2 text-base-text text-2xl'>{subjectData?.subject_firstname}</h1>
                 </div>
-                <IconButton icon={flagButton}  onClick={() =>(console.log('future feature'))}/>
-            </div> 
-            <FlagModal subject_id={subjectData?.subject_id}/>
+                <IconButton icon={flagButton}  onClick={() =>setIsFlagModalOpen(true)}/>
+            </div>
+            <FlagModal 
+                subject_id={subjectData?.subject_id}
+                isOpen={isFlagModalOpen}
+                onClose={() => setIsFlagModalOpen(false)}
+            />
         </div>
     );
 
