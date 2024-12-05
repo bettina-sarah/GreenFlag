@@ -1,14 +1,18 @@
 from enum import Enum
 
 class User:
-    def __init__(self,first_name:str, last_name:str, dob:int, gender:str, email:str,
-                 preferences:dict,interests:dict, bio: str, photo_key: str, password:str = 'password123') -> None: # set[str]
+    def __init__(self,first_name:str, last_name:str, dob:int, gender:str, height:int, email:str, religion:str, want_kids:bool,
+                 city:str,preferences:dict,interests:dict, bio: str, photo_key: str, password:str = 'password123') -> None:
         self.first_name = first_name
         self.last_name = last_name
         self.dob = dob
         self.gender = gender
+        self.height = height
         self.email = email
+        self.religion = religion
         self.preferences = preferences
+        self.want_kids = want_kids
+        self.city = city
         self.interests = interests
         self.bio = bio
         self.photo_key = photo_key
@@ -52,6 +56,14 @@ class User:
     @gender.setter
     def gender(self, gender:str) -> None:
         self.__gender = gender
+        
+    @property
+    def height(self) -> int:
+        return self.__height
+    
+    @height.setter
+    def height(self, value:int) -> None:
+        self.__height = value
 
     @property
     def email(self) -> str:
@@ -60,7 +72,30 @@ class User:
     @email.setter
     def email(self, email:str) -> None:
         self.__email = email
+    
+    @property
+    def religion(self) -> str:
+        return self.__religion
+    
+    @religion.setter
+    def religion(self,value) -> None:
+        self.__religion = value
         
+    @property
+    def want_kids(self) -> bool:
+        return self.__wants_kids
+    
+    @want_kids.setter
+    def want_kids(self,value) -> None:
+        self.__wants_kids = value
+    
+    @property
+    def city(self) -> str:
+        return self.__city
+    
+    @city.setter
+    def city(self,value) -> None:
+        self.__city = value
     
     @property
     def preferences(self) -> dict:
@@ -101,7 +136,7 @@ class User:
     @password.setter
     def password(self, password:str) -> None:
         self.__password = password
-      
+    
     @property
     def user_id(self) -> int:
         return self.__user_id  
@@ -112,8 +147,20 @@ class User:
     
     
     @property
-    def basic_account_info(self) -> None:
+    def basic_account_info(self) -> dict:
         return {'firstname': self.first_name,
                 'lastname': self.last_name,
                 'email': self.email,
                 'password': self.password}
+    
+    @property
+    def info(self) -> dict:
+        info = self.preferences
+        info['gender'] = self.gender
+        info['height'] = self.height
+        info['want_kids'] = self.want_kids
+        info['religion'] = self.religion
+        info['city'] = self.city
+        info['bio'] = self.bio
+        info['date_of_birth'] = self.dob
+        return info
