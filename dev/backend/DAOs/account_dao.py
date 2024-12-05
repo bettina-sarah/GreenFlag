@@ -16,7 +16,7 @@ class AccountDAO(DAO):
 
 
     @staticmethod
-    def create_account(params:tuple) -> bool:
+    def create_account(params:tuple) -> int:
             query = 'INSERT INTO member (first_name, last_name, email, member_password) VALUES (%s, %s, %s, %s) RETURNING id;'
             response = AccountDAO._prepare_statement("insert", query, params)
             # si courriel existe deja, DB retorune erreur cle existe - faut gerer - envoyer au frontend 'account exists' 
