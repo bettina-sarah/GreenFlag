@@ -48,8 +48,8 @@ const RegisterForm = () => {
     });
 
     return (
-        <form onSubmit={onSubmit} className="flex flex-col justify-between p-4 h-72">
-            <div className="flex items-center w-full max-w-sm border-b-2 border-custom-bg">
+        <form onSubmit={onSubmit} className="flex flex-col justify-between items-center p-4 h-80">
+            <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
                 <img src={PersonIcon} className="size-7"/>
                 <input className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
                 placeholder="Firstname"
@@ -58,7 +58,7 @@ const RegisterForm = () => {
                 {errors.firstname?.type === "required" && <span className="text-red-500 text-xs">This is required</span>}
                 {errors.firstname?.type === "maxLength" && <span className="text-red-500 text-xs">Max length exceeded</span>}
 
-            <div className="flex items-center w-full max-w-sm border-b-2 border-custom-bg">
+            <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
                 <img src={PersonIcon} className="size-7"/>
                 <input  className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
                 placeholder="LastName"
@@ -67,7 +67,7 @@ const RegisterForm = () => {
                 {errors.lastname?.type === "required" && <span className="text-red-500 text-xs">This is required</span>}
                 {errors.lastname?.type === "maxLength" && <span className="text-red-500 text-xs">Max length exceeded</span>}
 
-            <div className="flex items-center w-full max-w-sm border-b-2 border-custom-bg">
+            <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
                 <img src={EmailIcon} className="size-7"/>
                 <input className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
                 placeholder="Email"
@@ -76,7 +76,7 @@ const RegisterForm = () => {
                 {errors.email?.type === "required" && <span className="text-red-500 text-xs">This is required</span>}
                 {errors.email?.type === "pattern" && <span className="text-red-500 text-xs">You need to provide a valid email</span>}
             
-            <div className="flex items-center w-full max-w-sm border-b-2 border-custom-bg">
+            <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
                 <img src={LockIcon} className="size-7"/>
                 <input className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
                 placeholder="Password"
@@ -86,7 +86,7 @@ const RegisterForm = () => {
                 {errors.password?.type === "required" && <span className="text-red-500 text-xs">This is required</span>}
                 {errors.password?.type === "maxLength" && <span className="text-red-500 text-xs">Max length exceeded</span>}
             
-            <div className="flex items-center w-full max-w-sm border-b-2 border-custom-bg">
+            <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
                 <img src={LockIcon} className="size-7"/>
                 <input className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
                 placeholder="Password confirmation"
@@ -96,7 +96,7 @@ const RegisterForm = () => {
                 {errors.password?.type === "required" && <span className="text-red-500 text-xs">This is required</span>}
                 {errors.cpassword?.message && <span className="text-red-500 text-xs">{errors.cpassword?.message}</span>}
 
-            <button className="bg-custom-bg text-primary-color max-w-sm py-2 rounded-md text-lg font-inter font-semibold" type="submit">
+            <button className="bg-custom-bg text-primary-color w-full max-w-sm py-2 rounded-md text-lg font-inter font-semibold" type="submit">
                 Register
             </button>
         </form>
