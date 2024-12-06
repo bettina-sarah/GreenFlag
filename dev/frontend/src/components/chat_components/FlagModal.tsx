@@ -4,6 +4,7 @@ import axios from "axios";
 import { IP_SERVER } from "@/config/constants";
 import redFlagIcon from "@/../ressources/icons/FlagButton_right.png"
 import { modalTheme, selectTheme } from "../theme-flowbite/CustomTheme";
+import {toast} from "react-toastify";
 
 const reasons = [
   'Inappropriate msgs',
@@ -26,39 +27,83 @@ const FlagModal: React.FC<FlagProps> = ({ subject_id, isOpen, onClose }) => {
 
   const sendFlag = async (reason:string) => {
     if (reason !== ""){
+      const id = sessionStorage.getItem("id");
+      
+      if(!id){
+        toast.error("Unable to find a session id")
+        return;
+      }
+
+      if(reason === ""){
+        toast.warning("Reason cannot be empty.");
+        return;
+      }
+      
       const data = {
-        id: sessionStorage.getItem("id"),
+        id: id,
         subject_id: subject_id,
         reason: reason
       }
-      const answer = await axios.post(IP_SERVER + "/flag", data);
-      onClose();
-      if (answer) {
-        return (
-          <Toast>
-            <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-color text-cyan-500 dark:bg-cyan-800 dark:text-cyan-200">
-              <img src={redFlagIcon} alt="" />
-            </div>
-            <div className="ml-3 text-sm font-normal">
-              Your Red Flag have been sent
-            </div>
-            <Toast.Toggle />
-          </Toast>
-        )
+      
+
+      try{
+        const response = await axios.post(IP_SERVER + "/flag", data);
+        console.log("answer from flag", response)
+        if (response.data === true)
+          toast.success("You red flag has been sent!");
+        else if (response.data === "FLAGGED TOO MANY TIME")
+          toast.error("You have been flagged too many times to flag another user.");
+        else
+          toast.error("An error occured. Please try again.");
+      } catch(error){
+        console.error("Error sending flag: ", error);
+        toast.error("An unexpected error occured.");
       }
-      else {
-        return(
-          <Toast>
-            <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-color text-cyan-500 dark:bg-cyan-800 dark:text-cyan-200">
-              <img src={redFlagIcon} alt="" />
-            </div>
-            <div className="ml-3 text-sm font-normal">
-              Sorry, an error occured. Please try a new time.
-            </div>
-            <Toast.Toggle />
-          </Toast>
-        )
-      }
+      // onClose();
+
+      // const answer = await axios.post(IP_SERVER + "/flag", data);
+      
+      // if (answer.data == true) {
+        
+      //   return (
+      //     <Toast>
+      //       <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-color text-cyan-500 dark:bg-cyan-800 dark:text-cyan-200">
+      //         <img src={redFlagIcon} alt="" />
+      //       </div>
+      //       <div className="ml-3 text-sm font-normal">
+      //         Your Red Flag have been sent
+      //       </div>
+      //       <Toast.Toggle />
+      //     </Toast>
+      //   )
+      // }
+      // else if (answer.data == 'FLAGGED TOO MANY TIME'){
+      //   return(
+      //     <Toast>
+      //       <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-color text-cyan-500 dark:bg-cyan-800 dark:text-cyan-200">
+      //         <img src={redFlagIcon} alt="" />
+      //       </div>
+      //       <div className="ml-3 text-sm font-normal">
+      //         Sorry, you've been flagged too many time to report another user.
+      //       </div>
+      //       <Toast.Toggle />
+      //     </Toast>
+      //   )
+      // }
+      // else {
+      //   return(
+      //     <Toast>
+      //       <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-color text-cyan-500 dark:bg-cyan-800 dark:text-cyan-200">
+      //         <img src={redFlagIcon} alt="" />
+      //       </div>
+      //       <div className="ml-3 text-sm font-normal">
+      //         Sorry, an error occured. Please try again.
+      //       </div>
+      //       <Toast.Toggle />
+      //     </Toast>
+      //   )
+      // }
+      // onClose();
     }
   }
 

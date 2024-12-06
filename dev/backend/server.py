@@ -153,7 +153,7 @@ def fetch_chatroom_subject() -> list:  # send JSON jsonify ...
 @app.route('/flag',methods=['POST'])
 def flag_user() -> bool:
     response = chatroomManager.flag_user(request.json)
-    print(response)
+    print("response from flag backend:",response)
     return jsonify(response)
 
 # -------- MATCHING ------------

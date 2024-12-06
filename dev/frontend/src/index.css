@@ -9,7 +9,6 @@
 @tailwind utilities;
 
 
-
 .theme-emerald {
   --bg-color: 200, 255, 237; /* Muted mint green */
   --text-color: 47, 72, 88; /* Dark green */
