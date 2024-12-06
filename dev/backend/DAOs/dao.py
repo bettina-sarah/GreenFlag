@@ -85,6 +85,9 @@ class DAO():
             return response
         except Exception as e:
             print(e)
+            error = str(e).split("\n")
+            if str(error[0]) == "FLAGGED TOO MANY TIME":
+                return str(error[0])
             return False
 
     # this can be in DAO directly 
@@ -99,7 +102,7 @@ class DAO():
             connection.commit() # possibly necessary for an insert request
             # connection.close()
             return response
-        except Exception as error:  
+        except Exception as error:
             print(error)
         return False
 

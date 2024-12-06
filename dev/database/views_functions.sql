@@ -235,9 +235,22 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+DROP TRIGGER IF EXISTS trigger_unmatch_on_flag ON flagged;
+DROP FUNCTION IF EXISTS unmatch_on_flag;
+
 CREATE OR REPLACE FUNCTION unmatch_on_flag()
 RETURNS TRIGGER AS $$
+DECLARE
+  reporter_flagged_count INTEGER;
 BEGIN
+  SELECT COUNT(*) INTO reporter_flagged_count
+  FROM flagged
+  WHERE member_id = NEW.reporter_id;
+
+  IF reporter_flagged_count >= 3 THEN
+    RAISE EXCEPTION 'FLAGGED TOO MANY TIME';
+  END IF;
+
   PERFORM unmatch(NEW.reporter_id, NEW.member_id);
 
   RETURN NEW;
@@ -261,14 +274,14 @@ BEGIN
   INSERT INTO alert_notification (member_id, subject_id, msg, chatroom_name)
   VALUES (
     (SELECT CASE WHEN NEW.sender_id = m1.member_id_1 THEN m1.member_id_2 ELSE m1.member_id_1 END
-     FROM member_match AS mm
-     JOIN suggestion AS m1 ON mm.suggestion_id = m1.id
-     WHERE mm.id = NEW.match_id),
+    FROM member_match AS mm
+    JOIN suggestion AS m1 ON mm.suggestion_id = m1.id
+    WHERE mm.id = NEW.match_id),
     NEW.sender_id,
     'You have a new message from ' || (SELECT first_name FROM member WHERE id = NEW.sender_id),
     (SELECT mm.chatroom_name
-     FROM member_match AS mm
-     WHERE mm.id = NEW.match_id)
+    FROM member_match AS mm
+    WHERE mm.id = NEW.match_id)
   );
   RETURN NEW;
 END;

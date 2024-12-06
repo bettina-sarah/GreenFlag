@@ -13,14 +13,13 @@ import ProfilePage from "./pages/ProfilePage";
 
 import PrivateChatroomPage from "./pages/PrivateChatroomPage";
 import AuthGuard from "./components/AuthGuard";
+import { ToastContainer } from "react-toastify";
 
 const App: React.FC = () => {
   return (
     <>
       <BrowserRouter>
-        {/* <header>
-          <Link to="/">Green Flag</Link>
-        </header> */}
+        <ToastContainer/>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
