@@ -146,6 +146,13 @@ BEGIN
         FROM member
         WHERE id = user_id
       )
+      -- AND ST_Distance( -- calculate distance between last locations of current user and user filtered
+      --   ST_SetSRID(ST_MakePoint(m.last_long,m.last_lat), 4326)::geography,
+      --   ST_SetSRID(ST_MakePoint(
+      --     (SELECT last_long FROM member WHERE id = user_id),
+      --     (SELECT last_lat FROM member WHERE id = user_id)
+      --     ), 4326)::geography
+      -- ) <= 10000 -- Distance of 10km in meters
   )
   SELECT m.id AS member_id, ARRAY_AGG(ma.activity_id) AS aggregated_id_activities
 	FROM member_activities ma
