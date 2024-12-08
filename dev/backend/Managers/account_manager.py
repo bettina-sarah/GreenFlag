@@ -49,6 +49,18 @@ class AccountManager:
     
 
     @staticmethod
+    def update_localisation(data) -> bool:
+        id = data.get('id')
+        lat = data.get('lat')
+        long = data.get('long')
+        if id != None:
+            params = (lat,long,int(id))
+            response = AccountDAO.update_localisation(params)
+            return response
+        else:
+            return False
+
+    @staticmethod
     def save_token(id, token) -> bool:
         params = (token, id)
         try:

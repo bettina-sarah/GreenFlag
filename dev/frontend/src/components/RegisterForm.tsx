@@ -1,12 +1,10 @@
 import { IP_SERVER } from "@/config/constants";
 import { useNavigate } from 'react-router-dom';
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import axios from 'axios';
 import EmailIcon from "@/../ressources/icons/email.png";
 import LockIcon from "@/../ressources/icons/lock.png";
 import PersonIcon from "@/../ressources/icons/person.png";
-import { useEffect } from "react";
-import { error } from "console";
 
 const RegisterForm = () => {
     const navigate = useNavigate(); //hook

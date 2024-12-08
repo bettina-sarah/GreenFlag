@@ -49,6 +49,11 @@ def login() -> bool:
         return jsonify(response)
     return jsonify(False)
 
+@app.route('/localisation', methods=['POST'])
+def update_localisation() -> bool:
+    response = AccountManager.update_localisation(request.json)
+    return jsonify(True) if response else jsonify(False)
+
 @app.route('/complete-profile', methods=['POST'])
 def complete_profile() -> bool:
     response = AccountManager.complete_profile(request.json)

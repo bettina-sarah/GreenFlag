@@ -121,3 +121,9 @@ class AccountDAO(DAO):
         query = 'SELECT update_hobbies(%s, %s);'
         response = AccountDAO._prepare_statement("select", query, params)
         return response
+    
+    @staticmethod
+    def update_localisation(params:tuple) -> bool:
+        query = 'UPDATE member SET last_lat = %s, last_long = %s WHERE id = %s'
+        response = AccountDAO._prepare_statement('update',query,params)
+        return response
