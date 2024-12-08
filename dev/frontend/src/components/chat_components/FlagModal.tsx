@@ -1,8 +1,7 @@
-import {Modal,Select,Button,Toast} from "flowbite-react";
+import {Modal,Select,Button} from "flowbite-react";
 import { useState } from "react";
 import axios from "axios";
 import { IP_SERVER } from "@/config/constants";
-import redFlagIcon from "@/../ressources/icons/FlagButton_right.png"
 import { modalTheme, selectTheme } from "../theme-flowbite/CustomTheme";
 import {toast} from "react-toastify";
 
@@ -59,51 +58,7 @@ const FlagModal: React.FC<FlagProps> = ({ subject_id, isOpen, onClose }) => {
         console.error("Error sending flag: ", error);
         toast.error("An unexpected error occured.");
       }
-      // onClose();
-
-      // const answer = await axios.post(IP_SERVER + "/flag", data);
-      
-      // if (answer.data == true) {
-        
-      //   return (
-      //     <Toast>
-      //       <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-color text-cyan-500 dark:bg-cyan-800 dark:text-cyan-200">
-      //         <img src={redFlagIcon} alt="" />
-      //       </div>
-      //       <div className="ml-3 text-sm font-normal">
-      //         Your Red Flag have been sent
-      //       </div>
-      //       <Toast.Toggle />
-      //     </Toast>
-      //   )
-      // }
-      // else if (answer.data == 'FLAGGED TOO MANY TIME'){
-      //   return(
-      //     <Toast>
-      //       <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-color text-cyan-500 dark:bg-cyan-800 dark:text-cyan-200">
-      //         <img src={redFlagIcon} alt="" />
-      //       </div>
-      //       <div className="ml-3 text-sm font-normal">
-      //         Sorry, you've been flagged too many time to report another user.
-      //       </div>
-      //       <Toast.Toggle />
-      //     </Toast>
-      //   )
-      // }
-      // else {
-      //   return(
-      //     <Toast>
-      //       <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-color text-cyan-500 dark:bg-cyan-800 dark:text-cyan-200">
-      //         <img src={redFlagIcon} alt="" />
-      //       </div>
-      //       <div className="ml-3 text-sm font-normal">
-      //         Sorry, an error occured. Please try again.
-      //       </div>
-      //       <Toast.Toggle />
-      //     </Toast>
-      //   )
-      // }
-      // onClose();
+      onClose();
     }
   }
 

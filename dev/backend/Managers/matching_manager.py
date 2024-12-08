@@ -85,10 +85,8 @@ class MatchingManager():
     
     @staticmethod
     def find_suggestions(user_id:int, members:int) -> list[int]:
-        user_activities = np.zeros((1, NUMBER_ACTIVITIES))
-        index_counter = 0
-        members_index = []
-        data = np.zeros((len(members), NUMBER_ACTIVITIES))
+        user_activities = np.zeros((1, NUMBER_ACTIVITIES + 1))
+        data = np.zeros((len(members), NUMBER_ACTIVITIES + 1))
         
         if len(members) <= 8:
             prospects_ids = []
@@ -101,14 +99,30 @@ class MatchingManager():
         user_data = MatchingDAO.get_user_activities(user_id)
         user_data[:] = [x - 1 for x in user_data[:]]
         user_activities[0,user_data[0]] += 1
+        user_flag_count = MatchingDAO.get_flag_count(user_id)
+        user_activities[0,-1] = user_flag_count
         
+        index_counter = 0
+        members_index = []
+        max_flag_count = user_flag_count
         for member in members:
             if member[0] != user_id:
                 member_id, member_activities = member
                 members_index.append(member_id)
+                
                 member_activities[:] = [x-1 for x in member_activities]
                 data[index_counter,member_activities] += 1
+                
+                flag_count = MatchingDAO.get_flag_count(member_id)
+                max_flag_count = max(max_flag_count,flag_count)
+                data[index_counter, -1] = flag_count
+                
                 index_counter += 1
+        
+        if max_flag_count > 0:
+            data[:,-1] = data[:,-1] / max_flag_count
+            user_activities[0,-1] /= max_flag_count
+        
         
         if np.sum(data) > 0:
             Algo = AlgoContext(MeanShift(0.3,100,0.001))

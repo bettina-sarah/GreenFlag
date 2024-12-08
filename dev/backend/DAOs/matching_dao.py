@@ -94,3 +94,12 @@ class MatchingDAO(DAO):
         if response:
             return response
         return False
+    
+    @staticmethod
+    def get_flag_count(user_id:int) -> int:
+        query = 'SELECT COUNT(*) FROM flagged WHERE member_id = %s'
+        params = (user_id,)
+        response = MatchingDAO._prepare_statement('select',query,params)
+        if response:
+            return response[0][0]
+        return 0
