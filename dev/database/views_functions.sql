@@ -154,7 +154,7 @@ BEGIN
         FROM member
         WHERE id = user_id
       )
-      AND (
+      AND ( -- !!! comment out this last AND at school if PostGIS not installed else error
         m.last_lat IS NULL OR
         m.last_long IS NULL OR 
         user_last_long IS NULL OR
