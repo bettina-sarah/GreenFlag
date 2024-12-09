@@ -2,7 +2,7 @@ from enum import Enum
 
 class User:
     def __init__(self,first_name:str, last_name:str, dob:int, gender:str, height:int, email:str, religion:str, want_kids:bool,
-                 city:str,preferences:dict,interests:dict, bio: str, photo_key: str, password:str = 'password123') -> None:
+                 city:str,latitude: float, longitude: float, preferences:dict,interests:dict, bio: str, photo_key: str, password:str = 'password123') -> None:
         self.first_name = first_name
         self.last_name = last_name
         self.dob = dob
@@ -13,6 +13,8 @@ class User:
         self.preferences = preferences
         self.want_kids = want_kids
         self.city = city
+        self.latitude = latitude
+        self.longitude = longitude
         self.interests = interests
         self.bio = bio
         self.photo_key = photo_key
@@ -96,6 +98,22 @@ class User:
     @city.setter
     def city(self,value) -> None:
         self.__city = value
+        
+    @property
+    def latitude(self) -> str:
+        return self.__latitude
+    
+    @latitude.setter
+    def latitude(self,value) -> None:
+        self.__latitude = value
+
+    @property
+    def longitude(self) -> str:
+        return self.__longitude
+    
+    @longitude.setter
+    def longitude(self,value) -> None:
+        self.__longitude = value
     
     @property
     def preferences(self) -> dict:
