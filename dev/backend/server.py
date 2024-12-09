@@ -61,6 +61,11 @@ def complete_profile() -> bool:
     # make sure database gets it !!!!
     return jsonify(response) if response else jsonify(False)
 
+@app.route('/confirm-email', methods=['POST'])
+def complete_profile() -> bool:
+    response = AccountManager.confirm_email(request.json)
+    return jsonify(response) if response else jsonify(False)
+
 @app.route('/get-profile', methods=['POST'])
 def get_profile() -> bool:
     # if authentication_middleware.check_session_validity():
