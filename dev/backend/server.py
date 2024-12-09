@@ -4,9 +4,10 @@ os.environ['GEVENT_SUPPORT'] = 'True'
 from gevent import monkey
 monkey.patch_all()
 
-from flask import Flask, jsonify, request, make_response, send_file
+from flask import Flask, jsonify, request, make_response, send_file, url_for
 from flask_cors import CORS
 from flask_socketio import SocketIO
+from flask_mail import Mail, Message
 from Managers.chatroom_socket_manager import ChatroomSocketManager
 from Managers.chatroom_manager import ChatroomManager
 from Managers.account_manager import AccountManager
@@ -15,6 +16,10 @@ from Managers.notification_manager import NotificationManager
 from authentication.authentication_middleware import AuthenticationMiddleware
 
 app = Flask(__name__)
+
+app.config.from_pyfile('config.cfg')
+mail = Mail(app)
+
 cors = CORS(app, resources={r"/*": {"origins": "*"}},
             methods=["GET", "POST", "OPTIONS"],
             allow_headers=["Content-Type", "Authorization", "X-Requested-With", "Access-Control-Allow-Origin"])
@@ -36,6 +41,18 @@ def test_connection():
 @app.route('/create-account', methods=['POST'])
 def create_account() -> bool:
     response = AccountManager.create_account(request.json)
+    data = request.json
+    email = data.get('email')
+    if response:
+        token = None # needs a generate_email_token function
+        confirm_url = url_for('confirm_email',token=token, _external=True)
+        msg = Message(
+            subject='Email Confirmation',
+            sender=app.config['MAIL_USERNAME'],
+            recipients=[email],
+            body=f'Please confirm your email by clicking on the link: {confirm_url}'
+        )
+        mail.send(msg)
     return jsonify(True) if response else jsonify(False)
 
 @app.route('/login', methods=['POST'])
