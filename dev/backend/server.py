@@ -43,7 +43,7 @@ def create_account() -> bool:
     response = AccountManager.create_account(request.json)
     data = request.json
     email = data.get('email')
-    if response:
+    if response: # https://www.youtube.com/watch?v=vF9n248M1yk&t=287s
         token = None # needs a generate_email_token function
         confirm_url = url_for('confirm_email',token=token, _external=True)
         msg = Message(
