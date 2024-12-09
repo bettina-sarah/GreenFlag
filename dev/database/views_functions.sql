@@ -1,3 +1,4 @@
+CREATE EXTENSION IF NOT EXISTS postgis;
 DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
 DROP VIEW IF EXISTS chatroom_messages_view;
@@ -121,7 +122,14 @@ CREATE OR REPLACE FUNCTION find_eligible_members_activities
 (user_id INTEGER)
 RETURNS TABLE(member_id INT, aggregated_id_activities INT[])
 AS $$
+DECLARE
+  user_last_lat FLOAT;
+  user_last_long FLOAT;
 BEGIN
+  SELECT last_lat, last_long INTO user_last_lat, user_last_long
+  FROM member
+  WHERE id = user_id;
+
 	RETURN QUERY
   WITH eligible_members AS (
     SELECT m.id
@@ -146,13 +154,18 @@ BEGIN
         FROM member
         WHERE id = user_id
       )
-      -- AND ST_Distance( -- calculate distance between last locations of current user and user filtered
-      --   ST_SetSRID(ST_MakePoint(m.last_long,m.last_lat), 4326)::geography,
-      --   ST_SetSRID(ST_MakePoint(
-      --     (SELECT last_long FROM member WHERE id = user_id),
-      --     (SELECT last_lat FROM member WHERE id = user_id)
-      --     ), 4326)::geography
-      -- ) <= 10000 -- Distance of 10km in meters
+      AND (
+        m.last_lat IS NULL OR
+        m.last_long IS NULL OR 
+        user_last_long IS NULL OR
+        user_last_lat IS NULL OR
+        (
+          ST_Distance( -- calculate distance between last locations of current user and user filtered
+            ST_SetSRID(ST_MakePoint(m.last_long,m.last_lat), 4326)::geography,
+            ST_SetSRID(ST_MakePoint(user_last_long,user_last_lat), 4326)::geography
+          ) <= 10000 -- Distance of 10km in meters
+        )
+      )
   )
   SELECT m.id AS member_id, ARRAY_AGG(ma.activity_id) AS aggregated_id_activities
 	FROM member_activities ma
