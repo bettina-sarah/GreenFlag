@@ -29,6 +29,13 @@ class AccountDAO(DAO):
         return response
     
     @staticmethod
+    def confirm_email(params:tuple) -> bool:
+        query = 'UPDATE member SET email_confirmed = true WHERE id = %s;'
+        response = AccountDAO._prepare_statement("update", query, params)
+        return response
+    
+    
+    @staticmethod
     def save_token(params:tuple) -> bool:
         query = 'UPDATE member SET token = %s WHERE id = %s;'
         response = AccountDAO._prepare_statement("update", query, params)

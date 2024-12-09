@@ -91,6 +91,19 @@ class AccountManager:
             return False
 
     @staticmethod
+    def confirm_email(data) -> bool:
+        id = data.get('id')
+        params = (id,)
+        try:
+            response = AccountDAO.confirm_email(params)
+            return response
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False
+        
+
+    @staticmethod
     def delete_account(data) -> bool:
         email = data.get('email')
         password = data.get('password')
