@@ -9,14 +9,6 @@ from Managers.account_manager import AccountManager
 from datetime import datetime, timezone, timedelta
 from enum import Enum
 
-
-
-
-
-# ACTIVITY_DICT = {activity: False for activity in ACTIVITY_TUPLE}
-
-
-
 class Factory(ABC):    
     def __init__(self) -> None:
         pass
@@ -168,4 +160,5 @@ class UserFactory(Factory):
             AccountManager.update_preferences({'id':user_id, 'info': user.info})
             AccountManager.modify_photos(user_id=user_id,keys=user.photo_key)
             AccountManager.complete_profile({'id': user_id})
+            AccountManager.confirm_email({'id': user_id})
             
