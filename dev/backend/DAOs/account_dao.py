@@ -33,6 +33,13 @@ class AccountDAO(DAO):
         query = 'UPDATE member SET email_confirmed = true WHERE id = %s;'
         response = AccountDAO._prepare_statement("update", query, params)
         return response
+
+    @staticmethod
+    def confirm_fake(params:tuple) -> bool:
+        query = 'UPDATE member SET fake_member = true WHERE id = %s;'
+        response = AccountDAO._prepare_statement("update", query, params)
+        return response
+    
     
     
     @staticmethod
