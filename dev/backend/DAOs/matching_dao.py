@@ -26,7 +26,7 @@ class MatchingDAO(DAO):
     
     @staticmethod
     def get_suggestions(user_id:int) -> List[dict]:
-        query = "SELECT id, member_id_2 FROM suggestion WHERE member_id_1 = %s and situation = 'pending' LIMIT 5;" # LIMIT 20
+        query = "SELECT id, member_id_2 FROM suggestion WHERE member_id_1 = %s and situation = 'pending' LIMIT 10;" # LIMIT 20
         params = (user_id,)
         response = MatchingDAO._prepare_statement('select',query,params)
         if response:

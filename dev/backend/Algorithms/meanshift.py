@@ -78,7 +78,7 @@ class MeanShift(AlgoStrategy):
         # get the clusters center points
         clusters_centers = np.unique(np.round(new, decimals=3),axis=0)
         
-        print(clusters_centers)
+        # print(clusters_centers)
         
         # clusters_centers = np.zeros((1, number_of_columns))
         # for center in np.unique(np.round(new, decimals=1), axis=0):

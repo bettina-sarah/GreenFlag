@@ -100,37 +100,39 @@ const LoginForm = () => {
   return (
     <form onSubmit={onSubmit} className="flex flex-col justify-between items-center w-full h-44">
       {loginError && (
-        <div className="text-red-500 text-md mb-2">{loginError}</div>
+        <div className="mb-4 rounded-md text-red-800 bg-red-400 p-2 border-red-800 border-2 text-md">{loginError}</div>
       )}
-      <div className="flex items-center w-full max-w-sm border-b-2 border-custom-bg">
-        <img src={EmailIcon} className="size-7"/>
-        <input className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
-          placeholder="Email"
-          {...register("email", {
-            required: true,
-            pattern: /^[\w.]+@([\w-]+\.)+[\w-]{2,4}$/,
-          })}
-        />
-        {errors.email && errors.email.type === "required" && (
-          <span className="justify-start">This is required</span>
-        )}
-        {errors.email && errors.email.type === "pattern" && (
-          <span>you need to give an email</span>
-        )}
-      </div>
-      
-      <div className="flex items-center w-full max-w-sm border-b-2 border-custom-bg">
-        <img src={LockIcon} className="size-7"/>
-        <input className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
-          placeholder="Password"
-          type="password"
-          {...register("password", { required: true, maxLength: 20 })} />
-        {errors.password && errors.password.type === "required" && (
-          <span>This is required</span>
-        )}
-        {errors.password && errors.password.type === "maxLength" && (
-          <span>Max length exceeded</span>
-        )}
+      <div className="flex flex-col items-center w-full max-w-sm">
+        <div className="flex items-center w-full border-b-2 border-custom-bg mb-4">
+          <img src={EmailIcon} className="size-7"/>
+          <input className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
+            placeholder="Email"
+            {...register("email", {
+              required: true,
+              pattern: /^[\w.]+@([\w-]+\.)+[\w-]{2,4}$/,
+            })}
+          />
+          {errors.email && errors.email.type === "required" && (
+            <span className="justify-start">This is required</span>
+          )}
+          {errors.email && errors.email.type === "pattern" && (
+            <span>you need to give an email</span>
+          )}
+        </div>
+        
+        <div className="flex items-center w-full border-b-2 border-custom-bg mb-4">
+          <img src={LockIcon} className="size-7"/>
+          <input className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
+            placeholder="Password"
+            type="password"
+            {...register("password", { required: true, maxLength: 20 })} />
+          {errors.password && errors.password.type === "required" && (
+            <span>This is required</span>
+          )}
+          {errors.password && errors.password.type === "maxLength" && (
+            <span>Max length exceeded</span>
+          )}
+        </div>
       </div>
       <button className="bg-custom-bg text-primary-color w-full max-w-sm py-2 rounded-md text-lg font-inter font-semibold" type="submit">
         Log in
