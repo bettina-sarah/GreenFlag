@@ -88,7 +88,7 @@ class MatchingManager():
         user_activities = np.zeros((1, NUMBER_ACTIVITIES + 1))
         data = np.zeros((len(members), NUMBER_ACTIVITIES + 1))
         
-        if len(members) <= 8:
+        if len(members) <= 20:
             prospects_ids = []
             for member in members: 
                 if member[0] != int(user_id):
