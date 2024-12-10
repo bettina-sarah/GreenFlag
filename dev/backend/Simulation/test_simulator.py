@@ -1,9 +1,12 @@
 from Simulation.user_factory import UserFactory
+from Managers.matching_manager import MatchingManager
+from Simulation.user import User
+from typing import Set
 import random
 
 class TestSimulator:
     def __init__(self) -> None:
-        self.users = set()
+        self.users : Set[User] = set()
         self.user_factory = UserFactory("w")
     
     # get old users to put in set ? 
@@ -18,16 +21,10 @@ class TestSimulator:
 
 
     def swipe(self) -> None:
-        pass
-        # loop set: 
-#         @app.route('/suggestions', methods=['POST'])
-# def get_suggestions() -> list:
-#     response = MatchingManager.get_suggestions(request.json)
-#     print ('suggestions: ', response)
-#     # if not response:
-#     #     MatchingManager.create_suggestions(request.json)
-#     #     response = MatchingManager.get_suggestions(request.json)
-#     return jsonify(response) if response else jsonify(False)
+        for user in self.users:
+            suggestions = MatchingManager.get_suggestions({'id': user.user_id})
+            print('hello')
+
 
 # @app.route('/update-suggestion', methods=['POST'])
 # def update_suggestion() -> bool:
