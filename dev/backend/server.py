@@ -172,9 +172,6 @@ def flag_user() -> bool:
 def get_suggestions() -> list:
     response = MatchingManager.get_suggestions(request.json)
     print ('suggestions: ', response)
-    # if not response:
-    #     MatchingManager.create_suggestions(request.json)
-    #     response = MatchingManager.get_suggestions(request.json)
     return jsonify(response) if response else jsonify(False)
 
 @app.route('/update-suggestion', methods=['POST'])
@@ -201,5 +198,6 @@ from Simulation.test_simulator import TestSimulator
 
 if __name__ == '__main__':
     sim = TestSimulator()
-    sim.create_random_users(1000)
+    sim.create_random_users(100)
+    sim.swipe()
     # socketio.run(app, debug=True, host="0.0.0.0", port=5000)
