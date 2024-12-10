@@ -20,10 +20,17 @@ class User:
         self.photo_key = photo_key
         self.password = password
         self.__user_id : int
+        self.__suggestions = set()
         
         
 
-
+    @property
+    def suggestions(self) -> str:
+        return self.__suggestions
+    
+    @suggestions.setter
+    def suggestions(self, suggestions:str) -> None:
+        self.__suggestions = suggestions
 
     
     

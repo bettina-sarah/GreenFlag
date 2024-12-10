@@ -197,7 +197,7 @@ def update_notification() -> bool:
 from Simulation.test_simulator import TestSimulator
 
 if __name__ == '__main__':
-    # sim = TestSimulator()
-    # sim.create_random_users(1000)
-    # sim.swipe()
-    socketio.run(app, debug=True, host="0.0.0.0", port=5000)
+    sim = TestSimulator()
+    sim.create_random_users(1000)
+    sim.swipe()
+    # socketio.run(app, debug=True, host="0.0.0.0", port=5000)
