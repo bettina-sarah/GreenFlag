@@ -116,6 +116,94 @@ BEGIN
 END$$;
 
 
+-- DROP FUNCTION IF EXISTS find_eligible_members_activities;
+
+-- CREATE OR REPLACE FUNCTION find_eligible_members_activities
+-- (user_id INTEGER)
+-- RETURNS TABLE(member_id INT, aggregated_id_activities INT[])
+-- AS $$
+-- DECLARE
+--   user_last_lat FLOAT;
+--   user_last_long FLOAT;
+-- BEGIN
+--   SELECT last_lat, last_long INTO user_last_lat, user_last_long
+--   FROM member
+--   WHERE id = user_id;
+
+-- 	RETURN QUERY
+--   WITH eligible_members AS (
+--     SELECT m.id
+--     FROM member m
+--     WHERE m.gender = ANY (
+--         SELECT UNNEST(preferred_genders)
+--         FROM member
+--         WHERE id = user_id
+--       )
+--       AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, m.date_of_birth)) BETWEEN (
+--         SELECT min_age
+--         FROM member
+--         WHERE id = user_id
+--       )
+--       AND (
+--         SELECT max_age
+--         FROM member
+--         WHERE id = user_id
+--       )
+--       AND m.relationship_type = (
+--         SELECT relationship_type
+--         FROM member
+--         WHERE id = user_id
+--       )
+--       AND ( -- !!! comment out this last AND at school if PostGIS not installed else error
+--         m.last_lat IS NULL OR
+--         m.last_long IS NULL OR 
+--         user_last_long IS NULL OR
+--         user_last_lat IS NULL OR
+--         (
+--           ST_Distance( -- calculate distance between last locations of current user and user filtered
+--             ST_SetSRID(ST_MakePoint(m.last_long,m.last_lat), 4326)::geography,
+--             ST_SetSRID(ST_MakePoint(user_last_long,user_last_lat), 4326)::geography
+--           ) <= 10000 -- Distance of 10km in meters
+--         )
+--       )
+--   )
+--   SELECT m.id AS member_id, ARRAY_AGG(ma.activity_id) AS aggregated_id_activities
+-- 	FROM member_activities ma
+--   JOIN eligible_members em ON ma.member_id = em.id
+--   JOIN member m ON ma.member_id = m.id
+--   GROUP BY m.id;
+-- END;
+-- $$ LANGUAGE PLPGSQL;
+
+
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS calculate_distance;
+
+CREATE OR REPLACE FUNCTION calculate_distance
+(user1_lat DOUBLE PRECISION, user1_long DOUBLE PRECISION, user2_lat DOUBLE PRECISION, user2_long DOUBLE PRECISION)
+RETURNS DOUBLE PRECISION
+AS $$
+DECLARE
+  distance_km FLOAT;
+BEGIN
+-- 6371: radius Earth in km
+    distance_km := 6371 * 2 * ASIN(
+        SQRT(
+            POWER( SIN( (RADIANS(user1_lat) - RADIANS(user2_lat) ) / 2), 2) + 
+            COS(RADIANS(user1_lat)) * COS(RADIANS(user2_lat)) * POWER(SIN( ( RADIANS(user1_long) - RADIANS(user2_long) ) / 2), 2)
+        )
+    );
+	RETURN distance_km * 1000;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
+
 DROP FUNCTION IF EXISTS find_eligible_members_activities;
 
 CREATE OR REPLACE FUNCTION find_eligible_members_activities
@@ -160,10 +248,7 @@ BEGIN
         user_last_long IS NULL OR
         user_last_lat IS NULL OR
         (
-          ST_Distance( -- calculate distance between last locations of current user and user filtered
-            ST_SetSRID(ST_MakePoint(m.last_long,m.last_lat), 4326)::geography,
-            ST_SetSRID(ST_MakePoint(user_last_long,user_last_lat), 4326)::geography
-          ) <= 10000 -- Distance of 10km in meters
+          calculate_distance(m.last_lat, m.last_long, user_last_long, user_last_lat ) <= 10000 -- Distance of 10km in meters
         )
       )
   )
@@ -174,6 +259,22 @@ BEGIN
   GROUP BY m.id;
 END;
 $$ LANGUAGE PLPGSQL;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 DROP FUNCTION IF EXISTS create_suggestions;

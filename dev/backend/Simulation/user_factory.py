@@ -9,14 +9,6 @@ from Managers.account_manager import AccountManager
 from datetime import datetime, timezone, timedelta
 from enum import Enum
 
-
-
-
-
-# ACTIVITY_DICT = {activity: False for activity in ACTIVITY_TUPLE}
-
-
-
 class Factory(ABC):    
     def __init__(self) -> None:
         pass
@@ -89,6 +81,45 @@ class UserFactory(Factory):
     "Other",
     )
     
+    CITY_LIST = [
+    ['Ahuntsic-Cartierville', (45.5599, -73.6984)],
+    ['Côte-des-Neiges', (45.4695, -73.6263)],
+    ['Lachine', (45.4217, -73.6336)],
+    ['LaSalle', (45.4058, -73.6335)],
+    ['Le Plateau-Mont-Royal', (45.5230, -73.5956)],
+    ['Mercier-Hochelaga-Maisonneuve', (45.5564, -73.5358)],
+    ['Outremont', (45.5145, -73.6111)],
+    ['Rosemont–La Petite-Patrie', (45.5289, -73.6012)],
+    ['Saint-Laurent', (45.4654, -73.6883)],
+    ['Saint-Léonard', (45.5582, -73.6053)],
+    ['Verdun', (45.4488, -73.5815)],
+    ['Ville-Marie', (45.5017, -73.5673)],
+    ['Villeray–Saint-Michel–Parc-Extension', (45.5510, -73.6110)],
+
+    ['Chomedey', (45.5745, -73.7516)],
+    ['Duvernay', (45.7394, -73.5524)],
+    ['Fabreville', (45.5989, -73.7975)],
+    ['Laval-des-Rapides', (45.5552, -73.6953)],
+    ['Laval-Ouest', (45.4877, -73.8561)],
+    ['Sainte-Dorothée', (45.5851, -73.7965)],
+    ['Vimont', (45.7549, -73.6524)],
+
+    ['Brossard', (45.4523, -73.5020)],
+    ['Candiac', (45.3894, -73.4493)],
+    ['Châteauguay', (45.4004, -73.7497)],
+    ['Greenfield Park', (45.4725, -73.4935)],
+    ['LeMoyne', (45.4678, -73.5121)],
+    ['Saint-Bruno-de-Montarville', (45.5327, -73.4034)],
+    ['Saint-Lambert', (45.5014, -73.5049)],
+    ['Longueuil', (45.5239, -73.5238)],
+
+    ['Terrebonne', (45.7084, -73.7492)],
+    ['Rosemère', (45.6492, -73.7944)],
+    ['Blainville', (45.6544, -73.8739)],
+    ['Mirabel', (45.6819, -74.0782)],
+    ['Boisbriand', (45.6173, -73.8507)],
+]
+    
     
     def __init__(self, name) -> None:
         self.__faker = Faker()
@@ -143,6 +174,7 @@ class UserFactory(Factory):
         activity_dict = self.generate_activities()
         preferences_dict = self.generate_preferences()
     
+        random_city = random.choice(UserFactory.CITY_LIST)
         photoDAO = PhotoDAO()
         user = User(first_name, last_name, dob_with_ms, 
                     gender = gender,
@@ -152,7 +184,9 @@ class UserFactory(Factory):
                     email=self.__faker.email(), 
                     religion = random.choice(UserFactory.RELIGION),
                     want_kids=self.__faker.boolean(), 
-                    city=self.__faker.city(), 
+                    city=random_city[0],
+                    latitude=random_city[1][0],
+                    longitude=random_city[1][1],
                     bio = self.__faker.text(200), 
                     photo_key=photoDAO.add_photos())
         
@@ -168,4 +202,5 @@ class UserFactory(Factory):
             AccountManager.update_preferences({'id':user_id, 'info': user.info})
             AccountManager.modify_photos(user_id=user_id,keys=user.photo_key)
             AccountManager.complete_profile({'id': user_id})
-            
+            AccountManager.confirm_email({'id': user_id})
+            AccountManager.update_localisation({'id': user_id, 'lat': user.latitude, 'long': user.longitude})

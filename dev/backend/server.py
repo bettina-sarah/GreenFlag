@@ -61,6 +61,11 @@ def complete_profile() -> bool:
     # make sure database gets it !!!!
     return jsonify(response) if response else jsonify(False)
 
+@app.route('/confirm-email', methods=['POST'])
+def confirm_email() -> bool:
+    response = AccountManager.confirm_email(request.json)
+    return jsonify(response) if response else jsonify(False)
+
 @app.route('/get-profile', methods=['POST'])
 def get_profile() -> bool:
     # if authentication_middleware.check_session_validity():
@@ -194,6 +199,6 @@ def update_notification() -> bool:
 
 from Simulation.test_simulator import TestSimulator
 if __name__ == '__main__':
-    # sim = TestSimulator()
-    # sim.create_random_users(1000)
-    socketio.run(app, debug=True, host="0.0.0.0", port=5000)
+    sim = TestSimulator()
+    sim.create_random_users(1000)
+    # socketio.run(app, debug=True, host="0.0.0.0", port=5000)
