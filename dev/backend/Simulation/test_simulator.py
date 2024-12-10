@@ -8,6 +8,7 @@ class TestSimulator:
     def __init__(self) -> None:
         self.users : Set[User] = set()
         self.user_factory = UserFactory("w")
+        self.suggestions= set()
     
     # get old users to put in set ? 
 
@@ -23,15 +24,16 @@ class TestSimulator:
     def swipe(self) -> None:
         for user in self.users:
             suggestions = MatchingManager.get_suggestions({'id': user.user_id})
-            print('hello')
+            user.suggestions = suggestions # pas necessaire ?
+            for suggestion in suggestions:
+                print(suggestion)
+                json_suggestion = {'suggestion_id': suggestion['suggestion_id'], "choice": 'yes'}
+                MatchingManager.update_suggestion(json_suggestion)
 
-
-# @app.route('/update-suggestion', methods=['POST'])
-# def update_suggestion() -> bool:
-#     response = MatchingManager.update_suggestion(request.json)
-#     return jsonify(response)
 
         # faire suggestions : [ personnes]
         # picky strategy or not
-        # plugger fonc BE
+        # plugger fonc BE: premiers elements de la liste ( ) clustering 
+        # desperate: all 
+        
 
