@@ -98,14 +98,22 @@ const LoginForm = () => {
   });
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col justify-between items-center w-full h-44">
+    <div className="flex flex-col justify-center items-center w-full h-44">
+      {/* Error message container */}
       {loginError && (
-        <div className="mb-4 rounded-md text-red-800 bg-red-400 p-2 border-red-800 border-2 text-md">{loginError}</div>
+        <div className="flex justify-center w-full mb-4">
+          <div className="rounded-md text-red-800 bg-red-400 p-2 border-red-800 border-2 text-md">
+            {loginError}
+          </div>
+        </div>
       )}
-      <div className="flex flex-col items-center w-full max-w-sm">
+  
+      {/* Login form */}
+      <form onSubmit={onSubmit} className="flex flex-col justify-between items-center w-full max-w-sm">
         <div className="flex items-center w-full border-b-2 border-custom-bg mb-4">
           <img src={EmailIcon} className="size-7"/>
-          <input className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
+          <input
+            className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
             placeholder="Email"
             {...register("email", {
               required: true,
@@ -113,7 +121,7 @@ const LoginForm = () => {
             })}
           />
           {errors.email && errors.email.type === "required" && (
-            <span className="justify-start">This is required</span>
+            <span>This is required</span>
           )}
           {errors.email && errors.email.type === "pattern" && (
             <span>you need to give an email</span>
@@ -122,10 +130,12 @@ const LoginForm = () => {
         
         <div className="flex items-center w-full border-b-2 border-custom-bg mb-4">
           <img src={LockIcon} className="size-7"/>
-          <input className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
+          <input
+            className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
             placeholder="Password"
             type="password"
-            {...register("password", { required: true, maxLength: 20 })} />
+            {...register("password", { required: true, maxLength: 20 })}
+          />
           {errors.password && errors.password.type === "required" && (
             <span>This is required</span>
           )}
@@ -133,12 +143,17 @@ const LoginForm = () => {
             <span>Max length exceeded</span>
           )}
         </div>
-      </div>
-      <button className="bg-custom-bg text-primary-color w-full max-w-sm py-2 rounded-md text-lg font-inter font-semibold" type="submit">
-        Log in
-      </button>
-    </form>
+  
+        <button
+          className="bg-custom-bg text-primary-color w-full max-w-sm py-2 rounded-md text-lg font-inter font-semibold"
+          type="submit"
+        >
+          Log in
+        </button>
+      </form>
+    </div>
   );
+  
 };
 
 export default LoginForm;
