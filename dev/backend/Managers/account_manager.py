@@ -102,6 +102,18 @@ class AccountManager:
             print('account manager')
             return False
         
+    @staticmethod
+    def confirm_fake(data) -> bool:
+        id = data.get('id')
+        params = (id,)
+        try:
+            response = AccountDAO.confirm_fake(params)
+            return response
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False
+        
 
     @staticmethod
     def delete_account(data) -> bool:

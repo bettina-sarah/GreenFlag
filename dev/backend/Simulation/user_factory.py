@@ -189,7 +189,6 @@ class UserFactory(Factory):
                     longitude=random_city[1][1],
                     bio = self.__faker.text(200), 
                     photo_key=photoDAO.add_photos())
-        
         return user
 
     def add_to_database(self, user: User):
@@ -197,10 +196,10 @@ class UserFactory(Factory):
         if user_id:
             user_id = user_id[0]
             user.user_id = user_id
-            
             AccountManager.update_hobbies({'id': user_id, 'hobbies': user.interests})
             AccountManager.update_preferences({'id':user_id, 'info': user.info})
             AccountManager.modify_photos(user_id=user_id,keys=user.photo_key)
             AccountManager.complete_profile({'id': user_id})
             AccountManager.confirm_email({'id': user_id})
+            AccountManager.confirm_fake({'id': user_id})
             AccountManager.update_localisation({'id': user_id, 'lat': user.latitude, 'long': user.longitude})
