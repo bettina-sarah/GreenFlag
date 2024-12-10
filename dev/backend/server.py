@@ -201,4 +201,4 @@ from Simulation.test_simulator import TestSimulator
 if __name__ == '__main__':
     sim = TestSimulator()
     sim.create_random_users(1000)
-    # socketio.run(app, debug=True, host="0.0.0.0", port=5000)
+    socketio.run(app, debug=True, host="0.0.0.0", port=5000)
