@@ -248,7 +248,11 @@ BEGIN
         user_last_long IS NULL OR
         user_last_lat IS NULL OR
         (
+<<<<<<< HEAD
           calculate_distance(m.last_lat, m.last_long, user_last_lat, user_last_long) <= 50000
+=======
+          calculate_distance(m.last_lat, m.last_long, user_last_lat,user_last_long ) <= 10000 -- Distance of 10km in meters
+>>>>>>> main
         )
       )
   )
@@ -286,8 +290,13 @@ DECLARE
 	prospect_id INTEGER;
 BEGIN
   FOREACH prospect_id IN ARRAY prospect_ids LOOP
-    INSERT INTO suggestion (member_id_1, member_id_2, situation, date_creation)
+    BEGIN
+      INSERT INTO suggestion (member_id_1, member_id_2, situation, date_creation)
       VALUES (user_id, prospect_id, 'pending', CURRENT_DATE);
+    EXCEPTION
+      WHEN unique_violation THEN
+      NULL;
+    END;
   END LOOP;
 
   RETURN TRUE;
