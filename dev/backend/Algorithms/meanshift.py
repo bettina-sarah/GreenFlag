@@ -12,7 +12,7 @@ class MeanShift(AlgoStrategy):
         #getters setters and private
         
     def get_cluster_centers(self)->np.ndarray:
-        return self.cluster_centers
+        return self.clusters_centers
     
     def get_labels(self)->np.ndarray:
         return self.labels

@@ -143,17 +143,17 @@ class MatchingManager():
                     
                 index += 1
             
-            if prospects <= MINIMUM_SUGGESTION:
+            if len(prospects) <= MINIMUM_SUGGESTION:
                 cluster_centers = Algo.get_cluster_centers()
                 cluster_distances = np.linalg.norm(cluster_centers - user_activities, axis=1)
                 sorted_cluster_distances = np.argsort(cluster_distances)
                 
                 cluster_index = 0
-                while prospects < MINIMUM_SUGGESTION:
-                    if sorted_cluster_distances != user_label:
+                while len(prospects) < MINIMUM_SUGGESTION:
+                    if sorted_cluster_distances[cluster_index] != user_label:
                         index = 0
                         for label in labels:
-                            if label == sorted_cluster_distances:
+                            if label == sorted_cluster_distances[cluster_index]:
                                 prospects.append(index)
                             index += 1
                             
