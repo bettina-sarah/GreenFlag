@@ -175,7 +175,6 @@ VALUES
   ('petlover'),
   ('learningnewlanguage');
 
-CREATE EXTENSION IF NOT EXISTS postgis;
 DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
 DROP VIEW IF EXISTS chatroom_messages_view;
@@ -293,71 +292,6 @@ BEGIN
 END$$;
 
 
--- DROP FUNCTION IF EXISTS find_eligible_members_activities;
-
--- CREATE OR REPLACE FUNCTION find_eligible_members_activities
--- (user_id INTEGER)
--- RETURNS TABLE(member_id INT, aggregated_id_activities INT[])
--- AS $$
--- DECLARE
---   user_last_lat FLOAT;
---   user_last_long FLOAT;
--- BEGIN
---   SELECT last_lat, last_long INTO user_last_lat, user_last_long
---   FROM member
---   WHERE id = user_id;
-
--- 	RETURN QUERY
---   WITH eligible_members AS (
---     SELECT m.id
---     FROM member m
---     WHERE m.gender = ANY (
---         SELECT UNNEST(preferred_genders)
---         FROM member
---         WHERE id = user_id
---       )
---       AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, m.date_of_birth)) BETWEEN (
---         SELECT min_age
---         FROM member
---         WHERE id = user_id
---       )
---       AND (
---         SELECT max_age
---         FROM member
---         WHERE id = user_id
---       )
---       AND m.relationship_type = (
---         SELECT relationship_type
---         FROM member
---         WHERE id = user_id
---       )
---       AND ( -- !!! comment out this last AND at school if PostGIS not installed else error
---         m.last_lat IS NULL OR
---         m.last_long IS NULL OR 
---         user_last_long IS NULL OR
---         user_last_lat IS NULL OR
---         (
---           ST_Distance( -- calculate distance between last locations of current user and user filtered
---             ST_SetSRID(ST_MakePoint(m.last_long,m.last_lat), 4326)::geography,
---             ST_SetSRID(ST_MakePoint(user_last_long,user_last_lat), 4326)::geography
---           ) <= 10000 -- Distance of 10km in meters
---         )
---       )
---   )
---   SELECT m.id AS member_id, ARRAY_AGG(ma.activity_id) AS aggregated_id_activities
--- 	FROM member_activities ma
---   JOIN eligible_members em ON ma.member_id = em.id
---   JOIN member m ON ma.member_id = m.id
---   GROUP BY m.id;
--- END;
--- $$ LANGUAGE PLPGSQL;
-
-
-
-
-
-
-
 
 DROP FUNCTION IF EXISTS calculate_distance;
 
@@ -366,7 +300,7 @@ CREATE OR REPLACE FUNCTION calculate_distance
 RETURNS DOUBLE PRECISION
 AS $$
 DECLARE
-  distance_km FLOAT;
+  distance_km DOUBLE PRECISION;
 BEGIN
 -- 6371: radius Earth in km
     distance_km := 6371 * 2 * ASIN(
@@ -419,13 +353,14 @@ BEGIN
         FROM member
         WHERE id = user_id
       )
-      AND ( -- !!! comment out this last AND at school if PostGIS not installed else error
+      AND (
         m.last_lat IS NULL OR
         m.last_long IS NULL OR 
         user_last_long IS NULL OR
         user_last_lat IS NULL OR
         (
-          calculate_distance(m.last_lat, m.last_long, user_last_lat,user_last_long ) <= 50000 -- Distance of 10km in meters
+          calculate_distance(m.last_lat, m.last_long, user_last_lat, user_last_long) <= 50000
+
         )
       )
   )
