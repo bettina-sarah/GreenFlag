@@ -37,7 +37,6 @@ class MatchingManager():
             
             if not response:
                 create = MatchingManager.create_suggestions(user_id)
-                print("create : ", create)
                 response = MatchingDAO.get_suggestions(user_id)
                 return response
             elif response:

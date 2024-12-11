@@ -2,6 +2,20 @@ from DAOs.dao import DAO
 from typing import List
 #from backend.util_classes.email_adapter import EmailAdapter
 
+import logging
+import coloredlogs
+
+level_styles = {
+    'debug': {'color': 'blue'},
+    'info': {'color': 'green'},
+    'warning': {'color': 'yellow'},
+    'error': {'color': 'red'},
+    'critical': {'color': 'magenta'}
+}
+
+
+coloredlogs.install(level='DEBUG', level_styles=level_styles)
+
 class AccountDAO(DAO):
 
     def update_account() -> bool:
@@ -99,21 +113,7 @@ class AccountDAO(DAO):
 
     @staticmethod
     def add_photos(params:tuple) -> bool:
-        # params: (user id, keys)
-        # delete & remake it all.
-        ''' ------ postgres DOCU:
-        PostgreSQL lets you reference columns of other tables in the WHERE condition by specifying the other tables in the USING
-        clause. For example, to delete all films produced by a given producer, one can do:
-
-        DELETE FROM films USING producers
-        WHERE producer_id = producers.id AND producers.name = 'foo';
-        What is essentially happening here is a join between films and producers, with all successfully joined films rows being marked
-        for deletion. This syntax is not standard. A more standard way to do it is:
-
-        DELETE FROM films
-        WHERE producer_id IN (SELECT id FROM producers WHERE name = 'foo');
-        '''
-        print('accounTdao, add photos', params)
+        logging.warning(f"add photos: user_id & photo_key: {params}")
         # query = 'SELECT add_photos(%s, ARRAY[%s]);'
         # we format the sql array in manager
         query = 'SELECT add_photos(%s, %s);'
