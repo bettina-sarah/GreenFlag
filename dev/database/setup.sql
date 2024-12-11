@@ -175,7 +175,6 @@ VALUES
   ('petlover'),
   ('learningnewlanguage');
 
-CREATE EXTENSION IF NOT EXISTS postgis;
 DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
 DROP VIEW IF EXISTS chatroom_messages_view;
@@ -366,7 +365,7 @@ CREATE OR REPLACE FUNCTION calculate_distance
 RETURNS DOUBLE PRECISION
 AS $$
 DECLARE
-  distance_km FLOAT;
+  distance_km DOUBLE PRECISION;
 BEGIN
 -- 6371: radius Earth in km
     distance_km := 6371 * 2 * ASIN(
@@ -419,13 +418,13 @@ BEGIN
         FROM member
         WHERE id = user_id
       )
-      AND ( -- !!! comment out this last AND at school if PostGIS not installed else error
+      AND (
         m.last_lat IS NULL OR
         m.last_long IS NULL OR 
         user_last_long IS NULL OR
         user_last_lat IS NULL OR
         (
-          calculate_distance(m.last_lat, m.last_long, user_last_lat,user_last_long ) <= 50000 -- Distance of 10km in meters
+          calculate_distance(m.last_lat, m.last_long, user_last_lat, user_last_long) <= 50000
         )
       )
   )
