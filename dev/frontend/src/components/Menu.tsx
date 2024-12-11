@@ -3,6 +3,7 @@ import IconButton from "./IconButton";
 import matchingIcon from "../../ressources/icons/matching.png";
 import messageIcon from "../../ressources/icons/messages.png";
 import settingsIcon from "../../ressources/icons/settings.png";
+import SettingsDropDown from "./SettingsDropDown";
 
 import ThemeSelector from "./ThemeSelector";
 import NotificationDropDown from "./NotificationDropDown";
@@ -19,7 +20,8 @@ const Menu: React.FC = () => {
         <IconButton icon={messageIcon} page="chatrooms" />
         <NotificationDropDown notifications={notifications} />
         <ThemeSelector />
-        <IconButton icon={settingsIcon} page="settings" />
+        <SettingsDropDown />
+        {/* <IconButton icon={settingsIcon} page="settings" /> */}
       </div>
     </div>
   );

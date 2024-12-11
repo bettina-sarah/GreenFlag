@@ -1,4 +1,3 @@
-CREATE EXTENSION IF NOT EXISTS postgis;
 DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
 DROP VIEW IF EXISTS chatroom_messages_view;
@@ -248,11 +247,7 @@ BEGIN
         user_last_long IS NULL OR
         user_last_lat IS NULL OR
         (
-<<<<<<< HEAD
           calculate_distance(m.last_lat, m.last_long, user_last_lat, user_last_long) <= 50000
-=======
-          calculate_distance(m.last_lat, m.last_long, user_last_lat,user_last_long ) <= 10000 -- Distance of 10km in meters
->>>>>>> main
         )
       )
   )
