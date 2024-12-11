@@ -50,11 +50,5 @@ class TestSimulator:
             except Exception as error:
                 print(error)
                 pass
-
-
-        # faire suggestions : [ personnes]
-        # picky strategy or not
-        # plugger fonc BE: premiers elements de la liste ( ) clustering 
-        # desperate: all 
         
 
