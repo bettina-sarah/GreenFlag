@@ -1,18 +1,19 @@
 import numpy as np
+from abc import abstractmethod
 from util_classes.strategy import Strategy, Context
 class AlgoStrategy(Strategy):
     def __init__(self, type:str) -> None:
         self.type = type
     
+    @abstractmethod
     def fit(self, np_array:np.ndarray):
         pass
         
-
+    @abstractmethod
     def predict(self, np_array:np.ndarray):
         pass
     
 class AlgoContext(Context):
-    
     
     def get_cluster_centers(self)->np.ndarray:
         return self._strategy.get_cluster_centers()

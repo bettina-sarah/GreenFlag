@@ -9,6 +9,9 @@ class AffinityPropagation(AlgoStrategy):
   def get_labels(self)->np.ndarray:
     return self.algo.labels_
     
+  def get_cluster_centers(self)->np.ndarray:
+      return self.algo.cluster_centers_    
+    
   def fit(self, np_array:np.ndarray):
     self.algo.fit(np_array)
     
