@@ -23,6 +23,7 @@ class TestSimulator:
 
 
     def swipe(self) -> None:
+<<<<<<< HEAD
         for user in self.users:
             suggestions = MatchingManager.get_suggestions({'id': user.user_id})
             user.suggestions = suggestions # pas necessaire ?
@@ -30,6 +31,27 @@ class TestSimulator:
                 print(suggestion)
                 json_suggestion = {'suggestion_id': suggestion['suggestion_id'], "choice": 'yes'}
                 MatchingManager.update_suggestion(json_suggestion)
+=======
+        
+        random.shuffle(self.users)
+        nbr_users = len(self.users)
+        nbr_picky_users = int(nbr_users * 0.33)
+        nbr_random_users = int(nbr_users * 0.33)
+        nbr_desperate_users = nbr_users - nbr_picky_users - nbr_random_users
+        
+        strategy_nbr_users = [nbr_picky_users, nbr_random_users, nbr_desperate_users]
+        strategy_list_for_users = [[0] * nbr_picky_users, [1] * nbr_random_users, [2] * nbr_desperate_users]
+
+
+        for index_user, user in enumerate(self.users):
+            suggestions = MatchingManager.get_suggestions({'id': user.user_id})
+            user.suggestions = suggestions # pas necessaire ?
+            strategy_choice = random.randint(0,2)
+            try:
+                # 
+                swiped_list = self.contexts[strategy_list_for_users[index_user]].perform_swipe(len(suggestions))
+                strategy_nbr_users[strategy_choice] -= 1
+>>>>>>> factory
 
 
         # faire suggestions : [ personnes]
