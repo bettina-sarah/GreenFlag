@@ -193,6 +193,7 @@ class UserFactory(Factory):
 
     def add_to_database(self, user: User):
         user_id = AccountManager.create_account(user.basic_account_info)
+        print('reponse user:' , user_id)
         if user_id:
             user_id = user_id[0]
             user.user_id = user_id
@@ -203,3 +204,5 @@ class UserFactory(Factory):
             AccountManager.confirm_email({'id': user_id})
             AccountManager.confirm_fake({'id': user_id})
             AccountManager.update_localisation({'id': user_id, 'lat': user.latitude, 'long': user.longitude})
+            return True
+        return False
