@@ -47,11 +47,25 @@ class ChatroomManager(DischargedList.Observer):
             profile_photo = AccountDAO.get_photos(params, extraquery=' ORDER BY position LIMIT 1;')
             
             return {
+                "subject_id": subject_id,
                 "subject_firstname": first_name,
                 "subject_avatar": profile_photo,
             }
             
         return {}
+    
+    def flag_user(self,data) -> bool:
+        reporter_id = data.get('id')
+        subject_id = data.get('subject_id')
+        reason = data.get('reason')
+        params = (subject_id, reporter_id, reason)
+        response = ChatDAO.flag_user(params)
+        if response:
+            return response
+        
+        return False
+    
+    
 
     def add_chatroom_message(self,data) -> None:
         self.requests.add_item(data)

@@ -11,6 +11,7 @@ from Managers.chatroom_socket_manager import ChatroomSocketManager
 from Managers.chatroom_manager import ChatroomManager
 from Managers.account_manager import AccountManager
 from Managers.matching_manager import MatchingManager
+from Managers.notification_manager import NotificationManager
 from authentication.authentication_middleware import AuthenticationMiddleware
 
 app = Flask(__name__)
@@ -48,11 +49,21 @@ def login() -> bool:
         return jsonify(response)
     return jsonify(False)
 
+@app.route('/localisation', methods=['POST'])
+def update_localisation() -> bool:
+    response = AccountManager.update_localisation(request.json)
+    return jsonify(True) if response else jsonify(False)
+
 @app.route('/complete-profile', methods=['POST'])
 def complete_profile() -> bool:
     response = AccountManager.complete_profile(request.json)
     # call middleware to generate token; send it to frontend
     # make sure database gets it !!!!
+    return jsonify(response) if response else jsonify(False)
+
+@app.route('/confirm-email', methods=['POST'])
+def confirm_email() -> bool:
+    response = AccountManager.confirm_email(request.json)
     return jsonify(response) if response else jsonify(False)
 
 @app.route('/get-profile', methods=['POST'])
@@ -149,15 +160,18 @@ def fetch_chatroom_subject() -> list:  # send JSON jsonify ...
     print(response)
     return jsonify(response)
 
+@app.route('/flag',methods=['POST'])
+def flag_user() -> bool:
+    response = chatroomManager.flag_user(request.json)
+    print("response from flag backend:",response)
+    return jsonify(response)
+
 # -------- MATCHING ------------
 
 @app.route('/suggestions', methods=['POST'])
 def get_suggestions() -> list:
     response = MatchingManager.get_suggestions(request.json)
     print ('suggestions: ', response)
-    # if not response:
-    #     MatchingManager.create_suggestions(request.json)
-    #     response = MatchingManager.get_suggestions(request.json)
     return jsonify(response) if response else jsonify(False)
 
 @app.route('/update-suggestion', methods=['POST'])
@@ -165,6 +179,26 @@ def update_suggestion() -> bool:
     response = MatchingManager.update_suggestion(request.json)
     return jsonify(response)
 
+# -------- NOTIFICATIONS ------------
+
+@app.route('/notifications', methods=['POST'])
+def notifications() -> bool:
+    response = NotificationManager.get_notifications(request.json)
+    print('response db is: ', response)
+    return jsonify(response)
+
+@app.route('/update-notification', methods=['POST'])
+def update_notification() -> bool:
+    print('update_notification JSON: ', request.json)
+    response = NotificationManager.update_notification(request.json)
+    print('response db is: ', response)
+    return jsonify(response)
+
+from Simulation.test_simulator import TestSimulator
+
 if __name__ == '__main__':
-    socketio.run(app, debug=True, host="0.0.0.0", port=5000)
-    #app.run(debug=True, host="0.0.0.0", port=5000)
+    sim = TestSimulator()
+    sim.create_random_users(1000)
+    sim.swipe()
+    # socketio.run(app, debug=True, host="0.0.0.0", port=5000)
+

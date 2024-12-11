@@ -1,6 +1,7 @@
 #Lightning Memory-Mapped Database: key value
 import lmdb
 from typing import List
+from faker import Faker
 
 # pillow necessary for image processing
 from PIL import Image
@@ -8,9 +9,10 @@ import io
 
 class PhotoDAO:
     def __init__(self) -> None:
-        self.env = lmdb.open('my_lmdb_database', map_size=100 * 1024 * 1024)  # 100 MB au debut
+        self.env = lmdb.open('my_lmdb_database', map_size=48 * 1024 * 1024)
+        self.faker = Faker()
 
-    def add_photos(self, photos:List[str]) -> list | bool:
+    def add_photos(self, photos:List[str]= None) -> list | bool:
         keys = []
         try:
             with self.env.begin(write=True) as txn:
@@ -19,6 +21,10 @@ class PhotoDAO:
                         key = self.encode_image(txn, photo)
                         keys.append(key)
                     self.env.close()
+                    return keys
+                elif photos is None:
+                    key = self.encode_image(txn)
+                    keys.append(key)
                     return keys
                 else:
                     key = self.encode_image(txn, photos)
@@ -30,11 +36,19 @@ class PhotoDAO:
     
 
 
-    def encode_image(self,txn,photo) -> str:
+    def encode_image(self,txn,photo=None) -> str:
         # encodage pour lm db seulement !
-        key = photo.filename.encode('utf-8')        
+        if photo:
+            key = photo.filename.encode('utf-8')        
+            image = Image.open(photo)
+        else:
+            avatar_bytes = self.faker.image((200,200)) # bytearray
+            key = self.faker.text(max_nb_chars=16)
+            key = key.encode('utf-8')        
+            # image = Image.open(avatar)
+            txn.put(key, avatar_bytes)
+            return key.decode('utf-8')
         img_byte_arr = io.BytesIO()
-        image = Image.open(photo)
         image.save(img_byte_arr, format=image.format)
         img_bytes = img_byte_arr.getvalue()
         txn.put(key, img_bytes)

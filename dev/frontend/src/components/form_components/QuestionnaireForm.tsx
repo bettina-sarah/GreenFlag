@@ -23,6 +23,7 @@ import {
   hobbiesKeys,
   checkAndCompleteProfile,
 } from "../form_submits/QuestionnaireSubmitHandlers";
+import { datePickerTheme, selectTheme, textAreaTheme, textInputTheme } from "../theme-flowbite/CustomTheme";
 // https://marmelab.com/react-admin/ImageInput.html
 
 const QuestionnaireForm = () => {
@@ -31,11 +32,13 @@ const QuestionnaireForm = () => {
   const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
 
   const toggleGender = (gender: string) => {
-    setSelectedGenders((prev) =>
-      prev.includes(gender)
+    setSelectedGenders((prev) =>{
+      const updatedState = prev.includes(gender)
         ? prev.filter((g) => g !== gender)
-        : [...prev, gender]
-    );
+        : [...prev, gender];
+
+        return updatedState;
+    });
   };
 
   const {
@@ -61,111 +64,147 @@ const QuestionnaireForm = () => {
   };
 
   return (
-    <div className="flex flex-col justify-between m-2 overflow-visible">
+    <div className="flex flex-col justify-between m-6 overflow-visible">
       <form
-        onSubmit={handleSubmitHobbies(async (data) => {
+        onSubmit={handleSubmitHobbies(async (data:any) => {
           await onSubmitFormHobbies(data);
           await completeProfileAndNavigate();
         })}
+        className=" bg-primary-color rounded-3xl p-4"
       >
-        <div className="flex flex-col space-y-4 p-3 m-4">
+        <label className="text-base text-h1-custom">Select at least 5 centers of interest:</label>
+        <div className="flex flex-col space-y-4 p-3">
           {hobbiesKeys.map((hobby, index) => (
             <div className="flex items-center gap-2" key={index}>
-              <Checkbox id={hobby} {...registerHobbies(hobby)} />
-              <Label htmlFor={hobby}>{hobby}</Label>
+              <Checkbox className="bg-custom-bg border-secondary-color checked:bg-secondary-color focus:outline-secondary-color" id={hobby} {...registerHobbies(hobby)} />
+              <Label className="text-base-text" htmlFor={hobby}>{hobby}</Label>
             </div>
           ))}
         </div>
 
-        <button className="bg-teal-600 p-1 rounded-md text-white" type="submit">
+        <button className="bg-secondary-color p-1 min-h-8 min-w-24 rounded-lg text-white" type="submit">
           Submit
         </button>
       </form>
       <form
-        onSubmit={handleSubmitInfo(async (data) => {
+        onSubmit={handleSubmitInfo(async (data:any) => {
           await onSubmitFormInfo(data);
           await completeProfileAndNavigate();
         })}
+        className="bg-primary-color rounded-3xl p-4 mt-7"
       >
-        <label>Select Your Date of Birth:</label>
-        <Controller
-          name="date_of_birth"
-          control={controlInfo}
-          defaultValue={new Date()}
-          render={({ field }) => (
-            <Datepicker
-              {...field}
-              onChange={(date: Date | null) => field.onChange(date)}
-            />
+
+        <div>
+          <label className="text-h2-custom">Select Your Date of Birth:</label>
+          <Controller
+            name="date_of_birth"
+            control={controlInfo}
+            defaultValue={new Date()}
+            render={({ field }) => (
+              <Datepicker
+                {...field}
+                onChange={(date: Date | null) => field.onChange(date)}
+                minDate={new Date(new Date(new Date().setFullYear(new Date().getFullYear() - 100)))}
+                maxDate={new Date(new Date(new Date().setFullYear(new Date().getFullYear() - 18)))}
+                color="custom"
+                theme={datePickerTheme}
+              />
+            )}
+          />
+          {errorsInfo.date_of_birth &&
+            errorsInfo.date_of_birth.type === "required" && (
+              <span>This is required</span>
           )}
-        />
-        {errorsInfo.date_of_birth &&
-          errorsInfo.date_of_birth.type === "required" && (
-            <span>This is required</span>
-          )}
-
-        <label>Select Your Gender:</label>
-        <Select {...registerInfo("gender", { required: true })}>
-          {genders.map((gender, index) => (
-            <option value={gender} key={index}>
-              {gender}
-            </option>
-          ))}
-        </Select>
-        {errorsInfo.gender && errorsInfo.gender.type === "required" && (
-          <span>This is required</span>
-        )}
-
-        <label>Enter Your Height (in cm):</label>
-        <TextInput
-          {...registerInfo("height", { required: true })}
-          type="number"
-          placeholder="e.g., 175"
-        />
-        {errorsInfo.height && errorsInfo.height.type === "required" && (
-          <span>This is required</span>
-        )}
-
-        <label>Select Your Religion or Belief:</label>
-        <Select {...registerInfo("religion", { required: true })}>
-          {religions.map((religion, index) => (
-            <option value={religion} key={index}>
-              {religion}
-            </option>
-          ))}
-        </Select>
-        {errorsInfo.religion && errorsInfo.religion.type === "required" && (
-          <span>This is required</span>
-        )}
-
-        <div className="flex items-center gap-2">
-          <Label htmlFor="want_kids">Do you want kids? (check for yes)</Label>
-          <Checkbox {...registerInfo("want_kids")} />
         </div>
 
-        <label>Insert Your City:</label>
-        <TextInput
-          {...registerInfo("city", { required: true, maxLength: 50 })}
-          maxLength={50}
-        />
-        {errorsInfo.city && errorsInfo.city.type === "required" && (
-          <span>This is required</span>
-        )}
-        {errorsInfo.city && errorsInfo.city.type === "maxLength" && (
-          <span>Max length exceeded</span>
-        )}
+        <div className="pt-10">
+          <label className="text-h2-custom">Select Your Gender:</label>
+          <Select 
+          {...registerInfo("gender", { required: true })}
+          color="custom"
+          theme={selectTheme}
+          >
+            {genders.map((gender, index) => (
+              <option value={gender} key={index} className="bg-primary-color focus:bg-custom-bg">
+                {gender}
+              </option>
+            ))}
+          </Select>
+          {errorsInfo.gender && errorsInfo.gender.type === "required" && (
+            <span>This is required</span>
+          )}
+        </div>
 
-        <label>Tell us a little thing about yourself:</label>
-        <Textarea
-          {...registerInfo("bio", { required: true })}
-          required
-          rows={6}
-        />
+        <div className="pt-10">
+          <label className="text-h2-custom">Enter Your Height (in cm):</label>
+          <TextInput
+            {...registerInfo("height", { required: true })}
+            type="number"
+            placeholder="e.g., 175"
+            min={0}
+            max={272}
+            color="custom"
+            theme={textInputTheme}
+            className=" [::-webkit-inner-spin-button]:appearance-none [::-webkit-outer-spin-button]:appearance-none"
+          />
+          {errorsInfo.height && errorsInfo.height.type === "required" && (
+            <span>This is required</span>
+          )}
+        </div>
 
-        <div className="flex flex-col">
-          <label>Age preference range:</label>
-          <div className="flex flex-row justify-evenly">
-            <label>
+        <div className="pt-10">
+          <label className="text-h2-custom">Select Your Religion or Belief:</label>
+          <Select {...registerInfo("religion", { required: true })}
+          color="custom"
+          theme={selectTheme}
+          >
+            {religions.map((religion, index) => (
+              <option value={religion} key={index}>
+                {religion}
+              </option>
+            ))}
+          </Select>
+          {errorsInfo.religion && errorsInfo.religion.type === "required" && (
+            <span>This is required</span>
+          )}
+        </div>
+
+        <div className="flex items-center gap-2 pt-10">
+          <Label className="text-h2-custom" htmlFor="want_kids">Do you want kids? (check for yes)</Label>
+          <Checkbox className="bg-custom-bg border-secondary-color checked:bg-secondary-color focus:outline-secondary-color" {...registerInfo("want_kids")} />
+        </div>
+
+        <div className="pt-10">
+          <label className="text-h2-custom">Insert Your City:</label>
+          <TextInput
+            {...registerInfo("city", { required: true, maxLength: 50 })}
+            maxLength={50}
+            color="custom"
+            theme={textInputTheme}
+          />
+          {errorsInfo.city && errorsInfo.city.type === "required" && (
+            <span>This is required</span>
+          )}
+          {errorsInfo.city && errorsInfo.city.type === "maxLength" && (
+            <span>Max length exceeded</span>
+          )}
+        </div>
+
+        <div className="pt-10">
+          <label className="text-h2-custom">Tell us a little thing about yourself:</label>
+          <Textarea
+            {...registerInfo("bio", { required: true })}
+            required
+            rows={6}
+            color="custom"
+            theme={textAreaTheme}
+          />
+        </div>
+
+        <div className="flex flex-col pt-10 pb-10">
+          <label className="text-h2-custom">Age preference range:</label>
+          <div className="flex flex-row justify-evenly pt-4">
+            <label className="text-h2-custom">
               Prefered minimum age:
               <input
                 type="number"
@@ -173,7 +212,7 @@ const QuestionnaireForm = () => {
                 min={18}
                 max={99}
                 defaultValue={18}
-                className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ${
+                className={`bg-custom-bg border border-secondary-color text-base-text text-sm rounded-lg focus:ring-secondary-color focus:border-secondary-color block w-full p-2.5 ${
                   errorsInfo.max_age ? "border-red-500" : ""
                 }`}
               />
@@ -187,7 +226,7 @@ const QuestionnaireForm = () => {
                 <span>It needs to be below 99 years old</span>
               )}
             </label>
-            <label>
+            <label className="text-h2-custom pl-4">
               Prefered maximum age:
               <input
                 type="number"
@@ -195,7 +234,7 @@ const QuestionnaireForm = () => {
                 min={18}
                 max={99}
                 defaultValue={60}
-                className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ${
+                className={`bg-custom-bg border border-secondary-color text-base-text text-sm rounded-lg focus:ring-secondary-color focus:border-secondary-color block w-full p-2.5 ${
                   errorsInfo.max_age ? "border-red-500" : ""
                 }`}
               />
@@ -212,8 +251,11 @@ const QuestionnaireForm = () => {
           </div>
         </div>
 
-        <label>Select The Relationship Type You Prefer:</label>
-        <Select {...registerInfo("relationship_type", { required: true })}>
+        <label className="text-h2-custom">Select The Relationship Type You Prefer:</label>
+        <Select {...registerInfo("relationship_type", { required: true })}
+        color="custom"
+        theme={selectTheme}
+        >
           <option value="fun">Fun</option>
           <option value="shortterm">Shortterm</option>
           <option value="longterm">Longterm</option>
@@ -222,8 +264,8 @@ const QuestionnaireForm = () => {
           <span>This is required</span>
         )}
 
-        <div>
-          <label>
+        <div className="pt-10">
+          <label className="text-h2-custom">
             What genders are you interested in when choosing a partner?
           </label>
           <Controller
@@ -232,24 +274,25 @@ const QuestionnaireForm = () => {
             defaultValue={[]} // Default value for the genders array
             render={({ field: { onChange } }) => (
               <Dropdown
-                label="Select Genders"
+                label={<label className="text-h2-custom">Select Genders</label>}
                 inline
                 dismissOnClick={false}
                 placement="right"
+                className="text-h2-custom bg-primary-color border-secondary-color"
               >
                 {genders.map((gender) => (
-                  <Dropdown.Item key={gender}>
+                  <Dropdown.Item key={gender} className="focus:bg-custom-bg">
                     <div className="flex items-center">
                       <input
                         type="checkbox"
                         checked={selectedGenders.includes(gender)}
                         onChange={() => {
                           toggleGender(gender);
-                          onChange(selectedGenders); // Update react-hook-form state
+                          onChange([...selectedGenders, gender]); // Update react-hook-form state
                         }}
-                        className="mr-2"
+                        className="bg-custom-bg border-secondary-color checked:bg-secondary-color focus:outline-secondary-color rounded-sm"
                       />
-                      <span>{gender}</span>
+                      <span className="ml-2 text-base-text">{gender}</span>
                     </div>
                   </Dropdown.Item>
                 ))}
@@ -258,19 +301,20 @@ const QuestionnaireForm = () => {
           />
         </div>
 
-        <button className="bg-teal-600 p-1 rounded-md text-white" type="submit">
+        <button className="bg-secondary-color mt-5 p-1 min-h-8 min-w-24 rounded-lg text-white" type="submit">
           Submit
         </button>
       </form>
 
       <form
-        onSubmit={handleSubmitPhoto(async (data) => {
+        onSubmit={handleSubmitPhoto(async (data:any) => {
           await onSubmitPhoto(data);
           await completeProfileAndNavigate();
         })}
+        className="bg-primary-color rounded-3xl p-4 mt-7"
       >
         <ImageInputCustom name="image" control={control} />
-        <button className="bg-teal-600 p-1 rounded-md text-white" type="submit">
+        <button className="bg-secondary-color p-1 min-h-8 min-w-24 rounded-lg text-white" type="submit">
           Submit
         </button>
       </form>

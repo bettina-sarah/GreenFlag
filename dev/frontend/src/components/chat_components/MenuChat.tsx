@@ -7,8 +7,10 @@ import useFetch from '@/api/useFetch';
 import { Avatar } from 'flowbite-react';
 import { IPhotoData } from '../profile_card_components/PhotoCarousel';
 import fetchData from '@/api/fetchData';
+import FlagModal from './FlagModal';
 
 interface SubjectInfos{
+    subject_id: number;
     subject_firstname: string;
     subject_avatar: string | null;
 }
@@ -27,6 +29,7 @@ const MenuChat: React.FC = () => {
     });
 
     const [avatarPhoto,setAvatarPhoto] = useState<IPhotoData>()
+    const [isFlagModalOpen, setIsFlagModalOpen] = useState<boolean>(false)
 
     useEffect(() => {
         if (subjectData && !subjectLoading && !subjectError) {
@@ -48,12 +51,17 @@ const MenuChat: React.FC = () => {
                 <div>
                     <IconButton icon={backIcon} page="chatrooms"/>
                 </div>
-                <div className='flex w-50'>
+                <div className='flex w-50 items-center'>
                     <Avatar key={avatarPhoto?.key} img={avatarPhoto?.path || undefined} rounded/>
-                    <h1 className='pl-2 text-base-text'>{subjectData?.subject_firstname}</h1>
+                    <h1 className='pl-2 text-base-text text-2xl'>{subjectData?.subject_firstname}</h1>
                 </div>
-                <IconButton icon={flagButton}  onClick={() =>(console.log('future feature'))}/>
-            </div> 
+                <IconButton icon={flagButton}  onClick={() =>setIsFlagModalOpen(true)}/>
+            </div>
+            <FlagModal 
+                subject_id={subjectData?.subject_id}
+                isOpen={isFlagModalOpen}
+                onClose={() => setIsFlagModalOpen(false)}
+            />
         </div>
     );
 

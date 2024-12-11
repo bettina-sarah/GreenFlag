@@ -9,81 +9,29 @@ import IconButton from "./IconButton";
 import RedFlag from "../../ressources/icons/FlagButton_left.png";
 import GreenFlag from "../../ressources/icons/FlagButton_right.png";
 // import Undo from "../../ressources/icons/undo.png";
-import TinderCard from "react-tinder-card";
-import { updateSuggestion } from "@/api/updateSuggestion";
 
 interface IProfileProps {
-  suggestion_id: string;
+  suggestion_id?: string;
   profile_info: ProfileProps;
   photos: string[];
 }
 
-const ProfileCard: React.FC<IProfileProps> = ({
-  suggestion_id,
-  profile_info,
-  photos,
-}) => {
-  const [hasSwiped, setHasSwiped] = useState<boolean>(false);
-  console.log(photos);
-
-  const SwipeRight = (suggestion_id: string) => {
-    updateSuggestion(suggestion_id, "yes");
-    setHasSwiped(true);
-    console.log("right: ", suggestion_id);
-  };
-
-  const SwipeLeft = (suggestion_id: string) => {
-    updateSuggestion(suggestion_id, "no");
-    setHasSwiped(true);
-    console.log("left: ", suggestion_id);
-  };
-
-  const onSwipe = (direction: string, suggestion_id: string) => {
-    if (direction == "left") {
-      SwipeLeft(suggestion_id);
-    } else if (direction == "right") {
-      SwipeRight(suggestion_id);
-    }
-    console.log("You swiped: " + direction);
-  };
-
-  const handleCardLeftScreen = () => {
-    setHasSwiped(true);
-    console.log(`Card with suggestion_id ${suggestion_id} was swiped out.`);
-  };
-
+const ProfileCard: React.FC<IProfileProps> = ({ profile_info, photos }) => {
   return (
-    !hasSwiped && (
-      <TinderCard
-        className="absolute"
-        onSwipe={(direction) => onSwipe(direction, suggestion_id)}
-        preventSwipe={["up", "down"]}
-        onCardLeftScreen={() => handleCardLeftScreen()}
-      >
-        <div className="w-96 bg-greenflag-green p-1 rounded relative">
-          <PhotoCarousel images={photos} />
-          <BasicInfo basic_info={profile_info.basic_info} />
-          <RelationshipGoals
-            relationship={profile_info.relationship}
-            wants_kids={profile_info.wants_kids}
-          />
-          <Hobbies hobbies={profile_info.hobby_array} />
-          <Bio bio={profile_info.bio} />
-          <div className="flex items-center justify-evenly p-3">
-            <IconButton
-              icon={RedFlag}
-              onClick={() => SwipeLeft(suggestion_id)} // Pass suggestion_id to the handler
-              suggestion_id={suggestion_id}
-            />
-            <IconButton
-              icon={GreenFlag}
-              onClick={() => SwipeRight(suggestion_id)}
-              suggestion_id={suggestion_id}
-            />
-          </div>
-        </div>
-      </TinderCard>
-    )
+    <div className="w-96 p-5 bg-primary-color rounded-lg relative">
+      <PhotoCarousel images={photos} />
+      <BasicInfo basic_info={profile_info.basic_info} />
+      <RelationshipGoals
+        relationship={profile_info.relationship}
+        wants_kids={profile_info.wants_kids}
+      />
+      <Hobbies hobbies={profile_info.hobby_array} />
+      <Bio bio={profile_info.bio} />
+      <div className="flex items-center justify-evenly p-3">
+        <IconButton icon={RedFlag} />
+        <IconButton icon={GreenFlag} />
+      </div>
+    </div>
   );
 };
 

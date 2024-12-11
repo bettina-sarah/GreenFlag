@@ -51,7 +51,7 @@ Verify that the token is issued by a trusted source (iss).
 class CryptKeeper:
     def __init__(self) -> None:
         self.__key = "secret"
-        self.__expiry_time = 150 # 30 mins * 60 sec
+        self.__expiry_time = 1800  # 30 mins * 60 sec = 1800 for tests  | should be 150 so 2.5mins 
     
     def decode(self,token: str) -> str:
         print("var type of token is: ", type(token), token)

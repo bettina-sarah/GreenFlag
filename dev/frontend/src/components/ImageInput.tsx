@@ -23,7 +23,7 @@ const ImageInputCustom: React.FC<ImageInputProps> = ({ name, control }) => {
 
     return (
         <div className="mb-4">
-            <label htmlFor={name} className="block text-sm font-medium text-gray-700">
+            <label htmlFor={name} className="block text-lg font-medium text-h2-custom">
                 Upload Image
             </label>
             <input
@@ -31,7 +31,7 @@ const ImageInputCustom: React.FC<ImageInputProps> = ({ name, control }) => {
                 accept="image/*"
                 onChange={handleFileChange}
                 onBlur={onBlur}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+                className="mt-1 block w-full border border-secondary-color rounded-md text-h2-custom shadow-sm focus:border-custom-bg focus:ring focus:ring-custom-bg"
             />
             {value && (
                 <img src={URL.createObjectURL(value)} alt="Selected" className="mt-2 w-full h-auto border rounded-md" />

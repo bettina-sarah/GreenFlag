@@ -49,6 +49,18 @@ class AccountManager:
     
 
     @staticmethod
+    def update_localisation(data) -> bool:
+        id = data.get('id')
+        lat = data.get('lat')
+        long = data.get('long')
+        if id != None:
+            params = (lat,long,int(id))
+            response = AccountDAO.update_localisation(params)
+            return response
+        else:
+            return False
+
+    @staticmethod
     def save_token(id, token) -> bool:
         params = (token, id)
         try:
@@ -77,6 +89,31 @@ class AccountManager:
             print(error)
             print('account manager')
             return False
+
+    @staticmethod
+    def confirm_email(data) -> bool:
+        id = data.get('id')
+        params = (id,)
+        try:
+            response = AccountDAO.confirm_email(params)
+            return response
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False
+        
+    @staticmethod
+    def confirm_fake(data) -> bool:
+        id = data.get('id')
+        params = (id,)
+        try:
+            response = AccountDAO.confirm_fake(params)
+            return response
+        except Exception as error:
+            print(error)
+            print('account manager')
+            return False
+        
 
     @staticmethod
     def delete_account(data) -> bool:
@@ -125,10 +162,6 @@ class AccountManager:
     def jsonify_response(list):
         try:
             result=list[0]
-            # {'basic_info': {'first_name': 'Emma', 'age': 19, 'city': 'Montreal', 'location': 10}, 
-            #  'relationship': ['hiking', 'yoga', 'photography', 'cooking', 'traveling'], 
-            #  'wants_kids': True, 'hobby_array': 'fun', 
-            #  'bio': 'Hello this is user 11 !!!!'}
             profile_data= {  
             "basic_info": {
             "first_name": result[1],
@@ -195,7 +228,7 @@ class AccountManager:
         return columns, values
 
     @staticmethod
-    def modify_photos(user_id,files, info=None) -> bool:
+    def modify_photos(user_id,files=None, info=None,keys=None) -> bool:
         #token = info.get('token')
         # we verify if token is valid here ... and return right user id to put in params !
         # user_id = '11'
@@ -206,8 +239,11 @@ class AccountManager:
         # except Exception as error:
         #     print(error)
         #     return False
-        photo_dao = PhotoDAO()
-        keys = photo_dao.add_photos(files)
+        if files:
+            photo_dao = PhotoDAO()
+            keys = photo_dao.add_photos(files)
+        else:
+            keys = keys
         # keys = photo_dao.add_photos(images)
         formatted_keys = '{' + ','.join(keys) + '}'
         params = (user_id,formatted_keys)

@@ -3,5 +3,6 @@ lmdb
 scikit-learn
 flask_socketio
 gevent
+gevent-websocket
 PyJWT==2.4.0
 faker
