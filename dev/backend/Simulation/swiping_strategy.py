@@ -1,41 +1,53 @@
 from util_classes.strategy import Strategy, Context
 
+
+# fichier fait par: Bettina-Sarah Janesch
+'''
+Contient les strategies de swiper (difficile, aléatoire, et desesperé) et le contexte qui
+va avec le patron de conception Strategy.
+'''
+
 class SwipingStrategy(Strategy):
 
     def __init__(self, name) -> None:
         super().__init__(name)  
-        self.choices = ('no', 'yes')
+        self._choices = ('no', 'yes')
 
-    def picky(self) -> None:
+    def swipe(self, nbr_suggestions) -> None:
         pass
-    def random(self) -> None:
-        pass
-    def desperate(self) -> None:
-        pass
-    
 
-# class AlgoStrategy(Strategy):
-#     def __init__(self, type:str) -> None:
-#         self.type = type
+class PickyStrategy(SwipingStrategy):
+    def __init__(self) -> None:
+        super().__init__('picky')
     
-#     def fit(self, np_array:np.ndarray):
-#         pass
-        
+    def swipe(self, nbr_suggestions) -> None:
+        pass
 
-#     def predict(self, np_array:np.ndarray):
-#         pass
+
+class RandomStrategy(SwipingStrategy):
+    def __init__(self) -> None:
+        super().__init__('random')
     
+    def swipe(self, nbr_suggestions) -> None:
+        pass
+
+
+class DesperateStrategy(SwipingStrategy):
+    def __init__(self) -> None:
+        super().__init__('desperate')
+    
+    def swipe(self, nbr_suggestions) -> list:
+        return self._choices[1] * nbr_suggestions
+
 class SwipingContext(Context):
-    
-    # appelle strategy picky, random, desperate ... 
-    def get_cluster_centers(self)->np.ndarray:
-        return self._strategy.get_cluster_centers()
-    
-    def get_labels(self)->np.ndarray:
-        return self._strategy.get_labels()
-    
-    def fit(self, np_array:np.ndarray)->tuple:
-        return self._strategy.fit(np_array)
+    def __init__(self, strategy: SwipingStrategy):
+        self.strategy = strategy
 
-    def predict(self, np_array:np.ndarray)->list:
-        return self._strategy.predict(np_array)
+    def set_strategy(self, strategy: SwipingStrategy):
+        self.strategy = strategy
+
+    def perform_swipe(self, suggestions):
+        return self.strategy.swipe(suggestions)
+    
+
+    

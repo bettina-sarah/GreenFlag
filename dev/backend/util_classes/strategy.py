@@ -8,7 +8,7 @@ class Strategy(ABC):
 
 class Context():
     def __init__(self,strategy:Strategy):
-        self._strategy = strategy
+        self.strategy = strategy
         
     @property
     def strategy(self)->Strategy:
