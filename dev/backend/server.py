@@ -14,6 +14,20 @@ from Managers.matching_manager import MatchingManager
 from Managers.notification_manager import NotificationManager
 from authentication.authentication_middleware import AuthenticationMiddleware
 
+import logging
+import coloredlogs
+
+level_styles = {
+    'debug': {'color': 'blue'},
+    'info': {'color': 'green'},
+    'warning': {'color': 'yellow'},
+    'error': {'color': 'red'},
+    'critical': {'color': 'magenta'}
+}
+
+
+coloredlogs.install(level='DEBUG', level_styles=level_styles)
+
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}},
             methods=["GET", "POST", "OPTIONS"],
@@ -184,21 +198,21 @@ def update_suggestion() -> bool:
 @app.route('/notifications', methods=['POST'])
 def notifications() -> bool:
     response = NotificationManager.get_notifications(request.json)
-    print('response db is: ', response)
+    logging.warning(f'notifications:{response}'if response else 'no notifications available')
     return jsonify(response)
 
 @app.route('/update-notification', methods=['POST'])
 def update_notification() -> bool:
     print('update_notification JSON: ', request.json)
     response = NotificationManager.update_notification(request.json)
-    print('response db is: ', response)
+    print(f'response db is: ', response)
     return jsonify(response)
 
 from Simulation.test_simulator import TestSimulator
 
 if __name__ == '__main__':
-    sim = TestSimulator()
-    sim.create_random_users(50)
-    sim.swipe()
-    # socketio.run(app, debug=True, host="0.0.0.0", port=5000)
+    # sim = TestSimulator()
+    # sim.create_random_users(500)
+    # sim.swipe()
+    socketio.run(app, debug=True, host="0.0.0.0", port=5000)
 
