@@ -6,6 +6,9 @@ class Birch(AlgoStrategy):
   def __init__(self, threshold:float=0.5):
     self.algo = BirchScikit(threshold=threshold)
 
+  def get_cluster_centers(self):
+    return self.algo.subcluster_centers_
+
   def get_labels(self)->np.ndarray:
     return self.algo.labels_
   
