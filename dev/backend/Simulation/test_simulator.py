@@ -69,7 +69,7 @@ class TestSimulator:
                     MatchingManager.update_suggestion(json_suggestion)
 
             except Exception as error:
-                logging.error(error)
+                logging.error(f'No suggestions available; error: {error}')
                 pass
         
 
