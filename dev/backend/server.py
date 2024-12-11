@@ -197,6 +197,7 @@ def update_notification() -> bool:
 from Simulation.test_simulator import TestSimulator
 
 if __name__ == '__main__':
+
     # sim = TestSimulator()
     # sim.create_random_users(2000)
     # sim.swipe()

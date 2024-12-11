@@ -1,4 +1,10 @@
-from enum import Enum
+    # ------------------------------------------------------------------------------------
+    # ====================================================================================
+    # user.py
+    # Created By  : Bettina-Sarah Janesch
+    # About       : A FAIRE .... 
+    # ====================================================================================
+    # ------------------------------------------------------------------------------------
 
 class User:
     def __init__(self,first_name:str, last_name:str, dob:int, gender:str, height:int, email:str, religion:str, want_kids:bool,
@@ -22,7 +28,8 @@ class User:
         self.__user_id : int
         self.__suggestions = set()
         
-        
+    def __repr__(self):
+          return f"User(name = {self.first_name}, email = {self.email})"
 
     @property
     def suggestions(self) -> str:

@@ -6,3 +6,4 @@ gevent
 gevent-websocket
 PyJWT==2.4.0
 faker
+coloredlogs

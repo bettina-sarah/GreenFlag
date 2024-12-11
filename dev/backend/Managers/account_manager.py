@@ -173,7 +173,6 @@ class AccountManager:
             "wants_kids": result[6],
             "hobby_array": result[9],
             "bio": result[4]}
-            print(profile_data)
             return profile_data
         except Exception as error:
             print(error)
