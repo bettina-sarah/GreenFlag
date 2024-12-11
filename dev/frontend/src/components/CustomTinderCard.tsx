@@ -16,12 +16,16 @@ interface IProfileProps {
   suggestion_id: string;
   profile_info: ProfileProps;
   photos: string[];
+  isLastCard?: boolean; // New prop to mark the last card
+  onLastCardLeftScreen?: () => void; // Callback for end-of-list detection
 }
 
 const CustomTinderCard: React.FC<IProfileProps> = ({
   suggestion_id,
   profile_info,
   photos,
+  isLastCard = false,
+  onLastCardLeftScreen,
 }) => {
   const [hasSwiped, setHasSwiped] = useState<boolean>(false);
   console.log(photos);
@@ -50,6 +54,10 @@ const CustomTinderCard: React.FC<IProfileProps> = ({
   const handleCardLeftScreen = () => {
     setHasSwiped(true);
     console.log(`Card with suggestion_id ${suggestion_id} was swiped out.`);
+
+    if (isLastCard && onLastCardLeftScreen) {
+      onLastCardLeftScreen();
+    }
   };
 
   return (
@@ -58,7 +66,7 @@ const CustomTinderCard: React.FC<IProfileProps> = ({
         className="absolute"
         onSwipe={(direction) => onSwipe(direction, suggestion_id)}
         preventSwipe={["up", "down"]}
-        onCardLeftScreen={() => handleCardLeftScreen()}
+        onCardLeftScreen={handleCardLeftScreen}
       >
         <div className="w-96 bg-primary-color p-1 rounded-3xl relative">
           <PhotoCarousel images={photos} />
