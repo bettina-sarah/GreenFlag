@@ -2,12 +2,12 @@ from Simulation.user_factory import UserFactory
 from Simulation.swiping_strategy import SwipingContext, RandomStrategy, PickyStrategy, DesperateStrategy
 from Managers.matching_manager import MatchingManager
 from Simulation.user import User
-from typing import Set
+# from typing import Set
 import random
 
 class TestSimulator:
     def __init__(self) -> None:
-        self.users : Set[User] = set()
+        self.users : list[User] = []
         self.user_factory = UserFactory("w")
         self.suggestions= set()
         self.contexts = (SwipingContext(PickyStrategy()), SwipingContext(RandomStrategy()), SwipingContext(DesperateStrategy())) 
@@ -21,7 +21,7 @@ class TestSimulator:
                 user = self.user_factory.factory_method(gender=UserFactory.GENDER[index],age_type=UserFactory.AGE_TYPE[i % 3])
                 real_user = self.user_factory.add_to_database(user)
                 if real_user:
-                    self.users.add(user)
+                    self.users.append(user)
 
     def swipe(self) -> None:
         
@@ -31,7 +31,7 @@ class TestSimulator:
         nbr_random_users = int(nbr_users * 0.33)
         nbr_desperate_users = nbr_users - nbr_picky_users - nbr_random_users
     
-        strategy_list_for_users = [[0] * nbr_picky_users, [1] * nbr_random_users, [2] * nbr_desperate_users]
+        strategy_list_for_users = [0] * nbr_picky_users + [1] * nbr_random_users + [2] * nbr_desperate_users
 
 
         for index_user, user in enumerate(self.users):
@@ -42,7 +42,7 @@ class TestSimulator:
                 swiped_list = self.contexts[chosen_context_index].perform_swipe(len(suggestions))
                 # manipulated list
                 for index, suggestion in enumerate(suggestions):
-                    print(suggestion)
+                    print('--- SUGGESTION: ', suggestion)
                     json_suggestion = {'suggestion_id': suggestion['suggestion_id'], "choice": swiped_list[index]}
                     MatchingManager.update_suggestion(json_suggestion)
 
