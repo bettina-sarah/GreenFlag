@@ -1,4 +1,5 @@
 from util_classes.strategy import Strategy, Context
+import random
 
 
 # fichier fait par: Bettina-Sarah Janesch
@@ -21,7 +22,10 @@ class PickyStrategy(SwipingStrategy):
         super().__init__('picky')
     
     def swipe(self, nbr_suggestions) -> None:
-        pass
+        amount_of_yes = int(nbr_suggestions* 0.1)
+        amount_of_no = nbr_suggestions - amount_of_yes
+        suggestions = [self._choices[0]] * amount_of_no + [self._choices[1]] * amount_of_yes
+        return suggestions
 
 
 class RandomStrategy(SwipingStrategy):
@@ -29,7 +33,8 @@ class RandomStrategy(SwipingStrategy):
         super().__init__('random')
     
     def swipe(self, nbr_suggestions) -> None:
-        pass
+        return [random.choice(self._choices) for _ in range(nbr_suggestions)]
+
 
 
 class DesperateStrategy(SwipingStrategy):
@@ -37,7 +42,7 @@ class DesperateStrategy(SwipingStrategy):
         super().__init__('desperate')
     
     def swipe(self, nbr_suggestions) -> list:
-        return self._choices[1] * nbr_suggestions
+        return [self._choices[1]] * nbr_suggestions
 
 class SwipingContext(Context):
     def __init__(self, strategy: SwipingStrategy):

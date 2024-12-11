@@ -28,21 +28,28 @@ class TestSimulator:
         nbr_random_users = int(nbr_users * 0.33)
         nbr_desperate_users = nbr_users - nbr_picky_users - nbr_random_users
         
-        strategy_nbr_users = (nbr_picky_users, nbr_random_users, nbr_desperate_users)
+        strategy_nbr_users = [nbr_picky_users, nbr_random_users, nbr_desperate_users]
 
 
         for user in self.users:
             suggestions = MatchingManager.get_suggestions({'id': user.user_id})
             user.suggestions = suggestions # pas necessaire ?
             strategy_choice = random.randint(0,2)
-            swiped_list = self.contexts[strategy_choice].perform_swipe(len(suggestions))
-            strategy_nbr_users[strategy_choice] -= 1
+            try:
+                swiped_list = self.contexts[strategy_choice].perform_swipe(len(suggestions))
+                strategy_nbr_users[strategy_choice] -= 1
 
-            # manipulated list
-            for suggestion in suggestions:
-                print(suggestion)
-                json_suggestion = {'suggestion_id': suggestion['suggestion_id'], "choice": 'yes'}
-                MatchingManager.update_suggestion(json_suggestion)
+                # decrease here isnt good.
+
+                # manipulated list
+                for index, suggestion in enumerate(suggestions):
+                    print(suggestion)
+                    json_suggestion = {'suggestion_id': suggestion['suggestion_id'], "choice": swiped_list[index]}
+                    MatchingManager.update_suggestion(json_suggestion)
+
+            except Exception as error:
+                print(error)
+                pass
 
 
         # faire suggestions : [ personnes]
