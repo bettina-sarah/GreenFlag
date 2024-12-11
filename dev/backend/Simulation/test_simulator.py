@@ -5,6 +5,21 @@ from Simulation.user import User
 # from typing import Set
 import random
 
+import logging
+import coloredlogs
+
+level_styles = {
+    'debug': {'color': 'blue'},
+    'info': {'color': 'green'},
+    'warning': {'color': 'yellow'},
+    'error': {'color': 'red'},
+    'critical': {'color': 'magenta'}
+}
+
+
+coloredlogs.install(level='DEBUG', level_styles=level_styles)
+
+
 class TestSimulator:
     def __init__(self) -> None:
         self.users : list[User] = []
@@ -22,6 +37,13 @@ class TestSimulator:
                 real_user = self.user_factory.add_to_database(user)
                 if real_user:
                     self.users.append(user)
+                    logging.debug(f"User {repr(user)} created locally")
+                    
+
+        # logging.info("This is an info message.")
+        # logging.warning("This is a warning message.")
+        # logging.error("This is an error message.")
+        # logging.critical("This is a critical message.")
 
     def swipe(self) -> None:
         
@@ -42,12 +64,12 @@ class TestSimulator:
                 swiped_list = self.contexts[chosen_context_index].perform_swipe(len(suggestions))
                 # manipulated list
                 for index, suggestion in enumerate(suggestions):
-                    print('--- SUGGESTION: ', suggestion)
+                    logging.info(f"--- SUGGESTION: {suggestion['suggestion_id']}, user: {suggestion['user_infos']['profile_info']['basic_info']['first_name']}")
                     json_suggestion = {'suggestion_id': suggestion['suggestion_id'], "choice": swiped_list[index]}
                     MatchingManager.update_suggestion(json_suggestion)
 
             except Exception as error:
-                print(error)
+                logging.error(error)
                 pass
         
 

@@ -7,6 +7,20 @@ from faker import Faker
 from PIL import Image
 import io
 
+import logging
+import coloredlogs
+
+level_styles = {
+    'debug': {'color': 'blue'},
+    'info': {'color': 'green'},
+    'warning': {'color': 'yellow'},
+    'error': {'color': 'red'},
+    'critical': {'color': 'magenta'}
+}
+
+
+coloredlogs.install(level='DEBUG', level_styles=level_styles)
+
 class PhotoDAO:
     def __init__(self) -> None:
         self.env = lmdb.open('my_lmdb_database', map_size=48 * 1024 * 1024)
@@ -31,7 +45,7 @@ class PhotoDAO:
                     keys.append(key)
                     return keys
         except Exception as e:
-            print("PHOTO DAO add phptp not working: ", e)
+            logging.error(f"PhotoDAO add_photos:, {e}")
             return []
     
 
@@ -62,7 +76,7 @@ class PhotoDAO:
                 self.env.close()
                 return True
         except Exception as e:
-            print(e)
+            logging.error(f"PhotoDAO delete_photo:, {e}")
             return False
     
     def get_photo(self, key) -> str | bool:
@@ -74,7 +88,7 @@ class PhotoDAO:
                 # self.env.close()
             return image
         except Exception as e:
-            print(e)
+            logging.error(f"PhotoDAO get_photo:, {e}")
             return False
     
 
