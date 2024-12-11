@@ -5,12 +5,12 @@ import numpy as np
 class AffinityPropagation(AlgoStrategy):
   def __init__(self):
     self.algo = AffinityPropagationSciKit()
-    
-  def get_labels(self)->np.ndarray:
-    return self.algo.labels_
-    
+  
   def get_cluster_centers(self)->np.ndarray:
       return self.algo.cluster_centers_    
+    
+  def get_labels(self)->np.ndarray:
+    return self.algo.labels_  
     
   def fit(self, np_array:np.ndarray):
     self.algo.fit(np_array)

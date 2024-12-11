@@ -6,6 +6,14 @@ class AlgoStrategy(Strategy):
         self.type = type
     
     @abstractmethod
+    def get_cluster_centers(self)->np.ndarray:
+        pass
+    
+    @abstractmethod
+    def get_labels(self)->np.ndarray:
+        pass
+    
+    @abstractmethod
     def fit(self, np_array:np.ndarray):
         pass
         

@@ -6,11 +6,11 @@ class KMeans(AlgoStrategy):
   def __init__(self, n_clusters:int,max_iteration:int, tolerance:float):
     self.algo = KMeansScikit(n_clusters,max_iteration,tolerance)
 
-  def get_labels(self)->np.ndarray:
-    return self.algo.labels_
-  
   def get_cluster_centers(self)->np.ndarray:
     return self.algo.cluster_centers_
+  
+  def get_labels(self)->np.ndarray:
+    return self.algo.labels_
 
   def fit(self, np_array:np.ndarray):
     self.algo.fit(np_array)
