@@ -40,12 +40,7 @@ class TestSimulator:
             user.suggestions = suggestions # pas necessaire ?
             strategy_choice = random.randint(0,2)
             try:
-                # 
                 swiped_list = self.contexts[strategy_list_for_users[index_user]].perform_swipe(len(suggestions))
-                strategy_nbr_users[strategy_choice] -= 1
-
-                # decrease here isnt good.
-
                 # manipulated list
                 for index, suggestion in enumerate(suggestions):
                     print(suggestion)
