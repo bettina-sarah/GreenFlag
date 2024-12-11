@@ -1,7 +1,8 @@
 import React from "react";
 import Menu from "@/components/Menu";
-import ProfileCard from "@/components/ProfileCard";
 import useFetch from "@/api/useFetch";
+import { NotificationProvider } from "@/components/NotificationContext";
+import CustomTinderCard from "@/components/CustomTinderCard";
 
 export interface IProfileData {
   suggestion_id: string;
@@ -48,15 +49,17 @@ const MatchingPage: React.FC = () => {
 
   return (
     <div className="w-full h-full flex flex-col items-center">
-      <Menu />
+      <NotificationProvider>
+        <Menu />
+      </NotificationProvider>
       <div className="relative w-96 pt-3">
         {profileData &&
           profileData?.map((profile, index) => (
-            <ProfileCard
+            <CustomTinderCard
               key={index}
               profile_info={profile.user_infos.profile_info}
               photos={profile.user_infos.photo_keys}
-              suggestion_id = {profile.suggestion_id}
+              suggestion_id={profile.suggestion_id}
             />
           ))}
         {!profileData && !profileLoading && !profileError && (

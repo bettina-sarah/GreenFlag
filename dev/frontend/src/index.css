@@ -9,44 +9,53 @@
 @tailwind utilities;
 
 
-
 .theme-emerald {
   --bg-color: 200, 255, 237; /* Muted mint green */
   --text-color: 47, 72, 88; /* Dark green */
-  --text-muted: 51, 107, 84;
+  --text-muted: 200,255,237;
+  --text-inverted: 208, 183,167;
+  --custom-h1: 238, 230, 131;
+  --custom-h2: 189, 223, 123;
   --primary-color: 0, 178, 151;
   --secondary-color: 0, 78, 100;
-  --optional-color: 75, 181, 247;
+  --optional-color: 77, 128, 118;
   --bg-image-1: url('../ressources/bg/Background.svg');
   --bg-image-2: url('../ressources/bg/Background-2.svg');
 }
 
 .theme-autumn {
-  --bg-color: 251, 249, 249; /* Light neutral tan */
-  --text-color: 17, 11, 12; /* Soft muted pink */
-  /* --text-muted:; */
-  --primary-color: 153, 107, 107;/* - Dark earthy green */
-  --secondary-color: 197, 195, 171;/* - Muted brownish gray */
-  --optional-color: 171, 177, 142;/* - Muted olive green */
+  --bg-color: 251, 249, 249; 
+  --text-color: 242, 206, 152; 
+  --text-muted: 255, 255, 255;
+  --text-inverted: 13,49,103;
+  --custom-h1: 242, 206, 152;
+  --custom-h2: 178, 207, 136;
+  --primary-color: 153, 107, 107;
+  --secondary-color: 197, 195, 171;
+  --optional-color: 171, 177, 142;
   --bg-image-1: url('../ressources/bg/autumn/Background.svg');
   --bg-image-2: url('../ressources/bg/autumn/Background-2.svg');
 }
 
 .theme-electric {
-  --bg-color: 254, 236, 240; /* Muted orange-brown */
-  --text-color: 20, 1, 5; /* Bright orange-red */
-  /* --text-muted:; */
-  --primary-color: 240, 29, 73; /* - Warm terracotta */
-  --secondary-color: 112, 246, 208; /* - Deep charcoal */
-  --optional-color: 81, 123, 243; /* - Soft gray */
+  --bg-color: 254, 236, 240; 
+  --text-color: 216, 240, 142; 
+  --text-muted:255,255,255;
+  --custom-h1: 218, 242, 138;
+  --custom-h2: 159, 242, 138;
+  --primary-color: 240, 29, 73; 
+  --secondary-color: 81, 123, 243; 
+  --optional-color: 112, 246, 208; 
   --bg-image-1: url('../ressources/bg/electric/Background.svg');
   --bg-image-2: url('../ressources/bg/electric/Background-2.svg');
 }
 
 .theme-orange{
   --bg-color: 253, 252, 250;
-  --text-color: 22, 19, 17;
+  --text-color: 0, 95, 38;
   --text-muted:242, 237, 111;
+  --custom-h1: 238, 230, 131;
+  --custom-h2: 189, 223, 123;
   --primary-color:255, 143, 24;
   --secondary-color:230, 186, 140;
   --optional-color:237, 162, 83;
@@ -56,8 +65,10 @@
 
 .theme-blue {
   --bg-color: 246, 248, 251; /* Muted blue-gray */
-  --text-color: 7, 10, 13; /* Light sky blue */
-  /* --text-muted:; */
+  --text-color: 255, 240, 121; /* Light sky blue */
+  --text-muted: 241, 239, 173;
+  --custom-h1: 238, 230, 131;
+  --custom-h2: 189, 223, 123;
   --primary-color: 79, 136, 196; /* - Vibrant aqua */
   --secondary-color: 133, 177, 224; /* - Medium bright blue */
   --optional-color: 94, 158, 226; /* - Deep navy blue */
@@ -69,6 +80,8 @@
   --bg-color: 251, 253, 250; /* Soft muted green */
   --text-color: 18, 24, 12;
   /* --text-muted:; */
+  --custom-h1: 238, 230, 131;
+  --custom-h2: 189, 223, 123;
   --primary-color: 136, 195, 76; /* - Bright green */
   --secondary-color: 182, 224, 138; /* - Light seafoam */
   --optional-color: 155, 221, 89; /* - Pale green */
@@ -129,6 +142,8 @@ h1{
     --bg-color: 200, 255, 237;
     --text-color: 47, 72, 88; /* Dark green */
     --text-muted: 51, 107, 84;
+    --custom-h1: 238, 230, 131;
+    --custom-h2: 189, 223, 123;
     --primary-color: 0, 178, 151;
     --secondary-color: 0, 78, 100;
     --bg-image-1: url('./../ressources/bg/Background.svg');

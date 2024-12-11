@@ -32,7 +32,7 @@ class DAO():
     def _insert_request(cursor) -> bool:
         try:
             if cursor.rowcount > 0: # we might want to know how much was inserted, return count later
-                return True
+                return cursor.fetchone()
         except Exception as e:
             print(e)
             return False
@@ -49,6 +49,7 @@ class DAO():
         try:
             if cursor.rowcount > 0:
                 return True
+            return False
         except Exception as e:
             print(e)
             return False 
@@ -84,6 +85,9 @@ class DAO():
             return response
         except Exception as e:
             print(e)
+            error = str(e).split("\n")
+            if str(error[0]) == "FLAGGED TOO MANY TIME":
+                return str(error[0])
             return False
 
     # this can be in DAO directly 
@@ -98,7 +102,7 @@ class DAO():
             connection.commit() # possibly necessary for an insert request
             # connection.close()
             return response
-        except Exception as error:  
+        except Exception as error:
             print(error)
         return False
 

@@ -85,29 +85,46 @@ class MatchingManager():
     
     @staticmethod
     def find_suggestions(user_id:int, members:int) -> list[int]:
-        user_activities = np.zeros((1, NUMBER_ACTIVITIES))
-        index_counter = 0
-        members_index = []
-        data = np.zeros((len(members), NUMBER_ACTIVITIES))
+        MINIMUM_SUGGESTION = 20
+        user_activities = np.zeros((1, NUMBER_ACTIVITIES + 1))
+        data = np.zeros((len(members), NUMBER_ACTIVITIES + 1))
         
-        if len(members) <= 8:
+
+        if len(members) <= MINIMUM_SUGGESTION:
             prospects_ids = []
-            for member in members:
-                prospects_ids.append(member[0])
+            for member in members: 
+                if member[0] != int(user_id):
+                    prospects_ids.append(member[0])
             return prospects_ids
         
         
         user_data = MatchingDAO.get_user_activities(user_id)
         user_data[:] = [x - 1 for x in user_data[:]]
         user_activities[0,user_data[0]] += 1
+        user_flag_count = MatchingDAO.get_flag_count(user_id)
+        user_activities[0,-1] = user_flag_count
         
+        index_counter = 0
+        members_index = []
+        max_flag_count = user_flag_count
         for member in members:
             if member[0] != user_id:
                 member_id, member_activities = member
                 members_index.append(member_id)
+                
                 member_activities[:] = [x-1 for x in member_activities]
                 data[index_counter,member_activities] += 1
+                
+                flag_count = MatchingDAO.get_flag_count(member_id)
+                max_flag_count = max(max_flag_count,flag_count)
+                data[index_counter, -1] = flag_count
+                
                 index_counter += 1
+        
+        if max_flag_count > 0:
+            data[:,-1] = data[:,-1] / max_flag_count
+            user_activities[0,-1] /= max_flag_count
+        
         
         if np.sum(data) > 0:
             Algo = AlgoContext(MeanShift(0.3,100,0.001))
@@ -115,9 +132,9 @@ class MatchingManager():
             Algo.fit(data)
             
             user_label = Algo.predict(user_activities)
-        
+
             labels = Algo.get_labels()
-        
+
             prospects = []
         
             index = 0
@@ -126,6 +143,23 @@ class MatchingManager():
                     prospects.append(index)
                     
                 index += 1
+            
+            if len(prospects) <= MINIMUM_SUGGESTION:
+                cluster_centers = Algo.get_cluster_centers()
+                cluster_distances = np.linalg.norm(cluster_centers - user_activities, axis=1)
+                sorted_cluster_distances = np.argsort(cluster_distances)
+                
+                cluster_index = 0
+                while len(prospects) < MINIMUM_SUGGESTION:
+                    if sorted_cluster_distances[cluster_index] != user_label:
+                        index = 0
+                        for label in labels:
+                            if label == sorted_cluster_distances[cluster_index]:
+                                prospects.append(index)
+                            index += 1
+                            
+                    cluster_index += 1
+                    
             
             prospects_ids = [members_index[i] for i in prospects]
             

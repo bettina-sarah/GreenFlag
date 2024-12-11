@@ -27,8 +27,13 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
         try {
           // Send the token to the backend for validation
           console.log(
-            "auth session storage:",sessionStorage.getItem("authToken"));
-          const response = await fetchData<TokenData>( "/verify-token", sessionStorage.getItem("authToken"));
+            "auth session storage:",
+            sessionStorage.getItem("authToken")
+          );
+          const response = await fetchData<TokenData>(
+            "/verify-token",
+            sessionStorage.getItem("authToken")
+          );
           console.log("apres fetch AUTHGUARD:", response);
           if (typeof response === "boolean") {
             if (response) {
@@ -39,7 +44,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
               sessionStorage.removeItem("authToken");
               navigate("/");
             }
-          } else if (response.token !== undefined){
+          } else if (response.token !== undefined) {
             setIsAuthenticated(true);
             console.log("token if response is not bool:", response);
             console.log("response.token: ", response.token);

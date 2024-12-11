@@ -16,7 +16,7 @@ class AccountDAO(DAO):
 
 
     @staticmethod
-    def create_account(params:tuple) -> bool:
+    def create_account(params:tuple) -> int:
             query = 'INSERT INTO member (first_name, last_name, email, member_password) VALUES (%s, %s, %s, %s) RETURNING id;'
             response = AccountDAO._prepare_statement("insert", query, params)
             # si courriel existe deja, DB retorune erreur cle existe - faut gerer - envoyer au frontend 'account exists' 
@@ -27,6 +27,20 @@ class AccountDAO(DAO):
         query = 'UPDATE member SET profile_completed = true WHERE id = %s;'
         response = AccountDAO._prepare_statement("update", query, params)
         return response
+    
+    @staticmethod
+    def confirm_email(params:tuple) -> bool:
+        query = 'UPDATE member SET email_confirmed = true WHERE id = %s;'
+        response = AccountDAO._prepare_statement("update", query, params)
+        return response
+
+    @staticmethod
+    def confirm_fake(params:tuple) -> bool:
+        query = 'UPDATE member SET fake_member = true WHERE id = %s;'
+        response = AccountDAO._prepare_statement("update", query, params)
+        return response
+    
+    
     
     @staticmethod
     def save_token(params:tuple) -> bool:
@@ -120,4 +134,10 @@ class AccountDAO(DAO):
     def update_hobbies(params:tuple) -> bool:
         query = 'SELECT update_hobbies(%s, %s);'
         response = AccountDAO._prepare_statement("select", query, params)
+        return response
+    
+    @staticmethod
+    def update_localisation(params:tuple) -> bool:
+        query = 'UPDATE member SET last_lat = %s, last_long = %s WHERE id = %s'
+        response = AccountDAO._prepare_statement('update',query,params)
         return response

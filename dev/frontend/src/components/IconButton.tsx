@@ -7,15 +7,17 @@ interface IconButtonProps {
   icon: string;
   page?: string | null; // button can naviagate or execute custom function!
   onClick?: () => void;
+  disabled?: boolean;
   toggleState?: boolean; // optional turn on off !
   suggestion_id?: string;
-  className?:string;
+  className?: string;
 }
 
 const IconButton: React.FC<IconButtonProps> = ({
   icon,
   page,
   onClick,
+  disabled,
   toggleState,
   className,
 }) => {
@@ -49,8 +51,9 @@ const IconButton: React.FC<IconButtonProps> = ({
     <div className={customClassName}>
       <button
         className="w-15 h-12 flex items-center justify-center p-1 border-none
-      hover:bg-teal-500 rounded"
+      hover:bg-gray-500/30 rounded"
         onClick={handleClick}
+        disabled={disabled}
       >
         <Icon icon={icon} />
       </button>

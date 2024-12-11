@@ -12,13 +12,13 @@ interface BasicInfoProps {
 const BasicInfo: React.FC<BasicInfoProps> = ({ basic_info }) => {
   return (
     <div className="flex flex-col items-baseline pl-4 pt-1">
-      <h1 className="font-nunito-extrabold text-h1-yellow ">
+      <h1 className="font-nunito-extrabold text-h1-custom ">
         {basic_info.first_name}, {basic_info.age}
       </h1>
-      <h2 className="font-nunito-bold text-blue-100">
+      <h2 className="font-nunito-bold text-muted-text">
         Lives in {basic_info.city}
       </h2>
-      <h2 className="font-nunito-bold text-blue-100">
+      <h2 className="font-nunito-bold text-muted-text">
         {basic_info.location} km away
       </h2>
     </div>

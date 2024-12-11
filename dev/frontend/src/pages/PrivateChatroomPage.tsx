@@ -105,8 +105,10 @@ const PrivateChatroomPage: React.FC = () => {
             onChange={(e) => setNewMessage(e.target.value)} 
             placeholder="Type a message"
             onKeyDown={(e)=>{ // https://www.geeksforgeeks.org/how-to-get-the-enter-key-in-reactjs/
-              if (e.key === "Enter")
+              if (e.key === "Enter"){
+                e.preventDefault()
                 sendMessage()
+              }
             }}
           />
           <IconButton className="absolute right-3 bottom-2" onClick={sendMessage} icon={sendIcon} />

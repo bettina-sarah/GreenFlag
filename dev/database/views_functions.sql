@@ -1,3 +1,4 @@
+CREATE EXTENSION IF NOT EXISTS postgis;
 DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
 DROP VIEW IF EXISTS chatroom_messages_view;
@@ -115,13 +116,108 @@ BEGIN
 END$$;
 
 
+-- DROP FUNCTION IF EXISTS find_eligible_members_activities;
+
+-- CREATE OR REPLACE FUNCTION find_eligible_members_activities
+-- (user_id INTEGER)
+-- RETURNS TABLE(member_id INT, aggregated_id_activities INT[])
+-- AS $$
+-- DECLARE
+--   user_last_lat FLOAT;
+--   user_last_long FLOAT;
+-- BEGIN
+--   SELECT last_lat, last_long INTO user_last_lat, user_last_long
+--   FROM member
+--   WHERE id = user_id;
+
+-- 	RETURN QUERY
+--   WITH eligible_members AS (
+--     SELECT m.id
+--     FROM member m
+--     WHERE m.gender = ANY (
+--         SELECT UNNEST(preferred_genders)
+--         FROM member
+--         WHERE id = user_id
+--       )
+--       AND EXTRACT(YEAR FROM AGE(CURRENT_DATE, m.date_of_birth)) BETWEEN (
+--         SELECT min_age
+--         FROM member
+--         WHERE id = user_id
+--       )
+--       AND (
+--         SELECT max_age
+--         FROM member
+--         WHERE id = user_id
+--       )
+--       AND m.relationship_type = (
+--         SELECT relationship_type
+--         FROM member
+--         WHERE id = user_id
+--       )
+--       AND ( -- !!! comment out this last AND at school if PostGIS not installed else error
+--         m.last_lat IS NULL OR
+--         m.last_long IS NULL OR 
+--         user_last_long IS NULL OR
+--         user_last_lat IS NULL OR
+--         (
+--           ST_Distance( -- calculate distance between last locations of current user and user filtered
+--             ST_SetSRID(ST_MakePoint(m.last_long,m.last_lat), 4326)::geography,
+--             ST_SetSRID(ST_MakePoint(user_last_long,user_last_lat), 4326)::geography
+--           ) <= 10000 -- Distance of 10km in meters
+--         )
+--       )
+--   )
+--   SELECT m.id AS member_id, ARRAY_AGG(ma.activity_id) AS aggregated_id_activities
+-- 	FROM member_activities ma
+--   JOIN eligible_members em ON ma.member_id = em.id
+--   JOIN member m ON ma.member_id = m.id
+--   GROUP BY m.id;
+-- END;
+-- $$ LANGUAGE PLPGSQL;
+
+
+
+
+
+
+
+
+DROP FUNCTION IF EXISTS calculate_distance;
+
+CREATE OR REPLACE FUNCTION calculate_distance
+(user1_lat DOUBLE PRECISION, user1_long DOUBLE PRECISION, user2_lat DOUBLE PRECISION, user2_long DOUBLE PRECISION)
+RETURNS DOUBLE PRECISION
+AS $$
+DECLARE
+  distance_km DOUBLE PRECISION;
+BEGIN
+-- 6371: radius Earth in km
+    distance_km := 6371 * 2 * ASIN(
+        SQRT(
+            POWER( SIN( (RADIANS(user1_lat) - RADIANS(user2_lat) ) / 2), 2) + 
+            COS(RADIANS(user1_lat)) * COS(RADIANS(user2_lat)) * POWER(SIN( ( RADIANS(user1_long) - RADIANS(user2_long) ) / 2), 2)
+        )
+    );
+	RETURN distance_km * 1000;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
+
 DROP FUNCTION IF EXISTS find_eligible_members_activities;
 
 CREATE OR REPLACE FUNCTION find_eligible_members_activities
 (user_id INTEGER)
 RETURNS TABLE(member_id INT, aggregated_id_activities INT[])
 AS $$
+DECLARE
+  user_last_lat FLOAT;
+  user_last_long FLOAT;
 BEGIN
+  SELECT last_lat, last_long INTO user_last_lat, user_last_long
+  FROM member
+  WHERE id = user_id;
+
 	RETURN QUERY
   WITH eligible_members AS (
     SELECT m.id
@@ -146,6 +242,19 @@ BEGIN
         FROM member
         WHERE id = user_id
       )
+      AND (
+        m.last_lat IS NULL OR
+        m.last_long IS NULL OR 
+        user_last_long IS NULL OR
+        user_last_lat IS NULL OR
+        (
+<<<<<<< HEAD
+          calculate_distance(m.last_lat, m.last_long, user_last_lat, user_last_long) <= 50000
+=======
+          calculate_distance(m.last_lat, m.last_long, user_last_lat,user_last_long ) <= 10000 -- Distance of 10km in meters
+>>>>>>> main
+        )
+      )
   )
   SELECT m.id AS member_id, ARRAY_AGG(ma.activity_id) AS aggregated_id_activities
 	FROM member_activities ma
@@ -154,6 +263,22 @@ BEGIN
   GROUP BY m.id;
 END;
 $$ LANGUAGE PLPGSQL;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 DROP FUNCTION IF EXISTS create_suggestions;
@@ -165,8 +290,13 @@ DECLARE
 	prospect_id INTEGER;
 BEGIN
   FOREACH prospect_id IN ARRAY prospect_ids LOOP
-    INSERT INTO suggestion (member_id_1, member_id_2, situation, date_creation)
+    BEGIN
+      INSERT INTO suggestion (member_id_1, member_id_2, situation, date_creation)
       VALUES (user_id, prospect_id, 'pending', CURRENT_DATE);
+    EXCEPTION
+      WHEN unique_violation THEN
+      NULL;
+    END;
   END LOOP;
 
   RETURN TRUE;
@@ -234,6 +364,94 @@ BEGIN
 
 END;
 $$ LANGUAGE PLPGSQL;
+
+DROP TRIGGER IF EXISTS trigger_unmatch_on_flag ON flagged;
+DROP FUNCTION IF EXISTS unmatch_on_flag;
+
+CREATE OR REPLACE FUNCTION unmatch_on_flag()
+RETURNS TRIGGER AS $$
+DECLARE
+  reporter_flagged_count INTEGER;
+BEGIN
+  SELECT COUNT(*) INTO reporter_flagged_count
+  FROM flagged
+  WHERE member_id = NEW.reporter_id;
+
+  IF reporter_flagged_count >= 3 THEN
+    RAISE EXCEPTION 'FLAGGED TOO MANY TIME';
+  END IF;
+
+  PERFORM unmatch(NEW.reporter_id, NEW.member_id);
+
+  RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE TRIGGER trigger_unmatch_on_flag
+AFTER INSERT ON flagged
+FOR EACH ROW
+EXECUTE FUNCTION unmatch_on_flag();
+
+
+-- NOTIFICATION TRIGGERS & FUNCTIONS
+
+DROP TRIGGER IF EXISTS trigger_notify_on_message ON msg;
+DROP FUNCTION IF EXISTS notify_on_message;
+
+CREATE OR REPLACE FUNCTION notify_on_message()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO alert_notification (member_id, subject_id, msg, chatroom_name)
+  VALUES (
+    (SELECT CASE WHEN NEW.sender_id = m1.member_id_1 THEN m1.member_id_2 ELSE m1.member_id_1 END
+    FROM member_match AS mm
+    JOIN suggestion AS m1 ON mm.suggestion_id = m1.id
+    WHERE mm.id = NEW.match_id),
+    NEW.sender_id,
+    'You have a new message from ' || (SELECT first_name FROM member WHERE id = NEW.sender_id),
+    (SELECT mm.chatroom_name
+    FROM member_match AS mm
+    WHERE mm.id = NEW.match_id)
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE TRIGGER trigger_notify_on_message
+AFTER INSERT ON msg
+FOR EACH ROW
+EXECUTE FUNCTION notify_on_message();
+
+DROP TRIGGER IF EXISTS trigger_notify_on_match ON member_match;
+DROP FUNCTION IF EXISTS notify_on_match;
+
+
+CREATE OR REPLACE FUNCTION notify_on_match()
+RETURNS TRIGGER AS $$
+DECLARE
+  member1 INT;
+  member2 INT;
+BEGIN
+
+  SELECT member_id_1, member_id_2
+  INTO member1, member2
+  FROM suggestion
+  WHERE id = NEW.suggestion_id;
+
+  INSERT INTO alert_notification (member_id, subject_id, msg, chatroom_name)
+  VALUES
+    (member1, member2, 'You matched with ' || (SELECT first_name FROM member WHERE id = member2) || '!', NEW.chatroom_name),
+    (member2, member1, 'You matched with ' || (SELECT first_name FROM member WHERE id = member1) || '!', NEW.chatroom_name);
+
+  RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+
+CREATE TRIGGER trigger_notify_on_match
+AFTER INSERT ON member_match
+FOR EACH ROW
+EXECUTE FUNCTION notify_on_match();
 
 -- INTRICATE FUNCTION BY CHATGEPETO
 CREATE OR REPLACE FUNCTION get_chatrooms(user_id INTEGER)

@@ -1,10 +1,6 @@
 # Green Flag
-
-#   QUESTIONS POUR JC
-1. si qlqn swipe like NO sur toi, tu ne laura pas dans tes suggestions ... mais qsq on fait si toulmonde swipe left pour toi? Tu aura personne? 
-Je trouve c pas une bonne idee dajuster les suggestions des autres en fonc de les profils q toi a swipé ?
-2. struct des tables: message; conversation; tab de match avec memes info? 
-
+## to-do:
+* Il est attendu que pour chaque fichier de code se trouve un en-tête standardisé qui contient au minimum le nom du fichier (introspection), le contexte de ce fichier, que retrouve-t-on ici? (une très courte phrase), le nom de l’auteur ou des auteurs. Tentez de déterminer un standard élégant et de le respecter dans tous les fichiers.
 ### par Vincent Fournier et Bettina-Sarah Janesch
 
 ## Présentation
