@@ -1,43 +1,16 @@
+
+    # ------------------------------------------------------------------------------------
+    # ====================================================================================
+    # swipingstrategy.py
+    # Created By  : Bettina-Sarah Janesch
+    # About       : Contient les strategies de swiper (difficile, aléatoire, et desesperé)
+    #               et le contexte qui va avec le patron de conception Strategy.
+    # ====================================================================================
+    # ------------------------------------------------------------------------------------
+
+
 from util_classes.strategy import Strategy, Context
 import random
-
-
-# fichier fait par: Bettina-Sarah Janesch
-'''
-Contient les strategies de swiper (difficile, aléatoire, et desesperé) et le contexte qui
-va avec le patron de conception Strategy.
-'''
-
-      #!/usr/bin/env python3  Line 1
-      # -*- coding: utf-8 -*- Line 2
-      #----------------------------------------------------------------------------
-      # Created By  : name_of_the_creator   Line 3
-      # Created Date: date/month/time ..etc
-      # version ='1.0'
-      # --
-"""
-            :mod:`parrot` -- Dead parrot access
-      ===================================
-
-      .. module:: parrot
-         :platform: Unix, Windows
-         :synopsis: Analyze and reanimate dead parrots.
-      .. moduleauthor:: Eric Cleese <eric@python.invalid>
-      .. moduleauthor:: John Idle <john@python.invalid>
-
-__author__ = "Rob Knight, Gavin Huttley, and Peter Maxwell"
-__copyright__ = "Copyright 2007, The Cogent Project"
-__credits__ = ["Rob Knight", "Peter Maxwell", "Gavin Huttley",
-                    "Matthew Wakefield"]
-__license__ = "GPL"
-__version__ = "1.0.1"
-__maintainer__ = "Rob Knight"
-__email__ = "rob@spot.colorado.edu"
-__status__ = "Production"
-
-
-
-  """
 
 class SwipingStrategy(Strategy):
 
