@@ -175,6 +175,7 @@ VALUES
   ('petlover'),
   ('learningnewlanguage');
 
+
 DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
 DROP VIEW IF EXISTS chatroom_messages_view;

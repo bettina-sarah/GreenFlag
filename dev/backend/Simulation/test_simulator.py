@@ -19,8 +19,9 @@ class TestSimulator:
         for index, gender in enumerate(gender_proportion):
             for i in range(int(user_amount*gender)):
                 user = self.user_factory.factory_method(gender=UserFactory.GENDER[index],age_type=UserFactory.AGE_TYPE[i % 3])
-                self.user_factory.add_to_database(user)
-                self.users.add(user)
+                real_user = self.user_factory.add_to_database(user)
+                if real_user:
+                    self.users.add(user)
 
     def swipe(self) -> None:
         nbr_users = len(self.users)
