@@ -42,6 +42,7 @@ class TestSimulator:
         for user in self.users:
             # creates them if not existent; pending ONLY
             suggestions = MatchingManager.get_suggestions({'id': user.user_id})
+            logging.critical(f'Suggestions for User {user.user_id} created.')
             user.suggestions = suggestions # pas necessaire ?
 
 
