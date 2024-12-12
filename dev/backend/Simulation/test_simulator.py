@@ -38,6 +38,12 @@ class TestSimulator:
                     self.users.append(user)
                     logging.debug(f"User {repr(user)} created locally")
 
+    def _create_pending_suggestions(self) -> None:
+        for user in self.users:
+            # creates them if not existent; pending ONLY
+            suggestions = MatchingManager.get_suggestions({'id': user.user_id})
+            user.suggestions = suggestions # pas necessaire ?
+
 
     def swipe(self) -> None:
         
