@@ -33,12 +33,19 @@ const CustomTinderCard: React.FC<IProfileProps> = ({
     updateSuggestion(suggestion_id, "yes");
     setHasSwiped(true);
     console.log("right: ", suggestion_id);
+    console.log('isLastCard:', isLastCard)
+    if (isLastCard && onLastCardLeftScreen) {
+      onLastCardLeftScreen();
+    }
   };
 
   const SwipeLeft = (suggestion_id: string) => {
     updateSuggestion(suggestion_id, "no");
     setHasSwiped(true);
     console.log("left: ", suggestion_id);
+    if (isLastCard && onLastCardLeftScreen) {
+      onLastCardLeftScreen();
+    }
   };
 
   const onSwipe = (direction: string, suggestion_id: string) => {
