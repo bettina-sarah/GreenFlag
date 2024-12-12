@@ -48,7 +48,7 @@ const ThemeSelector = () => {
       </button> */}
 
       {isOpen && (
-      <div className="flex absolute mt-2 w-60 bg-primary-color rounded-md shadow-lg z-10 left-1/2  transform -translate-x-1/2">
+      <div className="flex absolute mt-2 w-32 bg-primary-color rounded-md shadow-lg z-10 left-1/2  transform -translate-x-1/2">
         <ul className='w-full space-y-2 p-2'>
           <li>
             <button
