@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Menu from "@/components/Menu";
-import useFetch from "@/api/useFetch";
+// import useFetch from "@/api/useFetch";
 import { NotificationProvider } from "@/components/NotificationContext";
 import CustomTinderCard from "@/components/CustomTinderCard";
+import useTriggerFetch from "@/api/useTriggerFetch";
 
 export interface IProfileData {
   suggestion_id: string;
@@ -31,7 +32,7 @@ const MatchingPage: React.FC = () => {
     data: profileData,
     loading: profileLoading,
     error: profileError,
-  } = useFetch<IProfileData[]>({
+  } = useTriggerFetch<IProfileData[]>({
     url: "/suggestions",
     data: { id: sessionStorage.getItem("id") },
   }, refetchTrigger);
@@ -60,12 +61,13 @@ const MatchingPage: React.FC = () => {
       <div className="relative w-96 pt-3">
         {profileData &&
           profileData?.map((profile, index) => (
+            console.log('index: ',index),
             <CustomTinderCard
               key={index}
               profile_info={profile.user_infos.profile_info}
               photos={profile.user_infos.photo_keys}
               suggestion_id={profile.suggestion_id}
-              isLastCard={index === profileData.length - 1} // Mark the last card
+              isLastCard={index === 0} // Mark the last card
               onLastCardLeftScreen={handleEndOfList} // Pass the callback
             />
           ))}
