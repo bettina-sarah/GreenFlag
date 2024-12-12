@@ -1,5 +1,4 @@
 import { IP_SERVER } from "@/config/constants";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import LockIcon from "@/../ressources/icons/lock.png";
@@ -7,7 +6,6 @@ import EmailIcon from "@/../ressources/icons/email.png";
 import {toast} from "react-toastify";
 
 const ModifyPasswordForm = () => {
-  const navigate = useNavigate();
   type FormData = {
     email: string;
     password: string;

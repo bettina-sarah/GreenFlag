@@ -132,24 +132,24 @@ CREATE TABLE msg (
 );
 
 ALTER TABLE member_activities ADD FOREIGN KEY (activity_id) REFERENCES activity (id);
-ALTER TABLE member_activities ADD FOREIGN KEY (member_id) REFERENCES member (id);
+ALTER TABLE member_activities ADD FOREIGN KEY (member_id) REFERENCES member (id) ON DELETE CASCADE;
 
-ALTER TABLE flagged ADD FOREIGN KEY (member_id) REFERENCES member (id);
-ALTER TABLE flagged ADD FOREIGN KEY (reporter_id) REFERENCES member (id);
+ALTER TABLE flagged ADD FOREIGN KEY (member_id) REFERENCES member (id) ON DELETE CASCADE;
+ALTER TABLE flagged ADD FOREIGN KEY (reporter_id) REFERENCES member (id) ON DELETE CASCADE;
 
-ALTER TABLE alert_notification ADD FOREIGN KEY (member_id) REFERENCES member (id);
-ALTER TABLE alert_notification ADD FOREIGN KEY (subject_id) REFERENCES member (id);
+ALTER TABLE alert_notification ADD FOREIGN KEY (member_id) REFERENCES member (id) ON DELETE CASCADE;
+ALTER TABLE alert_notification ADD FOREIGN KEY (subject_id) REFERENCES member (id) ON DELETE CASCADE;
 
 ALTER TABLE member_photo ADD FOREIGN KEY (photo_id) REFERENCES photo (id);
-ALTER TABLE member_photo ADD FOREIGN KEY (member_id) REFERENCES member (id);
+ALTER TABLE member_photo ADD FOREIGN KEY (member_id) REFERENCES member (id) ON DELETE CASCADE;
 
-ALTER TABLE suggestion ADD FOREIGN KEY (member_id_1) REFERENCES member (id);
-ALTER TABLE suggestion ADD FOREIGN KEY (member_id_2) REFERENCES member (id);
+ALTER TABLE suggestion ADD FOREIGN KEY (member_id_1) REFERENCES member (id) ON DELETE CASCADE;
+ALTER TABLE suggestion ADD FOREIGN KEY (member_id_2) REFERENCES member (id) ON DELETE CASCADE;
 
-ALTER TABLE member_match ADD FOREIGN KEY (suggestion_id) REFERENCES suggestion (id);
+ALTER TABLE member_match ADD FOREIGN KEY (suggestion_id) REFERENCES suggestion (id) ON DELETE CASCADE;
 
-ALTER TABLE msg ADD FOREIGN KEY (match_id) REFERENCES member_match (id);
-ALTER TABLE msg ADD FOREIGN KEY (sender_id) REFERENCES member (id);
+ALTER TABLE msg ADD FOREIGN KEY (match_id) REFERENCES member_match (id)  ON DELETE CASCADE;
+ALTER TABLE msg ADD FOREIGN KEY (sender_id) REFERENCES member (id)  ON DELETE CASCADE;
 
 
 INSERT INTO activity (activity_name)
