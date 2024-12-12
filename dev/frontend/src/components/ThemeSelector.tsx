@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, Component } from 'react';
 import IconButton from './IconButton';
 import PaletteIcon from '@/../ressources/icons/palette_bold_icon_white.png'
 
@@ -18,8 +18,28 @@ const ThemeSelector = () => {
     document.documentElement.classList.add(theme);
   }, [theme]);
 
+  // Gemini
+  const componentRef = useRef(null);
+
+  useEffect(()=>{
+    const handleClickOutside = (event:any) => {
+      if (componentRef.current && !componentRef.current.contains(event.target)){
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown',handleClickOutside);
+    document.addEventListener('touchstart',handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  },[]);
+
+
+
   return (
-    <div className="relative pt-1">
+    <div ref={componentRef} className="relative pt-1">
       
       <IconButton icon={PaletteIcon} onClick={()=> setIsOpen(!isOpen)}/>
 
@@ -28,11 +48,11 @@ const ThemeSelector = () => {
       </button> */}
 
       {isOpen && (
-      <div className="flex absolute mt-2 bg-primary-color rounded-md shadow-lg z-10">
-        <ul className='space-y-2 p-2'>
+      <div className="flex absolute mt-2 w-60 bg-primary-color rounded-md shadow-lg z-10 left-1/2  transform -translate-x-1/2">
+        <ul className='w-full space-y-2 p-2'>
           <li>
             <button
-              className="w-full p-2 bg-theme-emerald text-black hover:bg-theme-emerald/50 rounded"
+              className="w-full p-2 bg-theme-emerald text-black hover:bg-theme-emerald/50 rounded shadow-xl"
               onClick={() => changeTheme('theme-emerald')}
             >
               Emerald
@@ -40,7 +60,7 @@ const ThemeSelector = () => {
           </li>
           <li>
             <button
-              className="w-full p-2 bg-theme-autumn text-black hover:bg-theme-autumn/50 rounded-md"
+              className="w-full p-2 bg-theme-autumn text-black hover:bg-theme-autumn/50 rounded-md shadow-xl"
               onClick={() => changeTheme('theme-autumn')}
             >
               Autumn
@@ -48,7 +68,7 @@ const ThemeSelector = () => {
           </li>
           <li>
             <button
-              className="w-full p-2 bg-theme-electric text-black hover:bg-theme-orange/50 rounded-md"
+              className="w-full p-2 bg-theme-electric text-black hover:bg-theme-orange/50 rounded-md shadow-xl"
               onClick={() => changeTheme('theme-electric')}
             >
               Electric
@@ -56,7 +76,7 @@ const ThemeSelector = () => {
           </li>
           <li>
             <button
-              className="w-full p-2 bg-theme-orange text-black hover:bg-theme-orange/50 rounded-md"
+              className="w-full p-2 bg-theme-orange text-black hover:bg-theme-orange/50 rounded-md shadow-xl"
               onClick={() => changeTheme('theme-orange')}
             >
               Orange
@@ -64,7 +84,7 @@ const ThemeSelector = () => {
           </li>
           <li>
             <button
-              className="w-full p-2 bg-theme-blue text-black hover:bg-theme-blue/50 rounded-md"
+              className="w-full p-2 bg-theme-blue text-black hover:bg-theme-blue/50 rounded-md shadow-xl"
               onClick={() => changeTheme('theme-blue')}
             >
               Ocean
@@ -72,7 +92,7 @@ const ThemeSelector = () => {
           </li>
           <li>
             <button
-              className="w-full p-2 bg-theme-green text-black hover:bg-theme-green/50 rounded-md"
+              className="w-full p-2 bg-theme-green text-black hover:bg-theme-green/50 rounded-md shadow-xl"
               onClick={() => changeTheme('theme-green')}
             >
               Forest
