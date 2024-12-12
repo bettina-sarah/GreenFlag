@@ -2,12 +2,15 @@ import { IP_SERVER } from "@/config/constants";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import LockIcon from "@/../ressources/icons/lock.png";
+
 
 const DeleteAccountForm = () => {
   const navigate = useNavigate();
   type FormData = {
     email: string;
     password: string;
+    cpassword: string;
   };
 
   const email = sessionStorage.getItem("email") || "";
@@ -15,8 +18,11 @@ const DeleteAccountForm = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<FormData>();
+
+  const PasswordValue = watch('password');
 
   const onSubmit = handleSubmit(async (data: any) => {
     try {
@@ -33,21 +39,27 @@ const DeleteAccountForm = () => {
   });
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col justify-between">
-      <label>Password:</label>
-      <input {...register("password", { required: true, maxLength: 20 })} />
-      {errors.password && errors.password.type === "required" && (
-        <span>This is required</span>
-      )}
-      {errors.password && errors.password.type === "maxLength" && (
-        <span>Max length exceeded</span>
-      )}
-      <input
-        type="email"
-        {...register("email")}
-        defaultValue={email}
-        readOnly
-      />
+    <form onSubmit={onSubmit} className="flex flex-col h-32 justify-between m-5">
+      <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
+        <img src={LockIcon} className="size-7"/>
+        <input className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
+        placeholder="Password"
+        type="password"
+        {...register("password", { required: true, maxLength: 20 })}/>
+      </div>
+        {errors.password?.type === "required" && <span className="text-red-500 text-xs">This is required</span>}
+        {errors.password?.type === "maxLength" && <span className="text-red-500 text-xs">Max length exceeded</span>}
+
+      <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
+        <img src={LockIcon} className="size-7"/>
+        <input className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
+        placeholder="Password confirmation"
+        type="password"
+        {...register("cpassword", { required: true, validate: (val:string) =>PasswordValue != val ? "Your passwords do not match" : true, })}/>
+      </div>
+        {errors.password?.type === "required" && <span className="text-red-500 text-xs">This is required</span>}
+        {errors.cpassword?.message && <span className="text-red-500 text-xs">{errors.cpassword?.message}</span>}
+
       <button className="bg-red-600 p-1 rounded-md text-white" type="submit">
         Delete Account
       </button>
