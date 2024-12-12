@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import LockIcon from "@/../ressources/icons/lock.png";
 import EmailIcon from "@/../ressources/icons/email.png";
+import {toast} from "react-toastify";
 
 const ModifyPasswordForm = () => {
   const navigate = useNavigate();
@@ -29,15 +30,12 @@ const ModifyPasswordForm = () => {
 
   const onSubmit = handleSubmit(async (data: any) => {
     try {
-      const answer = await axios.post(IP_SERVER + "/delete-account", data);
+      const answer = await axios.post(IP_SERVER + "/modify-password", data);
       if (answer.data) {
-        console.log(answer);
-        console.log("Account deleted successfully");
-        navigate("/login");
-        // extra message: account deleted
+        toast.success('Password succesfully changed');
       }
     } catch (error) {
-      console.error("Error during login:", error);
+      console.error("Error during password modification:", error);
     }
   });
 
@@ -79,8 +77,8 @@ const ModifyPasswordForm = () => {
         <img src={LockIcon} className="size-7"/>
         <input className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
         placeholder="New password"
-        type="newpassword"
-        {...register("password", { required: true, maxLength: 20 })}/>
+        type="password"
+        {...register("newpassword", { required: true, maxLength: 20 })}/>
       </div>
         {errors.password?.type === "required" && <span className="text-red-500 text-xs">This is required</span>}
         {errors.password?.type === "maxLength" && <span className="text-red-500 text-xs">Max length exceeded</span>}
@@ -89,8 +87,8 @@ const ModifyPasswordForm = () => {
         <img src={LockIcon} className="size-7"/>
         <input className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
         placeholder="New password confirmation"
-        type="cnewpassword"
-        {...register("cpassword", { required: true, validate: (val:string) =>NewPasswordValue != val ? "Your passwords do not match" : true, })}/>
+        type="password"
+        {...register("cnewpassword", { required: true, validate: (val:string) =>NewPasswordValue != val ? "Your passwords do not match" : true, })}/>
       </div>
         {errors.password?.type === "required" && <span className="text-red-500 text-xs">This is required</span>}
         {errors.cpassword?.message && <span className="text-red-500 text-xs">{errors.cpassword?.message}</span>}
