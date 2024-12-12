@@ -18,7 +18,7 @@ const NotificationDropDown: React.FC<NotificationDropDownProps> = ({
 
   const navigate = useNavigate();
 
-  console.log("notificationDropDown:", notifications);
+  // console.log("notificationDropDown:", notifications);
 
   return (
     <div className="relative pt-1">

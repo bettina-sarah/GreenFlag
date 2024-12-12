@@ -11,7 +11,6 @@ import { useNotifications } from "./NotificationContext";
 
 const Menu: React.FC = () => {
   const { notifications } = useNotifications();
-  console.log("menu notifications received are: ", notifications);
 
   return (
     <div className="w-full h-50">
