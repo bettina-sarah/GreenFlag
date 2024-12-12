@@ -33,7 +33,7 @@ const SettingsDropDown: React.FC = () => {
             />
             
             {isOpen && (
-                <div className="flex absolute w-60 mt-2 bg-primary-color rounded-md shadow-lg z-10 left-1/2 transform sm:-translate-x-full md:-translate-x-1/2">
+                <div className="flex absolute w-48 mt-2 bg-primary-color rounded-md shadow-lg z-10 left-1/2 transform -translate-x-full md:-translate-x-1/2">
                     <ul className="w-full space-y-2 p-2">
                         <li>
                             <button
