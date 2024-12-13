@@ -44,11 +44,6 @@ const MatchingPage: React.FC = () => {
     setRefetchTrigger((prev) => prev + 1); // Increment trigger to refetch
   };
 
-  // // Debugging ONLY: Check data changes
-  // useEffect(() => {
-  //   console.log("Updated profileData:", profileData);
-  // }, [profileData]);
-
   if (!profileData && profileLoading) {
     return <div>Loading...</div>;
   }

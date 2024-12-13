@@ -201,6 +201,7 @@ def notifications() -> bool:
     response = NotificationManager.get_notifications(request.json)
     logger.warning(f'notifications:{response}'if response else 'no notifications available')
     return jsonify(response)
+#---- ATTENTION JSONIFY TRUE FALSE GOOD OR BAD , CHECK RESPONSE TYPE AND REFACTOR !!!
 
 @app.route('/update-notification', methods=['POST'])
 def update_notification() -> bool:
