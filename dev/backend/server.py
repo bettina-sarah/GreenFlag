@@ -27,6 +27,7 @@ level_styles = {
 
 
 coloredlogs.install(level='DEBUG', level_styles=level_styles)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}},
@@ -198,7 +199,7 @@ def update_suggestion() -> bool:
 @app.route('/notifications', methods=['POST'])
 def notifications() -> bool:
     response = NotificationManager.get_notifications(request.json)
-    logging.warning(f'notifications:{response}'if response else 'no notifications available')
+    logger.warning(f'notifications:{response}'if response else 'no notifications available')
     return jsonify(response)
 
 @app.route('/update-notification', methods=['POST'])

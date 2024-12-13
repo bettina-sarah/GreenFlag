@@ -8,19 +8,6 @@ from DAOs.photo_lmdb_dao import PhotoDAO
 from Managers.account_manager import AccountManager
 from datetime import datetime, timezone
 import logging
-import coloredlogs
-
-# Set up custom colors
-level_styles = {
-    'debug': {'color': 'blue'},
-    'info': {'color': 'green'},
-    'warning': {'color': 'yellow'},
-    'error': {'color': 'red'},
-    'critical': {'color': 'magenta'}
-}
-
-# Install coloredlogs with custom styles
-coloredlogs.install(level='DEBUG', level_styles=level_styles)
 
 class Factory(ABC):    
     def __init__(self) -> None:
