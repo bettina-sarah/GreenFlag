@@ -107,23 +107,7 @@ class AccountDAO(DAO):
 
     @staticmethod
     def add_photos(params:tuple) -> bool:
-        # params: (user id, keys)
-        # delete & remake it all.
-        ''' ------ postgres DOCU:
-        PostgreSQL lets you reference columns of other tables in the WHERE condition by specifying the other tables in the USING
-        clause. For example, to delete all films produced by a given producer, one can do:
-
-        DELETE FROM films USING producers
-        WHERE producer_id = producers.id AND producers.name = 'foo';
-        What is essentially happening here is a join between films and producers, with all successfully joined films rows being marked
-        for deletion. This syntax is not standard. A more standard way to do it is:
-
-        DELETE FROM films
-        WHERE producer_id IN (SELECT id FROM producers WHERE name = 'foo');
-        '''
-        print('accounTdao, add photos', params)
-        # query = 'SELECT add_photos(%s, ARRAY[%s]);'
-        # we format the sql array in manager
+        logging.warning(f'photo added, key: {params}')
         query = 'SELECT add_photos(%s, %s);'
         response = AccountDAO._prepare_statement("select", query, params)
         if response:
