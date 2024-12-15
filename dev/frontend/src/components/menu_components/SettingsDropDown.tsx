@@ -1,18 +1,18 @@
 import {useState, useEffect, useRef} from "react";
-import IconButton from "./IconButton";
+import IconButton from "../IconButton";
 import { useNavigate } from "react-router-dom";
-import settingsIcon from "../../ressources/icons/settings.png";
+import settingsIcon from "../../../ressources/icons/settings.png";
 
 const SettingsDropDown: React.FC = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
-    const componentRef = useRef(null);
+    const componentRef = useRef<HTMLDivElement>(null);
 
     useEffect(()=>{
-        const handleClickOutside = (event:any) => {
-            if (componentRef.current && !componentRef.current.contains(event.target)){
+        const handleClickOutside = (event:Event) => {
+            if (componentRef.current && !componentRef.current.contains(event.target as Node | null)){
                 setIsOpen(false);
             }
         };

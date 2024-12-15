@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Menu from "@/components/Menu";
+import Menu from "@/components/menu_components/Menu";
 import useFetch from "@/api/useFetch";
 import fetchData from "@/api/fetchData";
 import ChatroomItem from "@/components/ChatroomItem";

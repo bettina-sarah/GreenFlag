@@ -1,6 +1,6 @@
 import React from "react";
 import DeleteAccountForm from "@/components/form_components/DeleteAccountForm";
-import Menu from "@/components/Menu";
+import Menu from "@/components/menu_components/Menu";
 import { NotificationProvider } from "@/components/NotificationContext";
 import { useNavigate } from "react-router-dom";
 import QuestionnaireForm from "@/components/form_components/QuestionnaireForm";

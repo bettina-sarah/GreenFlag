@@ -43,8 +43,7 @@ const QuestionnaireForm = () => {
 
   const {
     register: registerHobbies,
-    handleSubmit: handleSubmitHobbies,
-    formState: { errors: errorsHobbies },
+    handleSubmit: handleSubmitHobbies
   } = useForm<FormDataHobbies>();
 
   const {
@@ -66,7 +65,7 @@ const QuestionnaireForm = () => {
   return (
     <div className="flex flex-col justify-between m-6 overflow-visible">
       <form
-        onSubmit={handleSubmitHobbies(async (data:any) => {
+        onSubmit={handleSubmitHobbies(async (data:FormDataHobbies) => {
           await onSubmitFormHobbies(data);
           await completeProfileAndNavigate();
         })}
@@ -87,7 +86,7 @@ const QuestionnaireForm = () => {
         </button>
       </form>
       <form
-        onSubmit={handleSubmitInfo(async (data:any) => {
+        onSubmit={handleSubmitInfo(async (data:FormDataInfo) => {
           await onSubmitFormInfo(data);
           await completeProfileAndNavigate();
         })}
@@ -307,7 +306,7 @@ const QuestionnaireForm = () => {
       </form>
 
       <form
-        onSubmit={handleSubmitPhoto(async (data:any) => {
+        onSubmit={handleSubmitPhoto(async (data:FormDataPhoto) => {
           await onSubmitPhoto(data);
           await completeProfileAndNavigate();
         })}
