@@ -1,11 +1,13 @@
-    # ------------------------------------------------------------------------------------
-    # ====================================================================================
-    # user.py
-    # Created By  : Bettina-Sarah Janesch
-    # About       : A FAIRE .... 
-    # ====================================================================================
-    # ------------------------------------------------------------------------------------
-
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : user.py
+Created By  : Bettina-Sarah Janesch
+About       : Contient la classe User avec tous les attributs nécessaires pour 
+              simuler un usager dans la base de données.
+====================================================================================
+------------------------------------------------------------------------------------
+'''
 class User:
     def __init__(self,first_name:str, last_name:str, dob:int, gender:str, height:int, email:str, religion:str, want_kids:bool,
                  city:str,latitude: float, longitude: float, preferences:dict,interests:dict, bio: str, photo_key: str, password:str = 'password123') -> None:
@@ -39,7 +41,6 @@ class User:
     def suggestions(self, suggestions:str) -> None:
         self.__suggestions = suggestions
 
-    
     
     @property
     def first_name(self) -> str:

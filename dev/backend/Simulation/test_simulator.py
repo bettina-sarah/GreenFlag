@@ -1,3 +1,16 @@
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : test_simulator.py
+Created By  : Bettina-Sarah Janesch et Vincent Fournier
+About       : Contient le simulateur principal de notre application avec la fabrique
+              d'usagers et faire des suggestions (encore en attente) et des swipes.
+====================================================================================
+------------------------------------------------------------------------------------
+'''
+
+
+
 from Simulation.user_factory import UserFactory
 from Simulation.swiping_strategy import SwipingContext, RandomStrategy, PickyStrategy, DesperateStrategy
 from Managers.matching_manager import MatchingManager

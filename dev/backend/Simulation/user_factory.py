@@ -1,3 +1,15 @@
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : user_factory.py
+Created By  : Bettina-Sarah Janesch et Vincent Fournier
+About       : Contient le patron de conception Factory: la fabrique d'usagers qui 
+              permet de génerer des usagers et leurs attributs, incluant des photos 
+              et localisation aléatoires, ainsi que les ajouter a la BD.
+====================================================================================
+------------------------------------------------------------------------------------
+'''
+
 from __future__ import annotations
 from Simulation.user import User
 from abc import ABC, abstractmethod
@@ -12,24 +24,11 @@ import logging
 class Factory(ABC):    
     def __init__(self) -> None:
         pass
-    
-    # @abstractmethod
-    # def factory_method_men(self):
-    #     pass
 
     @abstractmethod
     def factory_method(self):
         pass
 
-    
-    
-    # @abstractmethod
-    # def factory_method_women(self):
-    #     pass
-    
-    # @abstractmethod
-    # def factory_method_nonbinary(self):
-    #     pass
 
 class UserFactory(Factory):
     
