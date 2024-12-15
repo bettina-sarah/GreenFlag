@@ -23,7 +23,13 @@ import {
   hobbiesKeys,
   checkAndCompleteProfile,
 } from "../form_submits/QuestionnaireSubmitHandlers";
-import { datePickerTheme, selectTheme, textAreaTheme, textInputTheme } from "../theme-flowbite/CustomTheme";
+import {
+  datePickerTheme,
+  selectTheme,
+  textAreaTheme,
+  textInputTheme,
+} from "../theme-flowbite/CustomTheme";
+import { toast } from "react-toastify";
 // https://marmelab.com/react-admin/ImageInput.html
 
 const QuestionnaireForm = () => {
@@ -32,12 +38,12 @@ const QuestionnaireForm = () => {
   const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
 
   const toggleGender = (gender: string) => {
-    setSelectedGenders((prev) =>{
+    setSelectedGenders((prev) => {
       const updatedState = prev.includes(gender)
         ? prev.filter((g) => g !== gender)
         : [...prev, gender];
 
-        return updatedState;
+      return updatedState;
     });
   };
 
@@ -66,34 +72,49 @@ const QuestionnaireForm = () => {
   return (
     <div className="flex flex-col justify-between m-6 overflow-visible">
       <form
-        onSubmit={handleSubmitHobbies(async (data:any) => {
-          await onSubmitFormHobbies(data);
+        onSubmit={handleSubmitHobbies(async (data: any) => {
+          await toast.promise(onSubmitFormHobbies(data), {
+            pending: "Promise is pending",
+            success: "Hobbies saved!",
+            error: "Promise rejected 🤯",
+          });
+
           await completeProfileAndNavigate();
         })}
         className=" bg-primary-color rounded-3xl p-4"
       >
-        <label className="text-base text-h1-custom">Select at least 5 centers of interest:</label>
+        <label className="text-base text-h1-custom">
+          Select at least 5 centers of interest:
+        </label>
         <div className="flex flex-col space-y-4 p-3">
           {hobbiesKeys.map((hobby, index) => (
             <div className="flex items-center gap-2" key={index}>
-              <Checkbox className="bg-custom-bg border-secondary-color checked:bg-secondary-color focus:outline-secondary-color" id={hobby} {...registerHobbies(hobby)} />
-              <Label className="text-base-text" htmlFor={hobby}>{hobby}</Label>
+              <Checkbox
+                className="bg-custom-bg border-secondary-color checked:bg-secondary-color focus:outline-secondary-color"
+                id={hobby}
+                {...registerHobbies(hobby)}
+              />
+              <Label className="text-base-text" htmlFor={hobby}>
+                {hobby}
+              </Label>
             </div>
           ))}
         </div>
 
-        <button className="bg-secondary-color p-1 min-h-8 min-w-24 rounded-lg text-white" type="submit">
+        <button
+          className="bg-secondary-color p-1 min-h-8 min-w-24 rounded-lg text-white"
+          type="submit"
+        >
           Submit
         </button>
       </form>
       <form
-        onSubmit={handleSubmitInfo(async (data:any) => {
+        onSubmit={handleSubmitInfo(async (data: any) => {
           await onSubmitFormInfo(data);
           await completeProfileAndNavigate();
         })}
         className="bg-primary-color rounded-3xl p-4 mt-7"
       >
-
         <div>
           <label className="text-h2-custom">Select Your Date of Birth:</label>
           <Controller
@@ -104,8 +125,20 @@ const QuestionnaireForm = () => {
               <Datepicker
                 {...field}
                 onChange={(date: Date | null) => field.onChange(date)}
-                minDate={new Date(new Date(new Date().setFullYear(new Date().getFullYear() - 100)))}
-                maxDate={new Date(new Date(new Date().setFullYear(new Date().getFullYear() - 18)))}
+                minDate={
+                  new Date(
+                    new Date(
+                      new Date().setFullYear(new Date().getFullYear() - 100)
+                    )
+                  )
+                }
+                maxDate={
+                  new Date(
+                    new Date(
+                      new Date().setFullYear(new Date().getFullYear() - 18)
+                    )
+                  )
+                }
                 color="custom"
                 theme={datePickerTheme}
               />
@@ -114,18 +147,22 @@ const QuestionnaireForm = () => {
           {errorsInfo.date_of_birth &&
             errorsInfo.date_of_birth.type === "required" && (
               <span>This is required</span>
-          )}
+            )}
         </div>
 
         <div className="pt-10">
           <label className="text-h2-custom">Select Your Gender:</label>
-          <Select 
-          {...registerInfo("gender", { required: true })}
-          color="custom"
-          theme={selectTheme}
+          <Select
+            {...registerInfo("gender", { required: true })}
+            color="custom"
+            theme={selectTheme}
           >
             {genders.map((gender, index) => (
-              <option value={gender} key={index} className="bg-primary-color focus:bg-custom-bg">
+              <option
+                value={gender}
+                key={index}
+                className="bg-primary-color focus:bg-custom-bg"
+              >
                 {gender}
               </option>
             ))}
@@ -153,10 +190,13 @@ const QuestionnaireForm = () => {
         </div>
 
         <div className="pt-10">
-          <label className="text-h2-custom">Select Your Religion or Belief:</label>
-          <Select {...registerInfo("religion", { required: true })}
-          color="custom"
-          theme={selectTheme}
+          <label className="text-h2-custom">
+            Select Your Religion or Belief:
+          </label>
+          <Select
+            {...registerInfo("religion", { required: true })}
+            color="custom"
+            theme={selectTheme}
           >
             {religions.map((religion, index) => (
               <option value={religion} key={index}>
@@ -170,8 +210,13 @@ const QuestionnaireForm = () => {
         </div>
 
         <div className="flex items-center gap-2 pt-10">
-          <Label className="text-h2-custom" htmlFor="want_kids">Do you want kids? (check for yes)</Label>
-          <Checkbox className="bg-custom-bg border-secondary-color checked:bg-secondary-color focus:outline-secondary-color" {...registerInfo("want_kids")} />
+          <Label className="text-h2-custom" htmlFor="want_kids">
+            Do you want kids? (check for yes)
+          </Label>
+          <Checkbox
+            className="bg-custom-bg border-secondary-color checked:bg-secondary-color focus:outline-secondary-color"
+            {...registerInfo("want_kids")}
+          />
         </div>
 
         <div className="pt-10">
@@ -191,7 +236,9 @@ const QuestionnaireForm = () => {
         </div>
 
         <div className="pt-10">
-          <label className="text-h2-custom">Tell us a little thing about yourself:</label>
+          <label className="text-h2-custom">
+            Tell us a little thing about yourself:
+          </label>
           <Textarea
             {...registerInfo("bio", { required: true })}
             required
@@ -251,10 +298,13 @@ const QuestionnaireForm = () => {
           </div>
         </div>
 
-        <label className="text-h2-custom">Select The Relationship Type You Prefer:</label>
-        <Select {...registerInfo("relationship_type", { required: true })}
-        color="custom"
-        theme={selectTheme}
+        <label className="text-h2-custom">
+          Select The Relationship Type You Prefer:
+        </label>
+        <Select
+          {...registerInfo("relationship_type", { required: true })}
+          color="custom"
+          theme={selectTheme}
         >
           <option value="fun">Fun</option>
           <option value="shortterm">Shortterm</option>
@@ -301,20 +351,26 @@ const QuestionnaireForm = () => {
           />
         </div>
 
-        <button className="bg-secondary-color mt-5 p-1 min-h-8 min-w-24 rounded-lg text-white" type="submit">
+        <button
+          className="bg-secondary-color mt-5 p-1 min-h-8 min-w-24 rounded-lg text-white"
+          type="submit"
+        >
           Submit
         </button>
       </form>
 
       <form
-        onSubmit={handleSubmitPhoto(async (data:any) => {
+        onSubmit={handleSubmitPhoto(async (data: any) => {
           await onSubmitPhoto(data);
           await completeProfileAndNavigate();
         })}
         className="bg-primary-color rounded-3xl p-4 mt-7"
       >
         <ImageInputCustom name="image" control={control} />
-        <button className="bg-secondary-color p-1 min-h-8 min-w-24 rounded-lg text-white" type="submit">
+        <button
+          className="bg-secondary-color p-1 min-h-8 min-w-24 rounded-lg text-white"
+          type="submit"
+        >
           Submit
         </button>
       </form>

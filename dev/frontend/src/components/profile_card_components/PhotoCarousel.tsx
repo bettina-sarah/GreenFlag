@@ -38,10 +38,10 @@ const PhotoCarousel: React.FC<CarouselProps> = ({ images }) => {
 
   if (!images || images.length === 0) {
     return (
-      <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
+      <div className="h-56 sm:h-64 xl:h-80 2xl:h-96 [&>div>div]:!rounded-none">
         <Carousel slide={false}>
           <img
-            className="w-full object-cover rounded-3xl"
+            className="w-full object-cover"
             src={unknown_photo}
             alt="First slide"
           />
@@ -50,12 +50,12 @@ const PhotoCarousel: React.FC<CarouselProps> = ({ images }) => {
     );
   } else if (photoData && photoData.length > 0) {
     return (
-      <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
+      <div className="h-56 sm:h-64 xl:h-80 2xl:h-96 [&>div>div]:!rounded-none">
         <Carousel slide={false}>
           {photoData.map((image) => (
             <img
               key={image.key}
-              className="w-full object-cover rounded-3xl"
+              className="w-full object-cover"
               src={image.path}
               alt="unknown"
             />

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Menu from "@/components/Menu";
-// import useFetch from "@/api/useFetch";
 import { NotificationProvider } from "@/components/NotificationContext";
 import CustomTinderCard from "@/components/CustomTinderCard";
 import useTriggerFetch from "@/api/useTriggerFetch";
