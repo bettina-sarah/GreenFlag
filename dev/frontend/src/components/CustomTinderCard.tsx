@@ -33,7 +33,7 @@ const CustomTinderCard: React.FC<IProfileProps> = ({
     updateSuggestion(suggestion_id, "yes");
     setHasSwiped(true);
     console.log("right: ", suggestion_id);
-    console.log('isLastCard:', isLastCard)
+    console.log("isLastCard:", isLastCard);
     if (isLastCard && onLastCardLeftScreen) {
       onLastCardLeftScreen();
     }
@@ -76,7 +76,8 @@ const CustomTinderCard: React.FC<IProfileProps> = ({
         preventSwipe={["up", "down"]}
         onCardLeftScreen={handleCardLeftScreen}
       >
-        <div className="w-96 bg-primary-color p-1 rounded-3xl relative">
+        {/* <div className="w-96 bg-primary-color p-1 rounded-3xl relative"> */}
+        <div className="min-w-[48vw] max-w-[96vw]    lg:min-w-[23vw] lg:max-w-[24vw] bg-primary-color p-2 rounded-3xl relative min-h-[90vh] max-h-[95vh] lg:min-h-[95vh] lg:max-h-[100vh] overflow-hidden">
           <PhotoCarousel images={photos} />
           <BasicInfo basic_info={profile_info.basic_info} />
           <RelationshipGoals
@@ -85,7 +86,7 @@ const CustomTinderCard: React.FC<IProfileProps> = ({
           />
           <Hobbies hobbies={profile_info.hobby_array} />
           <Bio bio={profile_info.bio} />
-          <div className="flex items-center justify-evenly p-3">
+          <div className="flex items-center justify-evenly p-2">
             <IconButton
               icon={RedFlag}
               onClick={() => SwipeLeft(suggestion_id)} // Pass suggestion_id to the handler

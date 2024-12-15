@@ -45,11 +45,6 @@ const PhotoCarousel: React.FC<CarouselProps> = ({ images }) => {
             src={unknown_photo}
             alt="First slide"
           />
-          <img
-            className="w-full object-cover rounded-3xl"
-            src={unknown_photo}
-            alt="unknown"
-          />
         </Carousel>
       </div>
     );
