@@ -77,8 +77,12 @@ const CustomTinderCard: React.FC<IProfileProps> = ({
         onCardLeftScreen={handleCardLeftScreen}
       >
         {/* <div className="w-96 bg-primary-color p-1 rounded-3xl relative"> */}
-
-        <div className=" shadow-[rgba(0,_0,_0,_0.4)_0px_30px_90px] min-w-[48vw] max-w-[96vw]    lg:min-w-[23vw] lg:max-w-[24vw] bg-primary-color p-2 rounded-3xl relative min-h-[90vh] max-h-[95vh] lg:min-h-[95vh] lg:max-h-[100vh] overflow-hidden">
+        {/* SHADOW BOX OPTIONS: */}
+        {/* option 1: */}
+        {/* <div className="shadow-[0_3px_10px_rgb(0,0,0,0.2)]   min-w-[48vw] max-w-[96vw]    lg:min-w-[23vw] lg:max-w-[24vw] bg-primary-color p-2 rounded-3xl relative min-h-[90vh] max-h-[95vh] lg:min-h-[95vh] lg:max-h-[100vh] overflow-hidden"> */}
+        {/* option 2: */}
+        {/* <div className="shadow-[5px_5px_rgba(0,_98,_90,_0.4),_10px_10px_rgba(0,_98,_90,_0.3),_15px_15px_rgba(0,_98,_90,_0.2),_20px_20px_rgba(0,_98,_90,_0.1),_25px_25px_rgba(0,_98,_90,_0.05)]  min-w-[48vw] max-w-[96vw]    lg:min-w-[23vw] lg:max-w-[24vw] bg-primary-color p-2 rounded-3xl relative min-h-[90vh] max-h-[95vh] lg:min-h-[95vh] lg:max-h-[100vh] overflow-hidden"> */}
+        <div className="shadow-[0_3px_10px_rgb(0,0,0,0.2)]   min-w-[48vw] max-w-[96vw]    lg:min-w-[23vw] lg:max-w-[24vw] bg-primary-color p-2 rounded-3xl relative min-h-[90vh] max-h-[95vh] lg:min-h-[95vh] lg:max-h-[100vh] overflow-hidden">
           <div className="pt-1">
             <PhotoCarousel images={photos} />
           </div>
