@@ -1,23 +1,28 @@
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : notification_manager.py
+Created By  : Bettina-Sarah Janesch
+About       : Classe qui gère les notifications des utilisateurs en interagissant 
+              avec les DAO pour récupérer, formater, mettre à jour et supprimer 
+              les notifications.
+====================================================================================
+------------------------------------------------------------------------------------
+'''
+
 from DAOs.notification_dao import NotificationDAO
+import logging
 
 class NotificationManager:
-    def __init__(self) -> None:
-        pass
-        self.new_notifications = [] # [(notification.subject_id)]
-        self.read_notifications = []      #[(notification.subject_id)]
-
     @staticmethod
     def get_notifications(data) -> list:
         user_id = data.get('id')
         try:
             response = NotificationDAO.get_notifications(user_id)
-            #[('You matched with John!', 'chatroom_1_2'), ('You matched with John!', 'chatroom_1_3'), ('You matched with John!', 'chatroom_1_4'), ('You have a new message from Jane', 'chatroom_1_2')]
             jsonified_response = NotificationManager.jsonify_notification_response(response)
             return jsonified_response
-                    # email sequence here
         except Exception as error:
-            print(error)
-            print('notification manager')
+            logging.error(f' {__class__}: error in get_notifications: {error}')
             return False
     
     @staticmethod
@@ -28,7 +33,7 @@ class NotificationManager:
                 new_list.append({'notification': notification[0], 'chatroom': notification[1]})
             return new_list
         except Exception as error:
-            print(error)
+            logging.error(f' {__class__}: error in jsonify_notification_response: {error}')
             return False
 
     @staticmethod
@@ -38,13 +43,10 @@ class NotificationManager:
         try:
             response = NotificationDAO.update_notification(notification_id, user_id)
             return response
-                    # email sequence here
         except Exception as error:
-            print(error, __class__)
+            logging.error(f' {__class__}: error in update_notification: {error}')
             return False
 
-    # def add_notification(self, notification) -> None:
-    #     pass
 
     def delete_notification(self, notification) -> None:
         pass

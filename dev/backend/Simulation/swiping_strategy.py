@@ -1,12 +1,13 @@
-    # ------------------------------------------------------------------------------------
-    # ====================================================================================
-    # Filename    : swiping_strategy.py
-    # Created By  : Bettina-Sarah Janesch
-    # About       : Contient les strategies de swiper (difficile, aléatoire, et desesperé)
-    #               et le contexte qui va avec le patron de conception Strategy.
-    # ====================================================================================
-    # ------------------------------------------------------------------------------------
-
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : sim_main.py
+Created By  : Bettina-Sarah Janesch
+About       : Contient les strategies de swiper (difficile, aléatoire, et desesperé)
+              et le contexte qui va avec le patron de conception Strategy.
+====================================================================================
+------------------------------------------------------------------------------------
+'''
 
 from util_classes.strategy import Strategy, Context
 import random
