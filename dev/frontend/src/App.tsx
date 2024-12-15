@@ -3,17 +3,19 @@ import TestConnection from "./components/TestConnection";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import HomePage from "./pages/HomePage";
-import Login from "./pages/Login";
-import CreateAccount from "./pages/CreateAccount";
+import Login from "./pages/LoginPage";
+import CreateAccount from "./pages/CreateAccountPage";
 import MatchingPage from "./pages/MatchingPage";
 import ChatroomsPage from "./pages/ChatroomsPage";
-import QuestionnairePage from "./pages/Questionnaire";
+import QuestionnairePage from "./pages/QuestionnairePage";
 import SettingsPage from "./pages/SettingsPage";
 import ProfilePage from "./pages/ProfilePage";
 
 import PrivateChatroomPage from "./pages/PrivateChatroomPage";
 import AuthGuard from "./components/AuthGuard";
 import { ToastContainer } from "react-toastify";
+import ModifyProfilePage from "./pages/ModifyProfilePage";
+import AccountSettingsPage from "./pages/AccountSettingsPage";
 
 const App: React.FC = () => {
   return (
@@ -55,6 +57,24 @@ const App: React.FC = () => {
             element={
               <AuthGuard>
                 <QuestionnairePage />
+              </AuthGuard>
+            }
+          />
+
+          <Route
+            path="/modify-profile"
+            element={
+              <AuthGuard>
+                <ModifyProfilePage />
+              </AuthGuard>
+            }
+          />
+
+          <Route
+            path="/account-settings"
+            element={
+              <AuthGuard>
+                <AccountSettingsPage />
               </AuthGuard>
             }
           />

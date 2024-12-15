@@ -47,6 +47,24 @@ class AccountManager:
             print('account manager')
             return False
     
+    @staticmethod
+    def modify_password(data)-> bool:
+        email = data.get('email')
+        password = data.get('password')
+        newpassword = data.get('newpassword')
+        
+        verify_params = (email,password)
+        response = AccountDAO.verify_password(verify_params)
+        
+        if response:
+            id = response[0]
+            modify_params = (newpassword,id)
+            response = AccountDAO.modify_password(modify_params)
+            if response:
+                return response
+            
+        return False
+
 
     @staticmethod
     def update_localisation(data) -> bool:

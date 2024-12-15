@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef} from "react";
 import IconButton from "./IconButton";
 import bellIcon from "../../ressources/icons/bell_notification.png";
 import { useNavigate } from "react-router-dom";
@@ -18,10 +18,29 @@ const NotificationDropDown: React.FC<NotificationDropDownProps> = ({
 
   const navigate = useNavigate();
 
+  const componentRef = useRef(null);
+
+  useEffect(()=>{
+    const handleClickOutside = (event:any) => {
+      if (componentRef.current && !componentRef.current.contains(event.target)){
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown',handleClickOutside);
+    document.addEventListener('touchstart',handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  },[]);
+
+  console.log("notificationDropDown:", notifications);
   // console.log("notificationDropDown:", notifications);
 
+
   return (
-    <div className="relative pt-1">
+    <div ref={componentRef} className="relative pt-1">
       {notifications?.length > 0 && (
         <div className="bg-red-700 rounded-full text-white text-sm font-semibold w-5 h-5 flex items-center justify-center absolute top-1 right-0">
           {notifications?.length}
@@ -40,7 +59,7 @@ const NotificationDropDown: React.FC<NotificationDropDownProps> = ({
               <li key={index}>
                 <button
                   // className="w-full p-2 text-black text-sm hover:bg-theme-autumn/50 rounded-md"
-                  className={`w-full p-2 text-black text-sm hover:bg-theme-autumn/50 rounded-md 
+                  className={`w-full p-2 text-black text-sm hover:bg-theme-autumn/50 rounded-md shadow-lg
                     ${notificationRead ? "italic" : "font-bold"} `}
                   onClick={() => {
                     setNotificationRead(true);

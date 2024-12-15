@@ -4,7 +4,6 @@ from typing import List
 
 import logging
 
-
 class AccountDAO(DAO):
 
     def update_account() -> bool:
@@ -17,19 +16,12 @@ class AccountDAO(DAO):
         print('login response:', response)
         return response
 
-
     @staticmethod
     def create_account(params:tuple) -> int:
             query = 'INSERT INTO member (first_name, last_name, email, member_password) VALUES (%s, %s, %s, %s) RETURNING id;'
             response = AccountDAO._prepare_statement("insert", query, params)
             # si courriel existe deja, DB retorune erreur cle existe - faut gerer - envoyer au frontend 'account exists' 
             return response
-    
-    @staticmethod
-    def complete_profile(params:tuple) -> bool:
-        query = 'UPDATE member SET profile_completed = true WHERE id = %s;'
-        response = AccountDAO._prepare_statement("update", query, params)
-        return response
     
     @staticmethod
     def confirm_email(params:tuple) -> bool:
@@ -43,7 +35,11 @@ class AccountDAO(DAO):
         response = AccountDAO._prepare_statement("update", query, params)
         return response
     
-    
+    @staticmethod
+    def complete_profile(params:tuple) -> bool:
+        query = 'UPDATE member SET profile_completed = true WHERE id = %s;'
+        response = AccountDAO._prepare_statement("update", query, params)
+        return response
     
     @staticmethod
     def save_token(params:tuple) -> bool:
@@ -57,6 +53,17 @@ class AccountDAO(DAO):
         response = AccountDAO._prepare_statement("select", query, params)
         return response
     
+    @staticmethod
+    def verify_password(params:tuple)->bool:
+        query = 'SELECT id, profile_completed FROM member WHERE email = %s and member_password = %s;'
+        response = AccountDAO._prepare_statement("select", query, params)
+        return response[0]
+    
+    @staticmethod
+    def modify_password(params:tuple)->bool:
+        query = 'UPDATE member SET member_password = %s WHERE id = %s;'
+        response = AccountDAO._prepare_statement('update', query, params)
+        return response
     
     # rudimentaire: version finale faut que ca delete la personne des tables de suggestions de tout le monde, les match, les messages, les photos dans berkeleyDB
     @staticmethod
@@ -69,7 +76,7 @@ class AccountDAO(DAO):
     def get_user_infos(user_id:int) -> List[tuple]:
         query = "SELECT * FROM member_activities_view WHERE member_id = %s;"
         params = (user_id,)
-        response = AccountDAO._prepare_statement("select",query,params)
+        response = AccountDAO._prepare_statement("select", query, params)
         return response
     
     @staticmethod
@@ -98,11 +105,23 @@ class AccountDAO(DAO):
         response = AccountDAO._prepare_statement("update", query, params)
         return response
 
-
-
     @staticmethod
     def add_photos(params:tuple) -> bool:
-        logging.warning(f"add photos: user_id & photo_key: {params}")
+        # params: (user id, keys)
+        # delete & remake it all.
+        ''' ------ postgres DOCU:
+        PostgreSQL lets you reference columns of other tables in the WHERE condition by specifying the other tables in the USING
+        clause. For example, to delete all films produced by a given producer, one can do:
+
+        DELETE FROM films USING producers
+        WHERE producer_id = producers.id AND producers.name = 'foo';
+        What is essentially happening here is a join between films and producers, with all successfully joined films rows being marked
+        for deletion. This syntax is not standard. A more standard way to do it is:
+
+        DELETE FROM films
+        WHERE producer_id IN (SELECT id FROM producers WHERE name = 'foo');
+        '''
+        print('accounTdao, add photos', params)
         # query = 'SELECT add_photos(%s, ARRAY[%s]);'
         # we format the sql array in manager
         query = 'SELECT add_photos(%s, %s);'
@@ -128,5 +147,5 @@ class AccountDAO(DAO):
     @staticmethod
     def update_localisation(params:tuple) -> bool:
         query = 'UPDATE member SET last_lat = %s, last_long = %s WHERE id = %s'
-        response = AccountDAO._prepare_statement('update',query,params)
+        response = AccountDAO._prepare_statement('update', query, params)
         return response

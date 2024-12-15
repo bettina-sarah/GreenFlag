@@ -51,7 +51,7 @@ def test_connection():
 @app.route('/create-account', methods=['POST'])
 def create_account() -> bool:
     response = AccountManager.create_account(request.json)
-    return jsonify(True) if response else jsonify(False)
+    return jsonify(response)
 
 @app.route('/login', methods=['POST'])
 def login() -> bool:
@@ -67,7 +67,7 @@ def login() -> bool:
 @app.route('/localisation', methods=['POST'])
 def update_localisation() -> bool:
     response = AccountManager.update_localisation(request.json)
-    return jsonify(True) if response else jsonify(False)
+    return jsonify(response)
 
 @app.route('/complete-profile', methods=['POST'])
 def complete_profile() -> bool:
@@ -108,10 +108,15 @@ def verify_token() -> bool:
 
 # ---- PAS UTLISÉ ENCORE!!
 
+@app.route('/modify-password', methods=['POST'])
+def modify_password() -> bool:
+    response = AccountManager.modify_password(request.json)
+    return jsonify(response)
+
 @app.route('/modify-profile', methods=['POST'])
 def modify_profile() -> bool:
     response = AccountManager.modify_profile(request.json)
-    return jsonify(True) if response else jsonify(False)
+    return jsonify(response)
 
 @app.route('/delete-account', methods=['POST'])
 def settings() -> bool:
@@ -139,7 +144,7 @@ def upload_photos() -> bool:
     id = request.form['id']
     files = request.files['image']
     response = AccountManager.modify_photos(id,files)
-    return jsonify(True) if response else jsonify(False)
+    return jsonify(response)
 
 # ------ QUESTIONNAIRE -------
 # ATTENTION WE SHOULD KNOW IF NEW USER OR NOT. DIFFERENCE BETWEEN INSERT & UPDATE REQUEST
