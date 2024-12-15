@@ -1,3 +1,16 @@
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : notification_dao.py
+Created By  : Bettina-Sarah Janesch
+About       : Classe qui hérite de la classe DAO et qui interagit avec la base 
+              de données pour gérer les notifications usager. Elle inclut des 
+              méthodes pour récupérer et mettre à jour le statut des notifications, 
+              en exécutant des requêtes SQL préparées.
+====================================================================================
+------------------------------------------------------------------------------------
+'''
+
 from DAOs.dao import DAO
 from typing import List
 

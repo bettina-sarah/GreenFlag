@@ -1,12 +1,20 @@
-#Lightning Memory-Mapped Database: key value
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : photo_lmdb_dao.py
+Created By  : Bettina-Sarah Janesch
+About       : Classe qui gère l'encodage, le stockage, la récupération et la suppression 
+              d'images dans une base de données LMDB, en utilisant des outils comme 
+              Pillow et Faker pour le traitement et la génération d'images.
+====================================================================================
+------------------------------------------------------------------------------------
+'''
+
 import lmdb
 from typing import List
 from faker import Faker
-
-# pillow necessary for image processing
 from PIL import Image
 import io
-
 import logging
 
 
@@ -36,11 +44,8 @@ class PhotoDAO:
         except Exception as e:
             logging.error(f"PhotoDAO add_photos:, {e}")
             return []
-    
-
 
     def encode_image(self,txn,photo=None) -> str:
-        # encodage pour lm db seulement !
         if photo:
             key = photo.filename.encode('utf-8')        
             image = Image.open(photo)
@@ -48,7 +53,6 @@ class PhotoDAO:
             avatar_bytes = self.faker.image((200,200)) # bytearray
             key = self.faker.text(max_nb_chars=16)
             key = key.encode('utf-8')        
-            # image = Image.open(avatar)
             txn.put(key, avatar_bytes)
             return key.decode('utf-8')
         img_byte_arr = io.BytesIO()
@@ -57,7 +61,6 @@ class PhotoDAO:
         txn.put(key, img_bytes)
         return key.decode('utf-8')
 
-
     def delete_photo(self, user_id:str, photo_id:str) -> bool:
         try:
             with self.env.begin(write=True) as txn:
@@ -65,28 +68,24 @@ class PhotoDAO:
                 self.env.close()
                 return True
         except Exception as e:
-            logging.error(f"PhotoDAO delete_photo:, {e}")
+            logging.error(f"{__class__} delete_photo: {e}")
             return False
     
     def get_photo(self, key) -> str | bool:
         try:
             with self.env.begin() as txn:
-                # key is a single tuple here with a string inside !!!
                 photo_data = txn.get(key.encode('utf-8'))
                 image = self.decode_image(photo_data)
                 # self.env.close()
             return image
         except Exception as e:
-            logging.error(f"PhotoDAO get_photo:, {e}")
+            logging.error(f"{__class__} get_photo: {e}")
             return False
     
-
     def decode_image(self, byte_array):
         img_byte_arr = io.BytesIO(byte_array)
         image = Image.open(img_byte_arr)
-
-
         output_stream = io.BytesIO()
-        image.save(output_stream, format=image.format)  # Use the image format from the decoded image
-        output_stream.seek(0)  # Reset the stream position
+        image.save(output_stream, format=image.format)
+        output_stream.seek(0)
         return output_stream
