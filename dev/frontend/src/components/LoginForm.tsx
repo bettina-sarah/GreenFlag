@@ -23,10 +23,10 @@ const LoginForm = () => {
   } = useForm<FormData>();
   const [loginError, setLoginError] = useState<string | null>(null);
 
-  const onSubmit = handleSubmit(async (data: object|boolean) => {
+  const onSubmit = handleSubmit(async (data: object | boolean) => {
     try {
       const answer = await axios.post(IP_SERVER + "/login", data);
-      if (answer.data && typeof answer.data === 'object') {
+      if (answer.data && typeof answer.data === "object") {
         console.log("login data: ", answer.data);
         sessionStorage.setItem("id", answer.data.id);
         // should get token via login route here !
@@ -41,21 +41,20 @@ const LoginForm = () => {
           "profileComplete:",
           sessionStorage.getItem("profileComplete")
         );
-        
+
         // update lat/long to current location
         navigator.geolocation.getCurrentPosition(
           async (position) => {
-            const {latitude, longitude} = position.coords;
-            console.log("lat:" + latitude + "\nlong:" + longitude)
+            const { latitude, longitude } = position.coords;
+            console.log("lat:" + latitude + "\nlong:" + longitude);
             data = {
-              id: sessionStorage.getItem('id'),
+              id: sessionStorage.getItem("id"),
               lat: latitude,
-              long: longitude
+              long: longitude,
             };
-            try{
-              await axios.post(IP_SERVER + "/localisation", data)
-            } 
-            catch (error){
+            try {
+              await axios.post(IP_SERVER + "/localisation", data);
+            } catch (error) {
               console.log("Error sending location:", error);
             }
           },
@@ -87,13 +86,12 @@ const LoginForm = () => {
         } else {
           navigate("/questionnaire");
         }
-      }
-      else if (answer.data === false){
-        setLoginError("Invalid email or password. Please try again.")
+      } else if (answer.data === false) {
+        setLoginError("Invalid email or password. Please try again.");
       }
     } catch (error) {
       console.error("Error during login:", error);
-      setLoginError("A network or server error occured. Please try again")
+      setLoginError("A network or server error occured. Please try again");
     }
   });
 
@@ -107,11 +105,14 @@ const LoginForm = () => {
           </div>
         </div>
       )}
-  
+
       {/* Login form */}
-      <form onSubmit={onSubmit} className="flex flex-col justify-between items-center w-full max-w-sm">
-        <div className="flex items-center w-full border-b-2 border-custom-bg mb-4">
-          <img src={EmailIcon} className="size-7"/>
+      <form
+        onSubmit={onSubmit}
+        className=" space-y-1 flex flex-col justify-between items-center w-full max-w-sm"
+      >
+        <div className="flex py-2 items-center w-full border-b-2 border-custom-bg mb-4">
+          <img src={EmailIcon} className="size-7" />
           <input
             className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
             placeholder="Email"
@@ -127,9 +128,9 @@ const LoginForm = () => {
             <span>you need to give an email</span>
           )}
         </div>
-        
-        <div className="flex items-center w-full border-b-2 border-custom-bg mb-4">
-          <img src={LockIcon} className="size-7"/>
+
+        <div className="flex !mb-[25px] py-2 items-center w-full border-b-2 border-custom-bg">
+          <img src={LockIcon} className="size-7" />
           <input
             className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
             placeholder="Password"
@@ -143,9 +144,11 @@ const LoginForm = () => {
             <span>Max length exceeded</span>
           )}
         </div>
-  
+
         <button
-          className="bg-custom-bg text-primary-color w-full max-w-sm py-2 rounded-md text-lg font-inter font-semibold"
+          className="transition-colors duration-300 bg-custom-bg hover:bg-primary-color
+             text-primary-color hover:text-custom-bg border-2 border-custom-bg 
+             font-bold py-2 px-4 rounded my-4 mx-6 w-96"
           type="submit"
         >
           Log in
@@ -153,7 +156,6 @@ const LoginForm = () => {
       </form>
     </div>
   );
-  
 };
 
 export default LoginForm;
