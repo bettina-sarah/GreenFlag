@@ -1,5 +1,17 @@
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : account_manager.py
+Created By  : Bettina-Sarah Janesch
+About       : Classe qui gère les comptes utilisateurs et les photos de profil en 
+              interagissant avec les DAO pour des opérations comme la connexion, 
+              l'inscription, la mise à jour des données, la gestion des préférences,
+              et le nettoyage des données recus du frontend.
+====================================================================================
+------------------------------------------------------------------------------------
+'''
+
 from DAOs.account_dao import AccountDAO
-#from account_dao import AccountDAO
 from DAOs.photo_lmdb_dao import PhotoDAO
 from datetime import datetime
 import mimetypes
