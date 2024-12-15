@@ -1,3 +1,13 @@
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : sim_main.py
+Created By  : Bettina-Sarah Janesch
+About       : Contient un main separé pour pouvoir rouler le simulateur afin de
+              populer la base de données avec des usagers et 
+====================================================================================
+------------------------------------------------------------------------------------
+'''
 
 from Simulation.test_simulator import TestSimulator
 
