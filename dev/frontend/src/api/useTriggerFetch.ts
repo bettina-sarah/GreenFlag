@@ -6,18 +6,21 @@ interface IUseFetch {
   data: any;
 }
 
-// added dependencies array, trigger to param & interface
-
-const useFetch = <T>({ url, data: incomingData }: IUseFetch) => {
+const useTriggerFetch = <T extends any[]>( // or just <T>
+  { url, data: incomingData }: IUseFetch,
+  trigger: number
+) => {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState<boolean>(true); // this is how you use a generic, useState can accept a generic type to help type hint
 
   useEffect(() => {
     setLoading(true);
+    setData(null); // in case of stale state?
     fetchData<T>(url, incomingData)
       .then((data) => {
-        setData(data);
+        // setData(data);
+        setData(data); // No need for spread operator if newData is already an array
         console.log("data", data);
       })
       .catch((error) => {
@@ -27,7 +30,7 @@ const useFetch = <T>({ url, data: incomingData }: IUseFetch) => {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [trigger]);
 
   return {
     data,
@@ -36,4 +39,4 @@ const useFetch = <T>({ url, data: incomingData }: IUseFetch) => {
   };
 };
 
-export default useFetch;
+export default useTriggerFetch;
