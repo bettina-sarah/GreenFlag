@@ -1,5 +1,6 @@
 import {Modal,Select,Button} from "flowbite-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { IP_SERVER } from "@/config/constants";
 import { modalTheme, selectTheme } from "../theme-flowbite/CustomTheme";
@@ -23,6 +24,7 @@ interface FlagProps {
 
 const FlagModal: React.FC<FlagProps> = ({ subject_id, isOpen, onClose }) => {
   const [reason,setReason] = useState<string>("");
+  const navigate = useNavigate();
 
   const sendFlag = async (reason:string) => {
     if (reason !== ""){
@@ -48,8 +50,10 @@ const FlagModal: React.FC<FlagProps> = ({ subject_id, isOpen, onClose }) => {
       try{
         const response = await axios.post(IP_SERVER + "/flag", data);
         console.log("answer from flag", response)
-        if (response.data === true)
+        if (response.data === true){
           toast.success("You red flag has been sent!");
+          navigate('/chatrooms');
+        }
         else if (response.data === "FLAGGED TOO MANY TIME")
           toast.error("You have been flagged too many times to flag another user.");
         else
