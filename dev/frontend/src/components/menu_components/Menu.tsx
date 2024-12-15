@@ -1,13 +1,12 @@
 import React from "react";
-import IconButton from "./IconButton";
-import matchingIcon from "../../ressources/icons/matching.png";
-import messageIcon from "../../ressources/icons/messages.png";
-import settingsIcon from "../../ressources/icons/settings.png";
+import IconButton from "../IconButton";
+import matchingIcon from "../../../ressources/icons/matching.png";
+import messageIcon from "../../../ressources/icons/messages.png";
 import SettingsDropDown from "./SettingsDropDown";
 
 import ThemeSelector from "./ThemeSelector";
 import NotificationDropDown from "./NotificationDropDown";
-import { useNotifications } from "./NotificationContext";
+import { useNotifications } from "../NotificationContext";
 
 const Menu: React.FC = () => {
   const { notifications } = useNotifications();
@@ -20,7 +19,6 @@ const Menu: React.FC = () => {
         <NotificationDropDown notifications={notifications} />
         <ThemeSelector />
         <SettingsDropDown />
-        {/* <IconButton icon={settingsIcon} page="settings" /> */}
       </div>
     </div>
   );

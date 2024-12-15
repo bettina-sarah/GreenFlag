@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef} from "react";
-import IconButton from "./IconButton";
-import bellIcon from "../../ressources/icons/bell_notification.png";
+import IconButton from "../IconButton";
+import bellIcon from "../../../ressources/icons/bell_notification.png";
 import { useNavigate } from "react-router-dom";
 import { updateNotification } from "@/api/updateNotification";
 
@@ -18,11 +18,11 @@ const NotificationDropDown: React.FC<NotificationDropDownProps> = ({
 
   const navigate = useNavigate();
 
-  const componentRef = useRef(null);
+  const componentRef = useRef<HTMLDivElement>(null);
 
   useEffect(()=>{
-    const handleClickOutside = (event:any) => {
-      if (componentRef.current && !componentRef.current.contains(event.target)){
+    const handleClickOutside = (event:Event) => {
+      if (componentRef.current && !componentRef.current.contains(event.target as Node | null)){
         setIsOpen(false);
       }
     };

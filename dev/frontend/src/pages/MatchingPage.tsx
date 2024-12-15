@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Menu from "@/components/Menu";
+import Menu from "@/components/menu_components/Menu";
 // import useFetch from "@/api/useFetch";
 import { NotificationProvider } from "@/components/NotificationContext";
 import CustomTinderCard from "@/components/CustomTinderCard";
@@ -28,6 +28,7 @@ export interface ProfileProps {
 
 const MatchingPage: React.FC = () => {
   const [refetchTrigger, setRefetchTrigger] = useState(0);
+  const algo = sessionStorage.getItem('algo') || 'Meanshift';
   const {
     data: profileData,
     loading: profileLoading,
@@ -35,7 +36,7 @@ const MatchingPage: React.FC = () => {
   } = useTriggerFetch<IProfileData[]>(
     {
       url: "/suggestions",
-      data: { id: sessionStorage.getItem("id") },
+      data: { id: sessionStorage.getItem("id"), algo: algo},
     },
     refetchTrigger
   );

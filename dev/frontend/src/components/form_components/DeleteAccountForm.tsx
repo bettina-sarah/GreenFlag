@@ -24,7 +24,7 @@ const DeleteAccountForm = () => {
 
   const PasswordValue = watch('password');
 
-  const onSubmit = handleSubmit(async (data: any) => {
+  const onSubmit = handleSubmit(async (data: FormData) => {
     try {
       const answer = await axios.post(IP_SERVER + "/delete-account", data);
       if (answer.data) {

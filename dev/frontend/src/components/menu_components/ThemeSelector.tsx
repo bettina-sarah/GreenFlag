@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, Component } from 'react';
-import IconButton from './IconButton';
+import { useState, useEffect, useRef } from 'react';
+import IconButton from '../IconButton';
 import PaletteIcon from '@/../ressources/icons/palette_bold_icon_white.png'
 
 const ThemeSelector = () => {
@@ -19,11 +19,11 @@ const ThemeSelector = () => {
   }, [theme]);
 
   // Gemini
-  const componentRef = useRef(null);
+  const componentRef = useRef<HTMLDivElement>(null);
 
   useEffect(()=>{
-    const handleClickOutside = (event:any) => {
-      if (componentRef.current && !componentRef.current.contains(event.target)){
+    const handleClickOutside = (event:Event) => {
+      if (componentRef.current && !componentRef.current.contains(event.target as Node | null)){
         setIsOpen(false);
       }
     };
