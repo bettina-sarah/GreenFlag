@@ -4,7 +4,7 @@ interface BioProps {
 
 const Bio: React.FC<BioProps> = ({ bio }) => {
   return (
-    <div className="pl-3 pt-1 pr-3 pb-4">
+    <div className=" pl-3 pt-1 pr-3 pb-1 max-h-[30vh] overflow-hidden text-ellipsis">
       <h2 className="font-nunito-bold text-h2-custom text-left">About Me</h2>
       <p className="font-nunito-light text-muted-text text-left">{bio}</p>
     </div>
