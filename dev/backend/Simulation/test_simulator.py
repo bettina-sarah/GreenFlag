@@ -5,19 +5,6 @@ from Simulation.user import User
 import random
 
 import logging
-import coloredlogs
-
-level_styles = {
-    'debug': {'color': 'blue'},
-    'info': {'color': 'green'},
-    'warning': {'color': 'yellow'},
-    'error': {'color': 'red'},
-    'critical': {'color': 'magenta'}
-}
-
-
-coloredlogs.install(level='DEBUG', level_styles=level_styles)
-
 
 class TestSimulator:
     def __init__(self) -> None:
@@ -37,6 +24,17 @@ class TestSimulator:
                 if real_user:
                     self.users.append(user)
                     logging.debug(f"User {repr(user)} created locally")
+
+    def _create_pending_suggestions(self) -> None:
+        for user in self.users:
+            # creates them if not existent; pending ONLY
+            try:
+                suggestions = MatchingManager.get_suggestions({'id': user.user_id})
+                logging.critical(f'Suggestions for User {user.user_id} created.')
+                user.suggestions = suggestions # pas necessaire ?
+            except Exception as error:
+                logging.error(f'No suggestions available; error: {error}')
+                pass
 
 
     def swipe(self) -> None:

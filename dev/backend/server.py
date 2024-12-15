@@ -27,6 +27,7 @@ level_styles = {
 
 
 coloredlogs.install(level='DEBUG', level_styles=level_styles)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}},
@@ -203,8 +204,9 @@ def update_suggestion() -> bool:
 @app.route('/notifications', methods=['POST'])
 def notifications() -> bool:
     response = NotificationManager.get_notifications(request.json)
-    logging.warning(f'notifications:{response}'if response else 'no notifications available')
+    logger.warning(f'notifications:{response}'if response else 'no notifications available')
     return jsonify(response)
+#---- ATTENTION JSONIFY TRUE FALSE GOOD OR BAD , CHECK RESPONSE TYPE AND REFACTOR !!!
 
 @app.route('/update-notification', methods=['POST'])
 def update_notification() -> bool:
@@ -213,11 +215,7 @@ def update_notification() -> bool:
     print(f'response db is: ', response)
     return jsonify(response)
 
-from Simulation.test_simulator import TestSimulator
 
 if __name__ == '__main__':
-    # sim = TestSimulator()
-    # sim.create_random_users(2000)
-    # sim.swipe()
     socketio.run(app, debug=True, host="0.0.0.0", port=5000)
 
