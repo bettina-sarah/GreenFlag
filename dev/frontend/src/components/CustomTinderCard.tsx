@@ -76,24 +76,26 @@ const CustomTinderCard: React.FC<IProfileProps> = ({
         preventSwipe={["up", "down"]}
         onCardLeftScreen={handleCardLeftScreen}
       >
+        {/* take SROUHTly : shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] */}
         {/* <div className="w-96 bg-primary-color p-1 rounded-3xl relative"> */}
         {/* SHADOW BOX OPTIONS: */}
         {/* option 1: */}
         {/* <div className="shadow-[0_3px_10px_rgb(0,0,0,0.2)]   min-w-[48vw] max-w-[96vw]    lg:min-w-[23vw] lg:max-w-[24vw] bg-primary-color p-2 rounded-3xl relative min-h-[90vh] max-h-[95vh] lg:min-h-[95vh] lg:max-h-[100vh] overflow-hidden"> */}
         {/* option 2: */}
         {/* <div className="shadow-[5px_5px_rgba(0,_98,_90,_0.4),_10px_10px_rgba(0,_98,_90,_0.3),_15px_15px_rgba(0,_98,_90,_0.2),_20px_20px_rgba(0,_98,_90,_0.1),_25px_25px_rgba(0,_98,_90,_0.05)]  min-w-[48vw] max-w-[96vw]    lg:min-w-[23vw] lg:max-w-[24vw] bg-primary-color p-2 rounded-3xl relative min-h-[90vh] max-h-[95vh] lg:min-h-[95vh] lg:max-h-[100vh] overflow-hidden"> */}
-        <div className="shadow-[0_3px_10px_rgb(0,0,0,0.2)]   min-w-[48vw] max-w-[96vw]    lg:min-w-[23vw] lg:max-w-[24vw] bg-primary-color p-2 rounded-3xl relative min-h-[90vh] max-h-[95vh] lg:min-h-[95vh] lg:max-h-[100vh] overflow-hidden">
-          <div className="pt-1">
-            <PhotoCarousel images={photos} />
+        <div className="shadow-[0_3px_10px_rgb(0,0,0,0.2)]   min-w-[48vw] max-w-[96vw]    lg:min-w-[23vw] lg:max-w-[24vw] bg-primary-color rounded-xl relative min-h-[90vh] max-h-[95vh] lg:min-h-[95vh] lg:max-h-[100vh] overflow-hidden">
+          {/* <div className="pt-1"> */}
+          <PhotoCarousel images={photos} />
+          {/* </div> */}
+          <div className="max-h-[700px] overflow-auto">
+            <BasicInfo basic_info={profile_info.basic_info} />
+            <RelationshipGoals
+              relationship={profile_info.relationship}
+              wants_kids={profile_info.wants_kids}
+            />
+            <Hobbies hobbies={profile_info.hobby_array} />
+            <Bio bio={profile_info.bio} />
           </div>
-
-          <BasicInfo basic_info={profile_info.basic_info} />
-          <RelationshipGoals
-            relationship={profile_info.relationship}
-            wants_kids={profile_info.wants_kids}
-          />
-          <Hobbies hobbies={profile_info.hobby_array} />
-          <Bio bio={profile_info.bio} />
           <div className="flex items-center justify-evenly p-2">
             <IconButton
               icon={RedFlag}
