@@ -68,18 +68,18 @@ class MatchingManager():
         except Exception as error:
             print(error)
 
-    @staticmethod
-    def flag_user(data:dict) -> bool:
-        try:
-            user_id = data.get("id")
-            flagged_id = data.get("flagged_id")
-            reason = data.get("reason")
-            response = MatchingDAO.flag_user(user_id,flagged_id,reason)
-            if response:
-                return response
+    # @staticmethod
+    # def flag_user(data:dict) -> bool:
+    #     try:
+    #         user_id = data.get("id")
+    #         flagged_id = data.get("flagged_id")
+    #         reason = data.get("reason")
+    #         response = MatchingDAO.flag_user(user_id,flagged_id,reason)
+    #         if response:
+    #             return response
         
-        except Exception as error:
-            print(error)        
+    #     except Exception as error:
+    #         print(error)        
 
     @staticmethod
     def unmatch(data:dict) -> bool:
