@@ -1,5 +1,5 @@
 import React from "react";
-import RegisterForm from "@/components/RegisterForm";
+import RegisterForm from "@/components/form_components/RegisterForm";
 import BackArrowIcon from "@/../ressources/icons/back_arrow.png";
 import IconButton from "@/components/IconButton";
 

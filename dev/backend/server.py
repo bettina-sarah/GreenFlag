@@ -41,10 +41,6 @@ socketio = SocketIO(app, cors_allowed_origins="*",async_mode="gevent")
 chatroomManager = ChatroomManager() # need to be an object because contains a discharged list
 websocketManager = ChatroomSocketManager(socketio,chatroomManager)
 
-@app.route('/test', methods=['GET'])
-def test_connection():
-    return jsonify(message="Hello React this is Flask")
-
 # -------- ACCOUNTS ------------
 
 

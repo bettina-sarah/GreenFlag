@@ -5,3 +5,6 @@ cat create_tables_enums.sql views_functions.sql users_insert.sql > setup.sql
 
 # user & database
 psql -U postgres -d postgres -f ./setup.sql
+
+echo "The setup has been executed. Press Enter to continue..."
+read -r

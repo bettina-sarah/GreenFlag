@@ -1,10 +1,19 @@
 from DAOs.matching_dao import MatchingDAO
 from Algorithms.algo_strategy import AlgoContext
 from Algorithms.algo_meanshift import MeanShift
+from Algorithms.algo_affinity_propagation import AffinityPropagation
+from Algorithms.algo_birch_tree import Birch
+from Algorithms.algo_kmeans import KMeans
 import numpy as np
 
 NUMBER_ACTIVITIES = 20
 
+ALGOS = {
+    'Meanshift': MeanShift(0.3,100,0.001),
+    'Affinity Propagation': AffinityPropagation(),
+    'Birch Tree': Birch(),
+    'K-Means': KMeans(n_clusters=20)
+}
 # observer inherit ?
 
 class MatchingManager():
@@ -12,13 +21,13 @@ class MatchingManager():
     matches = []
     
     @staticmethod
-    def create_suggestions(user_id) -> bool:
+    def create_suggestions(user_id:int, algo:str) -> bool:
         try:
             response = MatchingDAO.get_eligible_members(user_id)
             response_2 = None
             prospects_ids = None
             if response:
-                prospects_ids = MatchingManager.find_suggestions(user_id,response)
+                prospects_ids = MatchingManager.find_suggestions(user_id,response, algo)
                 
             if prospects_ids:
                 response_2 = MatchingDAO.create_suggestions(user_id,prospects_ids)
@@ -36,7 +45,8 @@ class MatchingManager():
             response = MatchingDAO.get_suggestions(user_id)
             
             if not response:
-                create = MatchingManager.create_suggestions(user_id)
+                algo = data.get('algo')
+                create = MatchingManager.create_suggestions(user_id, algo)
                 response = MatchingDAO.get_suggestions(user_id)
                 return response
             elif response:
@@ -83,7 +93,7 @@ class MatchingManager():
             print(error)
     
     @staticmethod
-    def find_suggestions(user_id:int, members:int) -> list[int]:
+    def find_suggestions(user_id:int, members:int, algo:str) -> list[int]:
         MINIMUM_SUGGESTION = 20
         user_activities = np.zeros((1, NUMBER_ACTIVITIES + 1))
         data = np.zeros((len(members), NUMBER_ACTIVITIES + 1))
@@ -126,7 +136,7 @@ class MatchingManager():
         
         
         if np.sum(data) > 0:
-            Algo = AlgoContext(MeanShift(0.3,100,0.001))
+            Algo = AlgoContext(ALGOS[algo])
         
             Algo.fit(data)
             

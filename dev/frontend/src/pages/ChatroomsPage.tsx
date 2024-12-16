@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Menu from "@/components/Menu";
+import Menu from "@/components/menu_components/Menu";
 import useFetch from "@/api/useFetch";
 import fetchData from "@/api/fetchData";
 import ChatroomItem from "@/components/ChatroomItem";
@@ -54,8 +54,14 @@ const ChatroomsPage: React.FC = () => {
 		
 					// If there are photos, fetch them
 					if (photoKey) {
-					  const fetchedPhoto: IPhotoData = await fetchData<IPhotoData>("/get-photo", photoKey[0]);
-					  profile.subject.profile_photo = fetchedPhoto; // Update profile photo data
+						try{
+							const fetchedPhoto: IPhotoData = await fetchData<IPhotoData>("/get-photo", photoKey[0]);
+							profile.subject.profile_photo = fetchedPhoto; // Update profile photo data
+						}
+						catch (error){
+							console.error("Error fetching phoro",error);
+							profile.subject.profile_photo = null;
+						}
 					} else {
 					  profile.subject.profile_photo = null; // No photos, set to null
 					}

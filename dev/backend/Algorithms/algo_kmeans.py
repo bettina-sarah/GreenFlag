@@ -3,8 +3,8 @@ from Algorithms.algo_strategy import AlgoStrategy
 import numpy as np
 
 class KMeans(AlgoStrategy):
-  def __init__(self, n_clusters:int,max_iteration:int, tolerance:float):
-    self.algo = KMeansScikit(n_clusters,max_iteration,tolerance)
+  def __init__(self, n_clusters:int):
+    self.algo = KMeansScikit(n_clusters)
 
   def get_cluster_centers(self)->np.ndarray:
     return self.algo.cluster_centers_

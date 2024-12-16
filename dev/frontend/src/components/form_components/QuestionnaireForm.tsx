@@ -47,11 +47,8 @@ const QuestionnaireForm = () => {
     });
   };
 
-  const {
-    register: registerHobbies,
-    handleSubmit: handleSubmitHobbies,
-    formState: { errors: errorsHobbies },
-  } = useForm<FormDataHobbies>();
+  const { register: registerHobbies, handleSubmit: handleSubmitHobbies } =
+    useForm<FormDataHobbies>();
 
   const {
     register: registerInfo,
@@ -78,7 +75,6 @@ const QuestionnaireForm = () => {
             success: "Hobbies saved!",
             error: "Promise rejected 🤯",
           });
-
           await completeProfileAndNavigate();
         })}
         className=" bg-primary-color rounded-3xl p-4"
@@ -111,7 +107,7 @@ const QuestionnaireForm = () => {
         </button>
       </form>
       <form
-        onSubmit={handleSubmitInfo(async (data: any) => {
+        onSubmit={handleSubmitInfo(async (data: FormDataInfo) => {
           await onSubmitFormInfo(data);
           await toast.promise(onSubmitFormInfo(data), {
             pending: "Promise is pending",
@@ -326,9 +322,9 @@ const QuestionnaireForm = () => {
           color="custom"
           theme={selectTheme}
         >
-          <option value="fun">Fun</option>
-          <option value="shortterm">Shortterm</option>
-          <option value="longterm">Longterm</option>
+          <option value="Fun">Fun</option>
+          <option value="Short term">Shortterm</option>
+          <option value="Long term">Longterm</option>
         </Select>
         {errorsInfo.gender && errorsInfo.gender.type === "required" && (
           <span>This is required</span>
@@ -384,7 +380,7 @@ const QuestionnaireForm = () => {
       </form>
 
       <form
-        onSubmit={handleSubmitPhoto(async (data: any) => {
+        onSubmit={handleSubmitPhoto(async (data: FormDataPhoto) => {
           await onSubmitPhoto(data);
           await toast.promise(onSubmitPhoto(data), {
             pending: "Promise is pending",
