@@ -13,16 +13,18 @@ import TinderCard from "react-tinder-card";
 import { updateSuggestion } from "@/api/updateSuggestion";
 
 interface IProfileProps {
-  index: number;
+  swipeLeft: (arg1: string, arg2: boolean) => void;
+  swipeRight: (arg1: string, arg2: boolean) => void;
   suggestion_id: string;
   profile_info: ProfileProps;
   photos: string[];
-  isLastCard?: boolean; // New prop to mark the last card
+  isLastCard: boolean; // New prop to mark the last card
   onLastCardLeftScreen?: () => void; // Callback for end-of-list detection
 }
 
 const CustomTinderCard: React.FC<IProfileProps> = ({
-  index,
+  swipeLeft,
+  swipeRight,
   suggestion_id,
   profile_info,
   photos,
@@ -30,36 +32,35 @@ const CustomTinderCard: React.FC<IProfileProps> = ({
   onLastCardLeftScreen,
 }) => {
   const [hasSwiped, setHasSwiped] = useState<boolean>(false);
-  const [currentIndex, setCurrentIndex] = useState(index);
 
-  const SwipeRight = (suggestion_id: string) => {
-    updateSuggestion(suggestion_id, "yes");
-    setHasSwiped(true);
-    console.log("right: ", suggestion_id);
-    console.log("isLastCard:", isLastCard);
-    setCurrentIndex(currentIndex + 1);
-    console.log("currentIndex:", currentIndex);
-    if (isLastCard && onLastCardLeftScreen) {
-      onLastCardLeftScreen();
-    }
-  };
+  // const SwipeRight = (suggestion_id: string) => {
+  //   updateSuggestion(suggestion_id, "yes");
+  //   setHasSwiped(true);
+  //   console.log("right: ", suggestion_id);
+  //   console.log("isLastCard:", isLastCard);
+  //   setCurrentIndex(currentIndex + 1);
+  //   console.log("currentIndex:", currentIndex);
+  //   if (isLastCard && onLastCardLeftScreen) {
+  //     onLastCardLeftScreen();
+  //   }
+  // };
 
-  const SwipeLeft = (suggestion_id: string) => {
-    updateSuggestion(suggestion_id, "no");
-    setHasSwiped(true);
-    setCurrentIndex(currentIndex + 1);
-    console.log("currentIndex:", currentIndex);
-    console.log("left: ", suggestion_id);
-    if (isLastCard && onLastCardLeftScreen) {
-      onLastCardLeftScreen();
-    }
-  };
+  // const SwipeLeft = (suggestion_id: string) => {
+  //   updateSuggestion(suggestion_id, "no");
+  //   setHasSwiped(true);
+  //   setCurrentIndex(currentIndex + 1);
+  //   console.log("currentIndex:", currentIndex);
+  //   console.log("left: ", suggestion_id);
+  //   if (isLastCard && onLastCardLeftScreen) {
+  //     onLastCardLeftScreen();
+  //   }
+  // };
 
   const onSwipe = (direction: string, suggestion_id: string) => {
     if (direction == "left") {
-      SwipeLeft(suggestion_id);
+      swipeLeft(suggestion_id, isLastCard);
     } else if (direction == "right") {
-      SwipeRight(suggestion_id);
+      swipeRight(suggestion_id, isLastCard);
     }
     console.log("You swiped: " + direction);
   };
@@ -76,35 +77,34 @@ const CustomTinderCard: React.FC<IProfileProps> = ({
   };
 
   return (
-    !hasSwiped && (
-      <div>
-        <TinderCard
-          className="absolute"
-          onSwipe={(direction) => onSwipe(direction, suggestion_id)}
-          preventSwipe={["up", "down"]}
-          onCardLeftScreen={handleCardLeftScreen}
-        >
-          {/* take SROUHTly : shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] */}
-          {/* <div className="w-96 bg-primary-color p-1 rounded-3xl relative"> */}
-          {/* SHADOW BOX OPTIONS: */}
-          {/* option 1: */}
-          {/* <div className="shadow-[0_3px_10px_rgb(0,0,0,0.2)]   min-w-[48vw] max-w-[96vw]    lg:min-w-[23vw] lg:max-w-[24vw] bg-primary-color p-2 rounded-3xl relative min-h-[90vh] max-h-[95vh] lg:min-h-[95vh] lg:max-h-[100vh] overflow-hidden"> */}
-          {/* option 2: */}
-          {/* <div className="shadow-[5px_5px_rgba(0,_98,_90,_0.4),_10px_10px_rgba(0,_98,_90,_0.3),_15px_15px_rgba(0,_98,_90,_0.2),_20px_20px_rgba(0,_98,_90,_0.1),_25px_25px_rgba(0,_98,_90,_0.05)]  min-w-[48vw] max-w-[96vw]    lg:min-w-[23vw] lg:max-w-[24vw] bg-primary-color p-2 rounded-3xl relative min-h-[90vh] max-h-[95vh] lg:min-h-[95vh] lg:max-h-[100vh] overflow-hidden"> */}
-          <div className="shadow-[0_3px_10px_rgb(0,0,0,0.2)]   min-w-[48vw] max-w-[96vw]    lg:min-w-[23vw] lg:max-w-[24vw] bg-primary-color rounded-xl relative min-h-[90vh] max-h-[95vh] lg:min-h-[95vh] lg:max-h-[100vh] overflow-hidden">
-            {/* <div className="pt-1"> */}
-            <PhotoCarousel images={photos} />
-            {/* </div> */}
-            <div className="max-h-[700px] overflow-auto">
-              <BasicInfo basic_info={profile_info.basic_info} />
-              <RelationshipGoals
-                relationship={profile_info.relationship}
-                wants_kids={profile_info.wants_kids}
-              />
-              <Hobbies hobbies={profile_info.hobby_array} />
-              <Bio bio={profile_info.bio} />
-            </div>
-            <div className="flex items-center justify-evenly p-2">
+    <div>
+      <TinderCard
+        className="absolute"
+        onSwipe={(direction) => onSwipe(direction, suggestion_id)}
+        preventSwipe={["up", "down"]}
+        onCardLeftScreen={handleCardLeftScreen}
+      >
+        {/* take SROUHTly : shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] */}
+        {/* <div className="w-96 bg-primary-color p-1 rounded-3xl relative"> */}
+        {/* SHADOW BOX OPTIONS: */}
+        {/* option 1: */}
+        {/* <div className="shadow-[0_3px_10px_rgb(0,0,0,0.2)]   min-w-[48vw] max-w-[96vw]    lg:min-w-[23vw] lg:max-w-[24vw] bg-primary-color p-2 rounded-3xl relative min-h-[90vh] max-h-[95vh] lg:min-h-[95vh] lg:max-h-[100vh] overflow-hidden"> */}
+        {/* option 2: */}
+        {/* <div className="shadow-[5px_5px_rgba(0,_98,_90,_0.4),_10px_10px_rgba(0,_98,_90,_0.3),_15px_15px_rgba(0,_98,_90,_0.2),_20px_20px_rgba(0,_98,_90,_0.1),_25px_25px_rgba(0,_98,_90,_0.05)]  min-w-[48vw] max-w-[96vw]    lg:min-w-[23vw] lg:max-w-[24vw] bg-primary-color p-2 rounded-3xl relative min-h-[90vh] max-h-[95vh] lg:min-h-[95vh] lg:max-h-[100vh] overflow-hidden"> */}
+        <div className="shadow-[0_3px_10px_rgb(0,0,0,0.2)]   min-w-[400px] max-w-[600px]    lg:min-w-[400px] lg:max-w-[600px] bg-primary-color rounded-xl relative min-h-[400px] max-h-[1200px] lg:min-h-[600px] lg:max-h-[1200px] overflow-hidden">
+          {/* <div className="pt-1"> */}
+          <PhotoCarousel images={photos} />
+          {/* </div> */}
+          <div className="max-h-[700px] overflow-auto">
+            <BasicInfo basic_info={profile_info.basic_info} />
+            <RelationshipGoals
+              relationship={profile_info.relationship}
+              wants_kids={profile_info.wants_kids}
+            />
+            <Hobbies hobbies={profile_info.hobby_array} />
+            <Bio bio={profile_info.bio} />
+          </div>
+          {/* <div className="flex items-center justify-evenly p-2">
               <IconButton
                 icon={RedFlag}
                 onClick={() => SwipeLeft(suggestion_id)} // Pass suggestion_id to the handler
@@ -115,11 +115,10 @@ const CustomTinderCard: React.FC<IProfileProps> = ({
                 onClick={() => SwipeRight(suggestion_id)}
                 suggestion_id={suggestion_id}
               />
-            </div>
-          </div>
-        </TinderCard>
-      </div>
-    )
+            </div> */}
+        </div>
+      </TinderCard>
+    </div>
   );
 };
 
