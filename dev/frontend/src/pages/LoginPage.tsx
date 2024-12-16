@@ -25,7 +25,10 @@ const Login: React.FC = () => {
       </h1>
       {showAccountCreatedMessage && (
         <div className="relative">
-          <div className="w-[300px] absolute top-[1.5rem] -left-[8.5rem] px-4 mt-22 font-nunito-bold text-3xl alert alert-success">
+          <div
+            className="w-[300px] absolute top-[1.5rem] -left-[8.5rem] px-4 mt-22 
+          text-custom-bg font-nunito-bold text-3xl alert alert-success"
+          >
             Account created successfully. Please log in.
           </div>
         </div>
