@@ -142,7 +142,7 @@ const MatchingPage: React.FC = () => {
                     />
                     <div
                       className=" absolute -bottom-[570px] left-0 w-full flex items-center justify-evenly
-                    sm:bottom-[200px] sm:left-5 lg:-bottom-[600px]"
+                    sm:-bottom-[290px] lg:-bottom-[620px]"
                     >
                       <IconButton
                         className="h-28 w-28"
