@@ -255,9 +255,9 @@ const QuestionnaireForm = () => {
         color="custom"
         theme={selectTheme}
         >
-          <option value="fun">Fun</option>
-          <option value="shortterm">Shortterm</option>
-          <option value="longterm">Longterm</option>
+          <option value="Fun">Fun</option>
+          <option value="Short term">Shortterm</option>
+          <option value="Long term">Longterm</option>
         </Select>
         {errorsInfo.gender && errorsInfo.gender.type === "required" && (
           <span>This is required</span>

@@ -28,9 +28,9 @@ CREATE TYPE SUGGESTION_STATUS AS ENUM (
 );
 
 CREATE TYPE RELATIONSHIP AS ENUM (
-  'fun',
-  'shortterm',
-  'longterm'
+  'Fun',
+  'Short term',
+  'Long term'
 );
 
 CREATE TYPE REASON_FLAGGED AS ENUM (
@@ -55,7 +55,7 @@ bio TEXT,
   preferred_genders  GENDER[] DEFAULT '{}',
   min_age INTEGER DEFAULT 18,
   max_age INTEGER DEFAULT 99,
-  relationship_type RELATIONSHIP DEFAULT 'longterm',
+  relationship_type RELATIONSHIP DEFAULT 'Long term',
   height            INTEGER CHECK (height > 0),
   religion          VARCHAR(50) DEFAULT NULL,
   want_kids        BOOL DEFAULT FALSE,
@@ -154,24 +154,24 @@ ALTER TABLE msg ADD FOREIGN KEY (sender_id) REFERENCES member (id)  ON DELETE CA
 
 INSERT INTO activity (activity_name)
 VALUES
-  ('hiking'),
-  ('yoga'),
-  ('photography'),
-  ('cooking'),
-  ('traveling'),
-  ('reading'),
-  ('videogaming'),
-  ('biking'),
-  ('running'),
-  ('watchingmovies'),
-  ('workingout'),
-  ('dancing'),
-  ('playinginstrument'),
-  ('attendingconcerts'),
-  ('painting'),
-  ('volunteering'),
-  ('playingsports'),
-  ('crafting'),
-  ('petlover'),
-  ('learningnewlanguage');
+  ('Hiking'),
+  ('Yoga'),
+  ('Photography'),
+  ('Cooking'),
+  ('Traveling'),
+  ('Reading'),
+  ('Video gaming'),
+  ('Biking'),
+  ('Running'),
+  ('Watching movies'),
+  ('Working out'),
+  ('Dancing'),
+  ('Playing instrument'),
+  ('Attending concerts'),
+  ('Painting'),
+  ('Volunteering'),
+  ('Playing sports'),
+  ('Crafting'),
+  ('Pet lover'),
+  ('Learning new language');
 

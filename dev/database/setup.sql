@@ -28,9 +28,9 @@ CREATE TYPE SUGGESTION_STATUS AS ENUM (
 );
 
 CREATE TYPE RELATIONSHIP AS ENUM (
-  'fun',
-  'shortterm',
-  'longterm'
+  'Fun',
+  'Short term',
+  'Long term'
 );
 
 CREATE TYPE REASON_FLAGGED AS ENUM (
@@ -55,7 +55,7 @@ bio TEXT,
   preferred_genders  GENDER[] DEFAULT '{}',
   min_age INTEGER DEFAULT 18,
   max_age INTEGER DEFAULT 99,
-  relationship_type RELATIONSHIP DEFAULT 'longterm',
+  relationship_type RELATIONSHIP DEFAULT 'Long term',
   height            INTEGER CHECK (height > 0),
   religion          VARCHAR(50) DEFAULT NULL,
   want_kids        BOOL DEFAULT FALSE,
@@ -154,26 +154,26 @@ ALTER TABLE msg ADD FOREIGN KEY (sender_id) REFERENCES member (id)  ON DELETE CA
 
 INSERT INTO activity (activity_name)
 VALUES
-  ('hiking'),
-  ('yoga'),
-  ('photography'),
-  ('cooking'),
-  ('traveling'),
-  ('reading'),
-  ('videogaming'),
-  ('biking'),
-  ('running'),
-  ('watchingmovies'),
-  ('workingout'),
-  ('dancing'),
-  ('playinginstrument'),
-  ('attendingconcerts'),
-  ('painting'),
-  ('volunteering'),
-  ('playingsports'),
-  ('crafting'),
-  ('petlover'),
-  ('learningnewlanguage');
+  ('Hiking'),
+  ('Yoga'),
+  ('Photography'),
+  ('Cooking'),
+  ('Traveling'),
+  ('Reading'),
+  ('Video gaming'),
+  ('Biking'),
+  ('Running'),
+  ('Watching movies'),
+  ('Working out'),
+  ('Dancing'),
+  ('Playing instrument'),
+  ('Attending concerts'),
+  ('Painting'),
+  ('Volunteering'),
+  ('Playing sports'),
+  ('Crafting'),
+  ('Pet lover'),
+  ('Learning new language');
 
 DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
@@ -614,7 +614,8 @@ BEGIN
       RAISE NOTICE 'Chatroom name not found: %', new_message.chatroom_name;
   END IF;
 END;
-$$ LANGUAGE PLPGSQL;-- INSERT INTO member (first_name, last_name, member_password, email, date_of_birth, gender, preferred_genders, min_age, max_age, relationship_type, height, religion, want_kids, city, token, email_confirmed, profile_completed) 
+$$ LANGUAGE PLPGSQL;
+-- INSERT INTO member (first_name, last_name, member_password, email, date_of_birth, gender, preferred_genders, min_age, max_age, relationship_type, height, religion, want_kids, city, token, email_confirmed, profile_completed) 
 -- VALUES
 -- ('John', 'Doe', 'password123', 'john.doe1@example.com', '1990-05-12', 'Male'::GENDER, ARRAY['Female', 'Non-Binary']::GENDER[], 20, 35, 'longterm'::RELATIONSHIP, 180, NULL, TRUE, 'New York', 'token12345', TRUE, TRUE),
 -- ('Jane', 'Smith', 'password123', 'jane.smith2@example.com', '1988-11-22', 'Female'::GENDER, ARRAY['Male']::GENDER[], 25, 40, 'shortterm'::RELATIONSHIP, 165, NULL, FALSE, 'Los Angeles', 'token12346', FALSE, TRUE),
