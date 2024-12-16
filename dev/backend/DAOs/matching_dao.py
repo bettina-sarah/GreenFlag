@@ -76,15 +76,15 @@ class MatchingDAO(DAO):
             return response[0][0]
         return False
 
-    @staticmethod
-    def flag_user(user_id:int,unmatched_id:int, reason:str) -> bool:
-        unmatched = MatchingDAO.unmatch(user_id, unmatched_id)
-        query = "INSERT INTO flagged (member_id, reporter_id, reason) VALUES(%s,%s,%s);"
-        params = (unmatched_id, user_id, reason)
-        response = MatchingDAO._prepare_statement('insert',query,params)
-        if response and unmatched:
-            return response
-        return False
+    # @staticmethod
+    # def flag_user(user_id:int,unmatched_id:int, reason:str) -> bool:
+    #     unmatched = MatchingDAO.unmatch(user_id, unmatched_id)
+    #     query = "INSERT INTO flagged (member_id, reporter_id, reason) VALUES(%s,%s,%s);"
+    #     params = (unmatched_id, user_id, reason)
+    #     response = MatchingDAO._prepare_statement('insert',query,params)
+    #     if response and unmatched:
+    #         return response
+    #     return False
 
     @staticmethod
     def unmatch(user_id:int, unmatched_id:int) -> bool:
