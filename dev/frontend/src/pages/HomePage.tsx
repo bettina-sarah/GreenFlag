@@ -25,7 +25,7 @@ const HomePage: React.FC = () => {
         <img src={Logo} alt="" />
       </div>
       <div className="flex flex-col justify-between">
-        <h2 className="text-align-left text-2xl text-base-text">
+        <h2 className="text-align-left text-2xl text-custom-bg">
           Emotional availability-based matching
         </h2>
         <p className="text-custom-bg">

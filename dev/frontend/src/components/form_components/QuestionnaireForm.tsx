@@ -83,18 +83,18 @@ const QuestionnaireForm = () => {
         })}
         className=" bg-primary-color rounded-3xl p-4"
       >
-        <label className="text-base text-h1-custom">
-          Select at least 5 centers of interest:
+        <label className="mb-2 block w-full text-left text-[1.3rem] text-h1-darkblue">
+          Select at least 5 areas of interest:
         </label>
         <div className="flex flex-col space-y-4 p-3">
           {hobbiesKeys.map((hobby, index) => (
             <div className="flex items-center gap-2" key={index}>
               <Checkbox
-                className="bg-custom-bg border-secondary-color checked:bg-secondary-color focus:outline-secondary-color"
+                className=" bg-custom-bg border-secondary-color checked:bg-secondary-color focus:outline-secondary-color"
                 id={hobby}
                 {...registerHobbies(hobby)}
               />
-              <Label className="text-base-text" htmlFor={hobby}>
+              <Label className="text-base-text text-lg" htmlFor={hobby}>
                 {hobby}
               </Label>
             </div>
@@ -102,7 +102,9 @@ const QuestionnaireForm = () => {
         </div>
 
         <button
-          className="bg-secondary-color p-1 min-h-8 min-w-24 rounded-lg text-white"
+          className="transition-colors duration-300 bg-custom-bg hover:bg-primary-color
+             text-primary-color hover:text-custom-bg border-2 border-custom-bg 
+             font-bold py-2 px-4 rounded my-4 mx-6 w-72"
           type="submit"
         >
           Submit
@@ -352,7 +354,9 @@ const QuestionnaireForm = () => {
         </div>
 
         <button
-          className="bg-secondary-color mt-5 p-1 min-h-8 min-w-24 rounded-lg text-white"
+          className="transition-colors duration-300 bg-custom-bg hover:bg-primary-color
+             text-primary-color hover:text-custom-bg border-2 border-custom-bg 
+             font-bold py-2 px-4 rounded my-4 mx-6 w-72"
           type="submit"
         >
           Submit
@@ -368,7 +372,9 @@ const QuestionnaireForm = () => {
       >
         <ImageInputCustom name="image" control={control} />
         <button
-          className="bg-secondary-color p-1 min-h-8 min-w-24 rounded-lg text-white"
+          className="transition-colors duration-300 bg-custom-bg hover:bg-primary-color
+             text-primary-color hover:text-custom-bg border-2 border-custom-bg 
+             font-bold py-2 px-4 rounded my-4 mx-6 w-72"
           type="submit"
         >
           Submit
