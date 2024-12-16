@@ -18,6 +18,6 @@ logger = logging.getLogger(__name__)
 
 if __name__ == '__main__':
     sim = TestSimulator()
-    sim.create_random_users(200)
-    sim._create_pending_suggestions()
+    sim.create_random_users(1000)
+    # sim._create_pending_suggestions()
     sim.swipe()

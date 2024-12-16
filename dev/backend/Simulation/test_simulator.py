@@ -29,7 +29,7 @@ class TestSimulator:
         for user in self.users:
             # creates them if not existent; pending ONLY
             try:
-                suggestions = MatchingManager.get_suggestions({'id': user.user_id})
+                suggestions = MatchingManager.get_suggestions({'id': user.user_id, 'algo': 'Meanshift'})
                 logging.critical(f'Suggestions for User {user.user_id} created.')
                 user.suggestions = suggestions # pas necessaire ?
             except Exception as error:
@@ -49,7 +49,7 @@ class TestSimulator:
 
 
         for index_user, user in enumerate(self.users):
-            suggestions = MatchingManager.get_suggestions({'id': user.user_id})
+            suggestions = MatchingManager.get_suggestions({'id': user.user_id, 'algo':'Meanshift'})
             user.suggestions = suggestions # pas necessaire ?
             try:
                 chosen_context_index = strategy_list_for_users[index_user]
