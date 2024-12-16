@@ -118,7 +118,7 @@ const QuestionnaireForm = () => {
         className="bg-primary-color rounded-3xl p-4 mt-7"
       >
         <div>
-          <label className="block text-left text-secondary-color text-lg mb-2">
+          <label className="block text-left text-secondary-color text-xl mb-2">
             Select Your Date of Birth:
           </label>
           <Controller
@@ -156,7 +156,7 @@ const QuestionnaireForm = () => {
             )}
         </div>
         <div className="pt-10">
-          <label className="block text-left text-secondary-color text-lg mb-2">
+          <label className="block text-left text-secondary-color text-xl mb-2">
             Select Your Gender:
           </label>
           <Select
@@ -180,7 +180,7 @@ const QuestionnaireForm = () => {
           )}
         </div>
         <div className="pt-10">
-          <label className="block text-left text-secondary-color text-lg mb-2">
+          <label className="block text-left text-secondary-color text-xl mb-2">
             Enter Your Height (in cm):
           </label>
           <TextInput
@@ -198,7 +198,7 @@ const QuestionnaireForm = () => {
           )}
         </div>
         <div className="pt-10">
-          <label className="block text-left text-secondary-color text-lg mb-2">
+          <label className="block text-left text-secondary-color text-xl mb-2">
             Select Your Religion or Belief:
           </label>
           <Select
@@ -219,7 +219,7 @@ const QuestionnaireForm = () => {
         </div>
         <div className="flex items-center gap-2 pt-10">
           <Label
-            className="block text-left text-secondary-color text-lg"
+            className="block text-left text-secondary-color text-xl"
             htmlFor="want_kids"
           >
             Check box if you want kids
@@ -230,8 +230,11 @@ const QuestionnaireForm = () => {
           />
         </div>
         <div className="pt-10">
-          <label className="text-h2-custom">Insert Your City:</label>
+          <label className="block text-left text-secondary-color text-xl mb-2">
+            Insert Your City:
+          </label>
           <TextInput
+            className="[&_input]:!text-lg"
             {...registerInfo("city", { required: true, maxLength: 50 })}
             maxLength={50}
             color="custom"
@@ -245,10 +248,11 @@ const QuestionnaireForm = () => {
           )}
         </div>
         <div className="pt-10">
-          <label className="text-h2-custom">
-            Tell us a little thing about yourself:
+          <label className="block text-left text-secondary-color text-xl mb-2">
+            Write something fun about yourself:
           </label>
           <Textarea
+            className="[&_textarea]:!text-lg"
             {...registerInfo("bio", { required: true })}
             required
             rows={6}
@@ -257,17 +261,19 @@ const QuestionnaireForm = () => {
           />
         </div>
         <div className="flex flex-col pt-10 pb-10">
-          <label className="text-h2-custom">Age preference range:</label>
+          <label className="block text-left text-secondary-color text-xl">
+            Dating age preference
+          </label>
           <div className="flex flex-row justify-evenly pt-4">
-            <label className="text-h2-custom">
-              Prefered minimum age:
+            <label className="block text-left text-secondary-color text-lg">
+              Minimum age:
               <input
                 type="number"
                 {...registerInfo("min_age", { min: 18, max: 99 })}
                 min={18}
                 max={99}
                 defaultValue={18}
-                className={`bg-custom-bg border border-secondary-color text-base-text text-sm rounded-lg focus:ring-secondary-color focus:border-secondary-color block w-full p-2.5 ${
+                className={`!text-lg bg-custom-bg border border-secondary-color text-base-text rounded-lg focus:ring-secondary-color focus:border-secondary-color block w-full p-2.5 ${
                   errorsInfo.max_age ? "border-red-500" : ""
                 }`}
               />
@@ -281,15 +287,15 @@ const QuestionnaireForm = () => {
                 <span>It needs to be below 99 years old</span>
               )}
             </label>
-            <label className="text-h2-custom pl-4">
-              Prefered maximum age:
+            <label className="block text-left text-secondary-color text-lg pl-4">
+              Maximum age:
               <input
                 type="number"
                 {...registerInfo("max_age", { min: 18, max: 99 })}
                 min={18}
                 max={99}
                 defaultValue={60}
-                className={`bg-custom-bg border border-secondary-color text-base-text text-sm rounded-lg focus:ring-secondary-color focus:border-secondary-color block w-full p-2.5 ${
+                className={` !text-lg bg-custom-bg border border-secondary-color text-base-text rounded-lg focus:ring-secondary-color focus:border-secondary-color block w-full p-2.5 ${
                   errorsInfo.max_age ? "border-red-500" : ""
                 }`}
               />
@@ -305,10 +311,11 @@ const QuestionnaireForm = () => {
             </label>
           </div>
         </div>
-        <label className="text-h2-custom">
-          Select The Relationship Type You Prefer:
+        <label className="block text-left text-secondary-color text-lg mb-2">
+          Select relationship type:
         </label>
         <Select
+          className="[&_select]:!text-lg"
           {...registerInfo("relationship_type", { required: true })}
           color="custom"
           theme={selectTheme}
@@ -321,8 +328,8 @@ const QuestionnaireForm = () => {
           <span>This is required</span>
         )}
         <div className="pt-10">
-          <label className="text-h2-custom">
-            What genders are you interested in when choosing a partner?
+          <label className="block text-left text-secondary-color text-lg mb-2">
+            Genders you're interested in:
           </label>
           <Controller
             name="preferred_genders"
@@ -330,7 +337,11 @@ const QuestionnaireForm = () => {
             defaultValue={[]} // Default value for the genders array
             render={({ field: { onChange } }) => (
               <Dropdown
-                label={<label className="text-h2-custom">Select Genders</label>}
+                label={
+                  <label className="block text-left text-secondary-color text-lg">
+                    Select
+                  </label>
+                }
                 inline
                 dismissOnClick={false}
                 placement="right"
