@@ -113,6 +113,12 @@ const QuestionnaireForm = () => {
       <form
         onSubmit={handleSubmitInfo(async (data: any) => {
           await onSubmitFormInfo(data);
+          await toast.promise(onSubmitFormInfo(data), {
+            pending: "Promise is pending",
+            success: "Preferences saved!",
+            error: "Promise rejected 🤯",
+          });
+
           await completeProfileAndNavigate();
         })}
         className="bg-primary-color rounded-3xl p-4 mt-7"
@@ -252,7 +258,7 @@ const QuestionnaireForm = () => {
             Write something fun about yourself:
           </label>
           <Textarea
-            className="[&_textarea]:!text-lg"
+            className="!text-lg"
             {...registerInfo("bio", { required: true })}
             required
             rows={6}
@@ -380,6 +386,11 @@ const QuestionnaireForm = () => {
       <form
         onSubmit={handleSubmitPhoto(async (data: any) => {
           await onSubmitPhoto(data);
+          await toast.promise(onSubmitPhoto(data), {
+            pending: "Promise is pending",
+            success: "Photo saved!",
+            error: "Promise rejected 🤯",
+          });
           await completeProfileAndNavigate();
         })}
         className="bg-primary-color rounded-3xl p-4 mt-7"
