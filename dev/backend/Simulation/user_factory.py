@@ -34,29 +34,29 @@ class UserFactory(Factory):
     
     
     ACTIVITY_TUPLE = (
-    "hiking",
-    "yoga",
-    "photography",
-    "cooking",
-    "traveling",
-    "reading",
-    "videogaming",
-    "biking",
-    "running",
-    "watchingmovies",
-    "workingout",
-    "dancing",
-    "playinginstrument",
-    "attendingconcerts",
-    "painting",
-    "volunteering",
-    "playingsports",
-    "crafting",
-    "petlover",
-    "learningnewlanguage"
+    "Hiking",
+    "Yoga",
+    "Photography",
+    "Cooking",
+    "Traveling",
+    "Reading",
+    "Video gaming",
+    "Biking",
+    "Running",
+    "Watching movies",
+    "Working out",
+    "Dancing",
+    "Playing instrument",
+    "Attending concerts",
+    "Painting",
+    "Volunteering",
+    "Playing sports",
+    "Crafting",
+    "Pet lover",
+    "Learning new language"
     )
 
-    RELATIONSHIP_TYPE = ("fun", "shortterm", "longterm")
+    RELATIONSHIP_TYPE = ("Fun", "Short term", "Long term")
 
     GENDER = ("Male", "Female", "Non-Binary", "Other")
     

@@ -53,7 +53,7 @@ class ChatDAO(DAO):
         print(messages)
         response = ChatDAO._prepare_statement('select',query,messages,many=True)
         if response:
-            return response
+            return True
         return False
 
     @staticmethod
@@ -89,6 +89,6 @@ class ChatDAO(DAO):
     
     @staticmethod
     def flag_user(params:tuple) -> bool:
-        query = "INSERT INTO flagged (member_id, reporter_id, reason) VALUES (%s, %s, %s)"
+        query = "INSERT INTO flagged (member_id, reporter_id, reason) VALUES (%s, %s, %s) RETURNING id;"
         response = ChatDAO._prepare_statement("insert",query,params)
         return response

@@ -3,26 +3,26 @@ import axios from "axios";
 
 export const genders = ["Male", "Female", "Non-Binary", "Other"];
 export const hobbiesKeys = [
-  "hiking",
-  "yoga",
-  "photography",
-  "cooking",
-  "traveling",
-  "reading",
-  "videogaming",
-  "biking",
-  "running",
-  "watchingmovies",
-  "workingout",
-  "dancing",
-  "playinginstrument",
-  "attendingconcerts",
-  "painting",
-  "volunteering",
-  "playingsports",
-  "crafting",
-  "petlover",
-  "learningnewlanguage",
+  "Hiking",
+  "Yoga",
+  "Photography",
+  "Cooking",
+  "Traveling",
+  "Reading",
+  "Video gaming",
+  "Biking",
+  "Running",
+  "Watching movies",
+  "Working out",
+  "Dancing",
+  "Playing instrument",
+  "Attending concerts",
+  "Painting",
+  "Volunteering",
+  "Playing sports",
+  "Crafting",
+  "Pet lover",
+  "Learning new language",
 ] as const;
 export const religions = [
   "Atheist",
@@ -44,26 +44,26 @@ export const religions = [
 
 export type FormDataHobbies = {
   // Activities
-  hiking: boolean;
-  yoga: boolean;
-  photography: boolean;
-  cooking: boolean;
-  traveling: boolean;
-  reading: boolean;
-  videogaming: boolean;
-  biking: boolean;
-  running: boolean;
-  watchingmovies: boolean;
-  workingout: boolean;
-  dancing: boolean;
-  playinginstrument: boolean;
-  attendingconcerts: boolean;
-  painting: boolean;
-  volunteering: boolean;
-  playingsports: boolean; //(e.g., Soccer, Tennis, Basketball)
-  crafting: boolean;
-  petlover: boolean;
-  learningnewlanguage: boolean;
+  "Hiking": boolean;
+  "Yoga": boolean;
+  "Photography": boolean;
+  "Cooking": boolean;
+  "Traveling": boolean;
+  "Reading": boolean;
+  "Video gaming": boolean;
+  "Biking": boolean;
+  "Running": boolean;
+  "Watching movies": boolean;
+  "Working out": boolean;
+  "Dancing": boolean;
+  "Playing instrument": boolean;
+  "Attending concerts": boolean;
+  "Painting": boolean;
+  "Volunteering": boolean;
+  "Playing sports": boolean;
+  "Crafting": boolean;
+  "Pet lover": boolean;
+  "Learning new language": boolean;
 };
 
 export type FormDataInfo = {

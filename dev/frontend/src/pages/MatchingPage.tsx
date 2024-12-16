@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Menu from "@/components/Menu";
+import Menu from "@/components/menu_components/Menu";
 import { NotificationProvider } from "@/components/NotificationContext";
 import CustomTinderCard from "@/components/CustomTinderCard";
 import useTriggerFetch from "@/api/useTriggerFetch";
@@ -27,6 +27,7 @@ export interface ProfileProps {
 
 const MatchingPage: React.FC = () => {
   const [refetchTrigger, setRefetchTrigger] = useState(0);
+  const algo = sessionStorage.getItem("algo") || "Meanshift";
   const {
     data: profileData,
     loading: profileLoading,
@@ -34,7 +35,7 @@ const MatchingPage: React.FC = () => {
   } = useTriggerFetch<IProfileData[]>(
     {
       url: "/suggestions",
-      data: { id: sessionStorage.getItem("id") },
+      data: { id: sessionStorage.getItem("id"), algo: algo },
     },
     refetchTrigger
   );
@@ -85,39 +86,6 @@ const MatchingPage: React.FC = () => {
       </div>
     </div>
   );
-
-  // return (
-  //   <div className="w-full h-full flex flex-col items-center">
-  //     <NotificationProvider>
-  //       <Menu />
-  //     </NotificationProvider>
-  //     <div className="relative w-96 pt-3">
-  //       {profileData &&
-  //         profileData?.map(
-  //           (profile, index) => (
-  //             console.log("index: ", index),
-  //             (
-  //               <CustomTinderCard
-  //                 key={index}
-  //                 profile_info={profile.user_infos.profile_info}
-  //                 photos={profile.user_infos.photo_keys}
-  //                 suggestion_id={profile.suggestion_id}
-  //                 isLastCard={index === 0} // Mark the last card
-  //                 onLastCardLeftScreen={handleEndOfList} // Pass the callback
-  //               />
-  //             )
-  //           )
-  //         )}
-  //       {!profileData && !profileLoading && !profileError && (
-  //         <div>
-  //           <div className="rounded-md text-red-800 bg-red-400 p-2 border-red-800 border-2 text-md">
-  //             No matching profiles found.
-  //           </div>
-  //         </div>
-  //       )}
-  //     </div>
-  //   </div>
-  // );
 };
 
 export default MatchingPage;
