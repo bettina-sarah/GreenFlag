@@ -68,6 +68,7 @@ const MatchingPage: React.FC = () => {
                 console.log("index: ", index),
                 (
                   <CustomTinderCard
+                    index={index}
                     key={profile.suggestion_id} // Ensure unique key for each card
                     profile_info={profile.user_infos.profile_info}
                     photos={profile.user_infos.photo_keys}
