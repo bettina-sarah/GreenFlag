@@ -118,13 +118,17 @@ const QuestionnaireForm = () => {
         className="bg-primary-color rounded-3xl p-4 mt-7"
       >
         <div>
-          <label className="text-h2-custom">Select Your Date of Birth:</label>
+          <label className="block text-left text-secondary-color text-lg mb-2">
+            Select Your Date of Birth:
+          </label>
           <Controller
             name="date_of_birth"
             control={controlInfo}
             defaultValue={new Date()}
             render={({ field }) => (
               <Datepicker
+                // puissance tailwind: changer CSS d'une librairie ou tu ne peux pas acceder normalement.
+                className="[&_input]:!pl-9 [&_input]:!text-lg [&_svg]:!text-secondary-color"
                 {...field}
                 onChange={(date: Date | null) => field.onChange(date)}
                 minDate={
@@ -151,10 +155,12 @@ const QuestionnaireForm = () => {
               <span>This is required</span>
             )}
         </div>
-
         <div className="pt-10">
-          <label className="text-h2-custom">Select Your Gender:</label>
+          <label className="block text-left text-secondary-color text-lg mb-2">
+            Select Your Gender:
+          </label>
           <Select
+            className="[&_select]:!text-lg"
             {...registerInfo("gender", { required: true })}
             color="custom"
             theme={selectTheme}
@@ -173,9 +179,10 @@ const QuestionnaireForm = () => {
             <span>This is required</span>
           )}
         </div>
-
         <div className="pt-10">
-          <label className="text-h2-custom">Enter Your Height (in cm):</label>
+          <label className="block text-left text-secondary-color text-lg mb-2">
+            Enter Your Height (in cm):
+          </label>
           <TextInput
             {...registerInfo("height", { required: true })}
             type="number"
@@ -184,18 +191,18 @@ const QuestionnaireForm = () => {
             max={272}
             color="custom"
             theme={textInputTheme}
-            className=" [::-webkit-inner-spin-button]:appearance-none [::-webkit-outer-spin-button]:appearance-none"
+            className="[&_input]:!text-lg [::-webkit-inner-spin-button]:appearance-none [::-webkit-outer-spin-button]:appearance-none"
           />
           {errorsInfo.height && errorsInfo.height.type === "required" && (
             <span>This is required</span>
           )}
         </div>
-
         <div className="pt-10">
-          <label className="text-h2-custom">
+          <label className="block text-left text-secondary-color text-lg mb-2">
             Select Your Religion or Belief:
           </label>
           <Select
+            className="[&_select]:!text-lg"
             {...registerInfo("religion", { required: true })}
             color="custom"
             theme={selectTheme}
@@ -210,17 +217,18 @@ const QuestionnaireForm = () => {
             <span>This is required</span>
           )}
         </div>
-
         <div className="flex items-center gap-2 pt-10">
-          <Label className="text-h2-custom" htmlFor="want_kids">
-            Do you want kids? (check for yes)
+          <Label
+            className="block text-left text-secondary-color text-lg"
+            htmlFor="want_kids"
+          >
+            Check box if you want kids
           </Label>
           <Checkbox
-            className="bg-custom-bg border-secondary-color checked:bg-secondary-color focus:outline-secondary-color"
+            className=" pl-4 bg-custom-bg border-secondary-color checked:bg-secondary-color focus:outline-secondary-color"
             {...registerInfo("want_kids")}
           />
         </div>
-
         <div className="pt-10">
           <label className="text-h2-custom">Insert Your City:</label>
           <TextInput
@@ -236,7 +244,6 @@ const QuestionnaireForm = () => {
             <span>Max length exceeded</span>
           )}
         </div>
-
         <div className="pt-10">
           <label className="text-h2-custom">
             Tell us a little thing about yourself:
@@ -249,7 +256,6 @@ const QuestionnaireForm = () => {
             theme={textAreaTheme}
           />
         </div>
-
         <div className="flex flex-col pt-10 pb-10">
           <label className="text-h2-custom">Age preference range:</label>
           <div className="flex flex-row justify-evenly pt-4">
@@ -299,7 +305,6 @@ const QuestionnaireForm = () => {
             </label>
           </div>
         </div>
-
         <label className="text-h2-custom">
           Select The Relationship Type You Prefer:
         </label>
@@ -315,7 +320,6 @@ const QuestionnaireForm = () => {
         {errorsInfo.gender && errorsInfo.gender.type === "required" && (
           <span>This is required</span>
         )}
-
         <div className="pt-10">
           <label className="text-h2-custom">
             What genders are you interested in when choosing a partner?
@@ -352,7 +356,6 @@ const QuestionnaireForm = () => {
             )}
           />
         </div>
-
         <button
           className="transition-colors duration-300 bg-custom-bg hover:bg-primary-color
              text-primary-color hover:text-custom-bg border-2 border-custom-bg 
