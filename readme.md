@@ -29,15 +29,15 @@ Vous pouvez maintenant utiliser l'application à l'addresse localhost:5173
 
 ## Utilisation
 La première étape serait de créer un nouveau compte.
-![My Image](images\to-creation.png) ![My Image](images\creation-compte.png)
+![My Image](images/to-creation.png) ![My Image](images/creation-compte.png)
 Après avoir donner son email et mot-de-passe, se connecter une première fois.
-![My Image](images\to-login.png) ![My Image](images\login.png)
+![My Image](images/to-login.png) ![My Image](images/login.png)
 Lors de cette première connection, on vous demande de remplir un formulaire afin d'en connaitre plus
 sur vous et de nous aider à trouver des usagers qui pourrais vous intérresser.
-![My Image](images\questionnaire-1.png) ![My Image](images\questionnaire-2.png) ![My Image](images\questionnaire-3.png)
+![My Image](images/questionnaire-1.png) ![My Image](images/questionnaire-2.png) ![My Image](images/questionnaire-3.png)
 Vous êtes par la suite redirigé vers la page des matchs où vous pouvez dès maintenant
 accepter ou refuser des suggestions de partenaires qui vous sont offertes.
-![My Image](images\match.png)
+![My Image](images/match.png)
 Dès qu'une suggestion est réciproquement acceptée, un match devrait être crée et une notification
 devrait vous être donner par laquelle vous serez redirigé à la discussion du match à l'aide d'un clic.
 
