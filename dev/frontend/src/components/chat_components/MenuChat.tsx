@@ -46,16 +46,19 @@ const MenuChat: React.FC = () => {
     }, [subjectData, subjectLoading, subjectError]);
 
     return(
-        <div className='w-full h-50'>
+
+        <div className='w-full h-14'>
             <div className='flex w-full h-full justify-between  bg-primary-color'>
-                <div>
-                    <IconButton icon={backIcon} page="chatrooms"/>
+                <div className='mt-1'>
+                    <IconButton className="h-18 w-20" icon={backIcon} page="chatrooms"/>
                 </div>
                 <div className='flex w-50 items-center'>
                     <Avatar key={avatarPhoto?.key} img={avatarPhoto?.path || undefined} rounded/>
                     <h1 className='pl-2 text-base-text text-2xl'>{subjectData?.subject_firstname}</h1>
                 </div>
-                <IconButton icon={flagButton}  onClick={() =>setIsFlagModalOpen(true)}/>
+                <div className='mt-1'>
+                <IconButton className="h-18 w-20" icon={flagButton}  onClick={() =>setIsFlagModalOpen(true)}/>
+                </div>
             </div>
             <FlagModal 
                 subject_id={subjectData?.subject_id}
