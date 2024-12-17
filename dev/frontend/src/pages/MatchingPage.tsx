@@ -162,7 +162,7 @@ const MatchingPage: React.FC = () => {
               );
             })
           : !profileLoading && (
-              <div className="rounded-md text-red-800 bg-red-400 p-2 border-red-800 border-2 text-md">
+              <div className=" my-56 rounded-md text-red-800 bg-red-400 p-2 border-red-800 border-2 text-lg">
                 No matching profiles found.
               </div>
             )}

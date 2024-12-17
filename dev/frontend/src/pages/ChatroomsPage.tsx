@@ -103,7 +103,7 @@ const ChatroomsPage: React.FC = () => {
 					<ChatroomItem key={profile.name} name={profile.name} subject={profile.subject} last_message={profile.last_message} />
 				))
 				: 
-					<div className="my-12 rounded-md text-red-800 bg-red-400 p-2 border-red-800 border-2 text-lg ">
+					<div className=" mx-5 my-56 xl:mx-80 sm:w-[400px] lg:w-[600px] xl:w-[800px] rounded-md text-red-800 bg-red-400 p-2 border-red-800 border-2 text-lg ">
 					  No ongoing chats - swipe more for matches!
 					</div>}
 			</div>
