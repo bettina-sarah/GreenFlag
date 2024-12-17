@@ -12,7 +12,7 @@ const Menu: React.FC = () => {
   const { notifications } = useNotifications();
 
   return (
-    <div className="w-full h-50">
+    <div className="w-full h-14">
       <div className="flex w-full h-full justify-evenly  bg-primary-color">
         <IconButton icon={matchingIcon} page="matching" />
         <IconButton icon={messageIcon} page="chatrooms" />
