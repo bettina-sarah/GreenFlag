@@ -49,7 +49,7 @@ const MatchingPage: React.FC = () => {
   );
 
   const handleEndOfList = () => {
-    setRefetchTrigger((prev) => prev + 1); // Increment trigger to refetch
+    setRefetchTrigger((prev) => prev + 1);
   };
 
   useEffect(() => {
@@ -82,8 +82,6 @@ const MatchingPage: React.FC = () => {
     }
     console.log("right: ", suggestion_id);
     console.log("isLastCard:", isLastCard);
-    // setCurrentIndex(currentIndex + 1);
-    // console.log("currentIndex:", currentIndex);
     if (isLastCard) {
       handleEndOfList();
     }
@@ -100,8 +98,6 @@ const MatchingPage: React.FC = () => {
         return [...prevCards];
       });
     }
-    // setCurrentIndex(currentIndex + 1);
-    // console.log("currentIndex:", currentIndex);
     console.log("left: ", suggestion_id);
     if (isLastCard) {
       handleEndOfList();
@@ -133,23 +129,23 @@ const MatchingPage: React.FC = () => {
                     <CustomTinderCard
                       swipeLeft={SwipeLeft}
                       swipeRight={SwipeRight}
-                      key={profile.suggestion_id} // Ensure unique key for each card
+                      key={profile.suggestion_id} 
                       profile_info={profile.user_infos.profile_info}
                       photos={profile.user_infos.photo_keys}
                       suggestion_id={profile.suggestion_id}
-                      isLastCard={index === 0} // Mark the last card
-                      onLastCardLeftScreen={handleEndOfList} // Callback for end-of-list detection
+                      isLastCard={index === 0} 
+                      onLastCardLeftScreen={handleEndOfList}
                     />
                     <div
                       className=" absolute -bottom-[570px] left-0 w-full flex items-center justify-evenly
-                    sm:-bottom-[290px] lg:-bottom-[620px]"
+                    sm:-bottom-[290px] lg:-bottom-[620px] xl:-bottom-[900px]"
                     >
                       <IconButton
                         className="h-28 w-28"
                         icon={RedFlag}
                         onClick={() =>
                           SwipeLeft(profile.suggestion_id, index === 0)
-                        } // Pass suggestion_id to the handler
+                        } 
                         suggestion_id={profile.suggestion_id}
                       />
                       <IconButton
