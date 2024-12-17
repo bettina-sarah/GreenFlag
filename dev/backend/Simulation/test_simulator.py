@@ -14,8 +14,12 @@ About       : Contient le simulateur principal de notre application avec la fabr
 from Simulation.user_factory import UserFactory
 from Simulation.swiping_strategy import SwipingContext, RandomStrategy, PickyStrategy, DesperateStrategy
 from Managers.matching_manager import MatchingManager
+from DAOs.chat_dao import ChatDAO
+from DAOs.account_dao import AccountDAO
 from Simulation.user import User
 import random
+from datetime import datetime, timedelta
+from faker import Faker
 
 import logging
 
@@ -25,6 +29,7 @@ class TestSimulator:
         self.user_factory = UserFactory("w")
         self.suggestions= set()
         self.contexts = (SwipingContext(PickyStrategy()), SwipingContext(RandomStrategy()), SwipingContext(DesperateStrategy())) 
+        self.faker = Faker()
     
     # !!! get old users to put in set
 
@@ -49,9 +54,12 @@ class TestSimulator:
                 logging.error(f'No suggestions available; error: {error}')
                 pass
 
+    def get_fake_users(self):
+        reponse = AccountDAO.get_fake_users((True,))
+        return reponse
 
     def swipe(self) -> None:
-        
+        self.users = self.get_fake_users()
         random.shuffle(self.users)
         nbr_users = len(self.users)
         nbr_picky_users = int(nbr_users * 0.33)
@@ -77,3 +85,28 @@ class TestSimulator:
                 logging.error(f'No suggestions available; error: {error}')
                 pass
         
+    def fill_conversations(self) -> None:
+        logging.info("filling empty convos with msgs")
+        empty_matches = ChatDAO.get_match_without_msg()
+        msgs = []
+        if not empty_matches:
+            logging.info("No empty match found")
+            return True
+        
+        for match in empty_matches:
+            match_id, member_id_1, member_id_2 = match
+            nb_msgs = random.randint(1,5)
+            
+            for _ in range(nb_msgs):
+                now = datetime.now() + timedelta(minutes=random.randint(1, 5))
+                datetime_string = now.strftime('%Y-%m-%d %H:%M:%S')
+                sender = random.choice([member_id_1,member_id_2])
+                
+                msg = (match_id, sender, self.faker.sentence(nb_words=random.randint(3,12)), datetime_string)
+                msgs.append(msg)
+        
+        try:
+            ChatDAO.add_fake_msgs(msgs)
+            logging.info('Success! convos filled')
+        except Exception as error:
+            logging.error(f'An error occured when adding the messages   error: {error}')
