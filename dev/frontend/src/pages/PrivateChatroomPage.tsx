@@ -99,7 +99,7 @@ const PrivateChatroomPage: React.FC = () => {
         </div>
         <div className="relative p-4">
           <Textarea
-            className="bg-primary-color resize-none overflow-y-auto no-scrollbar border border-secondary-color rounded p-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 min-h-10 max-h-32"
+            className="bg-primary-color resize-none overflow-y-auto no-scrollbar border border-secondary-color rounded p-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 min-h-11 max-h-32"
             rows={1}
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)} 
@@ -111,7 +111,7 @@ const PrivateChatroomPage: React.FC = () => {
               }
             }}
           />
-          <IconButton className="absolute right-3 bottom-2" onClick={sendMessage} icon={sendIcon} />
+          <IconButton className="absolute right-4 bottom-3" onClick={sendMessage} icon={sendIcon} />
         </div>
       </div>
     );
