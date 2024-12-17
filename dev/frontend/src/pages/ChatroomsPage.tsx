@@ -93,13 +93,19 @@ const ChatroomsPage: React.FC = () => {
 
 	return(
 		<div>
-					  <NotificationProvider>
+	<NotificationProvider>
         <Menu />
       </NotificationProvider>
 			<div>
-				{modifiedProfileData.map((profile) => (
+				{ modifiedProfileData && modifiedProfileData.length > 0
+					?	
+				modifiedProfileData.map((profile) => (
 					<ChatroomItem key={profile.name} name={profile.name} subject={profile.subject} last_message={profile.last_message} />
-				))}
+				))
+				: 
+					<div className="my-12 rounded-md text-red-800 bg-red-400 p-2 border-red-800 border-2 text-lg ">
+					  No ongoing chats - swipe more for matches!
+					</div>}
 			</div>
 		</div>
 	);
