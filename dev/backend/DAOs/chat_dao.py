@@ -55,6 +55,14 @@ class ChatDAO(DAO):
         if response:
             return True
         return False
+    
+    @staticmethod
+    def add_fake_msgs(messages:list[tuple[str,int]]) ->bool:
+        query = "INSERT INTO msg(match_id, sender_id, msg, date_sent) VALUES(%s,%s,%s,%s) RETURNING id;"
+        response = ChatDAO._prepare_statement('insert',query,messages,many=True)
+        if response:
+            return True
+        return False
 
     @staticmethod
     def get_messages(params:tuple) -> List[dict[str]]:
@@ -91,4 +99,25 @@ class ChatDAO(DAO):
     def flag_user(params:tuple) -> bool:
         query = "INSERT INTO flagged (member_id, reporter_id, reason) VALUES (%s, %s, %s) RETURNING id;"
         response = ChatDAO._prepare_statement("insert",query,params)
+        return response
+    
+    @staticmethod
+    def get_match_without_msg() -> List[tuple]:
+        query = '''
+        SELECT
+            mm.id AS match_id,
+            s.member_id_1,
+            s.member_id_2
+        FROM 
+            member_match AS mm
+        JOIN
+            suggestion AS s ON mm.suggestion_id = s.id
+        LEFT JOIN
+            msg AS m ON m.match_id = mm.id
+        WHERE
+            m.id IS NULL;
+        '''
+        params = ()
+        response = ChatDAO._prepare_statement('select',query,params)
+        
         return response
