@@ -98,8 +98,8 @@ const QuestionnaireForm = () => {
         </div>
 
         <button
-          className="transition-colors duration-300 bg-custom-bg hover:bg-primary-color
-             text-primary-color hover:text-custom-bg border-2 border-custom-bg 
+          className="transition-colors duration-300 bg-secondary-color hover:bg-primary-color
+             text-custom-bg/85 hover:text-custom-bg border-2 border-secondary-color
              font-bold py-2 px-4 rounded my-4 mx-6 w-72"
           type="submit"
         >
@@ -370,8 +370,8 @@ const QuestionnaireForm = () => {
           />
         </div>
         <button
-          className="transition-colors duration-300 bg-custom-bg hover:bg-primary-color
-             text-primary-color hover:text-custom-bg border-2 border-custom-bg 
+          className="transition-colors duration-300 bg-secondary-color hover:bg-primary-color
+             text-custom-bg/85 hover:text-custom-bg border-2 border-secondary-color
              font-bold py-2 px-4 rounded my-4 mx-6 w-72"
           type="submit"
         >
@@ -393,8 +393,8 @@ const QuestionnaireForm = () => {
       >
         <ImageInputCustom name="image" control={control} />
         <button
-          className="transition-colors duration-300 bg-custom-bg hover:bg-primary-color
-             text-primary-color hover:text-custom-bg border-2 border-custom-bg 
+          className="transition-colors duration-300 bg-secondary-color hover:bg-primary-color
+             text-custom-bg/85 hover:text-custom-bg border-2 border-secondary-color
              font-bold py-2 px-4 rounded my-4 mx-6 w-72"
           type="submit"
         >
