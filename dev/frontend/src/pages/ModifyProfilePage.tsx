@@ -45,7 +45,7 @@ const ModifyProfilePage: React.FC = () => {
         Your profile
       </h1>
       {profileData && (
-        <div className="w-full">
+        <div>
           <ProfileCard
             profile_info={profileData.profile_info}
             photos={profileData.photo_keys}
@@ -53,7 +53,9 @@ const ModifyProfilePage: React.FC = () => {
         </div>
       )}
 
-      <h1>Modify your profile</h1>
+      <h1 className="m-3 py-4 text-5xl font-bold text-base-text font-leckerli">
+        Modify your profile
+      </h1>
       <div className="flex-grow-1 flex flex-col justify-evenly items-center">
         <QuestionnaireForm />
       </div>
