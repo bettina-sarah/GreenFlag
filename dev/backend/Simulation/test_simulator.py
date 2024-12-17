@@ -15,6 +15,7 @@ from Simulation.user_factory import UserFactory
 from Simulation.swiping_strategy import SwipingContext, RandomStrategy, PickyStrategy, DesperateStrategy
 from Managers.matching_manager import MatchingManager
 from DAOs.chat_dao import ChatDAO
+from DAOs.account_dao import AccountDAO
 from Simulation.user import User
 import random
 from datetime import datetime, timedelta
@@ -53,9 +54,12 @@ class TestSimulator:
                 logging.error(f'No suggestions available; error: {error}')
                 pass
 
+    def get_fake_users(self):
+        reponse = AccountDAO.get_fake_users((True,))
+        return reponse
 
     def swipe(self) -> None:
-        
+        self.users = self.get_fake_users()
         random.shuffle(self.users)
         nbr_users = len(self.users)
         nbr_picky_users = int(nbr_users * 0.33)
