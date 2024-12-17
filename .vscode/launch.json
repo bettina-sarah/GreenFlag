@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Débogueur Python: serveur",
+            "name": "run server",
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/dev/backend/server.py",
@@ -14,6 +14,14 @@
             "env":{
                 "GEVENT_SUPPORT": "True"
             }
+        },
+        {
+            "name": "fill DB",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/dev/backend/sim_main.py",
+            "cwd": "${workspaceFolder}/dev/backend",
+            "console": "integratedTerminal"
         },
         {
             "name": "Débogueur Python: Fichier actuel",
