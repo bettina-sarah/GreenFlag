@@ -48,7 +48,7 @@ Dans ce dernier, il vous est possible en temps réel d'envoyer et de recevoir de
 Une compilation des ressources et des références principales consultées durant le
 développement du projet, avec des liens hypertextes le cas échéant.
 ChatGpt https://chatgpt.com/
-
+Scikit-Learn Github Repo https://github.com/scikit-learn/scikit-learn/blob/6e9039160/sklearn/cluster/_mean_shift.py#L302 for the algorithm Meanshift
 
 
 ## Contact
