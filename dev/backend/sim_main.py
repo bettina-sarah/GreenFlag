@@ -31,4 +31,4 @@ if __name__ == '__main__':
     sim = TestSimulator()
     sim.create_random_users(100)
     sim._create_pending_suggestions()
-    # sim.swipe()
+    sim.swipe()
