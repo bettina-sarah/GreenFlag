@@ -53,7 +53,7 @@ const CustomTinderCard: React.FC<IProfileProps> = ({
         onCardLeftScreen={handleCardLeftScreen}
       >
         <div
-          className="shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]   w-full max-w-[550px] lg:max-w-[600px] bg-primary-color rounded-xl 
+          className="shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]   w-full max-w-[550px] lg:max-w-[600px] bg-primary-color rounded-e-md 
         relative h-[750px] lg:h-[800px] overflow-hidden"
         >
           <PhotoCarousel images={photos} />
