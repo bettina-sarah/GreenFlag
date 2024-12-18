@@ -9,14 +9,14 @@ const AccountSettingsPage: React.FC = () => {
   return (
     <div className="w-full flex flex-col justify-between items-center bg-primary-color">
       <NotificationProvider>
-        <Menu />
+        <Menu classname="border-secondary-color/20 shadow-md border-2" />
       </NotificationProvider>
 
       <div className="flex flex-col justify-around items-center m-6 bg-primary-color rounded-3xl">
-        <h1 className="m-3 py-4 text-5xl font-bold text-base-text font-leckerli">
+        <h1 className="m-3 pt-2 pb-2 text-5xl font-bold text-base-text font-leckerli">
           Account settings
         </h1>
-        <h1 className="py-3 text-3xl font-bold text-base-text">
+        <h1 className="pt-1 pb-6 text-3xl font-bold text-base-text">
           Choose an assistant for the perfect match
         </h1>
 

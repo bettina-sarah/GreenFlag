@@ -129,11 +129,11 @@ const MatchingPage: React.FC = () => {
                     <CustomTinderCard
                       swipeLeft={SwipeLeft}
                       swipeRight={SwipeRight}
-                      key={profile.suggestion_id} 
+                      key={profile.suggestion_id}
                       profile_info={profile.user_infos.profile_info}
                       photos={profile.user_infos.photo_keys}
                       suggestion_id={profile.suggestion_id}
-                      isLastCard={index === 0} 
+                      isLastCard={index === 0}
                       onLastCardLeftScreen={handleEndOfList}
                     />
                     <div
@@ -145,7 +145,7 @@ const MatchingPage: React.FC = () => {
                         icon={RedFlag}
                         onClick={() =>
                           SwipeLeft(profile.suggestion_id, index === 0)
-                        } 
+                        }
                         suggestion_id={profile.suggestion_id}
                       />
                       <IconButton
