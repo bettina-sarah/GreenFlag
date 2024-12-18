@@ -46,13 +46,13 @@ sur vous et de nous aider à trouver des usagers qui pourrais vous intérresser.
 ![My Image](images/questionnaire-1_optimized.png) ![My Image](images/questionnaire-2_optimized.png) ![My Image](images/questionnaire-3_optimized.png)\
 Vous êtes par la suite redirigé vers la page des matchs où vous pouvez dès maintenant
 accepter ou refuser des suggestions de partenaires qui vous sont offertes.\
-![My Image](images/match-optimized.png)\
+![My Image](images/match_optimized.png)\
 
 Dès qu'une suggestion est réciproquement acceptée, un match devrait être crée et une notification
 devrait vous être donner par laquelle vous serez redirigé à la discussion du match à l'aide d'un clic.\
 ![My Image](images/notification-match_optimized.png) ![My Image](images/notification_optimized.png)\
 \
-Dans ce dernier, il vous est possible en temps réel d'envoyer et de recevoir des messages.
+Dans ce dernier, il vous est possible en temps réel d'envoyer et de recevoir des messages.\
 ![My Image](images/chat_optimized.png)
 
 ## Références
