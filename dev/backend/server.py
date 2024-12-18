@@ -136,22 +136,21 @@ def get_location() -> bool:
 
 @app.route('/get-photo', methods=['POST'])
 def get_photo() -> bool:
-    print("frontend sent this:", request.json)
+    logger.warning(f"FRONTEND demande une photo avec: {request.json}")
     photo, mimetype = AccountManager.get_photo(request.json[0])
-    print(photo, mimetype)
+    logger.critical(f'Photo de type {mimetype} envoyé au FRONTEND')
     return send_file(photo, mimetype=mimetype, as_attachment=False) if not isinstance(photo, bool) else jsonify(False)
 
 @app.route('/upload-photo', methods=['POST'])
 def upload_photos() -> bool:
-    print("id : " + request.form['id'])
-    print("image : " , request.files['image'])
     id = request.form['id']
     files = request.files['image']
     response = AccountManager.modify_photos(id, files)
     return jsonify(response)
 
 # ------ QUESTIONNAIRE -------
-# ATTENTION WE SHOULD KNOW IF NEW USER OR NOT. DIFFERENCE BETWEEN INSERT & UPDATE REQUEST
+
+
 @app.route('/questionnaire', methods=['POST'])
 def questionnaire() -> bool:
     print(request.json)
