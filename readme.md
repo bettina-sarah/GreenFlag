@@ -59,7 +59,7 @@ Dans ce dernier, il vous est possible en temps réel d'envoyer et de recevoir de
   <div style="flex: 1; padding-right: 10px;">
     Après avoir donner son email et mot-de-passe, se connecter une première fois.
   </div>
-  <div style="flex: 1;">
+  <div style="flex: 1; flex-direction: column; ">
     <img src="images/to-login_optimized.png" alt="Connexion étape 1" style="width: 100%;"><br>
     <img src="images/login_optimized.png" alt="Connexion étape 2" style="width: 100%;">
   </div>
