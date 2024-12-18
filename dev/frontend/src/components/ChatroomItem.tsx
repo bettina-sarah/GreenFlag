@@ -4,13 +4,12 @@ import LastMessage from "./chatroom_item_components/LastMessage";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "flowbite-react";
 
-
 interface ChatroomProps {
   name: string;
   subject: {
-    id:number;
-    firstname:string;
-    profile_photo:any;
+    id: number;
+    firstname: string;
+    profile_photo: any;
   };
   last_message: {
     sender_id: number;
@@ -20,7 +19,11 @@ interface ChatroomProps {
   };
 }
 
-const ChatroomItem: React.FC<ChatroomProps> = ({ name, subject, last_message }) => {
+const ChatroomItem: React.FC<ChatroomProps> = ({
+  name,
+  subject,
+  last_message,
+}) => {
   const navigate = useNavigate();
 
   function handleClick() {
@@ -28,10 +31,18 @@ const ChatroomItem: React.FC<ChatroomProps> = ({ name, subject, last_message }) 
   }
 
   return (
-    <div className="flex grow bg-custom-bg p-1 m-1 border-b-2 border-secondary-color" onClick={handleClick}>
+    <div
+      className="flex grow bg-custom-bg p-3 m-3 border-b-2 border-slate-400/20"
+      onClick={handleClick}
+    >
       <Avatar img={subject.profile_photo?.path || undefined} rounded size="lg">
-        <h2 className="font-inter text-base-text text-start">{subject.firstname}</h2>
-        <LastMessage last_message={last_message} subject_first_name={subject.firstname}/>
+        <h2 className="font-inter text-base-text text-2xl text-start">
+          {subject.firstname}
+        </h2>
+        <LastMessage
+          last_message={last_message}
+          subject_first_name={subject.firstname}
+        />
       </Avatar>
       {/* <Subject subject={subject}/> */}
     </div>

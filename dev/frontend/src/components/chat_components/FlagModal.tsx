@@ -70,7 +70,7 @@ const FlagModal: React.FC<FlagProps> = ({ subject_id, isOpen, onClose }) => {
 
   return (
     <Modal show={isOpen} onClose={onClose} className="bg-secondary-color/70" theme={modalTheme} position="bottom-center" size="sm">
-      <Modal.Header>Flag </Modal.Header>
+      <Modal.Header>Flag</Modal.Header>
       <Modal.Body>
         <Select 
           onChange={(event)=> setReason(event.target.value)}
@@ -78,15 +78,15 @@ const FlagModal: React.FC<FlagProps> = ({ subject_id, isOpen, onClose }) => {
           color="custom"
         >
           {reasons.map((reason, index) => (
-            <option value={reason} key={index} className="bg-primary-color text-h2-custom">
+            <option value={reason} key={index} className="bg-primary-color text-black">
               {reason}
             </option>
           ))}
         </Select>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={() => sendFlag(reason)} color="green">I confirm</Button>
-        <Button onClick={onClose} color="red">I abort</Button>
+        <Button onClick={() => sendFlag(reason)} color="green">Confirm</Button>
+        <Button onClick={onClose} color="red">Cancel</Button>
       </Modal.Footer>
     </Modal>
   );

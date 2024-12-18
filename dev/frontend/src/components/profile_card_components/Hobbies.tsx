@@ -12,7 +12,7 @@ const Hobbies: React.FC<HobbiesProps> = ({ hobbies }) => {
         {hobbies.map((hobby, index) => (
           <div
             key={index}
-            className="font-nunito-semibold p-1 m-1 pr-3 pl-3 border-[2px] border-black bg-complementary-color rounded-3xl text-muted-text "
+            className="font-nunito-semibold p-1 m-1 px-3 border-[2px] border-slate-700 bg-complementary-color rounded-3xl text-muted-text "
           >
             {hobby}
           </div>

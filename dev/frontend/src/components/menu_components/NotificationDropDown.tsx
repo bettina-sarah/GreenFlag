@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef} from "react";
+import { useState, useEffect, useRef } from "react";
 import IconButton from "../IconButton";
 import bellIcon from "../../../ressources/icons/bell_notification.png";
 import { useNavigate } from "react-router-dom";
@@ -20,24 +20,26 @@ const NotificationDropDown: React.FC<NotificationDropDownProps> = ({
 
   const componentRef = useRef<HTMLDivElement>(null);
 
-  useEffect(()=>{
-    const handleClickOutside = (event:Event) => {
-      if (componentRef.current && !componentRef.current.contains(event.target as Node | null)){
+  useEffect(() => {
+    const handleClickOutside = (event: Event) => {
+      if (
+        componentRef.current &&
+        !componentRef.current.contains(event.target as Node | null)
+      ) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener('mousedown',handleClickOutside);
-    document.addEventListener('touchstart',handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
     };
-  },[]);
+  }, []);
 
   console.log("notificationDropDown:", notifications);
   // console.log("notificationDropDown:", notifications);
-
 
   return (
     <div ref={componentRef} className="relative pt-1">
@@ -59,8 +61,8 @@ const NotificationDropDown: React.FC<NotificationDropDownProps> = ({
               <li key={index}>
                 <button
                   // className="w-full p-2 text-black text-sm hover:bg-theme-autumn/50 rounded-md"
-                  className={`w-full p-2 text-black text-sm hover:bg-theme-autumn/50 rounded-md shadow-lg
-                    ${notificationRead ? "italic" : "font-bold"} `}
+                  className={`w-full p-2 text-white text-left font-nunito text-xl rounded-md hover:bg-theme-autumn/50
+                    ${notificationRead ? "italic" : "font-normal"} `}
                   onClick={() => {
                     setNotificationRead(true);
                     updateNotification(

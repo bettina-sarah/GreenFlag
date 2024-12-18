@@ -18,18 +18,19 @@ interface IProfileProps {
 
 const ProfileCard: React.FC<IProfileProps> = ({ profile_info, photos }) => {
   return (
-    <div className="w-96 p-5 bg-primary-color rounded-lg relative">
+    <div
+      className="shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]   w-full max-w-[400px] lg:max-w-[450px] bg-primary-color rounded-e-md 
+  relative h-[750px] lg:h-[800px] xl:h-[900px] overflow-hidden"
+    >
       <PhotoCarousel images={photos} />
-      <BasicInfo basic_info={profile_info.basic_info} />
-      <RelationshipGoals
-        relationship={profile_info.relationship}
-        wants_kids={profile_info.wants_kids}
-      />
-      <Hobbies hobbies={profile_info.hobby_array} />
-      <Bio bio={profile_info.bio} />
-      <div className="flex items-center justify-evenly p-3">
-        <IconButton icon={RedFlag} />
-        <IconButton icon={GreenFlag} />
+      <div className="max-h-[700px] overflow-auto">
+        <BasicInfo basic_info={profile_info.basic_info} />
+        <RelationshipGoals
+          relationship={profile_info.relationship}
+          wants_kids={profile_info.wants_kids}
+        />
+        <Hobbies hobbies={profile_info.hobby_array} />
+        <Bio bio={profile_info.bio} />
       </div>
     </div>
   );
