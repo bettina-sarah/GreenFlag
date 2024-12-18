@@ -1,3 +1,16 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : ModifyPasswordForm.tsx
+Created By  : Vincent Fournier
+About       : Le composant ModifyPasswordForm utilise React Hook Form pour gérer le
+              formulaire de modification de mot de passe avec validation des champs 
+              anciens et nouveaux mots de passe, et envoie les données du formulaire 
+              à une API pour mise à jour de mot de passe.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import { IP_SERVER } from "@/constants";
 import { useForm } from "react-hook-form";
 import axios from "axios";

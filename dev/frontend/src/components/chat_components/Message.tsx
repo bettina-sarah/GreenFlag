@@ -1,3 +1,15 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : Message.tsx
+Created By  : Vincent Fournier
+About       : Le composant Message affiche un message avec un style conditionnel
+              selon qu'il provient de l'utilisateur actuel ou de l'interlocuteur, 
+              en se basant sur l'ID de l'expéditeur.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React from "react";
 import { MessageProps } from "@/interfaces/interfaces";
 

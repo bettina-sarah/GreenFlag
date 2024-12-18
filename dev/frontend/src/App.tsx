@@ -1,3 +1,20 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : AlgoSelector.ts
+Created By  : Vincent Fournier et Bettina-Sarah Janesh
+About       : Le composant App de cette application utilise BrowserRouter pour gérer 
+              le routage de l'application React. Il configure les différentes routes 
+              de l'application, chacune nécessitant une authentification via AuthGuard 
+              pour accéder aux pages protégées telles que /matching, /chatrooms, 
+              /chatroom/:chatroom_name, /questionnaire, /modify-profile, 
+              /account-settings, et /settings. Les autres pages comme HomePage, Login, 
+              CreateAccount ne nécessitent pas d'authentification. Il utilise également 
+              ToastContainer pour gérer les notifications toast dans l'application.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";

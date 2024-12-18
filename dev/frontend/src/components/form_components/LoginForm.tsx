@@ -1,3 +1,16 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : LoginForm.tsx
+Created By  : Vincent Fournier
+About       : Le composant LoginForm utilise React Hook Form pour gérer le 
+              formulaire de connexion avec validation des champs email et 
+              mot de passe, et gère également les erreurs de connexion en affichant 
+              des messages d’erreur pertinents.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import { IP_SERVER } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";

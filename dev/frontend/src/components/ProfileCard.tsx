@@ -1,3 +1,20 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : ProfileCard.tsx
+Created By  : Bettina-Sarah Janesh
+About       : Le composant ProfileCard est utilisé pour afficher un profil utilisateur
+              en intégrant divers composants pour présenter les informations de profil, 
+              telles que les photos, les informations de base, les objectifs 
+              relationnels, les loisirs et la biographie. Il utilise PhotoCarousel 
+              pour afficher les photos, et divise le contenu en sections pour des 
+              informations de base, des objectifs relationnels, des hobbies et une 
+              biographie. Il ajuste également le style et les dimensions en fonction 
+              des tailles d'écran pour un affichage responsive.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React from "react";
 import PhotoCarousel from "./profile_card_components/PhotoCarousel";
 import BasicInfo from "./profile_card_components/BasicInfo";
@@ -24,6 +41,6 @@ const ProfileCard: React.FC<IProfileCardProps> = ({ profile_info, photos }) => {
       </div>
     </div>
   );
-};
+};3
 
 export default ProfileCard;

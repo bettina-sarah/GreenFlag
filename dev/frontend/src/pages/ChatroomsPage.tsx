@@ -1,3 +1,17 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : ChatroomsPage.tsx
+Created By  : Vincent Fournier
+About       : Le composant ChatroomsPage récupère et affiche les salons de chat pour 
+			  un utilisateur, gérant les états de chargement et d'erreur, et mettant 
+			  à jour les données de profil avec les photos récupérées, en utilisant 
+			  useFetch pour la récupération de données et useEffect pour les effets 
+			  secondaires.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React, { useEffect, useState } from "react";
 import Menu from "@/components/menu_components/Menu";
 import useFetch from "@/api/useFetch";

@@ -1,3 +1,15 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : QuestionnaireSubmitHandlers.ts
+Created By  : Vincent Fournier
+About       : Ce fichier contient des fonctions asynchrones pour gérer et soumettre 
+              les informations de profil, les préférences, et les photos de 
+              l'utilisateur à un serveur.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import { IP_SERVER } from "@/constants";
 import axios from "axios";
 

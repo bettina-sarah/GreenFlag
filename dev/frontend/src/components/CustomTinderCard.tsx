@@ -1,3 +1,18 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : CustomTinderCard.tsx
+Created By  : Bettina-Sarah Janesh
+About       : Le composant CustomTinderCard utilise TinderCard pour permettre de 
+              swiper les suggestions de profil. Il gère les actions de swipe à gauche 
+              et à droite, ainsi que le retrait d'une carte de l'écran. Le composant 
+              affiche également des informations sur le profil, telles que les photos, 
+              les informations de base, les objectifs relationnels, les hobbies et la 
+              biographie via divers composants.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React from "react";
 import PhotoCarousel from "./profile_card_components/PhotoCarousel";
 import BasicInfo from "./profile_card_components/BasicInfo";

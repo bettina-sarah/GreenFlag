@@ -1,3 +1,17 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : MatchingPage.tsx
+Created By  : Bettina-Sarah Janesh
+About       : Le composant MatchingPage affiche des suggestions de profils à swiper, 
+              gère les mises à jour de la suggestion via des API et maintient l'état 
+              des cartes swipées à l'aide de useTriggerFetch et useEffect. Il utilise 
+              des icônes pour swiper les profils et affiche un message d'erreur en cas 
+              d'échec de chargement des données.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React, { useEffect, useState } from "react";
 import Menu from "@/components/menu_components/Menu";
 import { NotificationProvider } from "@/components/NotificationContext";

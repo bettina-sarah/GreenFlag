@@ -1,3 +1,18 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : FlagModal.tsx
+Created By  : Vincent Fournier
+About       : Ce composant React, FlagModal, affiche une fenêtre modale permettant à
+              un utilisateur de signaler une autre personne en sélectionnant une 
+              raison dans un menu déroulant. Il utilise axios pour envoyer une 
+              requête POST au serveur, affiche des notifications de succès ou 
+              d'erreur avec react-toastify et redirige l'utilisateur vers les 
+              "chatrooms" en cas de succès.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import {Modal,Select,Button} from "flowbite-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
