@@ -1,7 +1,7 @@
 '''
 ------------------------------------------------------------------------------------
 ====================================================================================
-Filename    : test_simulator.py
+Filename    : chat_dao.py
 Created By  : Vincent Fournier
 About       : Contient les méthodes principales d'accès aux données pour gérer les 
               salons de discussion, y compris la récupération des messages, des noms 
