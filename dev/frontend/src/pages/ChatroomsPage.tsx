@@ -5,42 +5,19 @@ import fetchData from "@/api/fetchData";
 import ChatroomItem from "@/components/ChatroomItem";
 import { Spinner } from "flowbite-react";
 import { NotificationProvider } from "@/components/NotificationContext";
-
-
-interface IProfileData {
-  name: string;
-  subject: {
-    id:number;
-    firstname:string;
-    profile_photo: any; // string | IPhotoData | null;
-  };
-  last_message: {
-    sender_id: number;
-    sender_first_name: string;
-    content: string;
-    date_sent: string;
-  };
-  }
-
-  interface IPhotoData {
-  path: string;
-  key: string;
-  }
+import { IProfileRoomData, IPhotoData } from "@/interfaces/interfaces";
 
 const ChatroomsPage: React.FC = () => {
-
-
-
 	const {
 		data: profileData,
 		loading: profileLoading,
 		error: profileError,
-	  } = useFetch<IProfileData[]>({
+	  } = useFetch<IProfileRoomData[]>({
 		url: "//get-chatrooms",
 		data: { id: sessionStorage.getItem("id") },
 	  });
 
-	  const [modifiedProfileData, setModifiedProfileData] = useState<IProfileData[]>([]);
+	  const [modifiedProfileData, setModifiedProfileData] = useState<IProfileRoomData[]>([]);
 	  
 	  useEffect(() => {
 		if (profileData && !profileLoading && !profileError) {

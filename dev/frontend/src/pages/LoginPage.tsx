@@ -1,5 +1,5 @@
 import IconButton from "@/components/IconButton";
-import LoginForm from "@/components/LoginForm";
+import LoginForm from "@/components/form_components/LoginForm";
 import React from "react";
 import { useState } from "react";
 import BackArrowIcon from "@/../ressources/icons/back_arrow.png";

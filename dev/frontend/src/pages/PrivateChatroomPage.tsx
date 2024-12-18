@@ -7,22 +7,12 @@ import { Textarea } from "flowbite-react";
 import IconButton from "@/components/IconButton";
 import sendIcon from "@/../ressources/icons/send.png"
 import MenuChat from '@/components/chat_components/MenuChat';
+import { IOldMessage, IMessage } from "@/interfaces/interfaces";
 
 
-interface Message {
-  sender_id: number;
-  message_content: string;
-}
-
-interface OldMessage {
-  sender_id:number; 
-  sender_first_name:string;
-  message_content:string;
-  date_sent:string;
-}
 const PrivateChatroomPage: React.FC = () => {
     const {chatroom_name} = useParams();
-    const [messages, setMessages] = useState<Message[]>([]);
+    const [messages, setMessages] = useState<IMessage[]>([]);
     const [newMessage,setNewMessage] = useState<string>('');
     const [firstLoad, setfirstLoad] = useState<boolean>(true);
     const currentUserId = sessionStorage.getItem('id') ? Number(sessionStorage.getItem('id')) : 0;
@@ -35,7 +25,7 @@ const PrivateChatroomPage: React.FC = () => {
       data: messageData,
       loading: messageLoading,
       error: messageError,
-      } = useFetch<OldMessage[]>({
+      } = useFetch<IOldMessage[]>({
       url: "//get-messages",
       data: { chatroom_name: chatroom_name },
     });

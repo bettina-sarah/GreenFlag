@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import fetchData from "@/api/fetchData";
-
-interface AuthGuardProps {
-  children: React.ReactNode;
-}
-
-export interface TokenData {
-  valid: boolean;
-  token?: string;
-}
+import { AuthGuardProps, TokenData } from "@/interfaces/interfaces";
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const navigate = useNavigate();

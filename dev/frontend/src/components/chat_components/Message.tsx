@@ -1,8 +1,5 @@
 import React from "react";
-interface MessageProps {
-  content: string;
-  sender_id: number;
-}
+import { MessageProps } from "@/interfaces/interfaces";
 
 const Message: React.FC<MessageProps> = ({ content, sender_id }) => {
   const currentUserId = sessionStorage.getItem('id') ? Number(sessionStorage.getItem('id')) : 0;

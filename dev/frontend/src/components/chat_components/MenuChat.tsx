@@ -5,15 +5,9 @@ import backIcon from '../../../ressources/icons/back_arrow.png';
 import flagButton from '../../../ressources/icons/FlagButton_left.png';
 import useFetch from '@/api/useFetch';
 import { Avatar } from 'flowbite-react';
-import { IPhotoData } from '../profile_card_components/PhotoCarousel';
 import fetchData from '@/api/fetchData';
 import FlagModal from './FlagModal';
-
-interface SubjectInfos{
-    subject_id: number;
-    subject_firstname: string;
-    subject_avatar: string | null;
-}
+import { IPhotoData, SubjectInfos } from '@/interfaces/interfaces';
 
 const MenuChat: React.FC = () => {
     const {chatroom_name} = useParams();

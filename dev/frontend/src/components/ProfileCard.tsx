@@ -1,22 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import PhotoCarousel from "./profile_card_components/PhotoCarousel";
 import BasicInfo from "./profile_card_components/BasicInfo";
 import RelationshipGoals from "./profile_card_components/RelationshipGoals";
 import Hobbies from "./profile_card_components/Hobbies";
 import Bio from "./profile_card_components/Bio";
-import { ProfileProps } from "@/pages/MatchingPage";
-import IconButton from "./IconButton";
-import RedFlag from "../../ressources/icons/FlagButton_left.png";
-import GreenFlag from "../../ressources/icons/FlagButton_right.png";
-// import Undo from "../../ressources/icons/undo.png";
+import { IProfileCardProps } from "@/interfaces/interfaces";
 
-interface IProfileProps {
-  suggestion_id?: string;
-  profile_info: ProfileProps;
-  photos: string[];
-}
-
-const ProfileCard: React.FC<IProfileProps> = ({ profile_info, photos }) => {
+const ProfileCard: React.FC<IProfileCardProps> = ({ profile_info, photos }) => {
   return (
     <div
       className="shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]   w-full max-w-[400px] lg:max-w-[450px] bg-primary-color rounded-e-md 

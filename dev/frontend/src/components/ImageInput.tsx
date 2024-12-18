@@ -1,10 +1,6 @@
 import React from "react";
-import { useController, Control } from "react-hook-form";
-
-interface ImageInputProps {
-  name: string;
-  control: Control<any>;
-}
+import { useController } from "react-hook-form";
+import { ImageInputProps } from "@/interfaces/interfaces";
 
 const ImageInputCustom: React.FC<ImageInputProps> = ({ name, control }) => {
   const {

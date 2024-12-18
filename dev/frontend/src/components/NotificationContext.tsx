@@ -1,21 +1,7 @@
 import fetchData from "@/api/fetchData";
 import React, { createContext, useContext, useState, useEffect } from "react";
-
+import { NotificationData, NotificationContextType, NotificationProviderProps } from "@/interfaces/interfaces";
 // source: https://react.dev/learn/passing-data-deeply-with-context
-
-interface NotificationData {
-  notification: string;
-  chatroom: string;
-}
-
-interface NotificationContextType {
-  notifications: NotificationData | null;
-  setNotifications: (notifications: NotificationData | null) => void;
-}
-
-interface NotificationProviderProps {
-  children: React.ReactNode;
-}
 
 const NotificationContext = createContext<NotificationContextType | undefined>(
   undefined

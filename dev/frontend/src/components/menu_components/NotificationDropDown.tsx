@@ -3,10 +3,7 @@ import IconButton from "../IconButton";
 import bellIcon from "../../../ressources/icons/bell_notification.png";
 import { useNavigate } from "react-router-dom";
 import { updateNotification } from "@/api/updateNotification";
-
-interface NotificationDropDownProps {
-  notifications: { chatroom: string; notification: string }[] | null;
-}
+import { NotificationDropDownProps } from "@/interfaces/interfaces";
 
 const NotificationDropDown: React.FC<NotificationDropDownProps> = ({
   notifications,
