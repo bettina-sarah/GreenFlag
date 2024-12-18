@@ -136,6 +136,6 @@ class AccountDAO(DAO):
 
     @staticmethod
     def get_fake_users(params:tuple) -> list:
-        query = 'SELECT * from member where fake_member = %s'
+        query = 'SELECT id from member where fake_member = %s'
         response = AccountDAO._prepare_statement('select', query, params)
         return response
