@@ -55,11 +55,14 @@ class TestSimulator:
                 pass
 
     def get_fake_users(self):
-        reponse = AccountDAO.get_fake_users((True,))
-        return reponse
+        fake_users = AccountDAO.get_fake_users((True,))
+        for user in fake_users:
+            old_user = User()
+            old_user.user_id =user[0]
+            self.users.append(old_user)
 
     def swipe(self) -> None:
-        self.users = self.get_fake_users()
+        self.get_fake_users() 
         random.shuffle(self.users)
         nbr_users = len(self.users)
         nbr_picky_users = int(nbr_users * 0.33)
