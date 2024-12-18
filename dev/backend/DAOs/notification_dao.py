@@ -28,20 +28,7 @@ class NotificationDAO(DAO):
     @staticmethod
     def update_notification(notification_id:int, user_id:str) -> List[tuple]:
         query = 'UPDATE alert_notification SET is_read = true WHERE chatroom_name = %s AND member_id = %s;'
-        # chatroom name si what we keep in the FE 
+        # chatroom name is what we keep in the FE 
         params = (notification_id,user_id)
         response = NotificationDAO._prepare_statement("update",query,params)
         return response
-
-    @staticmethod
-    def _create_connection(params: dict) -> None:
-        pass
-
-    def send_notification(self) -> bool:
-        return True
-
-    def modify_notification_status(self) -> bool:
-        return True
-
-    def get_notification(self, user_id) -> List[str]:
-        return []
