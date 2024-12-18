@@ -7,14 +7,16 @@ interface BasicInfoProps {
     age: number;
     city: string;
   };
+  suggestion_id: string;
 }
 
 interface LocationData {
   location: string;
-}
+  }
 
 
-const BasicInfo: React.FC<BasicInfoProps> = ({ basic_info }) => {
+
+const BasicInfo: React.FC<BasicInfoProps> = ({ basic_info, suggestion_id }) => {
 
 
   const {
@@ -23,7 +25,7 @@ const BasicInfo: React.FC<BasicInfoProps> = ({ basic_info }) => {
     error: locationError,
   } = useFetch<LocationData>({
     url: "/get-location",
-    data: { id: sessionStorage.getItem("id") },
+    data: { id: sessionStorage.getItem("id"), suggestion_id: suggestion_id },
   });
 
   if (!locationData && locationLoading) {

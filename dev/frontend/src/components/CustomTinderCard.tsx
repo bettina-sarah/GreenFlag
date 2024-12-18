@@ -59,7 +59,7 @@ const CustomTinderCard: React.FC<IProfileProps> = ({
           <PhotoCarousel images={photos} />
           {/* </div> */}
           <div className="max-h-[700px] overflow-auto">
-            <BasicInfo basic_info={profile_info.basic_info} />
+            <BasicInfo basic_info={profile_info.basic_info} suggestion_id = {suggestion_id} />
             <RelationshipGoals
               relationship={profile_info.relationship}
               wants_kids={profile_info.wants_kids}
