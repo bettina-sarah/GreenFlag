@@ -157,7 +157,6 @@ class AccountManager:
         try:
             response = AccountDAO.delete_account(params)
             return response
-                # email sequence here
         except Exception as error:
             print(error)
             print('account manager')
@@ -168,13 +167,10 @@ class AccountManager:
     def get_profile(data: any) -> bool:
         if not isinstance(data, int):
             id = data.get('id')
-            # normally here we get token or verify it
-            # params = (id,)
         else:
             id = data
         responses = {}
         try:
-            # profile_response = AccountDAO.get_profile(params)
             profile_response = AccountDAO.get_user_infos(id)
             if profile_response:
                 jsonified_response = AccountManager.jsonify_response(profile_response)
@@ -223,7 +219,6 @@ class AccountManager:
         try:
             response = AccountDAO.modify_profile(params)
             return response
-                # email sequence here
         except Exception as error:
             print(error)
             print('account manager')
@@ -237,7 +232,6 @@ class AccountManager:
         try:
             response = AccountDAO.update_preferences(columns, values, user_id)
             return response
-                # email sequence here
         except Exception as error:
             print(error)
             print('account manager')
@@ -248,11 +242,10 @@ class AccountManager:
         columns = []
         values = []
         for key, value in data.items():
-            # change dob to sql appropriate
             if key == 'date_of_birth':
-                dt = datetime.fromisoformat(value[:-1])  # format is '2024-10-07T04:00:00.000Z' - removes Z and keeps date only
+                dt = datetime.fromisoformat(value[:-1])
                 value = dt.date()
-            if key == 'preferred_genders': # make array into sql appropriate list:
+            if key == 'preferred_genders':
                 formatted_genders = '{' + ','.join(value) + '}'
                 value = formatted_genders
             columns.append(key)
@@ -261,28 +254,16 @@ class AccountManager:
 
     @staticmethod
     def modify_photos(user_id, files=None, info=None, keys=None) -> bool:
-        #token = info.get('token')
-        # we verify if token is valid here ... and return right user id to put in params !
-        # user_id = '11'
-        # by now we assume Frontend knows which photos were changed ??? overwrites them all ?
-        # try:
-        #     images = files.get('image')
-        #     # images = files.get('image').getlist()
-        # except Exception as error:
-        #     print(error)
-        #     return False
         if files:
             photo_dao = PhotoDAO()
             keys = photo_dao.add_photos(files)
         else:
             keys = keys
-        # keys = photo_dao.add_photos(images)
         formatted_keys = '{' + ','.join(keys) + '}'
         params = (user_id, formatted_keys)
         try:
             response = AccountDAO.add_photos(params)
             return response
-                # email sequence here
         except Exception as error:
             print(error)
             print('account manager')
@@ -290,8 +271,6 @@ class AccountManager:
     
     @staticmethod
     def get_photo_keys(id) -> bool:
-        # tokens ... 
-        # user_id = '11'
         params = (id,)
         try:
             encryption_keys = AccountDAO.get_photos(params)
@@ -300,10 +279,8 @@ class AccountManager:
             print(error)
     
     
-    
     @staticmethod
     def get_photo(data) -> bool:
-        # key = data.get('key')
         print('in get photo manager: data is ', data)
         photo_dao = PhotoDAO()
         try:
@@ -318,13 +295,12 @@ class AccountManager:
     def guess_mime_type(photo):
         try:
             image = Image.open(photo)
-            image_format = image.format.lower()  # Example: 'jpeg', 'png'
+            image_format = image.format.lower()
         except Exception as e:
             print(e)
 
         # Reset the BytesIO pointer to the beginning
         photo.seek(0)
-
         # Determine the correct MIME type based on the image format
         mime_type = f"image/{image_format}" if image_format in ['jpeg', 'png', 'gif', 'bmp', 'webp'] else 'application/octet-stream'
         return mime_type
@@ -337,17 +313,12 @@ class AccountManager:
         for key, value in data.get('hobbies').items():
             if value:
                 hobbies.append(key)
-
-        # token verification yo
-        #user_id = '11'
-        # postgres approved way of an array !!
         formatted_hobbies = '{' + ','.join(hobbies) + '}'
         params = (user_id,formatted_hobbies)
 
         try:
             response = AccountDAO.update_hobbies(params)
             return response
-                # email sequence here
         except Exception as error:
             print(error)
             print('account manager')
