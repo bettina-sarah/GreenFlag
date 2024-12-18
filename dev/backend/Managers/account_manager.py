@@ -14,8 +14,8 @@ About       : Classe qui gère les comptes utilisateurs et les photos de profil 
 from DAOs.account_dao import AccountDAO
 from DAOs.photo_lmdb_dao import PhotoDAO
 from datetime import datetime
-import mimetypes
 from PIL import Image
+import logging
 
 
 class AccountManager:
@@ -26,7 +26,6 @@ class AccountManager:
     def login(data) -> bool:
         email = data.get('email')
         password = data.get('password')
-        
         params = (email, password)
         try:
             response = AccountDAO.login(params)
@@ -34,7 +33,6 @@ class AccountManager:
             json_response = {'id': response[0][0], 'profile_completed': response[0][1]}
             print(json_response)
             return json_response
-            # CREAte token .... & SENT to the front
         except Exception as error:
             print(error)
             return False
@@ -51,9 +49,6 @@ class AccountManager:
         try:
             response = AccountDAO.create_account(params)
             return response
-                # email sequence here
-#             la valeur d'une clé dupliquée rompt la contrainte unique « member_email_key »
-# DETAIL:  La clé « (email)=(haha@jaja.com) » existe déjà.
         except Exception as error:
             print(error)
             print('account manager')
