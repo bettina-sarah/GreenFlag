@@ -137,8 +137,9 @@ def update_localisation() -> bool:
     response = AccountManager.update_localisation(request.json)
     return jsonify(response)
 
-@app.route('/get-location"', methods=['POST'])
+@app.route('/get-location', methods=['POST'])
 def get_location() -> bool:
+    
     response = AccountManager.get_location(request.json)
     return jsonify(response)
 

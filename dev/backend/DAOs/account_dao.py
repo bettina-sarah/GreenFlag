@@ -136,7 +136,7 @@ class AccountDAO(DAO):
     
     @staticmethod
     def get_location(params: tuple) -> bool:
-        query = 'SELECT '
+        query = 'SELECT fetch_distance(%s, %s);'
         response = AccountDAO._prepare_statement('select', query, params)
         return response
 
