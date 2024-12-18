@@ -1,4 +1,18 @@
-from flask_socketio import SocketIO, emit, join_room
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : chatroom_socket_manager.py
+Created By  : Vincent Fournier
+About       : Contient les gestionnaires pour les événements WebSocket liés aux salons
+              de discussion, permettant de rejoindre des salons et d'envoyer des 
+              messages,en intégrant l'interaction avec le gestionnaire de salons de 
+              discussion pour ajouter les messages et les diffuser à tous les 
+              utilisateurs dans le même salon.
+====================================================================================
+------------------------------------------------------------------------------------
+'''
+
+from flask_socketio import SocketIO, join_room
 from Managers.chatroom_manager import ChatroomManager
 import datetime
 
@@ -11,12 +25,12 @@ class ChatroomSocketManager:
         self.socketio.on_event('join_chatroom', self.handle_join_chatroom)
         self.socketio.on_event('message', self.handle_message)
 
-    def handle_join_chatroom(self, room:dict[str]):
+    def handle_join_chatroom(self, room: dict[str]):
         room_name = room["chatroom_name"]
         join_room(room_name)
         self.current_room = room_name
 
-    def handle_message(self, data:dict[str,int]):
+    def handle_message(self, data: dict[str,int]):
         message = data['message']
         sender_id = data['sender_id']
         now = datetime.datetime.now()

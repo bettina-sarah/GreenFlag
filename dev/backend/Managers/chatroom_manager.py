@@ -1,3 +1,16 @@
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : chatroom_manager.py
+Created By  : Vincent Fournier
+About       : Contient la logique principale de gestion des salons de discussion, 
+              y compris la récupération des messages, des informations des 
+              utilisateurs, et l'ajout de nouveaux messages via une liste de 
+              requêtes déchargées.
+====================================================================================
+------------------------------------------------------------------------------------
+'''
+
 from DAOs.chat_dao import ChatDAO
 from DAOs.account_dao import AccountDAO
 from util_classes.discharged_list import DischargedList
@@ -13,7 +26,6 @@ class ChatroomManager(DischargedList.Observer):
             return response
         return False
 
-
     def get_chatrooms(self, data) -> list:
         id = data.get("id")
         params = (id,)
@@ -21,7 +33,6 @@ class ChatroomManager(DischargedList.Observer):
         if response:
             return response
         return []
-
 
     def get_chatroom_messages(self, data) -> list:
         chatroom_name = data.get("chatroom_name")
@@ -31,8 +42,7 @@ class ChatroomManager(DischargedList.Observer):
             return response
         return []
 
-
-    def get_chatroom_subject(self,data) -> dict[str]:
+    def get_chatroom_subject(self, data) -> dict[str]:
         chatroom_name = data.get('chatroom_name')
         user_id = data.get('id')
         params = (chatroom_name,)
@@ -54,11 +64,10 @@ class ChatroomManager(DischargedList.Observer):
                 "subject_firstname": first_name,
                 "subject_avatar": profile_photo,
             }
-            
+        
         return {}
 
-
-    def flag_user(self,data) -> bool:
+    def flag_user(self, data) -> bool:
         reporter_id = int(data.get('id'))
         subject_id = data.get('subject_id')
         reason = data.get('reason')
@@ -69,6 +78,5 @@ class ChatroomManager(DischargedList.Observer):
         
         return False
 
-
-    def add_chatroom_message(self,data) -> None:
+    def add_chatroom_message(self, data) -> None:
         self.requests.add_item(data)

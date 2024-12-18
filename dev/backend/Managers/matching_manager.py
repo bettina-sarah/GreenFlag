@@ -1,3 +1,17 @@
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : matching_manager.py
+Created By  : Vincent Fournier
+About       : Contient le gestionnaire des suggestions de correspondances, utilisant
+              une variété d'algorithmes de clustering pour déterminer les suggestions
+              potentielles pour un utilisateur en fonction de ses activités. Le 
+              gestionnaire utilise également le DAO pour accéder aux informations 
+              utilisateur et gérer les suggestions et les correspondances.
+====================================================================================
+------------------------------------------------------------------------------------
+'''
+
 from DAOs.matching_dao import MatchingDAO
 from Algorithms.algo_strategy import AlgoContext
 from Algorithms.algo_meanshift import MeanShift
@@ -9,7 +23,7 @@ import numpy as np
 NUMBER_ACTIVITIES = 20
 
 ALGOS = {
-    'Meanshift': MeanShift(0.3,100,0.001),
+    'Meanshift': MeanShift(0.3, 100, 0.001),
     'Affinity Propagation': AffinityPropagation(),
     'Birch Tree': Birch(),
     'K-Means': KMeans(n_clusters=20)
@@ -21,16 +35,16 @@ class MatchingManager():
     matches = []
     
     @staticmethod
-    def create_suggestions(user_id:int, algo:str) -> bool:
+    def create_suggestions(user_id: int, algo: str) -> bool:
         try:
             response = MatchingDAO.get_eligible_members(user_id)
             response_2 = None
             prospects_ids = None
             if response:
-                prospects_ids = MatchingManager.find_suggestions(user_id,response, algo)
+                prospects_ids = MatchingManager.find_suggestions(user_id, response, algo)
                 
             if prospects_ids:
-                response_2 = MatchingDAO.create_suggestions(user_id,prospects_ids)
+                response_2 = MatchingDAO.create_suggestions(user_id, prospects_ids)
                 
             if response and response_2:
                 return response_2
@@ -39,7 +53,7 @@ class MatchingManager():
             print(error)
     
     @staticmethod
-    def get_suggestions(data:dict) -> bool:
+    def get_suggestions(data: dict) -> bool:
         try:
             user_id = data.get("id")
             response = MatchingDAO.get_suggestions(user_id)
@@ -55,9 +69,8 @@ class MatchingManager():
         except Exception as error:
             print(error)
             
-            
     @staticmethod
-    def update_suggestion(data:dict) -> bool:
+    def update_suggestion(data: dict) -> bool:
         try:
             suggestion_id = data.get("suggestion_id")
             situation = data.get("choice")
@@ -68,25 +81,12 @@ class MatchingManager():
         except Exception as error:
             print(error)
 
-    # @staticmethod
-    # def flag_user(data:dict) -> bool:
-    #     try:
-    #         user_id = data.get("id")
-    #         flagged_id = data.get("flagged_id")
-    #         reason = data.get("reason")
-    #         response = MatchingDAO.flag_user(user_id,flagged_id,reason)
-    #         if response:
-    #             return response
-        
-    #     except Exception as error:
-    #         print(error)        
-
     @staticmethod
-    def unmatch(data:dict) -> bool:
+    def unmatch(data: dict) -> bool:
         try:
             user_id = data.get("id")
             unmatched_id = data.get("unmatched_id")
-            response = MatchingDAO.unmatch(user_id,unmatched_id)
+            response = MatchingDAO.unmatch(user_id, unmatched_id)
             if response:
                 return response
         except Exception as error:
@@ -125,7 +125,7 @@ class MatchingManager():
                 data[index_counter,member_activities] += 1
                 
                 flag_count = MatchingDAO.get_flag_count(member_id)
-                max_flag_count = max(max_flag_count,flag_count)
+                max_flag_count = max(max_flag_count, flag_count)
                 data[index_counter, -1] = flag_count
                 
                 index_counter += 1

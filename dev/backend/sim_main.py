@@ -23,7 +23,6 @@ level_styles = {
     'critical': {'color': 'magenta'}
 }
 
-
 coloredlogs.install(level='DEBUG', level_styles=level_styles)
 logger = logging.getLogger(__name__)
 

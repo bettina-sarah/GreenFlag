@@ -17,7 +17,6 @@ from PIL import Image
 import io
 import logging
 
-
 class PhotoDAO:
     def __init__(self) -> None:
         self.env = lmdb.open('my_lmdb_database', map_size=48 * 1024 * 1024)
