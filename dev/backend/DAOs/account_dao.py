@@ -133,6 +133,12 @@ class AccountDAO(DAO):
         query = 'UPDATE member SET last_lat = %s, last_long = %s WHERE id = %s'
         response = AccountDAO._prepare_statement('update', query, params)
         return response
+    
+    @staticmethod
+    def get_location(params: tuple) -> bool:
+        query = 'SELECT '
+        response = AccountDAO._prepare_statement('select', query, params)
+        return response
 
     @staticmethod
     def get_fake_users(params: tuple) -> list:
