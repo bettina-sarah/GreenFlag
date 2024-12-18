@@ -50,12 +50,10 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}},
 
 socketio = SocketIO(app, cors_allowed_origins="*",async_mode="gevent")
 
-
 chatroomManager = ChatroomManager()
 websocketManager = ChatroomSocketManager(socketio,chatroomManager)
 
 # -------- ACCOUNTS ------------
-
 
 @app.route('/create-account', methods=['POST'])
 def create_account() -> bool:
@@ -67,8 +65,7 @@ def login() -> bool:
     response = AccountManager.login(request.json)
     if response:
         response['token'] = AuthenticationMiddleware().generate_token(response['id'])
-        print('login, token: ', response['token'])
-        print('login, full response: ', response)
+        logger.warning(f'LOGGED IN! new token generated: {response['token']}')
         token_saved = AccountManager.save_token(response['id'], response['token'])
         return jsonify(response)
     return jsonify(False)
@@ -76,8 +73,6 @@ def login() -> bool:
 @app.route('/complete-profile', methods=['POST'])
 def complete_profile() -> bool:
     response = AccountManager.complete_profile(request.json)
-    # call middleware to generate token; send it to frontend
-    # make sure database gets it !!!!
     return jsonify(response) if response else jsonify(False)
 
 @app.route('/confirm-email', methods=['POST'])
@@ -87,8 +82,6 @@ def confirm_email() -> bool:
 
 @app.route('/get-profile', methods=['POST'])
 def get_profile() -> bool:
-    # if authentication_middleware.check_session_validity():
-    #     return account_manager.get_profile()
     response = AccountManager.get_profile(request.json)
     print('get profile: ', response)
     return jsonify(response) if response else jsonify(False)
@@ -110,8 +103,6 @@ def verify_token() -> bool:
         AccountManager.save_token(user_id, new_token)
         return jsonify({'token': new_token})
 
-# ---- PAS UTLISÉ ENCORE!!
-
 @app.route('/modify-password', methods=['POST'])
 def modify_password() -> bool:
     response = AccountManager.modify_password(request.json)
@@ -126,8 +117,6 @@ def modify_profile() -> bool:
 def settings() -> bool:
     print(request.json)
     response = AccountManager.delete_account(request.json)
-    # call middleware to generate token; send i to frontend
-    # make sure database gets it !!!!
     return jsonify(response)
 
 # -------- LOCALISATION ---------
@@ -147,8 +136,6 @@ def get_location() -> bool:
 
 @app.route('/get-photo', methods=['POST'])
 def get_photo() -> bool:
-    # if authentication_middleware.check_session_validity():
-    #     return account_manager.get_profile()
     print("frontend sent this:", request.json)
     photo, mimetype = AccountManager.get_photo(request.json[0])
     print(photo, mimetype)
