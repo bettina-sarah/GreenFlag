@@ -40,12 +40,12 @@ const ModifyPasswordForm = () => {
   return (
     <form
       onSubmit={onSubmit}
-      className="flex flex-col h-60 justify-between m-5"
+      className="flex flex-col h-60 justify-between m-5 space-y-6"
     >
       <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
-        <img src={EmailIcon} className="size-7" />
+        <img src={EmailIcon} className="size-7 mb-3" />
         <input
-          className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
+          className="pl-3 mb-2 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
           placeholder="Email"
           defaultValue={email}
           {...register("email", {
@@ -65,9 +65,9 @@ const ModifyPasswordForm = () => {
 
       {/* Old Password */}
       <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
-        <img src={LockIcon} className="size-7" />
+        <img src={LockIcon} className="size-7  mb-3" />
         <input
-          className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
+          className="pl-3 mb-2 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
           placeholder="Old password"
           type="password"
           {...register("password", { required: true, maxLength: 20 })}
@@ -81,9 +81,9 @@ const ModifyPasswordForm = () => {
       )}
 
       <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
-        <img src={LockIcon} className="size-7" />
+        <img src={LockIcon} className="size-7  mb-3" />
         <input
-          className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
+          className="pl-3 mb-2 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
           placeholder="Old password confirmation"
           type="password"
           {...register("cpassword", {
@@ -104,9 +104,9 @@ const ModifyPasswordForm = () => {
 
       {/* New Password */}
       <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
-        <img src={LockIcon} className="size-7" />
+        <img src={LockIcon} className="size-7  mb-3" />
         <input
-          className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
+          className="pl-3 mb-2 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
           placeholder="New password"
           type="password"
           {...register("newpassword", { required: true, maxLength: 20 })}
@@ -120,9 +120,9 @@ const ModifyPasswordForm = () => {
       )}
 
       <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
-        <img src={LockIcon} className="size-7" />
+        <img src={LockIcon} className="size-7  mb-3" />
         <input
-          className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
+          className="pl-3 mb-2 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
           placeholder="New password confirmation"
           type="password"
           {...register("cnewpassword", {

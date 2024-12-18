@@ -40,12 +40,12 @@ const DeleteAccountForm = () => {
   return (
     <form
       onSubmit={onSubmit}
-      className="flex flex-col h-48 justify-between m-5"
+      className="flex flex-col h-48 justify-between m-5 space-y-6"
     >
       <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
-        <img src={EmailIcon} className="size-7" />
+        <img src={EmailIcon} className="size-7 mb-3" />
         <input
-          className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
+          className="pl-3 w-80 mb-2 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
           placeholder="Email"
           {...register("email", {
             required: true,
@@ -63,9 +63,9 @@ const DeleteAccountForm = () => {
       )}
 
       <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
-        <img src={LockIcon} className="size-7" />
+        <img src={LockIcon} className="size-7 mb-3" />
         <input
-          className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
+          className="pl-3 mb-2 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
           placeholder="Password"
           type="password"
           {...register("password", { required: true, maxLength: 20 })}
@@ -78,10 +78,10 @@ const DeleteAccountForm = () => {
         <span className="text-red-500 text-xs">Max length exceeded</span>
       )}
 
-      <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
+      <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg mb-3">
         <img src={LockIcon} className="size-7" />
         <input
-          className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
+          className="pl-3 mb-2w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
           placeholder="Password confirmation"
           type="password"
           {...register("cpassword", {
@@ -101,8 +101,8 @@ const DeleteAccountForm = () => {
       )}
 
       <button
-        className="transition-colors duration-300 bg-red-600 hover:bg-primary-color
-             text-red-900 hover:text-custom-bg border-2 border-red-950
+        className="transition-colors duration-300 bg-red-600 hover:bg-red-950
+             text-red-900 hover:text-red-600 hover:border-red-700 border-2 border-red-950
              font-bold py-2 px-4 rounded my-4 mx-6 w-72"
         type="submit"
       >
