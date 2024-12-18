@@ -21,15 +21,12 @@ class MeanShift(AlgoStrategy):
         self.tolerance = tolerance
         self.clusters_centers = None
         self.labels = None
-    
-    
+
     def get_cluster_centers(self) -> np.ndarray:
         return self.clusters_centers
-    
-    
+
     def get_labels(self) -> np.ndarray:
         return self.labels
-
 
     def fit(self, np_array: np.ndarray) -> None:
         origin = np_array
@@ -95,8 +92,7 @@ class MeanShift(AlgoStrategy):
         self.labels = labels
         
         return self.clusters_centers, self.labels
-    
-    
+
     def predict(self, point: np.ndarray) -> int:
         # find the closest cluster center
         if self.clusters_centers is not None and self.labels is not None:
