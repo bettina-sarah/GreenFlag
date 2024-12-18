@@ -92,7 +92,8 @@ class AccountManager:
     @staticmethod
     def get_location(data) -> bool:
         id = data.get('id')
-        params = (int(id),)
+        suggestion_id = data.get('suggestion_id')
+        params = (int(id),suggestion_id)
         response = AccountDAO.get_location(params)
         return response if response else False
     
