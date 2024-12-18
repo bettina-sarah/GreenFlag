@@ -72,7 +72,7 @@ const ThemeSelector = () => {
                 className="w-full p-2 bg-theme-autumn/80 text-xl text-white hover:bg-theme-autumn/50 rounded-md"
                 onClick={() => changeTheme("theme-autumn")}
               >
-                Autumn
+                Espresso
               </button>
             </li>
             <li>
