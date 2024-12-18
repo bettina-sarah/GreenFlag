@@ -101,8 +101,8 @@ const DeleteAccountForm = () => {
       )}
 
       <button
-        className="transition-colors duration-300 bg-red-600 hover:bg-red-950
-             text-red-900 hover:text-red-600 hover:border-red-700 border-2 border-red-950
+        className="transition-colors duration-300 bg-red-600 hover:bg-red-900
+             text-red-900 hover:text-red-600 border-2 border-red-950
              font-bold py-2 px-4 rounded my-4 mx-6 w-72"
         type="submit"
       >

@@ -1,79 +1,78 @@
-@import 'flowbite/dist/flowbite.css';
+@import "flowbite/dist/flowbite.css";
 /* title fonts: */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 .theme-emerald {
   --bg-color: 200, 255, 237; /* Muted mint green */
   --text-color: 47, 72, 88; /* Dark green */
-  --text-muted: 200,255,237;
-  --text-inverted: 208, 183,167;
+  --text-muted: 200, 255, 237;
+  --text-inverted: 208, 183, 167;
   --custom-h1: 238, 230, 131;
   --custom-h2: 189, 223, 123;
   --primary-color: 0, 178, 151;
   --secondary-color: 0, 78, 100;
   --optional-color: 77, 128, 118;
-  --bg-image-1: url('../ressources/bg/Background.svg');
-  --bg-image-2: url('../ressources/bg/Background-2.svg');
+  --bg-image-1: url("../ressources/bg/Background.svg");
+  --bg-image-2: url("../ressources/bg/Background-2.svg");
 }
 
 .theme-autumn {
-  --bg-color: 251, 249, 249; 
-  --text-color: 242, 206, 152; 
+  --bg-color: 251, 249, 249;
+  --text-color: 242, 206, 152;
   --text-muted: 255, 255, 255;
-  --text-inverted: 13,49,103;
+  --text-inverted: 13, 49, 103;
   --custom-h1: 242, 206, 152;
   --custom-h2: 178, 207, 136;
   --primary-color: 153, 107, 107;
   --secondary-color: 197, 195, 171;
   --optional-color: 171, 177, 142;
-  --bg-image-1: url('../ressources/bg/autumn/Background.svg');
-  --bg-image-2: url('../ressources/bg/autumn/Background-2.svg');
+  --bg-image-1: url("../ressources/bg/autumn/Background.svg");
+  --bg-image-2: url("../ressources/bg/autumn/Background-2.svg");
 }
 
 .theme-electric {
-  --bg-color: 254, 236, 240; 
-  --text-color: 216, 240, 142; 
-  --text-muted:255,255,255;
+  --bg-color: 254, 236, 240;
+  --text-color: 216, 240, 142;
+  --text-muted: 255, 255, 255;
   --custom-h1: 218, 242, 138;
   --custom-h2: 159, 242, 138;
-  --primary-color: 240, 29, 73; 
-  --secondary-color: 81, 123, 243; 
-  --optional-color: 112, 246, 208; 
-  --bg-image-1: url('../ressources/bg/electric/Background.svg');
-  --bg-image-2: url('../ressources/bg/electric/Background-2.svg');
+  --primary-color: 240, 29, 73;
+  --secondary-color: 81, 123, 243;
+  --optional-color: 112, 246, 208;
+  --bg-image-1: url("../ressources/bg/electric/Background.svg");
+  --bg-image-2: url("../ressources/bg/electric/Background-2.svg");
 }
 
-.theme-orange{
+.theme-orange {
   --bg-color: 253, 252, 250;
   --text-color: 0, 95, 38;
-  --text-muted:242, 237, 111;
+  --text-muted: 242, 237, 111;
   --custom-h1: 238, 230, 131;
   --custom-h2: 189, 223, 123;
-  --primary-color:255, 143, 24;
-  --secondary-color:230, 186, 140;
-  --optional-color:237, 162, 83;
-  --bg-image-1: url('../ressources/bg/orange/Background.svg');
-  --bg-image-2: url('../ressources/bg/orange/Background-2.svg');
-} 
+  --primary-color: 255, 143, 24;
+  --secondary-color: 230, 186, 140;
+  --optional-color: 237, 162, 83;
+  --bg-image-1: url("../ressources/bg/orange/Background.svg");
+  --bg-image-2: url("../ressources/bg/orange/Background-2.svg");
+}
 
 .theme-blue {
   --bg-color: 246, 248, 251; /* Muted blue-gray */
-  --text-color: 255, 240, 121; /* Light sky blue */
+  --text-color: 0, 41, 144;
   --text-muted: 241, 239, 173;
   --custom-h1: 238, 230, 131;
   --custom-h2: 189, 223, 123;
   --primary-color: 79, 136, 196; /* - Vibrant aqua */
   --secondary-color: 133, 177, 224; /* - Medium bright blue */
   --optional-color: 94, 158, 226; /* - Deep navy blue */
-  --bg-image-1: url('../ressources/bg/blue/Background.svg');
-  --bg-image-2: url('../ressources/bg/blue/Background-2.svg');
+  --bg-image-1: url("../ressources/bg/blue/Background.svg");
+  --bg-image-2: url("../ressources/bg/blue/Background-2.svg");
 }
 
 .theme-green {
@@ -85,24 +84,27 @@
   --primary-color: 136, 195, 76; /* - Bright green */
   --secondary-color: 182, 224, 138; /* - Light seafoam */
   --optional-color: 155, 221, 89; /* - Pale green */
-  --bg-image-1: url('../ressources/bg/green/Background.svg');
-  --bg-image-2: url('../ressources/bg/green/Background-2.svg');
+  --bg-image-1: url("../ressources/bg/green/Background.svg");
+  --bg-image-2: url("../ressources/bg/green/Background-2.svg");
 }
 
-
 /* index.css */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   background-color: rgba(var(--bg-color));
   /* color: var(--bg-color); */
 }
 
-html, body, #root, .App {
+html,
+body,
+#root,
+.App {
   height: 100%;
 }
 
-h1{
+h1 {
   @apply text-h1-darkblue;
 }
 
@@ -118,7 +120,6 @@ h1{
 }
 
 :root {
-
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -134,9 +135,6 @@ h1{
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-
-
 @layer base {
   :root {
     --bg-color: 200, 255, 237;
@@ -146,8 +144,8 @@ h1{
     --custom-h2: 189, 223, 123;
     --primary-color: 0, 178, 151;
     --secondary-color: 0, 78, 100;
-    --bg-image-1: url('./../ressources/bg/Background.svg');
-    --bg-image-2: url('./../ressources/bg/Background-2.svg');
+    --bg-image-1: url("./../ressources/bg/Background.svg");
+    --bg-image-2: url("./../ressources/bg/Background-2.svg");
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -202,18 +200,18 @@ h1{
   }
 }
 
-@layer utilities {  /* https://dev.to/derick1530/how-to-create-scrollable-element-in-tailwind-without-a-scrollbar-4mbd */
+@layer utilities {
+  /* https://dev.to/derick1530/how-to-create-scrollable-element-in-tailwind-without-a-scrollbar-4mbd */
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
-      display: none;
+    display: none;
   }
-/* Hide scrollbar for IE, Edge and Firefox */
+  /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }
-
 
 /* tinder-like font for titles */
 @layer base {
@@ -226,7 +224,6 @@ h1{
 }
 
 @layer base {
-
   .font-nunito-extrabold {
     @apply font-nunito font-bold;
   }
@@ -238,25 +235,23 @@ h1{
   .font-nunito-regular {
     @apply font-nunito font-normal;
   }
-  
+
   .font-nunito-light {
     @apply font-nunito font-light;
   }
 
-
   h1 {
-    @apply font-nunito font-bold text-3xl; 
+    @apply font-nunito font-bold text-3xl;
   }
 
   h2 {
-    @apply font-nunito font-semibold text-xl; 
+    @apply font-nunito font-semibold text-xl;
   }
 
   h3 {
-    @apply font-nunito font-semibold text-lg; 
+    @apply font-nunito font-semibold text-lg;
   }
   p {
-    @apply font-nunito font-light text-lg; 
+    @apply font-nunito font-light text-lg;
   }
-
 }

@@ -39,7 +39,7 @@ const ModifyProfilePage: React.FC = () => {
   return (
     <div className="bg-primary-color flex flex-col justify-between items-center">
       <NotificationProvider>
-        <Menu />
+        <Menu classname="border-secondary-color/20 shadow-md border-2" />
       </NotificationProvider>
       <h1 className="m-3 py-4 text-5xl font-bold text-base-text font-leckerli">
         Your profile
@@ -53,7 +53,7 @@ const ModifyProfilePage: React.FC = () => {
         </div>
       )}
 
-      <h1 className="m-3 py-4 text-5xl font-bold text-base-text font-leckerli">
+      <h1 className="m-3 pt-5 text-5xl font-bold text-base-text font-leckerli">
         Modify your profile
       </h1>
       <div className="flex-grow-1 flex flex-col justify-evenly items-center">
