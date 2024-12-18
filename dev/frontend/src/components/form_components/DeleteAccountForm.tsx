@@ -1,4 +1,4 @@
-import { IP_SERVER } from "@/config/constants";
+import { IP_SERVER } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";

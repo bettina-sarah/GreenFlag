@@ -1,10 +1,5 @@
 import React from "react";
-import { Emoji } from "react-emoji-render";
-
-interface RelationshipProps {
-  relationship: string;
-  wants_kids: boolean;
-}
+import { RelationshipProps } from "@/interfaces/interfaces";
 
 const RelationshipGoals: React.FC<RelationshipProps> = ({
   relationship,

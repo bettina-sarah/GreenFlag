@@ -1,6 +1,4 @@
-interface BioProps {
-  bio: string | null;
-}
+import { BioProps } from "@/interfaces/interfaces";
 
 const Bio: React.FC<BioProps> = ({ bio }) => {
   return (

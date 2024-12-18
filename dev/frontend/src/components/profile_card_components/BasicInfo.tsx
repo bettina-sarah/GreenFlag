@@ -1,13 +1,5 @@
 import React from "react";
-
-interface BasicInfoProps {
-  basic_info: {
-    first_name: string;
-    age: number;
-    city: string;
-    location: number;
-  };
-}
+import { BasicInfoProps } from "@/interfaces/interfaces";
 
 const BasicInfo: React.FC<BasicInfoProps> = ({ basic_info }) => {
   return (

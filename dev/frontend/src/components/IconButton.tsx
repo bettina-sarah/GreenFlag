@@ -2,16 +2,7 @@ import React from "react";
 import Icon from "./Icon";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
-interface IconButtonProps {
-  icon: string;
-  page?: string | null; // button can naviagate or execute custom function!
-  onClick?: () => void;
-  disabled?: boolean;
-  toggleState?: boolean; // optional turn on off !
-  suggestion_id?: string;
-  className?: string;
-}
+import { IconButtonProps } from "@/interfaces/interfaces";
 
 const IconButton: React.FC<IconButtonProps> = ({
   icon,

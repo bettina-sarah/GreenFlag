@@ -7,10 +7,7 @@ import SettingsDropDown from "./SettingsDropDown";
 import ThemeSelector from "./ThemeSelector";
 import NotificationDropDown from "./NotificationDropDown";
 import { useNotifications } from "../NotificationContext";
-
-interface MenuProps {
-  classname?: string;
-}
+import { MenuProps } from "@/interfaces/interfaces";
 
 const Menu: React.FC<MenuProps> = ({ classname }) => {
   const { notifications } = useNotifications();

@@ -1,8 +1,5 @@
 import React from "react";
-
-interface HobbiesProps {
-  hobbies: string[];
-}
+import { HobbiesProps } from "@/interfaces/interfaces";
 
 const Hobbies: React.FC<HobbiesProps> = ({ hobbies }) => {
   return (

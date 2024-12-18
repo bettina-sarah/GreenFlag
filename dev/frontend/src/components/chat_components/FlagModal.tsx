@@ -2,25 +2,11 @@ import {Modal,Select,Button} from "flowbite-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { IP_SERVER } from "@/config/constants";
+import { IP_SERVER } from "@/constants";
 import { modalTheme, selectTheme } from "../theme-flowbite/CustomTheme";
 import {toast} from "react-toastify";
-
-const reasons = [
-  'Inappropriate msgs',
-  'Fake profile',
-  'Harassment or bullying',
-  'Spam or promotion',
-  'Looking for casual hookups',
-  'Ghosting or inconsistent communication',
-  'Misleading profile information'
-]
-
-interface FlagProps {
-  subject_id: number | undefined;
-  isOpen: boolean;
-  onClose: () => void;
-}
+import { FlagProps } from "@/interfaces/interfaces";
+import { FLAG_REASONS } from "@/constants";
 
 const FlagModal: React.FC<FlagProps> = ({ subject_id, isOpen, onClose }) => {
   const [reason,setReason] = useState<string>("");
@@ -45,7 +31,6 @@ const FlagModal: React.FC<FlagProps> = ({ subject_id, isOpen, onClose }) => {
         subject_id: subject_id,
         reason: reason
       }
-      
 
       try{
         const response = await axios.post(IP_SERVER + "/flag", data);
@@ -77,7 +62,7 @@ const FlagModal: React.FC<FlagProps> = ({ subject_id, isOpen, onClose }) => {
           theme={selectTheme}
           color="custom"
         >
-          {reasons.map((reason, index) => (
+          {FLAG_REASONS.map((reason, index) => (
             <option value={reason} key={index} className="bg-primary-color text-black">
               {reason}
             </option>

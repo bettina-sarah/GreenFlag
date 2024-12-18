@@ -4,31 +4,10 @@ import { NotificationProvider } from "@/components/NotificationContext";
 import CustomTinderCard from "@/components/CustomTinderCard";
 import useTriggerFetch from "@/api/useTriggerFetch";
 import IconButton from "@/components/IconButton";
-
 import RedFlag from "../../ressources/icons/FlagButton_left.png";
 import GreenFlag from "../../ressources/icons/FlagButton_right.png";
 import { updateSuggestion } from "@/api/updateSuggestion";
-
-export interface IProfileData {
-  suggestion_id: string;
-  user_infos: {
-    profile_info: ProfileProps;
-    photo_keys: string[];
-  };
-}
-
-export interface ProfileProps {
-  basic_info: {
-    first_name: string;
-    age: number;
-    city: string;
-    location: number;
-  };
-  relationship: string;
-  wants_kids: boolean;
-  hobby_array: string[];
-  bio: string | null;
-}
+import { IProfileData } from "@/interfaces/interfaces";
 
 const MatchingPage: React.FC = () => {
   const [refetchTrigger, setRefetchTrigger] = useState(0);

@@ -4,18 +4,8 @@ import BasicInfo from "./profile_card_components/BasicInfo";
 import RelationshipGoals from "./profile_card_components/RelationshipGoals";
 import Hobbies from "./profile_card_components/Hobbies";
 import Bio from "./profile_card_components/Bio";
-import { ProfileProps } from "@/pages/MatchingPage";
+import { IProfileProps } from "@/interfaces/interfaces";
 import TinderCard from "react-tinder-card";
-
-interface IProfileProps {
-  swipeLeft: (arg1: string, arg2: boolean) => void;
-  swipeRight: (arg1: string, arg2: boolean) => void;
-  suggestion_id: string;
-  profile_info: ProfileProps;
-  photos: string[];
-  isLastCard: boolean; // New prop to mark the last card
-  onLastCardLeftScreen?: () => void; // Callback for end-of-list detection
-}
 
 const CustomTinderCard: React.FC<IProfileProps> = ({
   swipeLeft,

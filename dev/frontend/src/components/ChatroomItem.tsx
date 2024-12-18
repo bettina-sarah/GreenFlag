@@ -1,23 +1,9 @@
 import React from "react";
-import LastMessage from "./chatroom_item_components/LastMessage";
-// import Subject from "./chatroom_item_components/Subject";
+import LastMessage from "./LastMessage";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "flowbite-react";
+import { ChatroomProps } from "@/interfaces/interfaces";
 
-interface ChatroomProps {
-  name: string;
-  subject: {
-    id: number;
-    firstname: string;
-    profile_photo: any;
-  };
-  last_message: {
-    sender_id: number;
-    sender_first_name: string;
-    content: string;
-    date_sent: string;
-  };
-}
 
 const ChatroomItem: React.FC<ChatroomProps> = ({
   name,
@@ -44,7 +30,6 @@ const ChatroomItem: React.FC<ChatroomProps> = ({
           subject_first_name={subject.firstname}
         />
       </Avatar>
-      {/* <Subject subject={subject}/> */}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { IP_SERVER } from "@/config/constants";
+import { IP_SERVER } from "@/constants";
 import axios, { AxiosResponse } from "axios";
 
 /**  FETCH DATA FUNCTION

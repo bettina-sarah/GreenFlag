@@ -1,4 +1,4 @@
-import { IP_SERVER } from "@/config/constants";
+import { IP_SERVER } from "@/constants";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import LockIcon from "@/../ressources/icons/lock.png";

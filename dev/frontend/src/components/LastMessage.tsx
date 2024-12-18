@@ -1,16 +1,6 @@
 import React from "react";
 import { formatDate } from "@/lib/utils";
-// import Subject from "./Subject";
-
-interface LastMessageProps {
-  last_message: {
-    sender_id: number;
-    sender_first_name: string;
-    content: string;
-    date_sent: string;
-  };
-  subject_first_name: string;
-}
+import { LastMessageProps } from "@/interfaces/interfaces";
 
 const LastMessage: React.FC<LastMessageProps> = ({
   last_message,
