@@ -88,6 +88,14 @@ class AccountManager:
             return response
         else:
             return False
+        
+    @staticmethod
+    def get_location(data) -> bool:
+        id = data.get('id')
+        params = (int(id),)
+        response = AccountDAO.get_location(params)
+        return response if response else False
+    
 
     @staticmethod
     def save_token(id, token) -> bool:
