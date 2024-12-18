@@ -1,10 +1,23 @@
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : server.py
+Created By  : Bettina-Sarah Janesch et Vincent Fournier
+About       : Contient une application Flask avec des routes pour gérer les comptes
+              utilisateurs, les photos, les chatrooms, les suggestions de 
+              correspondance, et les notifications, utilisant le socket.io pour les 
+              communications en temps réel.
+====================================================================================
+------------------------------------------------------------------------------------
+'''
+
 import os
 os.environ['GEVENT_SUPPORT'] = 'True'
 
 from gevent import monkey
 monkey.patch_all()
 
-from flask import Flask, jsonify, request, make_response, send_file
+from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
 from flask_socketio import SocketIO
 from Managers.chatroom_socket_manager import ChatroomSocketManager
@@ -38,7 +51,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}},
 socketio = SocketIO(app, cors_allowed_origins="*",async_mode="gevent")
 
 
-chatroomManager = ChatroomManager() # need to be an object because contains a discharged list
+chatroomManager = ChatroomManager()
 websocketManager = ChatroomSocketManager(socketio,chatroomManager)
 
 # -------- ACCOUNTS ------------
@@ -54,8 +67,8 @@ def login() -> bool:
     response = AccountManager.login(request.json)
     if response:
         response['token'] = AuthenticationMiddleware().generate_token(response['id'])
-        print('login, token: ',response['token'])
-        print('login, full response: ',response)
+        print('login, token: ', response['token'])
+        print('login, full response: ', response)
         token_saved = AccountManager.save_token(response['id'], response['token'])
         return jsonify(response)
     return jsonify(False)
@@ -139,7 +152,7 @@ def upload_photos() -> bool:
     print("image : " , request.files['image'])
     id = request.form['id']
     files = request.files['image']
-    response = AccountManager.modify_photos(id,files)
+    response = AccountManager.modify_photos(id, files)
     return jsonify(response)
 
 # ------ QUESTIONNAIRE -------
