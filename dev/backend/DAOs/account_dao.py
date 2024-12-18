@@ -65,7 +65,6 @@ class AccountDAO(DAO):
         response = AccountDAO._prepare_statement('update', query, params)
         return response
     
-    # rudimentaire: version finale faut que ca delete la personne des tables de suggestions de tout le monde, les match, les messages, les photos dans berkeleyDB
     @staticmethod
     def delete_account(params: tuple) -> bool:
         query = 'DELETE FROM member where email = %s and member_password = %s;'

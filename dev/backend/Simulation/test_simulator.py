@@ -31,7 +31,7 @@ class TestSimulator:
     
     # !!! get old users to put in set
 
-    def create_random_users(self, user_amount: int = 100, gender_proportion:list = [0.25,0.25,0.25,0.25]):
+    def create_random_users(self, user_amount: int = 100, gender_proportion: list = [0.25,0.25,0.25,0.25]):
         random.shuffle(gender_proportion)       
         for index, gender in enumerate(gender_proportion):
             for i in range(int(user_amount * gender)):
