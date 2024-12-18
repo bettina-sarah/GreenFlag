@@ -9,8 +9,6 @@ About       : Contient le simulateur principal de notre application avec la fabr
 ------------------------------------------------------------------------------------
 '''
 
-
-
 from Simulation.user_factory import UserFactory
 from Simulation.swiping_strategy import SwipingContext, RandomStrategy, PickyStrategy, DesperateStrategy
 from Managers.matching_manager import MatchingManager
@@ -33,11 +31,11 @@ class TestSimulator:
     
     # !!! get old users to put in set
 
-    def create_random_users(self, user_amount: int= 100, gender_proportion:list = [0.25,0.25,0.25,0.25]):
+    def create_random_users(self, user_amount: int = 100, gender_proportion:list = [0.25,0.25,0.25,0.25]):
         random.shuffle(gender_proportion)       
         for index, gender in enumerate(gender_proportion):
-            for i in range(int(user_amount*gender)):
-                user = self.user_factory.factory_method(gender=UserFactory.GENDER[index],age_type=UserFactory.AGE_TYPE[i % 3])
+            for i in range(int(user_amount * gender)):
+                user = self.user_factory.factory_method(gender=UserFactory.GENDER[index], age_type=UserFactory.AGE_TYPE[i % 3])
                 real_user = self.user_factory.add_to_database(user)
                 if real_user:
                     self.users.append(user)
@@ -58,7 +56,7 @@ class TestSimulator:
         fake_users = AccountDAO.get_fake_users((True,))
         for user in fake_users:
             old_user = User()
-            old_user.user_id =user[0]
+            old_user.user_id = user[0]
             self.users.append(old_user)
 
     def swipe(self) -> None:
@@ -91,7 +89,7 @@ class TestSimulator:
         
     def fill_conversations(self) -> None:
         logging.info("filling empty convos with msgs")
-        empty_matches = ChatDAO.get_match_without_msg()
+        empty_matches = ChatDAO.get_matches_without_msg()
         msgs = []
         if not empty_matches:
             logging.info("No empty match found")
@@ -99,14 +97,14 @@ class TestSimulator:
         
         for match in empty_matches:
             match_id, member_id_1, member_id_2 = match
-            nb_msgs = random.randint(1,5)
+            nb_msgs = random.randint(1, 5)
             
             for _ in range(nb_msgs):
                 now = datetime.now() + timedelta(minutes=random.randint(1, 5))
                 datetime_string = now.strftime('%Y-%m-%d %H:%M:%S')
                 sender = random.choice([member_id_1,member_id_2])
                 
-                msg = (match_id, sender, self.faker.sentence(nb_words=random.randint(3,12)), datetime_string)
+                msg = (match_id, sender, self.faker.sentence(nb_words=random.randint(3, 12)), datetime_string)
                 msgs.append(msg)
         
         try:
