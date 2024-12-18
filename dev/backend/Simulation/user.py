@@ -9,8 +9,23 @@ About       : Contient la classe User avec tous les attributs nécessaires pour
 ------------------------------------------------------------------------------------
 '''
 class User:
-    def __init__(self,first_name:str, last_name:str, dob:int, gender:str, height:int, email:str, religion:str, want_kids:bool,
-                 city:str,latitude: float, longitude: float, preferences:dict,interests:dict, bio: str, photo_key: str, password:str = 'password123') -> None:
+    def __init__(self,
+                first_name:str = "FirstName", 
+                last_name:str = "LastName", 
+                dob:int = 20000101, 
+                gender:str = "NotSpecified",
+                height:int = 0, 
+                email:str = "example@example.com", 
+                religion:str = "None", 
+                want_kids:bool = False, 
+                city:str = "Unknown",
+                latitude:float = 0.0, 
+                longitude:float = 0.0, 
+                preferences:dict = None,
+                interests:dict = None, 
+                bio: str = "",
+                photo_key: str = "", 
+                password:str = 'password123') -> None:
         self.first_name = first_name
         self.last_name = last_name
         self.dob = dob
@@ -18,16 +33,16 @@ class User:
         self.height = height
         self.email = email
         self.religion = religion
-        self.preferences = preferences
+        self.preferences = preferences or {}
         self.want_kids = want_kids
         self.city = city
         self.latitude = latitude
         self.longitude = longitude
-        self.interests = interests
+        self.interests = interests or {}
         self.bio = bio
         self.photo_key = photo_key
         self.password = password
-        self.__user_id : int
+        self.__user_id : int = 0
         self.__suggestions = set()
         
     def __repr__(self):
