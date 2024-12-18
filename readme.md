@@ -7,24 +7,59 @@
 Une introduction succincte au projet, exposant son but et les éléments clés.
 
 ## Installation
-Des instructions détaillées pour configurer l'environnement de développement
-nécessaire au projet, incluant les langages, les bibliothèques et les IDE requis. Cette section doit être
-suffisamment précise pour permettre à un développeur débutant d'intégrer et d'utiliser le projet
-sans obstacle.
+Requirements:
+Python
+VSCode
+Postgres avec comme user: postgres et une base de donnée: postgres
+Node.js
+
+*Il est préférable d'utiliser VSCode pour la majorité des opérations.*
+1. Ouvrir le dossier GreenFlag avec VSCode.
+2. Dans le terminal VSCode entrer: pip install -r requirements.txt
+3. Par la suite dans l'explorateur système, allez dans le dossier GreenFlag/dev/database et exécuter le fichier run_database.sh ou run_database_windows.ps1 si vous n'avez pas Git Bash
+4. Dans le terminal VSCode entrer une à la fois les commandes qui suit:
+cd .\dev\frontend\
+npm install
+npm run dev
+5. Dans le debugger de VSCode sélectionner la configuration 'fill DB' et appuyer sur F5
+6. Toujours dans le debugger de VSCode sélectionner la configuration 'run server' et appuyer sur F5
+
+Vous pouvez maintenant utiliser l'application à l'addresse localhost:5173
+
 
 ## Utilisation
-Des directives sur la manière de démarrer le projet, accompagnées de captures d'écran
-illustratives. Cette partie doit éclairer l'utilisateur sur les fonctionnalités clés et l'approche
-recommandée pour tirer parti du projet.
+La première étape serait de créer un nouveau compte.
+![My Image](images/to-creation.png) ![My Image](images/creation-compte.png)
+Après avoir donner son email et mot-de-passe, se connecter une première fois.
+![My Image](images/to-login.png) ![My Image](images/login.png)
+Lors de cette première connection, on vous demande de remplir un formulaire afin d'en connaitre plus
+sur vous et de nous aider à trouver des usagers qui pourrais vous intérresser.
+![My Image](images/questionnaire-1.png) ![My Image](images/questionnaire-2.png) ![My Image](images/questionnaire-3.png)
+Vous êtes par la suite redirigé vers la page des matchs où vous pouvez dès maintenant
+accepter ou refuser des suggestions de partenaires qui vous sont offertes.
+![My Image](images/match.png)
+Dès qu'une suggestion est réciproquement acceptée, un match devrait être crée et une notification
+devrait vous être donner par laquelle vous serez redirigé à la discussion du match à l'aide d'un clic.
+
+Dans ce dernier, il vous est possible en temps réel d'envoyer et de recevoir des messages.
+
 
 ## Références
 Une compilation des ressources et des références principales consultées durant le
 développement du projet, avec des liens hypertextes le cas échéant.
+ChatGpt https://chatgpt.com/
+Scikit-Learn Github Repo https://github.com/scikit-learn/scikit-learn/blob/6e9039160/sklearn/cluster/_mean_shift.py#L302 for the algorithm Meanshift
+
 
 ## Contact
-L’identification des membres de l'équipe. Optionnellement, un moyen de les contacter afin
-d’offrir une communication aisée avec les contributeurs du projet (courriel, réseaux sociaux, etc.).
+### Vincent Fournier
+Github: vincentfournier127
+email: vincentfournier.127@gmail.com
+### Bettina-Sarah Janesh
+Github: bettina-sarah
+email: bettina.sarah.janesch@gmail.com
 
 ## Remerciements
-Une section optionnelle pour reconnaître le soutien de tierces personnes ayant
-contribué au projet de manière significative (autre que l’enseignant responsable du cours)
+On remercie Pierre-Paul Monty pour son aide et ses conseils sur les algorithmes,
+Frédéric Thériault pour ses conseils frontend qui nous ont permis à mieux nous enligner dans notre projet
+et pour finir Erik Freundorfer pour ses conseils frontend

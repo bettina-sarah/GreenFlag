@@ -9,7 +9,6 @@ class MeanShift(AlgoStrategy):
         self.tolerance = tolerance
         self.clusters_centers = None
         self.labels = None
-        #getters setters and private
         
     def get_cluster_centers(self)->np.ndarray:
         return self.clusters_centers
@@ -39,16 +38,7 @@ class MeanShift(AlgoStrategy):
                 
                 # calculate norms (euclidian distances)
                 distances = np.linalg.norm(old - P, axis=1)
-                
-                # first way
-                # sum all points within the bandwidth
-                # new[i,:] += old[distances <= self.bandwith]
-                # find the number of points within the bandwidth
-                # total = np.sum(distances <= self.bandwith)
-                # divide the sum by the number of points to find the mean
-                # new[i,:] /= total
-                
-                # second way
+            
                 # mask of points within the bandwidth
                 within_bandwidth = distances <= self.bandwidth
                 # only poits within the bandwidth
@@ -77,21 +67,7 @@ class MeanShift(AlgoStrategy):
         
         # get the clusters center points
         clusters_centers = np.unique(np.round(new, decimals=3),axis=0)
-        
-        # print(clusters_centers)
-        
-        # clusters_centers = np.zeros((1, number_of_columns))
-        # for center in np.unique(np.round(new, decimals=1), axis=0):
-        #     if not np.equal(clusters_centers,center).all(axis=1).any():
-        #         np.vstack((clusters_centers, center))
-        #     else:
-        #         # Check if this center is close to any existing ones
-        #         if np.min(np.linalg.norm(np.array(clusters_centers) - center, axis=1)) > self.bandwidth:
-        #             np.vstack((clusters_centers, center))
-        
-        #print(clusters_centers)
-        
-        
+
         labels = np.zeros(number_of_rows, np.int32)
         
         # for each point calculate the distance with the cluster centers
@@ -105,12 +81,7 @@ class MeanShift(AlgoStrategy):
         
         return self.clusters_centers, self.labels
 
-    # will need to be used on the subject to know his label
-    # and then on all the data to get a list of all the other users with the same label
-    # or we need to find a way to keep an array of the points(users) with the label they have
     def predict(self, point:np.ndarray) -> None:
-        
-        
         # find the closest cluster center
         if self.clusters_centers is not None and self.labels is not None:
             distances = np.linalg.norm(self.clusters_centers - point, axis=1)
@@ -119,31 +90,3 @@ class MeanShift(AlgoStrategy):
         # return the label predicted
             return self.labels[closest_cluster]
         
-        
-# if __name__ == "__main__":
-#     np.random.seed(17)
-#     data = np.random.rand(100, 2) * 20
-#     print(data)
-    
-#     skms = ms.MeanShift(bandwidth=5, max_iter=10000)
-#     skms.fit(data)
-    
-#     meanshift = MeanShift(bandwidth=3, max_iteration=100, tolerance=0.001)
-#     old, origin = meanshift.fit(data)
-    
-#     point = np.array([3, 3])
-    
-#     print(skms.labels_)
-#     print(skms.predict(point.reshape(1, -1)))
-    
-    
-#     print(meanshift.labels)
-#     print(meanshift.predict(point))
-    
-#     import matplotlib.pyplot as plt
-
-# # Plot the points and clusters
-
-#     plt.scatter(origin[:, 0], origin[:, 1], c=meanshift.labels)
-#     plt.scatter(meanshift.clusters_centers[:, 0], meanshift.clusters_centers[:, 1], color='red', marker='x')
-#     plt.show()

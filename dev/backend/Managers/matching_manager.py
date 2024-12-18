@@ -97,12 +97,12 @@ class MatchingManager():
         MINIMUM_SUGGESTION = 20
         user_activities = np.zeros((1, NUMBER_ACTIVITIES + 1))
         data = np.zeros((len(members), NUMBER_ACTIVITIES + 1))
-        
+        user_id = int(user_id)
 
         if len(members) <= MINIMUM_SUGGESTION:
             prospects_ids = []
             for member in members: 
-                if member[0] != int(user_id):
+                if member[0] != user_id:
                     prospects_ids.append(member[0])
             return prospects_ids
         
