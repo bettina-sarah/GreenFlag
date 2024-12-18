@@ -53,7 +53,7 @@ class User:
         return self.__suggestions
     
     @suggestions.setter
-    def suggestions(self, suggestions:str) -> None:
+    def suggestions(self, suggestions: str) -> None:
         self.__suggestions = suggestions
 
     
@@ -62,7 +62,7 @@ class User:
         return self.__first_name
     
     @first_name.setter
-    def first_name(self, first_name:str) -> None:
+    def first_name(self, first_name: str) -> None:
         self.__first_name = first_name
 
     @property
@@ -70,7 +70,7 @@ class User:
         return self.__last_name
     
     @last_name.setter
-    def last_name(self, last_name:str) -> None:
+    def last_name(self, last_name: str) -> None:
         self.__last_name = last_name
     
     @property
@@ -78,7 +78,7 @@ class User:
         return self.__dob
     
     @dob.setter
-    def dob(self, dob:int) -> None:
+    def dob(self, dob: int) -> None:
         self.__dob = dob
     
     @property
@@ -86,7 +86,7 @@ class User:
         return self.__gender
     
     @gender.setter
-    def gender(self, gender:str) -> None:
+    def gender(self, gender: str) -> None:
         self.__gender = gender
         
     @property
@@ -94,7 +94,7 @@ class User:
         return self.__height
     
     @height.setter
-    def height(self, value:int) -> None:
+    def height(self, value: int) -> None:
         self.__height = value
 
     @property
@@ -102,7 +102,7 @@ class User:
         return self.__email
     
     @email.setter
-    def email(self, email:str) -> None:
+    def email(self, email: str) -> None:
         self.__email = email
     
     @property
@@ -110,47 +110,47 @@ class User:
         return self.__religion
     
     @religion.setter
-    def religion(self,value) -> None:
-        self.__religion = value
+    def religion(self, religion: str) -> None:
+        self.__religion = religion
         
     @property
     def want_kids(self) -> bool:
         return self.__wants_kids
     
     @want_kids.setter
-    def want_kids(self,value) -> None:
-        self.__wants_kids = value
+    def want_kids(self, wants: bool) -> None:
+        self.__wants_kids = wants
     
     @property
     def city(self) -> str:
         return self.__city
     
     @city.setter
-    def city(self,value) -> None:
-        self.__city = value
+    def city(self, city: str) -> None:
+        self.__city = city
         
     @property
-    def latitude(self) -> str:
+    def latitude(self) -> float:
         return self.__latitude
     
     @latitude.setter
-    def latitude(self,value) -> None:
-        self.__latitude = value
+    def latitude(self, latitude: float) -> None:
+        self.__latitude = latitude
 
     @property
-    def longitude(self) -> str:
+    def longitude(self) -> float:
         return self.__longitude
     
     @longitude.setter
-    def longitude(self,value) -> None:
-        self.__longitude = value
+    def longitude(self, longitude: float) -> None:
+        self.__longitude = longitude
     
     @property
     def preferences(self) -> dict:
         return self.__preferences
     
     @preferences.setter
-    def preferences(self, preferences:dict) -> None:
+    def preferences(self, preferences: dict) -> None:
         self.__preferences = preferences
     
     @property
@@ -158,7 +158,7 @@ class User:
         return self.__interests
     
     @interests.setter
-    def interests(self, interests:dict) -> None:
+    def interests(self, interests: dict) -> None:
         self.__interests = interests
 
     @property
@@ -166,7 +166,7 @@ class User:
         return self.__bio
     
     @bio.setter
-    def bio(self, bio:str) -> None:
+    def bio(self, bio: str) -> None:
         self.__bio = bio
         
     @property
@@ -174,7 +174,7 @@ class User:
         return self.__photo_key
     
     @photo_key.setter
-    def photo_key(self, photo_key:list[str]) -> None:
+    def photo_key(self, photo_key: list[str]) -> None:
         self.__photo_key = photo_key
     
     @property
@@ -182,7 +182,7 @@ class User:
         return self.__password
     
     @password.setter
-    def password(self, password:str) -> None:
+    def password(self, password: str) -> None:
         self.__password = password
     
     @property

@@ -27,7 +27,7 @@ class AccountManager:
         email = data.get('email')
         password = data.get('password')
         
-        params = (email,password)
+        params = (email, password)
         try:
             response = AccountDAO.login(params)
             print('login response:', response)
@@ -65,7 +65,7 @@ class AccountManager:
         password = data.get('password')
         newpassword = data.get('newpassword')
         
-        verify_params = (email,password)
+        verify_params = (email, password)
         response = AccountDAO.verify_password(verify_params)
         
         if response:
@@ -77,14 +77,13 @@ class AccountManager:
             
         return False
 
-
     @staticmethod
     def update_localisation(data) -> bool:
         id = data.get('id')
         lat = data.get('lat')
         long = data.get('long')
         if id != None:
-            params = (lat,long,int(id))
+            params = (lat, long, int(id))
             response = AccountDAO.update_localisation(params)
             return response
         else:
@@ -162,8 +161,8 @@ class AccountManager:
     
 
     @staticmethod
-    def get_profile(data:any) -> bool:
-        if not isinstance(data,int):
+    def get_profile(data: any) -> bool:
+        if not isinstance(data, int):
             id = data.get('id')
             # normally here we get token or verify it
             # params = (id,)
@@ -232,7 +231,7 @@ class AccountManager:
 
         user_id = data.get('id')
         try:
-            response = AccountDAO.update_preferences(columns,values, user_id)
+            response = AccountDAO.update_preferences(columns, values, user_id)
             return response
                 # email sequence here
         except Exception as error:
@@ -257,7 +256,7 @@ class AccountManager:
         return columns, values
 
     @staticmethod
-    def modify_photos(user_id,files=None, info=None,keys=None) -> bool:
+    def modify_photos(user_id, files=None, info=None, keys=None) -> bool:
         #token = info.get('token')
         # we verify if token is valid here ... and return right user id to put in params !
         # user_id = '11'
@@ -275,7 +274,7 @@ class AccountManager:
             keys = keys
         # keys = photo_dao.add_photos(images)
         formatted_keys = '{' + ','.join(keys) + '}'
-        params = (user_id,formatted_keys)
+        params = (user_id, formatted_keys)
         try:
             response = AccountDAO.add_photos(params)
             return response

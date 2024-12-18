@@ -32,7 +32,6 @@ class Factory(ABC):
 
 class UserFactory(Factory):
     
-    
     ACTIVITY_TUPLE = (
     "Hiking",
     "Yoga",
@@ -125,21 +124,21 @@ class UserFactory(Factory):
         self.__name = name
     
     def generate_activities(self):
-        activity_list = np.full(20,False,bool)
+        activity_list = np.full(20, False, bool)
         activity_list[0:5] = True
         np.random.shuffle(activity_list)
-        zipped = zip(UserFactory.ACTIVITY_TUPLE,activity_list)
+        zipped = zip(UserFactory.ACTIVITY_TUPLE, activity_list)
         activity_dict = dict(zipped)
         return activity_dict
     
     def generate_preferences(self):
-        min_age = random.randint(18,59)
-        max_age = random.randint(min_age,60)
+        min_age = random.randint(18, 59)
+        max_age = random.randint(min_age, 60)
 
-        rel_type = random.randint(0,2)
+        rel_type = random.randint(0, 2)
         relationship_type = UserFactory.RELATIONSHIP_TYPE[rel_type]
         
-        nbr_pref_gender = random.randint(1,4)
+        nbr_pref_gender = random.randint(1, 4)
         preferred_gender = set(random.sample(list(UserFactory.GENDER), nbr_pref_gender))   # Select a random subset of genders
         
         preferences = {'min_age': str(min_age), 'max_age': str(max_age),
@@ -179,7 +178,7 @@ class UserFactory(Factory):
                     gender = gender,
                     preferences=preferences_dict, 
                     interests=activity_dict, 
-                    height = random.randint(150,250), 
+                    height = random.randint(150, 250), 
                     email=self.__faker.email(), 
                     religion = random.choice(UserFactory.RELIGION),
                     want_kids=self.__faker.boolean(), 
