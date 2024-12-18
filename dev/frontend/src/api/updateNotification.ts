@@ -1,15 +1,12 @@
 import { updateData } from "./updateData";
+import { NotificationUpdateData } from "@/interfaces/interfaces";
 
-interface NotificationData {
-  notification_id: string;
-  user_id: string;
-}
 
 export const updateNotification = async (
   notification_id: string,
   user_id: string
 ) => {
-  const data: NotificationData = { notification_id, user_id };
+  const data: NotificationUpdateData = { notification_id, user_id };
   const endpoint = "/update-notification";
-  return await updateData<NotificationData>(endpoint, data);
+  return await updateData<NotificationUpdateData>(endpoint, data);
 };

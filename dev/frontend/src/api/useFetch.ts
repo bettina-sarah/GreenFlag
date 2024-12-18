@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import fetchData from "./fetchData";
-
-interface IUseFetch {
-  url: string;
-  data: any;
-}
-
+import { IUseFetch } from "@/interfaces/interfaces";
 // added dependencies array, trigger to param & interface
 
 const useFetch = <T>({ url, data: incomingData }: IUseFetch) => {

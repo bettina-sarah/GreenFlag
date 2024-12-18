@@ -106,6 +106,21 @@ export interface LastMessageProps {
     subject_first_name: string;
 }
 
+export interface SuggestionData {
+    suggestion_id: string;
+    choice: string;
+}
+
+export interface IUseFetch {
+    url: string;
+    data: any;
+}
+
+export interface NotificationUpdateData {
+    notification_id: string;
+    user_id: string;
+}
+
 // CHATROOMS
 export interface ChatroomProps {
     name: string;
