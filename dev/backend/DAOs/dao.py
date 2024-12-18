@@ -1,3 +1,17 @@
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : dao.py
+Created By  : Bettina-Sarah Janesch
+About       : Cette classe DAO gère la communication avec une base de données 
+              PostgreSQL en encapsulant les opérations de connexion, d'exécution de 
+              requêtes (select, insert, update, delete), et de gestion des erreurs, 
+              afin de simplifier l'interaction avec la base de données tout en 
+              garantissant une gestion centralisée des connexions et des exceptions.
+====================================================================================
+------------------------------------------------------------------------------------
+'''
+
 import psycopg as pg
 from DAOs.constants import *
 
@@ -7,7 +21,6 @@ class DAO():
     
     @staticmethod
     def _create_connection():
-        # TO ADD: confirm that the database is available ?
         try:
             DAO.connection = pg.connect(dbname=DB_NAME,
                                     password=DB_PASSWORD,
@@ -18,7 +31,7 @@ class DAO():
             print(error)
             return False
     
-    def _select_request(cursor) -> tuple: # retour pas claire? faut debug qsq c'est retourné
+    def _select_request(cursor) -> tuple:
         try:
             result = cursor.fetchall()
             if result:
@@ -27,11 +40,9 @@ class DAO():
             print(e)
             return False   
     
-    # --- ATTENTION: insert, delete, update: same thing. not sure if they differ in the database - TO REFACTOR
-    
     def _insert_request(cursor) -> bool:
         try:
-            if cursor.rowcount > 0: # we might want to know how much was inserted, return count later
+            if cursor.rowcount > 0:
                 return cursor.fetchone()
         except Exception as e:
             print(e)
@@ -67,20 +78,14 @@ class DAO():
             return DAO.connection
         else:
             return DAO.connection
-        
-    # connection pool maybe??? 
 
-    @staticmethod
-    def store_request(request) -> None: 
-        pass
 
     @staticmethod
     def _send_request(connection_type, connection, query: str, params: tuple | list) -> tuple | bool :
         try:
             pg_cursor = connection.cursor()
             pg_cursor.execute(query, params)
-            # pg_cursor.executemany
-            response = DAO.request_type[connection_type](pg_cursor) # tuple OR bool!
+            response = DAO.request_type[connection_type](pg_cursor)
             pg_cursor.close()
             return response
         except Exception as e:
@@ -90,7 +95,6 @@ class DAO():
                 return str(error[0])
             return False
 
-    # this can be in DAO directly 
     @staticmethod
     def _prepare_statement(request_type, query, params,many=False) -> bool:
         try:
@@ -99,8 +103,7 @@ class DAO():
                 response = DAO._send_requests(request_type, connection, query, params)    
             else:
                 response = DAO._send_request(request_type, connection, query, params)
-            connection.commit() # possibly necessary for an insert request
-            # connection.close()
+            connection.commit()
             return response
         except Exception as error:
             print(error)
@@ -111,63 +114,9 @@ class DAO():
         try:
             pg_cursor = connection.cursor()
             pg_cursor.executemany(query, params)
-            response = DAO.request_type[connection_type](pg_cursor) # tuple OR bool!
+            response = DAO.request_type[connection_type](pg_cursor)
             pg_cursor.close()
             return response
         except Exception as e:
             print(e)
             return False
-
-
-    # def __next__(self):
-    #     pass
-
-    # def __len__(self) -> int:
-    #     pass
-
-    # def __getitem__(self, item):
-    #     pass
-
-    # def __setitem__(self, key, value):
-    #     pass
-
-    # def __delitem__(self, key):
-    #     pass
-
-    # def __contains__(self, item):
-    #     pass
-
-    # def __call__(self, *args, **kwargs):
-    #     pass
-    
-
-
-    # def insert_request(connection, query: str, params: tuple) -> bool:
-    #     try:
-    #         pg_cursor = connection.cursor()
-    #         pg_cursor.execute(query, params)
-    #         if pg_cursor.rowcount > 0:
-    #             return True
-    #     except Exception as e:
-    #         print(e)
-    #         return False 
-
-    # def delete_request(connection, query: str, params: tuple) -> bool:
-    #     try:
-    #         pg_cursor = connection.cursor()
-    #         pg_cursor.execute(query, params)
-    #         if pg_cursor.rowcount > 0:
-    #             return True
-    #     except Exception as e:
-    #         print(e)
-    #         return False  
-
-    # def update_request(connection, query: str, params: tuple) -> bool:
-    #     try:
-    #         pg_cursor = connection.cursor()
-    #         pg_cursor.execute(query, params)
-    #         if pg_cursor.rowcount > 0:
-    #             return True
-    #     except Exception as e:
-    #         print(e)
-    #         return False 

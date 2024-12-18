@@ -298,7 +298,6 @@ class AccountManager:
             image_format = image.format.lower()
         except Exception as e:
             print(e)
-
         # Reset the BytesIO pointer to the beginning
         photo.seek(0)
         # Determine the correct MIME type based on the image format
