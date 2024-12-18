@@ -23,7 +23,8 @@ Opérations Manuels\
 3. Par la suite dans l'explorateur système, allez dans le dossier GreenFlag/dev/database et exécuter le fichier run_database.sh ou run_database_windows.ps1 si vous n'avez pas Git Bash
 4. Dans le terminal VSCode entrer une à la fois les commandes qui suit:
 cd .\dev\frontend\
-npm install
+npm install 
+\
 \
 5. Dans le terminal VSCode entrer: npm run dev
 6. Dans le fichier constants.py dans GreenFlag/dev/backend/DAOs
@@ -34,21 +35,21 @@ Vous pouvez maintenant utiliser l'application à l'addresse localhost:5173
 
 
 ## Utilisation
-### La première étape serait de créer un nouveau compte.\
+### La première étape serait de créer un nouveau compte.
 ![My Image](images/to-creation_optimized.png) ![My Image](images/creation-compte_optimized.png)\
 
-### Après avoir donner son email et mot-de-passe, se connecter une première fois.\
+### Après avoir donner son email et mot-de-passe, se connecter une première fois.
 ![My Image](images/to-login_optimized.png) ![My Image](images/login_optimized.png)\
 
-### Lors de cette première connection, on vous demande de remplir un formulaire afin d'en connaitre plus sur vous et de nous aider à trouver des usagers qui pourrais vous intérresser.\
+### Lors de cette première connection, on vous demande de remplir un formulaire afin d'en connaitre plus sur vous et de nous aider à trouver des usagers qui pourrais vous intérresser.
 ![My Image](images/questionnaire-1_optimized.png) ![My Image](images/questionnaire-2_optimized.png) ![My Image](images/questionnaire-3_optimized.png)\
-### Vous êtes par la suite redirigé vers la page des matchs où vous pouvez dès maintenant accepter ou refuser des suggestions de partenaires qui vous sont offertes.\
+### Vous êtes par la suite redirigé vers la page des matchs où vous pouvez dès maintenant accepter ou refuser des suggestions de partenaires qui vous sont offertes.
 ![My Image](images/match_optimized.png)\
 
-### Dès qu'une suggestion est réciproquement acceptée, un match devrait être crée et une notification devrait vous être donner par laquelle vous serez redirigé à la discussion du match à l'aide d'un clic.\
+### Dès qu'une suggestion est réciproquement acceptée, un match devrait être crée et une notification devrait vous être donner par laquelle vous serez redirigé à la discussion du match à l'aide d'un clic.
 ![My Image](images/notification-match_optimized.png) ![My Image](images/notification_optimized.png)\
 \
-### Dans ce dernier, il vous est possible en temps réel d'envoyer et de recevoir des messages.\
+### Dans ce dernier, il vous est possible en temps réel d'envoyer et de recevoir des messages.
 ![My Image](images/chat_optimized.png)
 
 ## Références
