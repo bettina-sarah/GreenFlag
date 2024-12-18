@@ -7,12 +7,12 @@ import AlgoSelector from "@/components/AlgoSelector";
 
 const AccountSettingsPage: React.FC = () => {
   return (
-    <div className="w-full flex flex-col justify-between items-center bg-primary-color">
+    <div className="w-full flex flex-col min-h-screen justify-between items-center bg-primary-color">
       <NotificationProvider>
         <Menu classname="border-secondary-color/20 shadow-md border-2" />
       </NotificationProvider>
 
-      <div className="flex flex-col justify-around items-center m-6 bg-primary-color rounded-3xl">
+      <div className="flex flex-col  flex-grow justify-around items-center m-6 bg-primary-color rounded-3xl">
         <h1 className="m-3 pt-2 pb-2 text-5xl font-bold text-base-text font-leckerli">
           Account settings
         </h1>
