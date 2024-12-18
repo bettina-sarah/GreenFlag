@@ -24,8 +24,9 @@ Opérations Manuels\
 4. Dans le terminal VSCode entrer une à la fois les commandes qui suit:
 cd .\dev\frontend\
 npm install 
-\
-\
+
+<br><br>
+
 5. Dans le terminal VSCode entrer: npm run dev
 6. Dans le fichier constants.py dans GreenFlag/dev/backend/DAOs
 7. Dans le debugger de VSCode sélectionner la configuration 'fill DB' et appuyer sur F5
