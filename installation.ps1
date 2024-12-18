@@ -11,7 +11,7 @@ Set-Location "dev/database"
 
 # Combiner les fichiers SQL en un seul
 Write-Host "Création du fichier setup.sql..."
-Get-Content create_tables_enums.sql, views_functions.sql, users_insert.sql | Set-Content setup.sql
+Get-Content create_tables_enums.sql, views_functions.sql | Set-Content setup.sql
 
 # Exécuter le fichier SQL avec PostgreSQL
 Write-Host "Exécution du fichier setup.sql dans PostgreSQL..."
