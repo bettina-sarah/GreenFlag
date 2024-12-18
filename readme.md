@@ -8,15 +8,15 @@ Une introduction succincte au projet, exposant son but et les éléments clés.
 
 ## Installation
 Requirements:
-Python
-VSCode
-Postgres avec comme user: postgres et une base de donnée: postgres
-Node.js
+- Python
+- VSCode
+- Postgres avec comme user: postgres et une base de donnée: postgres
+- Node.js
 
-Exécuter l'un des scripts installation (installation.ps1(PowerShell) ou installation.sh(Bash))
-Passer à l'étape 5 si le script à fonctionner sinon suivre les opérations manuels
-
-Opérations Manuels
+Exécuter l'un des scripts installation (installation.ps1(PowerShell) ou installation.sh(Bash))\
+Passer à l'étape 5 si le script à fonctionner sinon suivre les opérations manuels\
+\
+Opérations Manuels\
 *Il est préférable d'utiliser VSCode pour la majorité des opérations.*
 1. Ouvrir le dossier GreenFlag avec VSCode.
 2. Dans le terminal VSCode entrer: pip install -r requirements.txt
@@ -24,8 +24,8 @@ Opérations Manuels
 4. Dans le terminal VSCode entrer une à la fois les commandes qui suit:
 cd .\dev\frontend\
 npm install
-
-
+\
+\
 5. Dans le terminal VSCode entrer: npm run dev
 6. Dans le fichier constants.py dans GreenFlag/dev/backend/DAOs
 7. Dans le debugger de VSCode sélectionner la configuration 'fill DB' et appuyer sur F5
@@ -64,10 +64,10 @@ Scikit-Learn Github Repo https://github.com/scikit-learn/scikit-learn/blob/6e903
 
 ## Contact
 ### Vincent Fournier
-Github: vincentfournier127
-email: vincentfournier.127@gmail.com
+Github: vincentfournier127 \
+email: vincentfournier.127@gmail.com 
 ### Bettina-Sarah Janesh
-Github: bettina-sarah
+Github: bettina-sarah \
 email: bettina.sarah.janesch@gmail.com
 
 ## Remerciements
