@@ -1,6 +1,5 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/LoginPage";
 import CreateAccount from "./pages/CreateAccountPage";
@@ -12,6 +11,7 @@ import ProfilePage from "./pages/ProfilePage";
 
 import PrivateChatroomPage from "./pages/PrivateChatroomPage";
 import AuthGuard from "./components/AuthGuard";
+import ReverseAuthGuard from "@/components/ReverseAuthGuard";
 import { ToastContainer } from "react-toastify";
 import ModifyProfilePage from "./pages/ModifyProfilePage";
 import AccountSettingsPage from "./pages/AccountSettingsPage";
@@ -22,9 +22,34 @@ const App: React.FC = () => {
       <BrowserRouter>
         <ToastContainer/>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/create-account" element={<CreateAccount />} />
+        <Route
+        path="/"
+        element={
+          <ReverseAuthGuard>
+            <HomePage />
+          </ReverseAuthGuard>
+        }
+      />
+
+
+      <Route
+        path="/login"
+        element={
+          <ReverseAuthGuard>
+            <Login />
+          </ReverseAuthGuard>
+        }
+      />
+
+      <Route
+        path="/create-account"
+        element={
+          <ReverseAuthGuard>
+            <CreateAccount />
+          </ReverseAuthGuard>
+        }
+      />
+
 
           <Route
             path="/matching"
