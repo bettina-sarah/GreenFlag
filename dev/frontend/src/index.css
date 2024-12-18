@@ -24,14 +24,14 @@
 
 .theme-autumn {
   --bg-color: 251, 249, 249;
-  --text-color: 242, 206, 152;
+  --text-color: 72, 15, 15;
   --text-muted: 255, 255, 255;
   --text-inverted: 13, 49, 103;
   --custom-h1: 242, 206, 152;
-  --custom-h2: 178, 207, 136;
+  --custom-h2: 242, 206, 152;
   --primary-color: 153, 107, 107;
-  --secondary-color: 197, 195, 171;
-  --optional-color: 171, 177, 142;
+  --secondary-color: 105, 84, 84;
+  --optional-color: 116, 93, 93;
   --bg-image-1: url("../ressources/bg/autumn/Background.svg");
   --bg-image-2: url("../ressources/bg/autumn/Background-2.svg");
 }
