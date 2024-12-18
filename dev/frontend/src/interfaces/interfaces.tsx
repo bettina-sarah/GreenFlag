@@ -155,8 +155,12 @@ export interface BasicInfoProps {
       first_name: string;
       age: number;
       city: string;
-      location: number;
     };
+    suggestion_id: string;
+}
+
+export interface LocationData {
+    location: string;
 }
 
 // NOTIFICATION
