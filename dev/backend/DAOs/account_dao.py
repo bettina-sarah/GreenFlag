@@ -1,13 +1,24 @@
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : account_dao.py
+Created By  : Bettina-Sarah Janesch
+About       : La classe AccountDAO hérite de DAO et fournit des méthodes statiques 
+              pour interagir avec la base de données PostgreSQL, permettant de gérer 
+              des comptes utilisateurs (connexion, création, mise à jour des 
+              informations, gestion des tokens, modification de mot de passe, 
+              suppression de compte, etc.) et d'effectuer des opérations liées à des
+              informations de profil, photos, préférences et localisation des membres.
+====================================================================================
+------------------------------------------------------------------------------------
+'''
+
 from DAOs.dao import DAO
 from typing import List
-#from backend.util_classes.email_adapter import EmailAdapter
 
 import logging
 
 class AccountDAO(DAO):
-
-    def update_account() -> bool:
-        return True
 
     @staticmethod
     def login(params: tuple) -> bool:
@@ -20,7 +31,6 @@ class AccountDAO(DAO):
     def create_account(params: tuple) -> int:
             query = 'INSERT INTO member (first_name, last_name, email, member_password) VALUES (%s, %s, %s, %s) RETURNING id;'
             response = AccountDAO._prepare_statement("insert", query, params)
-            # si courriel existe deja, DB retorune erreur cle existe - faut gerer - envoyer au frontend 'account exists' 
             return response
     
     @staticmethod
@@ -84,21 +94,14 @@ class AccountDAO(DAO):
         response = AccountDAO._prepare_statement("select", query, params)
         return response
     
-    '''
-    !!!! ATTENTION: quand il faut modifier plusieurs tables:
-    UPDATE accounts SET contact_first_name = first_name,
-                     contact_last_name = last_name
-    FROM employees WHERE employees.id = accounts.sales_person;
-    '''
     @staticmethod
     def modify_profile(params: tuple) -> bool:
         query = 'UPDATE member SET first_name =%s, last_name = %s WHERE email = %s and member_password = %s;'
         response = AccountDAO._prepare_statement("update", query, params)
         return response
-    # retour: UPDATE 1
     
+    @staticmethod
     def update_preferences(columns,values,user_id) -> bool:
-    
         query = "UPDATE member SET " + ", ".join([f"{col} = %s" for col in columns]) + " WHERE id = %s"
         params = values + [user_id]
         response = AccountDAO._prepare_statement("update", query, params)
