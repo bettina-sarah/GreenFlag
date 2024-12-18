@@ -1,5 +1,4 @@
 import React from "react";
-import DeleteAccountForm from "@/components/form_components/DeleteAccountForm";
 import Menu from "@/components/menu_components/Menu";
 import { NotificationProvider } from "@/components/NotificationContext";
 import { useNavigate } from "react-router-dom";
@@ -38,13 +37,15 @@ const ModifyProfilePage: React.FC = () => {
   }
 
   return (
-    <div className="w-full h-full flex flex-col justify-between items-center">
+    <div className="bg-primary-color flex flex-col justify-between items-center">
       <NotificationProvider>
         <Menu />
       </NotificationProvider>
-      <h1>Your profile right now</h1>
+      <h1 className="m-3 py-4 text-5xl font-bold text-base-text font-leckerli">
+        Your profile
+      </h1>
       {profileData && (
-        <div className="p-6">
+        <div>
           <ProfileCard
             profile_info={profileData.profile_info}
             photos={profileData.photo_keys}
@@ -52,7 +53,9 @@ const ModifyProfilePage: React.FC = () => {
         </div>
       )}
 
-      <h1>Modify your profile</h1>
+      <h1 className="m-3 py-4 text-5xl font-bold text-base-text font-leckerli">
+        Modify your profile
+      </h1>
       <div className="flex-grow-1 flex flex-col justify-evenly items-center">
         <QuestionnaireForm />
       </div>

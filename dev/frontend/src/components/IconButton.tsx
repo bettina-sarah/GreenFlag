@@ -48,10 +48,10 @@ const IconButton: React.FC<IconButtonProps> = ({
   };
 
   return (
-    <div className={customClassName}>
+    <div>
       <button
-        className="w-15 h-12 flex items-center justify-center p-1 border-none
-      hover:bg-gray-500/30 rounded"
+        className={`w-15 h-12 flex items-center justify-center p-1 border-none
+    hover:bg-gray-500/30 rounded ${customClassName || ""}`}
         onClick={handleClick}
         disabled={disabled}
       >

@@ -9,7 +9,7 @@ const Message: React.FC<MessageProps> = ({ content, sender_id }) => {
   return (
     <li className={`flex ${sender_id === currentUserId ? 'justify-end' : 'justify-start'}`}>
       <div
-        className={`max-w-xs text-left text-wrap break-words p-3 m-1 rounded-2xl text-white ${sender_id === currentUserId ? 'bg-primary-color' : 'bg-secondary-color text-white'}`}
+        className={`max-w-xs text-left text-wrap break-words py-2 px-3 mt-2 mx-3 rounded-full text-white ${sender_id === currentUserId ? 'bg-primary-color' : 'bg-secondary-color text-white'}`}
       >
         <p>{content}</p>
       </div>

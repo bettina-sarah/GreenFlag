@@ -46,7 +46,7 @@ const AlgoSelector: React.FC = () =>{
           </option>
         ))}
       </Select>
-      <div className="mt-4 p-4 max-w-sm h-36 border rounded-lg shadow">
+      <div className="mt-4 p-4 max-w-sm h-36 rounded-lg shadow">
         <h2 className="text-xl font-bold">{algoName}</h2>
         <p className="text-base-text">{algos[currentKey as keyof typeof algos].desc}</p>
       </div>

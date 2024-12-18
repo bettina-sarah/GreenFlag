@@ -63,6 +63,7 @@ class TestSimulator:
 
     def swipe(self) -> None:
         self.get_fake_users() 
+
         random.shuffle(self.users)
         nbr_users = len(self.users)
         nbr_picky_users = int(nbr_users * 0.33)
