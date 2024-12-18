@@ -73,11 +73,6 @@ def login() -> bool:
         return jsonify(response)
     return jsonify(False)
 
-@app.route('/localisation', methods=['POST'])
-def update_localisation() -> bool:
-    response = AccountManager.update_localisation(request.json)
-    return jsonify(response)
-
 @app.route('/complete-profile', methods=['POST'])
 def complete_profile() -> bool:
     response = AccountManager.complete_profile(request.json)
@@ -133,6 +128,19 @@ def settings() -> bool:
     response = AccountManager.delete_account(request.json)
     # call middleware to generate token; send i to frontend
     # make sure database gets it !!!!
+    return jsonify(response)
+
+# -------- LOCALISATION ---------
+
+@app.route('/localisation', methods=['POST'])
+def update_localisation() -> bool:
+    response = AccountManager.update_localisation(request.json)
+    return jsonify(response)
+
+@app.route('/get-location', methods=['POST'])
+def get_location() -> bool:
+    
+    response = AccountManager.get_location(request.json)
     return jsonify(response)
 
 # -------- PHOTOS ------------
