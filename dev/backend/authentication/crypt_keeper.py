@@ -1,53 +1,22 @@
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : crypt_keeper.py
+Created By  : Bettina-Sarah Janesch
+About       : Cette classe gère l'encodage et le décodage de tokens JWT (JSON Web 
+              Tokens), avec des mécanismes pour valider leur format, vérifier leur 
+              expiration et garantir leur intégrité en utilisant une clé secrète. 
+              Elle fournit des méthodes pour encoder un token avec une date 
+              d'expiration configurable, décoder un token pour extraire les informations 
+              utilisateur et valider si le token est toujours valide ou expiré.
+====================================================================================
+------------------------------------------------------------------------------------
+'''
+
 import json
 from jwt import PyJWT
-from datetime import datetime, timezone
 import time
 import base64
-
-''' JWT:   
-[header].[payload].[signature]
-HEADER:
- {
-    "typ":"JWT",
-    "alg":"HS256" - decode algo
- }
- 
- if alg = HS256 ... decode
- 
- Payload:
-{
-  "id" : 123456789,
-  "name" : "Joseph"
-  "password" : "1234"
-  "date" : 
-}
-
-Secret: GeeksForGeeks
-
-
-
-Deciding where to keep JWT in HTTP Requests: FRONTEND - IN authorization header
-'''
-
-# Validating JWT
-'''
-Simply decoding and reading a JWT is not enough; it’s essential to validate it. Here are some standard validation checks:
-
-1. Verifying Format:
-Ensure the JWT has three parts separated by dots (.).
-Check that the data is Base64URL encoded.
-Verify that the header and payload are valid JSON objects.
-2. Validating the Header:
-Check for known values in the alg and typ fields.
-Verify that the token is signed using a known key (check the kid field).
-Confirm that the key is suitable for the specified algorithm.
-3. Validating the Payload:
-Ensure the token is not expired (exp).
-Confirm that your application is the intended recipient (aud).
-Verify that the token is issued by a trusted source (iss).
-
-'''
-
 import logging
 
 class CryptKeeper:
@@ -60,7 +29,6 @@ class CryptKeeper:
         jwt_instance = PyJWT()
         if self.validate_jwt(token):
             try:
-                
                 decoded_jwt = jwt_instance.decode(token, self.__key, algorithms=["HS256"],
                                         audience="GreenFlag frontend", issuer="GreenFlag flask server")
                 is_valid = self.check_expiry_date(decoded_jwt['exp'], decoded_jwt['sub'])
@@ -85,7 +53,6 @@ class CryptKeeper:
             return True
         return False
         
-        
 
     def encode(self,user_id) -> str:
         payload = {
@@ -101,7 +68,7 @@ class CryptKeeper:
     
     def expiry_date(self, json):
         current_timestamp = int(time.time())
-        # 2 heures
+        # 2 hours
         expiry_timestamp = current_timestamp + self.__expiry_time
         json['exp'] = expiry_timestamp
         return json
@@ -123,16 +90,13 @@ class CryptKeeper:
         return False
 
     def decode_header(self, header: str) -> dict:
-        # Decode Base64URL encoded header
         padding = '=' * (4 - len(header) % 4) if len(header) % 4 else ''
         decoded = base64.urlsafe_b64decode(header + padding).decode('utf-8')
         return json.loads(decoded)
 
     def validate_header(self,header) -> bool:
-        # header_data = json.loads(header)
-        known_algorithms = ['HS256', 'RS256']  # Example known algorithms
+        known_algorithms = ['HS256', 'RS256']
         known_types = ['JWT']
-    
         if header.get('typ') not in known_types or header.get('alg') not in known_algorithms:
             return False
         return True
