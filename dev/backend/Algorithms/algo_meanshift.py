@@ -12,8 +12,8 @@ About       : Contient une implémentation personnalisée de l'algorithme Mean S
 '''
 
 import numpy as np
-import sklearn.cluster._mean_shift as ms
 from Algorithms.algo_strategy import AlgoStrategy
+
 class MeanShift(AlgoStrategy):
     def __init__(self, bandwidth: int, max_iteration: int, tolerance: float):
         self.bandwidth = bandwidth

@@ -1,3 +1,16 @@
+'''
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : discharged_list.py
+Created By  : Vincent Fournier
+About       : Ce module implémente une classe DischargedList qui gère une liste avec
+              des mécanismes de suivi automatique. Lorsqu'un certain nombre d'éléments
+              (limit) est atteint ou qu'un temps maximum (max_time) s'écoule, la liste
+              se vide en notifiant les observateurs attachés.
+====================================================================================
+------------------------------------------------------------------------------------
+'''
+
 from abc import ABC, abstractmethod
 from typing import List, Callable, Any
 from time import perf_counter, sleep
