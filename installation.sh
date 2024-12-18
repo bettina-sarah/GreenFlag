@@ -5,7 +5,7 @@ pip install -r requirements.txt
 
 echo "Installation de la base de donnée..."
 cd dev/database
-cat create_tables_enums.sql views_functions.sql users_insert.sql > setup.sql
+cat create_tables_enums.sql views_functions.sql > setup.sql
 psql -U postgres -d postgres -f ./setup.sql
 
 cd ../backend
