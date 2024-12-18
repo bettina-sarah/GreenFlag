@@ -1,3 +1,15 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : MenuChat.tsx
+Created By  : Vincent Fournier
+About       : Le composant MenuChat affiche une barre de menu pour une chatroom avec
+              les informations du sujet (nom, avatar), un bouton de retour, et une
+              option pour signaler l'interlocuteur via une fenêtre modale.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React, {useEffect,useState} from 'react';
 import { useParams } from 'react-router-dom';
 import IconButton from '../IconButton';

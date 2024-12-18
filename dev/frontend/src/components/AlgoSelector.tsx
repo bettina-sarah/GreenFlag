@@ -1,3 +1,18 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : AlgoSelector.tsx
+Created By  : Vincent Fournier
+About       : Le composant AlgoSelector utilise un Select de Flowbite pour permettre 
+              aux utilisateurs de choisir entre différentes algorithmes stockées dans 
+              ALGORITHMS via le local storage. Il maintient l'état de l'algorithme 
+              sélectionné et met à jour le sessionStorage en conséquence. Le composant 
+              affiche également une description correspondante pour l'algorithme 
+              sélectionné.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import { useState, useEffect } from "react";
 import React from "react";
 import { Select } from "flowbite-react";

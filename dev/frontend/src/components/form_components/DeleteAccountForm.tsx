@@ -1,3 +1,17 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : DeleteAccountForm.tsx
+Created By  : Vincent Fournier (Contribution: Bettina-Sarah Janesch)
+About       : Le composant DeleteAccountForm implémente un formulaire de suppression
+              de compte utilisateur avec validation des champs via react-hook-form, 
+              incluant un email, un mot de passe et une confirmation de mot de passe.
+              Une requête API est envoyée pour effectuer la suppression, et des 
+              notifications Toast sont utilisées pour afficher des retours.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import { IP_SERVER } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";

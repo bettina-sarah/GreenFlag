@@ -1,3 +1,17 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : LoginPage.tsx
+Created By  : Vincent Fournier
+About       : Le composant Login affiche un formulaire de connexion et gère un message 
+              indiquant que le compte a été créé avec succès si l'utilisateur est 
+              revenu après avoir créé un compte. Il utilise IconButton pour naviguer 
+              en arrière et affiche un message d'alerte temporaire lorsqu'un compte 
+              est créé avec succès.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import IconButton from "@/components/IconButton";
 import LoginForm from "@/components/form_components/LoginForm";
 import React from "react";

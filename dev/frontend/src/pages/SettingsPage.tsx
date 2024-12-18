@@ -1,3 +1,17 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : SettingsPage.tsx
+Created By  : Vincent Fournier
+About       : Le composant SettingsPage récupère les données du profil utilisateur, 
+              affiche une ProfileCard avec les informations de l'utilisateur, et 
+              fournit des formulaires pour modifier le profil et supprimer le compte, 
+              en utilisant useFetch pour la récupération de données et des hooks pour 
+              la gestion de l'état et de la navigation.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React from "react";
 import DeleteAccountForm from "@/components/form_components/DeleteAccountForm";
 import Menu from "@/components/menu_components/Menu";

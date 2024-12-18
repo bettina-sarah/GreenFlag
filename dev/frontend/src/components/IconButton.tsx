@@ -1,3 +1,17 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : IconButton.tsx
+Created By  : Bettina-Sarah Janesh
+About       : Le composant IconButton prend en entrée des props pour afficher une 
+              icône, naviguer vers une page, exécuter une fonction personnalisée 
+              onClick, et gérer l'état de l'icône. Il utilise le composant Icon pour 
+              afficher l'icône, et gère les clics pour naviguer, appeler onClick, et 
+              toggler l'état d'activation si nécessaire.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React from "react";
 import Icon from "./Icon";
 import { useNavigate } from "react-router-dom";

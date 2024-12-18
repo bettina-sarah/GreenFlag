@@ -1,3 +1,18 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : interfaces.ts
+Created By  : Vincent Fournier et Bettina-Sarah Janesch (REFACTORED: Vincent)
+About       : Ce fichier contient des interfaces TypeScript définissant les types 
+              pour divers composants et fonctionnalités d'une application React, 
+              notamment pour la gestion des profils, des chatrooms, des messages, de
+              l'authentification, des notifications, des menus, et des composants de
+              cartes de profil.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
+
 import { Control } from "react-hook-form";
 
 export interface IPhotoData {
@@ -156,7 +171,7 @@ export interface BasicInfoProps {
       age: number;
       city: string;
     };
-    suggestion_id: string;
+    suggestion_id?: string;
 }
 
 export interface LocationData {

@@ -1,3 +1,18 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : BasicInfo.tsx
+Created By  : Bettina-Sarah Janesh
+About       : Ce fichier définit le composant BasicInfo, qui utilise le hook useFetch 
+              pour récupérer les données de localisation pour un utilisateur 
+              spécifique en fonction de l'id et de l'suggestion_id. Le composant gère 
+              les états de chargement, d'erreur et affiche les informations de base, 
+              telles que le nom, l'âge et la distance de l'utilisateur par rapport 
+              à la suggestion.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import useFetch from "@/api/useFetch";
 import React from "react";
 

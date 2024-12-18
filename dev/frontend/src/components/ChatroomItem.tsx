@@ -1,3 +1,17 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : ChatroomItem.tsx
+Created By  : Vincent Fournier
+About       : Le composant ChatroomItem affiche un élément de liste représentant un 
+              chatroom, incluant le nom du chatroom, la photo de profil du dernier 
+              message, et un composant LastMessage pour afficher le dernier message 
+              du chat. Lorsqu'il est cliqué, il redirige l'utilisateur vers la page 
+              du chatroom correspondant.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React from "react";
 import LastMessage from "./LastMessage";
 import { useNavigate } from "react-router-dom";

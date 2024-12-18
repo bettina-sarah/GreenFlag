@@ -1,3 +1,20 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : PrivateChatroomPage.tsx
+Created By  : Vincent Fournier
+About       : Le composant PrivateChatroomPage facilite le messagerie en temps réel 
+              dans un chatroom spécifique. Il se connecte à un serveur via Socket.IO, 
+              récupère les messages anciens en utilisant un hook personnalisé, et 
+              permet aux utilisateurs d'envoyer de nouveaux messages. Le composant 
+              utilise un conteneur de chat défilable pour afficher les messages et 
+              fournit une zone de texte pour la saisie des messages avec un bouton 
+              associé pour envoyer les messages. Les messages sont automatiquement 
+              défilés jusqu'en bas pour afficher les messages les plus récents.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import useFetch from "@/api/useFetch";
 import React, {useState, useEffect, useRef} from "react";
 import { useParams } from 'react-router-dom';
