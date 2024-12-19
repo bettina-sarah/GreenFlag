@@ -38,6 +38,7 @@
 
 .theme-electric {
   --bg-color: 254, 236, 240;
+  /* --bg-color: 241, 65, 65; */
   --text-color: 216, 240, 142;
   --text-muted: 255, 255, 255;
   --custom-h1: 218, 242, 138;
