@@ -155,7 +155,6 @@ def upload_photos() -> bool:
 def questionnaire() -> bool:
     print(request.json)
     response = AccountManager.update_preferences(request.json)
-    #response = AccountManager.modify_profile(request.json)
     return jsonify(response)
 
 @app.route('/hobbies', methods=['POST'])
@@ -167,18 +166,18 @@ def update_hobbies() -> bool:
 # -------- CHATROOMS ------------
 
 @app.route('/get-chatrooms', methods=['POST'])
-def fetch_chatroom_list() -> list:  # send JSON jsonify ...
+def fetch_chatroom_list() -> list:
     response = chatroomManager.get_chatrooms(request.json)
     return jsonify(response)
 
 @app.route('/get-messages', methods=['POST'])
-def connect_chatroom() -> list:  # send JSON jsonify ...
+def connect_chatroom() -> list:
     response = chatroomManager.get_chatroom_messages(request.json)
     print(response)
     return jsonify(response)
 
 @app.route('/get-chatroom-subject', methods=['POST'])
-def fetch_chatroom_subject() -> list:  # send JSON jsonify ...
+def fetch_chatroom_subject() -> list:
     response = chatroomManager.get_chatroom_subject(request.json)
     print(response)
     return jsonify(response)
