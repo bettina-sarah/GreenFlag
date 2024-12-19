@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : AccountSettingsPage.tsx
-Created By  : Vincent Fournier
+Created By  : Vincent Fournier (contribution visuelle: Bettina-Sarah Janesch)
 About       : Le composant AccountSettingsPage rassemble différentes fonctionnalités 
               de gestion de compte telles que la sélection d’un assistant, la 
               modification du mot de passe et la suppression de compte, dans une 
