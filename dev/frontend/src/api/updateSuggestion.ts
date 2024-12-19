@@ -1,25 +1,13 @@
-// import fetchData from "./fetchData";
+/*
+------------------------------------------------------------------------------------
+Fichier     : updateSuggestion.ts
+Créé par    : Bettina-Sarah Janesch
+Résumé      : Fonction spécifique pour mettre à jour une suggestion en envoyant 
+              des données typées `SuggestionData` à un endpoint via `updateData`.
+------------------------------------------------------------------------------------
+*/
 
 import { updateData } from "./updateData";
-
-// interface SuggestionData {
-//   suggestion_id: string
-//   choice: string
-// }
-
-// export const updateSuggestion = async (suggestion_id: string, choice: string) => {
-//   const data = {  suggestion_id: suggestion_id,
-//     choice: choice}
-//     try {
-//           const response = await fetchData<SuggestionData>("/update-suggestion", data);
-//           if(response){
-//             return true;
-//           }
-//         }
-//     catch (error) {
-//       console.error("Error updating suggestion:", error);
-//     }
-//   };
 
 interface SuggestionData {
   suggestion_id: string;

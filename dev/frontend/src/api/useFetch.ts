@@ -1,3 +1,13 @@
+/*
+------------------------------------------------------------------------------------
+Fichier     : useFetch.ts
+Créé par    : Bettina-Sarah Janesch
+Résumé      : Hook personnalisé et générique pour effectuer des requêtes HTTP avec 
+              `fetchData`. Gère les états de chargement, d'erreur et de données 
+              typées (T), adapté aux composants React.
+------------------------------------------------------------------------------------
+*/
+
 import { useEffect, useState } from "react";
 import fetchData from "./fetchData";
 
@@ -6,12 +16,10 @@ interface IUseFetch {
   data: any;
 }
 
-// added dependencies array, trigger to param & interface
-
 const useFetch = <T>({ url, data: incomingData }: IUseFetch) => {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState<boolean>(true); // this is how you use a generic, useState can accept a generic type to help type hint
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setLoading(true);

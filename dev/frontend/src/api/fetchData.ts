@@ -1,17 +1,17 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : fetchData.ts
+Created By  : Bettina-Sarah Janesch
+About       : Fonction utilitaire générique pour effectuer des requêtes POST avec 
+              Axios, traitant les réponses JSON ou images, via une interface T,
+              sous forme de promesse type T.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import { IP_SERVER } from "@/config/constants";
 import axios, { AxiosResponse } from "axios";
-
-/**  FETCH DATA FUNCTION
- * Performs a POST request to the server at the given path with the given data,
- * and returns the response as a Promise of type T.
- *
- * Equipped to handle different Content-Type responses: JSON objects and images.
- *
- * @param path The path to POST to.
- * @param data The data to send in the request body.
- * @returns A Promise of type T, resolved with the response data.
- * @throws {Error} If the response Content-Type is not supported.
- */
 
 const fetchData = async <T>(path: string, data: any): Promise<T> => {
   try {
@@ -57,19 +57,3 @@ const fetchData = async <T>(path: string, data: any): Promise<T> => {
 };
 
 export default fetchData;
-
-// const fetchData = async <T>(path: string, data: any) => {
-//   try {
-//     const response = await axios.post(`${IP_SERVER}${path}`, data, {
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     });
-//     return response.data as T;
-//   } catch (error) {
-//     console.error("Error during fetching data:", error);
-//     throw error;
-//   }
-// };
-
-// export default fetchData;

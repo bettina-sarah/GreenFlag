@@ -1,3 +1,14 @@
+/*
+------------------------------------------------------------------------------------
+Fichier     : useTriggerFetch.ts
+Créé par    : Bettina-Sarah Janesch
+Résumé      : Hook personnalisé et générique permettant de déclencher des requêtes 
+              HTTP avec `fetchData` à l'aide d'une variable `trigger`. Gère les états 
+              de chargement, d'erreur, et de données typées (T), et réinitialise les 
+              données à chaque déclenchement.
+------------------------------------------------------------------------------------
+*/
+
 import { useEffect, useState } from "react";
 import fetchData from "./fetchData";
 
@@ -6,21 +17,20 @@ interface IUseFetch {
   data: any;
 }
 
-const useTriggerFetch = <T extends any[]>( // or just <T>
+const useTriggerFetch = <T extends any[]>(
   { url, data: incomingData }: IUseFetch,
   trigger: number
 ) => {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState<boolean>(true); // this is how you use a generic, useState can accept a generic type to help type hint
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setLoading(true);
-    setData(null); // in case of stale state?
+    setData(null);
     fetchData<T>(url, incomingData)
       .then((data) => {
-        // setData(data);
-        setData(data); // No need for spread operator if newData is already an array
+        setData(data);
         console.log("data", data);
       })
       .catch((error) => {
