@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : AuthGuard.tsx
-Created By  : Bettina-Sarah Janesh
+Created By  : Bettina-Sarah Janesch
 About       : Le composant AuthGuard vérifie la présence d'un jeton d'authentification
               dans le sessionStorage pour déterminer si l'utilisateur est authentifié. 
               S'il n'y a pas de jeton, l'utilisateur est redirigé vers la page de 

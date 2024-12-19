@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : PhotoCarousel.tsx
-Created By  : Bettina-Sarah Janesh
+Created By  : Bettina-Sarah Janesch
 About       : PhotoCarousel est un composant React qui utilise un carrousel de la 
               bibliothèque flowbite-react pour afficher les photos récupérées à partir 
               d'une API, avec des options pour gérer le chargement et les erreurs.
@@ -38,7 +38,7 @@ const PhotoCarousel: React.FC<CarouselProps> = ({ images }) => {
     } else {
       setPhotoData([]);
     }
-  }, []); //[profileData, profileLoading, profileError]
+  }, []);
 
   if (!images || images.length === 0) {
     return (

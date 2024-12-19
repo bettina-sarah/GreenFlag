@@ -1,10 +1,12 @@
 /*
 ------------------------------------------------------------------------------------
+====================================================================================
 Fichier     : useFetch.ts
 Créé par    : Bettina-Sarah Janesch
 Résumé      : Hook personnalisé et générique pour effectuer des requêtes HTTP avec 
               `fetchData`. Gère les états de chargement, d'erreur et de données 
               typées (T), adapté aux composants React.
+====================================================================================
 ------------------------------------------------------------------------------------
 */
 

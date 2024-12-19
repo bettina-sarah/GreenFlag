@@ -64,11 +64,6 @@ const ThemeSelector = () => {
   return (
     <div ref={componentRef} className="relative pt-1">
       <IconButton icon={PaletteIcon} onClick={() => setIsOpen(!isOpen)} />
-
-      {/* <button className="px-4 py-2 bg-gray-800 text-white rounded-md focus:outline-none" onClick={()=> setIsOpen(!isOpen)}>
-        Select Theme
-      </button> */}
-
       {isOpen && (
         <div className="flex absolute mt-2 w-32 bg-primary-color before:ounded-md shadow-lg z-10 left-1/2  transform -translate-x-1/2">
           <ul className="w-full space-y-2 p-2">

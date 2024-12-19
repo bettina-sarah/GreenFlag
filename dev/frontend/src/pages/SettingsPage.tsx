@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : SettingsPage.tsx
-Created By  : Vincent Fournier
+Created By  : Vincent Fournier (contribution visuelle: Bettina-Sarah Janesch)
 About       : Le composant SettingsPage récupère les données du profil utilisateur, 
               affiche une ProfileCard avec les informations de l'utilisateur, et 
               fournit des formulaires pour modifier le profil et supprimer le compte, 

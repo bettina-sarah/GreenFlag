@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : HomePage.tsx
-Created By  : Vincent Fournier
+Created By  : Vincent Fournier (contribution visuelle: Bettina-Sarah Janesch)
 About       : Le composant HomePage affiche un logo et des boutons pour se connecter 
               ou créer un compte. Il utilise useNavigate pour gérer la navigation 
               entre les pages de connexion et d'inscription. Les boutons sont stylés 

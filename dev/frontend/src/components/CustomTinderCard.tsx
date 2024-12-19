@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : CustomTinderCard.tsx
-Created By  : Bettina-Sarah Janesh
+Created By  : Bettina-Sarah Janesch
 About       : Le composant CustomTinderCard utilise TinderCard pour permettre de 
               swiper les suggestions de profil. Il gère les actions de swipe à gauche 
               et à droite, ainsi que le retrait d'une carte de l'écran. Le composant 

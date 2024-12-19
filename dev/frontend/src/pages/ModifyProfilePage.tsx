@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : ModifyProfilePage.tsx
-Created By  : Vincent Fournier
+Created By  : Vincent Fournier (contribution visuelle: Bettina-Sarah Janesch)
 About       : Le composant ModifyProfilePage récupère les données de profil, affiche 
               le profil avec ProfileCard et un formulaire de questionnaire pour la 
               modification du profil, tout en gérant les états de chargement et d'erreur.

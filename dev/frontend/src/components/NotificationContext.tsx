@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : NotificationContext.tsx
-Created By  : Bettina-Sarah Janesh
+Created By  : Bettina-Sarah Janesch
 About       : Le composant NotificationProvider fournit un contexte pour gérer les 
               notifications dans l'application. Il utilise un fetchData pour récupérer 
               les notifications de l'API toutes les 5 secondes et met à jour l'état 

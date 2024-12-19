@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : NotificationDropDown.tsx
-Created By  : Bettina-Sarah Janesh
+Created By  : Bettina-Sarah Janesch
 About       : Ce fichier définit le composant NotificationDropDown, qui affiche une
               liste déroulante de notifications. Il gère l'ouverture et la fermeture 
               du menu, le marquage des notifications comme lues, et la navigation 
