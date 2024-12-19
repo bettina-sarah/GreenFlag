@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : IconButton.tsx
-Created By  : Bettina-Sarah Janesh
+Created By  : Bettina-Sarah Janesch
 About       : Le composant IconButton prend en entrée des props pour afficher une 
               icône, naviguer vers une page, exécuter une fonction personnalisée 
               onClick, et gérer l'état de l'icône. Il utilise le composant Icon pour 
@@ -35,20 +35,13 @@ const IconButton: React.FC<IconButtonProps> = ({
       navigate(`/${page}`);
     }
 
-    // If a custom onClick function is provided, execute it
     if (onClick) {
       console.log("onclick");
-      onClick(); // !! when i define my button, i can provide it any function i want !!!
+      onClick();
     }
 
-    // If the button has a toggleState prop, toggle its state
     if (toggleState !== undefined) {
       setIsActive((prev) => !prev);
-    }
-    if (isActive) {
-      console.log(
-        "im now an active button .. if you want, execute smth extra here idk"
-      );
     }
   };
 

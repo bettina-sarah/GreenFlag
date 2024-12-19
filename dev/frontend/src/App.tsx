@@ -1,8 +1,8 @@
 /*
 ------------------------------------------------------------------------------------
 ====================================================================================
-Filename    : AlgoSelector.ts
-Created By  : Vincent Fournier et Bettina-Sarah Janesh
+Filename    : App.tsx
+Created By  : Vincent Fournier et Bettina-Sarah Janesch
 About       : Le composant App de cette application utilise BrowserRouter pour gérer 
               le routage de l'application React. Il configure les différentes routes 
               de l'application, chacune nécessitant une authentification via AuthGuard 
@@ -46,7 +46,6 @@ const App: React.FC = () => {
           </ReverseAuthGuard>
         }
       />
-
 
       <Route
         path="/login"

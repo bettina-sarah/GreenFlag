@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : Bio.tsx
-Created By  : Bettina-Sarah Janesh
+Created By  : Bettina-Sarah Janesch
 About       : Ce fichier définit le composant Bio, qui prend en charge les données 
               de biographie (bio) et les affiche dans une section avec une mise en page 
               stylisée, y compris un titre "About Me" et le texte de la biographie 

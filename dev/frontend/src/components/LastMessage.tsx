@@ -13,8 +13,16 @@ About       : Le composant LastMessage affiche le dernier message d'une conversa
 */
 
 import React from "react";
-import { formatDate } from "@/lib/utils";
 import { LastMessageProps } from "@/interfaces/interfaces";
+
+// code from chatgpt
+function formatDate(Datestr: string): string {
+  const date = new Date(Datestr)
+  
+  const formattedDate = new Intl.DateTimeFormat('en-US',{month:'short',day:'2-digit',timeZone:'UTC'}).format(date)
+
+  return formattedDate
+}
 
 const LastMessage: React.FC<LastMessageProps> = ({
   last_message,

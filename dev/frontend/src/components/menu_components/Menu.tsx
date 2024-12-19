@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : Menu.tsx
-Created By  : Bettina-Sarah Janesh
+Created By  : Bettina-Sarah Janesch
 About       : Ce fichier définit un composant Menu qui inclut plusieurs éléments 
               interactifs : un bouton d'icône pour les suggestions de correspondances 
               et les messages, une liste déroulante de notifications, un sélecteur de 

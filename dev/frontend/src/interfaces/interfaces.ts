@@ -47,8 +47,8 @@ export interface IProfileProps {
     suggestion_id: string;
     profile_info: ProfileProps;
     photos: string[];
-    isLastCard: boolean; // New prop to mark the last card
-    onLastCardLeftScreen?: () => void; // Callback for end-of-list detection
+    isLastCard: boolean;
+    onLastCardLeftScreen?: () => void;
 }
 
 export interface IProfileCardProps {
@@ -67,7 +67,7 @@ export interface IProfileRoomData {
     subject: {
       id:number;
       firstname:string;
-      profile_photo: any; // string | IPhotoData | null;
+      profile_photo: any;
     };
     last_message: {
       sender_id: number;
@@ -83,10 +83,10 @@ export interface IconProps {
 
 export interface IconButtonProps {
     icon: string;
-    page?: string | null; // button can naviagate or execute custom function!
+    page?: string | null;
     onClick?: () => void;
     disabled?: boolean;
-    toggleState?: boolean; // optional turn on off !
+    toggleState?: boolean;
     suggestion_id?: string;
     className?: string;
 }
@@ -122,6 +122,7 @@ export interface NotificationUpdateData {
 }
 
 // CHATROOMS
+
 export interface ChatroomProps {
     name: string;
     subject: {

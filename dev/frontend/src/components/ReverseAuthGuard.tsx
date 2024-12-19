@@ -1,3 +1,16 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : ReverseAuthGuard.tsx
+Created By  : Bettina-Sarah Janesch
+About       : ReverseAuthGuard est un composant React qui vérifie si un utilisateur 
+              est authentifié via un token dans sessionStorage. Si l'utilisateur 
+              est connecté, il est redirigé vers "/matching", sinon le contenu 
+              enfant est affiché.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 

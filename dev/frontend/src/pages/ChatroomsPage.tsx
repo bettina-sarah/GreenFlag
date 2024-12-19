@@ -43,23 +43,22 @@ const ChatroomsPage: React.FC = () => {
 				  const updatedProfiles = await Promise.all(updatedProfileData.map(async (profile) => {
 					const photoKey = profile.subject.profile_photo;
 		
-					// If there are photos, fetch them
 					if (photoKey) {
 						try{
 							const fetchedPhoto: IPhotoData = await fetchData<IPhotoData>("/get-photo", photoKey[0]);
-							profile.subject.profile_photo = fetchedPhoto; // Update profile photo data
+							profile.subject.profile_photo = fetchedPhoto;
 						}
 						catch (error){
 							console.error("Error fetching phoro",error);
 							profile.subject.profile_photo = null;
 						}
 					} else {
-					  profile.subject.profile_photo = null; // No photos, set to null
+					  profile.subject.profile_photo = null;
 					}
 					return profile;
 				  }));
 		
-				  setModifiedProfileData(updatedProfiles); // Update state with modified profiles
+				  setModifiedProfileData(updatedProfiles); 
 				} catch (error) {
 				  console.error("Error fetching photos:", error);
 				}
@@ -80,7 +79,6 @@ const ChatroomsPage: React.FC = () => {
 		  </div>
 		);
 	  }
-
 
 	return(
 		<div>

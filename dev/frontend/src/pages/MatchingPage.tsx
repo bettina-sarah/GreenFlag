@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : MatchingPage.tsx
-Created By  : Bettina-Sarah Janesh
+Created By  : Bettina-Sarah Janesch
 About       : Le composant MatchingPage affiche des suggestions de profils à swiper, 
               gère les mises à jour de la suggestion via des API et maintient l'état 
               des cartes swipées à l'aide de useTriggerFetch et useEffect. Il utilise 

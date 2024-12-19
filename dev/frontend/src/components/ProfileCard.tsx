@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : ProfileCard.tsx
-Created By  : Bettina-Sarah Janesh
+Created By  : Bettina-Sarah Janesch
 About       : Le composant ProfileCard est utilisé pour afficher un profil utilisateur
               en intégrant divers composants pour présenter les informations de profil, 
               telles que les photos, les informations de base, les objectifs 

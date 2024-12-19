@@ -1,9 +1,15 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : App.css
+Created By  : Vincent Fournier et Bettina-Sarah Janesch
+About       : fichier css pour la composante principale App.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 .App {
   min-height: 100vh;
-  /*height: 100vh;*/
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
   overflow: auto;
   flex-grow: 1;
 }

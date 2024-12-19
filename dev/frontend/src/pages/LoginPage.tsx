@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : LoginPage.tsx
-Created By  : Vincent Fournier
+Created By  : Vincent Fournier (contribution visuelle: Bettina-Sarah Janesch)
 About       : Le composant Login affiche un formulaire de connexion et gère un message 
               indiquant que le compte a été créé avec succès si l'utilisateur est 
               revenu après avoir créé un compte. Il utilise IconButton pour naviguer 

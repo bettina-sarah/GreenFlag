@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : Hobbies.tsx
-Created By  : Bettina-Sarah Janesh
+Created By  : Bettina-Sarah Janesch
 About       : Ce fichier définit le composant Hobbies, qui affiche une liste de 
               passe-temps sous forme de tags. Chaque passe-temps est affiché dans une 
               boîte stylisée avec une bordure, une couleur d'arrière-plan 

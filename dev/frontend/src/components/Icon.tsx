@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------
 ====================================================================================
 Filename    : Icon.tsx
-Created By  : Bettina-Sarah Janesh
+Created By  : Bettina-Sarah Janesch
 About       : Le composant Icon prend en entrée une prop icon qui contient l'URL de 
               l'icône à afficher. Il utilise une balise img pour afficher l'icône 
               avec la classe CSS object-contain pour maintenir les proportions et 
