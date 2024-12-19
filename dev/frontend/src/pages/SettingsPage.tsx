@@ -72,8 +72,6 @@ const SettingsPage: React.FC = () => {
           sessionStorage.clear();
           navigate("/");
 
-          //function to clear & post to BE 1st then clear
-          // post to remove token from database!
         }}
         className="bg-red-600 p-1 rounded-md text-white"
         type="submit"
