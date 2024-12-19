@@ -1,3 +1,20 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : PrivateChatroomPage.tsx
+Created By  : Vincent Fournier
+About       : Le composant PrivateChatroomPage facilite le messagerie en temps réel 
+              dans un chatroom spécifique. Il se connecte à un serveur via Socket.IO, 
+              récupère les messages anciens en utilisant un hook personnalisé, et 
+              permet aux utilisateurs d'envoyer de nouveaux messages. Le composant 
+              utilise un conteneur de chat défilable pour afficher les messages et 
+              fournit une zone de texte pour la saisie des messages avec un bouton 
+              associé pour envoyer les messages. Les messages sont automatiquement 
+              défilés jusqu'en bas pour afficher les messages les plus récents.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import useFetch from "@/api/useFetch";
 import React, {useState, useEffect, useRef} from "react";
 import { useParams } from 'react-router-dom';
@@ -7,22 +24,12 @@ import { Textarea } from "flowbite-react";
 import IconButton from "@/components/IconButton";
 import sendIcon from "@/../ressources/icons/send.png"
 import MenuChat from '@/components/chat_components/MenuChat';
+import { IOldMessage, IMessage } from "@/interfaces/interfaces";
 
 
-interface Message {
-  sender_id: number;
-  message_content: string;
-}
-
-interface OldMessage {
-  sender_id:number; 
-  sender_first_name:string;
-  message_content:string;
-  date_sent:string;
-}
 const PrivateChatroomPage: React.FC = () => {
     const {chatroom_name} = useParams();
-    const [messages, setMessages] = useState<Message[]>([]);
+    const [messages, setMessages] = useState<IMessage[]>([]);
     const [newMessage,setNewMessage] = useState<string>('');
     const [firstLoad, setfirstLoad] = useState<boolean>(true);
     const currentUserId = sessionStorage.getItem('id') ? Number(sessionStorage.getItem('id')) : 0;
@@ -35,7 +42,7 @@ const PrivateChatroomPage: React.FC = () => {
       data: messageData,
       loading: messageLoading,
       error: messageError,
-      } = useFetch<OldMessage[]>({
+      } = useFetch<IOldMessage[]>({
       url: "//get-messages",
       data: { chatroom_name: chatroom_name },
     });

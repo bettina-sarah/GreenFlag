@@ -1,3 +1,20 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : AlgoSelector.ts
+Created By  : Vincent Fournier et Bettina-Sarah Janesh
+About       : Le composant App de cette application utilise BrowserRouter pour gérer 
+              le routage de l'application React. Il configure les différentes routes 
+              de l'application, chacune nécessitant une authentification via AuthGuard 
+              pour accéder aux pages protégées telles que /matching, /chatrooms, 
+              /chatroom/:chatroom_name, /questionnaire, /modify-profile, 
+              /account-settings, et /settings. Les autres pages comme HomePage, Login, 
+              CreateAccount ne nécessitent pas d'authentification. Il utilise également 
+              ToastContainer pour gérer les notifications toast dans l'application.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
@@ -7,7 +24,6 @@ import MatchingPage from "./pages/MatchingPage";
 import ChatroomsPage from "./pages/ChatroomsPage";
 import QuestionnairePage from "./pages/QuestionnairePage";
 import SettingsPage from "./pages/SettingsPage";
-import ProfilePage from "./pages/ProfilePage";
 
 import PrivateChatroomPage from "./pages/PrivateChatroomPage";
 import AuthGuard from "./components/AuthGuard";
@@ -110,14 +126,6 @@ const App: React.FC = () => {
               </AuthGuard>
             }
           />
-          <Route
-            path="/profile"
-            element={
-              <AuthGuard>
-                <ProfilePage />
-              </AuthGuard>
-            }
-          />
         </Routes>
       </BrowserRouter>
     </>
@@ -125,20 +133,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-// ------------ NOTES:  CACHE HANDLING BELOW:
-
-// The QueryClient can be used to interact with a cache ; qc-provider needs an instance of queryclient
-// const queryClient = new QueryClient({
-//     defaultOptions: {
-//       queries: {
-//         staleTime: Infinity,
-//         cacheTime: Infinity,
-//       },
-//     },
-//   });
-
-//  Context lets components pass information deep down without explicitly passing props.
-{
-  /* <AdoptedPetContext.Provider value = {adoptedPet}> */
-}

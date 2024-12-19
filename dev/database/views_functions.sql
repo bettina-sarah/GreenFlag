@@ -1,3 +1,18 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : views_functins.sql
+Created By  : Bettina-Sarah Janesh et Vincent Fournier
+About       : Ce fichier contient des définitions de vues et de fonctions SQL 
+              utilisées pour gérer les données liées aux membres, suggestions, 
+              notifications et messages dans une application de rencontre, y compris 
+              des fonctions pour ajouter des photos et des activités aux membres, 
+              calculer les distances entre les membres, gérer les correspondances et 
+              les notifications de messages.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
 DROP VIEW IF EXISTS chatroom_messages_view;

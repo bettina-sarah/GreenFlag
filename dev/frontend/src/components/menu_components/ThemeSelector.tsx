@@ -1,3 +1,16 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : ThemeSelector.tsx
+Created By  : Vincent Fournier
+About       : Ce composant React, ThemeSelector, permet de choisir dynamiquement un
+              thème visuel pour une application, en utilisant localStorage pour 
+              mémoriser le thème sélectionné et en gérant un menu déroulant qui se 
+              ferme automatiquement lorsqu'on clique à l'extérieur.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import { useState, useEffect, useRef } from "react";
 import IconButton from "../IconButton";
 import PaletteIcon from "@/../ressources/icons/palette_bold_icon_white.png";

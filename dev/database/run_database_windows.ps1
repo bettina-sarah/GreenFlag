@@ -2,7 +2,7 @@
 # Open a PowerShell terminal in the folder and execute: .\run_database.ps1
 
 # Combine SQL files into setup.sql
-Get-Content create_tables_enums.sql, views_functions.sql, users_insert.sql | Set-Content setup.sql
+Get-Content create_tables_enums.sql, views_functions.sql | Set-Content setup.sql
 
 # User & Database
 # Replace 'postgres' with your PostgreSQL username if different

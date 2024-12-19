@@ -1,8 +1,18 @@
-import React from "react";
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : Hobbies.tsx
+Created By  : Bettina-Sarah Janesh
+About       : Ce fichier définit le composant Hobbies, qui affiche une liste de 
+              passe-temps sous forme de tags. Chaque passe-temps est affiché dans une 
+              boîte stylisée avec une bordure, une couleur d'arrière-plan 
+              complémentaire, et des styles de texte définis.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
 
-interface HobbiesProps {
-  hobbies: string[];
-}
+import React from "react";
+import { HobbiesProps } from "@/interfaces/interfaces";
 
 const Hobbies: React.FC<HobbiesProps> = ({ hobbies }) => {
   return (

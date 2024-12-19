@@ -10,11 +10,7 @@ Résumé      : Hook personnalisé et générique pour effectuer des requêtes H
 
 import { useEffect, useState } from "react";
 import fetchData from "./fetchData";
-
-interface IUseFetch {
-  url: string;
-  data: any;
-}
+import { IUseFetch } from "@/interfaces/interfaces";
 
 const useFetch = <T>({ url, data: incomingData }: IUseFetch) => {
   const [data, setData] = useState<T | null>(null);
@@ -36,7 +32,6 @@ const useFetch = <T>({ url, data: incomingData }: IUseFetch) => {
         setLoading(false);
       });
   }, []);
-
   return {
     data,
     loading,
