@@ -28,10 +28,9 @@ ALGOS = {
     'Birch Tree': Birch(),
     'K-Means': KMeans(n_clusters=20)
 }
-# observer inherit ?
 
 class MatchingManager():
-    suggestions = [] # Users
+    suggestions = []
     matches = []
     
     @staticmethod

@@ -29,8 +29,6 @@ class TestSimulator:
         self.contexts = (SwipingContext(PickyStrategy()), SwipingContext(RandomStrategy()), SwipingContext(DesperateStrategy())) 
         self.faker = Faker()
     
-    # !!! get old users to put in set
-
     def create_random_users(self, user_amount: int = 100, gender_proportion: list = [0.25,0.25,0.25,0.25]):
         random.shuffle(gender_proportion)       
         for index, gender in enumerate(gender_proportion):
@@ -43,11 +41,10 @@ class TestSimulator:
 
     def _create_pending_suggestions(self) -> None:
         for user in self.users:
-            # creates them if not existent; pending ONLY
             try:
                 suggestions = MatchingManager.get_suggestions({'id': user.user_id, 'algo': 'Meanshift'})
                 logging.critical(f'Suggestions for User {user.user_id} created.')
-                user.suggestions = suggestions # pas necessaire ?
+                user.suggestions = suggestions
             except Exception as error:
                 logging.error(f'No suggestions available; error: {error}')
                 pass
@@ -73,11 +70,10 @@ class TestSimulator:
 
         for index_user, user in enumerate(self.users):
             suggestions = MatchingManager.get_suggestions({'id': user.user_id, 'algo':'Meanshift'})
-            user.suggestions = suggestions # pas necessaire ?
+            user.suggestions = suggestions
             try:
                 chosen_context_index = strategy_list_for_users[index_user]
                 swiped_list = self.contexts[chosen_context_index].perform_swipe(len(suggestions))
-                # manipulated list
                 for index, suggestion in enumerate(suggestions):
                     logging.info(f"--- SUGGESTION: {suggestion['suggestion_id']}, user: {suggestion['user_infos']['profile_info']['basic_info']['first_name']}")
                     json_suggestion = {'suggestion_id': suggestion['suggestion_id'], "choice": swiped_list[index]}
