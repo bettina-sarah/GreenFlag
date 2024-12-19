@@ -1,24 +1,24 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : BasicInfo.tsx
+Created By  : Bettina-Sarah Janesh
+About       : Ce fichier définit le composant BasicInfo, qui utilise le hook useFetch 
+              pour récupérer les données de localisation pour un utilisateur 
+              spécifique en fonction de l'id et de l'suggestion_id. Le composant gère 
+              les états de chargement, d'erreur et affiche les informations de base, 
+              telles que le nom, l'âge et la distance de l'utilisateur par rapport 
+              à la suggestion.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import useFetch from "@/api/useFetch";
 import React from "react";
 
-interface BasicInfoProps {
-  basic_info: {
-    first_name: string;
-    age: number;
-    city: string;
-  };
-  suggestion_id: string;
-}
-
-interface LocationData {
-  location: string;
-  }
-
-
+import { BasicInfoProps, LocationData } from "@/interfaces/interfaces";
 
 const BasicInfo: React.FC<BasicInfoProps> = ({ basic_info, suggestion_id }) => {
-
-
   const {
     data: locationData,
     loading: locationLoading,
@@ -41,7 +41,6 @@ const BasicInfo: React.FC<BasicInfoProps> = ({ basic_info, suggestion_id }) => {
   }
 console.log('location:',locationData, locationData[0], locationData[0][0])
   const distance = locationData?.[0][0] ?? 0;
-
 
   return (
     <div className="flex flex-col items-baseline pl-4 pt-1 mt-2 mb-2">

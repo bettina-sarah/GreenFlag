@@ -1,6 +1,17 @@
-interface BioProps {
-  bio: string | null;
-}
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : Bio.tsx
+Created By  : Bettina-Sarah Janesh
+About       : Ce fichier définit le composant Bio, qui prend en charge les données 
+              de biographie (bio) et les affiche dans une section avec une mise en page 
+              stylisée, y compris un titre "About Me" et le texte de la biographie 
+              dans une police définie.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
+import { BioProps } from "@/interfaces/interfaces";
 
 const Bio: React.FC<BioProps> = ({ bio }) => {
   return (

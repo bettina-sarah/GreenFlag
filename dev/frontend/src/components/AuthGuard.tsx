@@ -1,15 +1,23 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : AuthGuard.tsx
+Created By  : Bettina-Sarah Janesh
+About       : Le composant AuthGuard vérifie la présence d'un jeton d'authentification
+              dans le sessionStorage pour déterminer si l'utilisateur est authentifié. 
+              S'il n'y a pas de jeton, l'utilisateur est redirigé vers la page de 
+              connexion. Si le jeton est présent, il est vérifié auprès du backend. 
+              En cas de succès, l'utilisateur reste authentifié, sinon, il est 
+              redirigé vers la page d'accueil. Les enfants sont rendus uniquement si 
+              l'utilisateur est authentifié.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import fetchData from "@/api/fetchData";
-
-interface AuthGuardProps {
-  children: React.ReactNode;
-}
-
-export interface TokenData {
-  valid: boolean;
-  token?: string;
-}
+import { AuthGuardProps, TokenData } from "@/interfaces/interfaces";
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const navigate = useNavigate();

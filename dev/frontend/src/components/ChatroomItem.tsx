@@ -1,23 +1,23 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : ChatroomItem.tsx
+Created By  : Vincent Fournier
+About       : Le composant ChatroomItem affiche un élément de liste représentant un 
+              chatroom, incluant le nom du chatroom, la photo de profil du dernier 
+              message, et un composant LastMessage pour afficher le dernier message 
+              du chat. Lorsqu'il est cliqué, il redirige l'utilisateur vers la page 
+              du chatroom correspondant.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React from "react";
-import LastMessage from "./chatroom_item_components/LastMessage";
-// import Subject from "./chatroom_item_components/Subject";
+import LastMessage from "./LastMessage";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from "flowbite-react";
+import { ChatroomProps } from "@/interfaces/interfaces";
 
-interface ChatroomProps {
-  name: string;
-  subject: {
-    id: number;
-    firstname: string;
-    profile_photo: any;
-  };
-  last_message: {
-    sender_id: number;
-    sender_first_name: string;
-    content: string;
-    date_sent: string;
-  };
-}
 
 const ChatroomItem: React.FC<ChatroomProps> = ({
   name,
@@ -44,7 +44,6 @@ const ChatroomItem: React.FC<ChatroomProps> = ({
           subject_first_name={subject.firstname}
         />
       </Avatar>
-      {/* <Subject subject={subject}/> */}
     </div>
   );
 };

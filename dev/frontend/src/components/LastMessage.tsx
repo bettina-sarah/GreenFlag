@@ -1,16 +1,20 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : LastMessage.tsx
+Created By  : Vincent Fournier
+About       : Le composant LastMessage affiche le dernier message d'une conversation. 
+              Il prend en compte si le message est vide ou non, et formatte 
+              l'affichage en affichant le nom de l'expéditeur, le contenu du message 
+              (avec une limite de caractères pour une prévisualisation) et la date 
+              d'envoi formatée.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React from "react";
 import { formatDate } from "@/lib/utils";
-// import Subject from "./Subject";
-
-interface LastMessageProps {
-  last_message: {
-    sender_id: number;
-    sender_first_name: string;
-    content: string;
-    date_sent: string;
-  };
-  subject_first_name: string;
-}
+import { LastMessageProps } from "@/interfaces/interfaces";
 
 const LastMessage: React.FC<LastMessageProps> = ({
   last_message,

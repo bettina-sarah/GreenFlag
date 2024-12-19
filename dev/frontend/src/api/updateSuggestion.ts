@@ -8,11 +8,7 @@ Résumé      : Fonction spécifique pour mettre à jour une suggestion en envoy
 */
 
 import { updateData } from "./updateData";
-
-interface SuggestionData {
-  suggestion_id: string;
-  choice: string;
-}
+import { SuggestionData } from "@/interfaces/interfaces";
 
 export const updateSuggestion = async (
   suggestion_id: string,

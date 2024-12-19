@@ -1,12 +1,24 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : NotificationDropDown.tsx
+Created By  : Bettina-Sarah Janesh
+About       : Ce fichier définit le composant NotificationDropDown, qui affiche une
+              liste déroulante de notifications. Il gère l'ouverture et la fermeture 
+              du menu, le marquage des notifications comme lues, et la navigation 
+              vers la discussion liée à la notification sélectionnée. Le composant 
+              utilise également le gestionnaire de notifications pour mettre à jour 
+              le statut des notifications.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import { useState, useEffect, useRef } from "react";
 import IconButton from "../IconButton";
 import bellIcon from "../../../ressources/icons/bell_notification.png";
 import { useNavigate } from "react-router-dom";
 import { updateNotification } from "@/api/updateNotification";
-
-interface NotificationDropDownProps {
-  notifications: { chatroom: string; notification: string }[] | null;
-}
+import { NotificationDropDownProps } from "@/interfaces/interfaces";
 
 const NotificationDropDown: React.FC<NotificationDropDownProps> = ({
   notifications,

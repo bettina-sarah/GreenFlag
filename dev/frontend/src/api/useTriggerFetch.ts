@@ -11,11 +11,7 @@ Résumé      : Hook personnalisé et générique permettant de déclencher des 
 
 import { useEffect, useState } from "react";
 import fetchData from "./fetchData";
-
-interface IUseFetch {
-  url: string;
-  data: any;
-}
+import { IUseFetch } from "@/interfaces/interfaces";
 
 const useTriggerFetch = <T extends any[]>(
   { url, data: incomingData }: IUseFetch,

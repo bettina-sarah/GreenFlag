@@ -1,3 +1,17 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : CreateAccountPage.tsx
+Created By  : Vincent Fournier
+About       : Le composant CreateAccount affiche une icône de retour, un titre pour 
+              créer un compte, et un formulaire d'enregistrement. Il utilise 
+              IconButton pour naviguer en arrière et RegisterForm pour le formulaire 
+              d'inscription. Le style du titre est également transformé pour un effet 
+              visuel.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React from "react";
 import RegisterForm from "@/components/form_components/RegisterForm";
 import BackArrowIcon from "@/../ressources/icons/back_arrow.png";

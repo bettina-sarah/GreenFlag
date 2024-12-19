@@ -1,3 +1,17 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : HomePage.tsx
+Created By  : Vincent Fournier
+About       : Le composant HomePage affiche un logo et des boutons pour se connecter 
+              ou créer un compte. Il utilise useNavigate pour gérer la navigation 
+              entre les pages de connexion et d'inscription. Les boutons sont stylés 
+              avec une transition de couleurs pour améliorer l'interaction de 
+              l'utilisateur.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import { useNavigate } from "react-router-dom";
 import Logo from "../../ressources/icons/logo.png";
 
