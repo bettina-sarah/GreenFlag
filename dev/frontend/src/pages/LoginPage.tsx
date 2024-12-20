@@ -32,9 +32,11 @@ const Login: React.FC = () => {
   }
 
   return (
-    <div className="w-full h-full flex flex-col justify-between items-center bg-home-bg2 bg-cover bg-center">
-      <IconButton icon={BackArrowIcon} page=" " className="place-self-start" />
-      <h1 className="text-5xl font-bold text-h1-darkblue font-leckerli">
+    <div className="relative w-full h-full flex flex-col justify-between items-center bg-home-bg2 bg-cover bg-center">
+      <div className="absolute top-2 left-2">
+        <IconButton icon={BackArrowIcon} page=" " className="p-2" />
+      </div>
+      <h1 className="mt-[30vh] text-5xl font-bold text-h1-darkblue font-leckerli">
         Welcome Back!
       </h1>
       {showAccountCreatedMessage && (
