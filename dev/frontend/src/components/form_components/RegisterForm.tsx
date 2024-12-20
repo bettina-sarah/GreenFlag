@@ -64,24 +64,24 @@ const RegisterForm = () => {
   return (
     <form
       onSubmit={onSubmit}
-      className="flex space-y-2 flex-col justify-between items-center p-4"
+      className="relative flex space-y-2 flex-col justify-between items-center p-4"
     >
-      <div className="flex py-6 items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
+      <div className="relative flex py-6 items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
         <img src={PersonIcon} className="size-7" />
         <input
           className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
           placeholder="First name"
           {...register("firstname", { required: true, maxLength: 50 })}
         />
+                {errors.firstname && (
+          <span className="absolute top-5 right-1 text-red-500 text-xs">
+            {errors.firstname.type === "required" && "This is required"}
+            {errors.firstname.type === "maxLength" && "Max length exceeded"}
+          </span>
+        )}
       </div>
-      {errors.firstname?.type === "required" && (
-        <span className="text-red-500 text-xs">This is required</span>
-      )}
-      {errors.firstname?.type === "maxLength" && (
-        <span className="text-red-500 text-xs">Max length exceeded</span>
-      )}
 
-      <div className="flex py-6 items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
+      <div className="relative flex py-6 items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
         <img src={PersonIcon} className="size-7" />
         <input
           className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
@@ -89,14 +89,14 @@ const RegisterForm = () => {
           {...register("lastname", { required: true, maxLength: 50 })}
         />
         {errors.lastname && (
-          <span className="absolute bottom-[-20px] left-0 text-red-500 text-xs">
+          <span className="absolute top-5 right-1 text-red-500 text-xs">
             {errors.lastname.type === "required" && "This is required"}
             {errors.lastname.type === "maxLength" && "Max length exceeded"}
           </span>
         )}
       </div>
 
-      <div className="flex py-6 items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
+      <div className="relative flex py-6 items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
         <img src={EmailIcon} className="size-7" />
         <input
           className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
@@ -106,17 +106,15 @@ const RegisterForm = () => {
             pattern: /^[\w.]+@([\w-]+\.)+[\w-]{2,4}$/,
           })}
         />
+        {errors.email && (
+          <span className="absolute top-5 right-1 text-red-500 text-xs">
+            {errors.email?.type === "required" && "This is required"}
+            {errors.email?.type === "pattern" && "You need to provide a valid email"}
+          </span>
+        )}
       </div>
-      {errors.email?.type === "required" && (
-        <span className="text-red-500 text-xs">This is required</span>
-      )}
-      {errors.email?.type === "pattern" && (
-        <span className="text-red-500 text-xs">
-          You need to provide a valid email
-        </span>
-      )}
 
-      <div className="flex py-6 items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
+      <div className="relative flex py-6 items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
         <img src={LockIcon} className="size-7" />
         <input
           className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
@@ -124,16 +122,16 @@ const RegisterForm = () => {
           type="password"
           {...register("password", { required: true, maxLength: 20 })}
         />
+        {errors.password && (
+          <span className="absolute top-5 right-1 text-red-500 text-xs">
+            {errors.password?.type === "required" && "This is required"}
+            {errors.password?.type === "maxLength" && "Max length exceeded"}
+          </span>
+        )}
       </div>
-      {errors.password?.type === "required" && (
-        <span className="text-red-500 text-xs">This is required</span>
-      )}
-      {errors.password?.type === "maxLength" && (
-        <span className="text-red-500 text-xs">Max length exceeded</span>
-      )}
 
       <div
-        className="!mb-[12px] py-6 flex items-center w-full max-w-sm 
+        className="relative py-6 flex items-center w-full max-w-sm 
                 border-b-2 h-6 border-custom-bg"
       >
         <img src={Lock2Icon} className="size-7" />
@@ -148,15 +146,12 @@ const RegisterForm = () => {
               PasswordValue != val ? "Your passwords do not match" : true,
           })}
         />
+        {errors.cpassword && (
+          <span className="absolute top-5 right-1 text-red-500 text-xs">
+            {errors.cpassword.type === "required" ? "This is required" : errors.cpassword.message}
+          </span>
+        )}
       </div>
-      {errors.password?.type === "required" && (
-        <span className="text-red-500 text-xs">This is required</span>
-      )}
-      {errors.cpassword?.message && (
-        <span className="text-red-500 text-xs">
-          {errors.cpassword?.message}
-        </span>
-      )}
 
       <button
         className="transition-colors duration-300 bg-custom-bg hover:bg-primary-color
