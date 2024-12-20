@@ -395,7 +395,6 @@ const QuestionnaireForm = () => {
 
       <form
         onSubmit={handleSubmitPhoto(async (data: FormDataPhoto) => {
-          await onSubmitPhoto(data);
           await toast.promise(onSubmitPhoto(data), {
             pending: "Promise is pending",
             success: "Photo saved!",

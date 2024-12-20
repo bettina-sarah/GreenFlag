@@ -88,13 +88,13 @@ const RegisterForm = () => {
           placeholder="Last name"
           {...register("lastname", { required: true, maxLength: 50 })}
         />
+        {errors.lastname && (
+          <span className="absolute bottom-[-20px] left-0 text-red-500 text-xs">
+            {errors.lastname.type === "required" && "This is required"}
+            {errors.lastname.type === "maxLength" && "Max length exceeded"}
+          </span>
+        )}
       </div>
-      {errors.lastname?.type === "required" && (
-        <span className="text-red-500 text-xs">This is required</span>
-      )}
-      {errors.lastname?.type === "maxLength" && (
-        <span className="text-red-500 text-xs">Max length exceeded</span>
-      )}
 
       <div className="flex py-6 items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
         <img src={EmailIcon} className="size-7" />
