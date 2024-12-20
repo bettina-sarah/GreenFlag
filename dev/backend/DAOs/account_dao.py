@@ -24,7 +24,6 @@ class AccountDAO(DAO):
     def login(params: tuple) -> bool:
         query = 'SELECT id, profile_completed FROM member WHERE email = %s and member_password = %s'
         response = AccountDAO._prepare_statement("select", query, params)
-        print('login response:', response)
         return response
 
     @staticmethod

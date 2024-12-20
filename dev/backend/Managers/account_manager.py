@@ -29,12 +29,10 @@ class AccountManager:
         params = (email, password)
         try:
             response = AccountDAO.login(params)
-            print('login response:', response)
             json_response = {'id': response[0][0], 'profile_completed': response[0][1]}
-            print(json_response)
             return json_response
         except Exception as error:
-            print(error)
+            print(__class__.__name__, error)
             return False
     
     @staticmethod
@@ -50,8 +48,7 @@ class AccountManager:
             response = AccountDAO.create_account(params)
             return response
         except Exception as error:
-            print(error)
-            print('account manager')
+            print(__class__.__name__, error)
             return False
     
     @staticmethod
@@ -100,7 +97,7 @@ class AccountManager:
             response = AccountDAO.save_token(params)
             return response
         except Exception as error:
-            print(error)
+            print(__class__.__name__, error)
             
     @staticmethod
     def does_token_exist(user_id, token) -> bool:
@@ -109,7 +106,7 @@ class AccountManager:
             response = AccountDAO.does_token_exist(params)
             return response
         except Exception as error:
-            print(error)
+            print(__class__.__name__, error)
             
     @staticmethod
     def complete_profile(data) -> bool:
@@ -119,8 +116,7 @@ class AccountManager:
             response = AccountDAO.complete_profile(params)
             return response
         except Exception as error:
-            print(error)
-            print('account manager')
+            print(__class__.__name__, error)
             return False
 
     @staticmethod
@@ -131,8 +127,7 @@ class AccountManager:
             response = AccountDAO.confirm_email(params)
             return response
         except Exception as error:
-            print(error)
-            print('account manager')
+            print(__class__.__name__, error)
             return False
         
     @staticmethod
@@ -143,8 +138,7 @@ class AccountManager:
             response = AccountDAO.confirm_fake(params)
             return response
         except Exception as error:
-            print(error)
-            print('account manager')
+            print(__class__.__name__, error)
             return False
         
 
@@ -158,8 +152,7 @@ class AccountManager:
             response = AccountDAO.delete_account(params)
             return response
         except Exception as error:
-            print(error)
-            print('account manager')
+            print(__class__.__name__, error)
             return False
     
 
@@ -182,8 +175,7 @@ class AccountManager:
                     responses["photo_keys"] = None
             return responses
         except Exception as error:
-            print(error)
-            print('account manager')
+            print(__class__.__name__, error)
             return False
         
     
@@ -204,7 +196,7 @@ class AccountManager:
             "bio": result[4]}
             return profile_data
         except Exception as error:
-            print(error)
+            print(__class__.__name__, error)
             return False
     
     @staticmethod
@@ -220,8 +212,7 @@ class AccountManager:
             response = AccountDAO.modify_profile(params)
             return response
         except Exception as error:
-            print(error)
-            print('account manager')
+            print(__class__.__name__, error)
             return False
 
     @staticmethod
@@ -233,8 +224,7 @@ class AccountManager:
             response = AccountDAO.update_preferences(columns, values, user_id)
             return response
         except Exception as error:
-            print(error)
-            print('account manager')
+            print(__class__.__name__, error)
             return False
     
     @staticmethod
@@ -265,8 +255,7 @@ class AccountManager:
             response = AccountDAO.add_photos(params)
             return response
         except Exception as error:
-            print(error)
-            print('account manager')
+            print(__class__.__name__, error)
             return False
     
     @staticmethod
@@ -276,28 +265,26 @@ class AccountManager:
             encryption_keys = AccountDAO.get_photos(params)
             return encryption_keys
         except Exception as error:
-            print(error)
+            print(__class__.__name__, error)
     
     
     @staticmethod
     def get_photo(data) -> bool:
-        print('in get photo manager: data is ', data)
         photo_dao = PhotoDAO()
         try:
             photo = photo_dao.get_photo(data)
             mime_type = AccountManager.guess_mime_type(photo)
             return photo, mime_type
         except Exception as error:
-            print(error)
-            print('account manager')
+            print(__class__.__name__, error)
             
     @staticmethod
     def guess_mime_type(photo):
         try:
             image = Image.open(photo)
             image_format = image.format.lower()
-        except Exception as e:
-            print(e)
+        except Exception as error:
+            print(__class__.__name__, error)
         # Reset the BytesIO pointer to the beginning
         photo.seek(0)
         # Determine the correct MIME type based on the image format
@@ -319,6 +306,5 @@ class AccountManager:
             response = AccountDAO.update_hobbies(params)
             return response
         except Exception as error:
-            print(error)
-            print('account manager')
+            print(__class__.__name__, error)
             return False

@@ -27,7 +27,6 @@ class AuthenticationMiddleware:
             return is_valid, user_id
         # we generate a new token if token is expired OR almost expiring
         new_token = self.generate_token(user_id)
-        print('new token: ', new_token)
         return new_token, user_id
 
     def generate_token(self, user_id:str) -> str:
