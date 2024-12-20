@@ -39,7 +39,6 @@ const BasicInfo: React.FC<BasicInfoProps> = ({ basic_info, suggestion_id }) => {
       </div>
     );
   }
-console.log('location:',locationData, locationData[0], locationData[0][0])
   const distance = locationData?.[0][0] ?? 0;
 
   return (

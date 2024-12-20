@@ -93,14 +93,6 @@ const ThemeSelector = () => {
             </li>
             <li>
               <button
-                className="w-full p-2 bg-theme-orange/80 text-xl text-white hover:bg-theme-orange/50 rounded-md "
-                onClick={() => changeTheme("theme-orange")}
-              >
-                Orange
-              </button>
-            </li>
-            <li>
-              <button
                 className="w-full p-2 bg-theme-blue/60 text-xl text-white hover:bg-theme-blue/50 rounded-md "
                 onClick={() => changeTheme("theme-blue")}
               >
@@ -109,10 +101,10 @@ const ThemeSelector = () => {
             </li>
             <li>
               <button
-                className="w-full p-2 bg-theme-green/90 text-xl text-white hover:bg-theme-green/50 rounded-md "
+                className="w-full p-2 bg-purple-500/80 text-xl text-white hover:bg-theme-green/50 rounded-md "
                 onClick={() => changeTheme("theme-green")}
               >
-                Forest
+                Lavender
               </button>
             </li>
           </ul>
