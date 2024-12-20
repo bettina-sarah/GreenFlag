@@ -1,10 +1,9 @@
 # Green Flag
-## to-do:
-* Il est attendu que pour chaque fichier de code se trouve un en-tête standardisé qui contient au minimum le nom du fichier (introspection), le contexte de ce fichier, que retrouve-t-on ici? (une très courte phrase), le nom de l’auteur ou des auteurs. Tentez de déterminer un standard élégant et de le respecter dans tous les fichiers.
+
 ### par Vincent Fournier et Bettina-Sarah Janesch
 
 ## Présentation
-Une introduction succincte au projet, exposant son but et les éléments clés.
+Greenflag est une application web de rencontres qui emploie des algorithmes afin de trouver des partenaires avec des intérêts similaires. Elle permet également la communication entre les utilisateurs en temps réel et la possibilité de signaler un usager pour mauvais comportement. Il y a également un système de notification connectée avec le mécanisme de matching et chat, ainsi qu’une gestion de session qui génère des jetons JWT qui rend l’application plus sécuritaire.
 
 ## Installation
 Requirements:
@@ -54,10 +53,12 @@ Vous pouvez maintenant utiliser l'application à l'addresse localhost:5173
 ![My Image](images/chat_optimized.png)
 
 ## Références
-Une compilation des ressources et des références principales consultées durant le
-développement du projet, avec des liens hypertextes le cas échéant.
-ChatGpt https://chatgpt.com/
+
 Scikit-Learn Github Repo https://github.com/scikit-learn/scikit-learn/blob/6e9039160/sklearn/cluster/_mean_shift.py#L302 for the algorithm Meanshift
+Cours sur React https://frontendmasters.com/courses/complete-react-v9/
+Documentation React https://react.dev/
+Documentation TypeScript https://www.typescriptlang.org/docs/
+ChatGpt https://chatgpt.com/
 
 
 ## Contact
@@ -71,4 +72,4 @@ email: bettina.sarah.janesch@gmail.com
 ## Remerciements
 On remercie Pierre-Paul Monty pour son aide et ses conseils sur les algorithmes,
 Frédéric Thériault pour ses conseils frontend qui nous ont permis à mieux nous enligner dans notre projet
-et pour finir Erik Freundorfer pour ses conseils frontend
+et pour finir Erik Freundorfer pour ses conseils frontend.
