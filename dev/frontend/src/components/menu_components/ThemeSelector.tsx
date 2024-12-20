@@ -17,14 +17,14 @@ import PaletteIcon from "@/../ressources/icons/palette_bold_icon_white.png";
 
 const ThemeSelector = () => {
   const [theme, setTheme] = useState(
-    localStorage.getItem("theme") || "theme-emerald"
+    sessionStorage.getItem("theme") || "theme-emerald"
   );
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   // Change theme dynamically
   const changeTheme = (newTheme: string) => {
     setTheme(newTheme);
-    localStorage.setItem("theme", newTheme); // Save selected theme in localStorage
+    sessionStorage.setItem("theme", newTheme); // Save selected theme in localStorage
     setIsOpen(false);
   };
 

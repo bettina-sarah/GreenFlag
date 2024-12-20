@@ -14,7 +14,6 @@ About       : Contient les méthodes pour gérer les données de correspondance,
 from DAOs.dao import DAO
 from Managers.account_manager import AccountManager
 from typing import List
-import numpy as np
 
 class MatchingDAO(DAO):
 

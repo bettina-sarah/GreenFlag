@@ -155,7 +155,6 @@ def upload_photos() -> bool:
 def questionnaire() -> bool:
     print(request.json)
     response = AccountManager.update_preferences(request.json)
-    #response = AccountManager.modify_profile(request.json)
     return jsonify(response)
 
 @app.route('/hobbies', methods=['POST'])
@@ -167,18 +166,18 @@ def update_hobbies() -> bool:
 # -------- CHATROOMS ------------
 
 @app.route('/get-chatrooms', methods=['POST'])
-def fetch_chatroom_list() -> list:  # send JSON jsonify ...
+def fetch_chatroom_list() -> list:
     response = chatroomManager.get_chatrooms(request.json)
     return jsonify(response)
 
 @app.route('/get-messages', methods=['POST'])
-def connect_chatroom() -> list:  # send JSON jsonify ...
+def connect_chatroom() -> list:
     response = chatroomManager.get_chatroom_messages(request.json)
     print(response)
     return jsonify(response)
 
 @app.route('/get-chatroom-subject', methods=['POST'])
-def fetch_chatroom_subject() -> list:  # send JSON jsonify ...
+def fetch_chatroom_subject() -> list:
     response = chatroomManager.get_chatroom_subject(request.json)
     print(response)
     return jsonify(response)
@@ -194,12 +193,13 @@ def flag_user() -> bool:
 @app.route('/suggestions', methods=['POST'])
 def get_suggestions() -> list:
     response = MatchingManager.get_suggestions(request.json)
-    print ('suggestions: ', response)
+    logger.critical(f'suggestions recues de la DB: {response}')
     return jsonify(response) if response else jsonify(False)
 
 @app.route('/update-suggestion', methods=['POST'])
 def update_suggestion() -> bool:
     response = MatchingManager.update_suggestion(request.json)
+    logger.info(f'Swipe recu : {response}')
     return jsonify(response)
 
 # -------- NOTIFICATIONS ------------
@@ -209,13 +209,11 @@ def notifications() -> bool:
     response = NotificationManager.get_notifications(request.json)
     logger.warning(f'notifications:{response}'if response else 'no notifications available')
     return jsonify(response)
-#---- ATTENTION JSONIFY TRUE FALSE GOOD OR BAD , CHECK RESPONSE TYPE AND REFACTOR !!!
 
 @app.route('/update-notification', methods=['POST'])
 def update_notification() -> bool:
-    print('update_notification JSON: ', request.json)
     response = NotificationManager.update_notification(request.json)
-    print(f'response db is: ', response)
+    logger.debug(f'Notification a été lue: {response}')
     return jsonify(response)
 
 

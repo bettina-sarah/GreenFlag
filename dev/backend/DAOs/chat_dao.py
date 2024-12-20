@@ -18,7 +18,6 @@ from typing import List
 class ChatDAO(DAO):
     @staticmethod
     def get_chatroom_names(params: tuple) -> list:
-        # need to returns the chatroom_names, the other user id, firstname and profile picture  and the last_message
         query = "SELECT * FROM get_chatrooms(%s)"
         response = ChatDAO._prepare_statement('select', query, params)
         chatrooms = []

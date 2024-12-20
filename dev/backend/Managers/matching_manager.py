@@ -28,10 +28,9 @@ ALGOS = {
     'Birch Tree': Birch(),
     'K-Means': KMeans(n_clusters=20)
 }
-# observer inherit ?
 
 class MatchingManager():
-    suggestions = [] # Users
+    suggestions = []
     matches = []
     
     @staticmethod
@@ -134,16 +133,12 @@ class MatchingManager():
             data[:,-1] = data[:,-1] / max_flag_count
             user_activities[0,-1] /= max_flag_count
         
-        
         if np.sum(data) > 0:
             Algo = AlgoContext(ALGOS[algo])
         
             Algo.fit(data)
-            
             user_label = Algo.predict(user_activities)
-
             labels = Algo.get_labels()
-
             prospects = []
         
             index = 0
@@ -169,7 +164,6 @@ class MatchingManager():
                             
                     cluster_index += 1
                     
-            
             prospects_ids = [members_index[i] for i in prospects]
             
             return prospects_ids
