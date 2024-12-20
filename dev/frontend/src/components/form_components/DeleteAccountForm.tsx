@@ -46,6 +46,7 @@ const DeleteAccountForm = () => {
       }
     } catch (error) {
       toast.error("Error during login");
+      console.error("Error during account deletion:", error)
     }
   });
 
