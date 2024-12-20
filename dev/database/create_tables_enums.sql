@@ -1,3 +1,17 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : create_tables_enums.sql
+Created By  : Bettina-Sarah Janesh et Vincent Fournier
+About       : Le script SQL crée, supprime et gère les relations entre tables pour 
+              stocker des informations sur les membres, leurs activités, photos, 
+              suggestions, signalements et notifications, avec des types ENUM pour 
+              gérer les genres, les statuts de suggestion et les raisons 
+              de signalement.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 DROP TABLE IF EXISTS member CASCADE;
 DROP TABLE IF EXISTS activity CASCADE;
 DROP TABLE IF EXISTS photo CASCADE;

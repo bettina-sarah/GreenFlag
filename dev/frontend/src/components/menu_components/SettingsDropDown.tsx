@@ -1,3 +1,16 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : SettingsDropDown.tsx
+Created By  : Vincent Fournier (Contribution: Bettina-Sarah Janesch)
+About       : Ce composant React, SettingsDropDown, affiche un menu déroulant avec 
+              des options pour modifier le profil, accéder aux paramètres du compte 
+              ou se déconnecter. Il utilise useNavigate pour rediriger l'utilisateur
+              et gère la fermeture automatique du menu lorsqu'on clique à l'extérieur.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import { useState, useEffect, useRef } from "react";
 import IconButton from "../IconButton";
 import { useNavigate } from "react-router-dom";

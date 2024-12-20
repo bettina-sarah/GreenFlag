@@ -1,4 +1,16 @@
-import { IP_SERVER } from "@/config/constants";
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : QuestionnaireSubmitHandlers.ts
+Created By  : Vincent Fournier (Contribution: Bettina-Sarah Janesch)
+About       : Ce fichier contient des fonctions asynchrones pour gérer et soumettre 
+              les informations de profil, les préférences, et les photos de 
+              l'utilisateur à un serveur.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
+import { IP_SERVER } from "@/constants";
 import axios from "axios";
 
 export const genders = ["Male", "Female", "Non-Binary", "Other"];

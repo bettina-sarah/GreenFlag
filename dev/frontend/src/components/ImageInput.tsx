@@ -1,10 +1,20 @@
-import React from "react";
-import { useController, Control } from "react-hook-form";
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : ImageInput.tsx
+Created By  : Vincent Fournier
+About       : Le composant ImageInputCustom utilise react-hook-form pour gérer un 
+              champ de saisie de fichier. Il permet de gérer le changement de fichier, 
+              de prévisualiser l'image sélectionnée et d'afficher des messages 
+              d'erreur en cas de problème. Il utilise le hook useController pour 
+              contrôler et synchroniser le champ avec le state de react-hook-form.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
 
-interface ImageInputProps {
-  name: string;
-  control: Control<any>;
-}
+import React from "react";
+import { useController } from "react-hook-form";
+import { ImageInputProps } from "@/interfaces/interfaces";
 
 const ImageInputCustom: React.FC<ImageInputProps> = ({ name, control }) => {
   const {
@@ -15,9 +25,9 @@ const ImageInputCustom: React.FC<ImageInputProps> = ({ name, control }) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files.length > 0) {
-      onChange(files[0]); // Store the image URL
+      onChange(files[0]);
     } else {
-      onChange(null); // Reset if no file selected
+      onChange(null);
     }
   };
 

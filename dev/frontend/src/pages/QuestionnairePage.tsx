@@ -1,3 +1,15 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : QuestionnairePage.tsx
+Created By  : Vincent Fournier (contribution visuelle: Bettina-Sarah Janesch)
+About       : Le composant QuestionnairePage affiche un titre et un QuestionnaireForm 
+              dans un conteneur flex avec un fond de couleur primaire, offrant de 
+              l'espace pour l'interaction utilisateur.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React from "react";
 // import Menu from "@/components/Menu";
 import QuestionnaireForm from "@/components/form_components/QuestionnaireForm";

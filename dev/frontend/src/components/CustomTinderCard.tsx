@@ -1,21 +1,26 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : CustomTinderCard.tsx
+Created By  : Bettina-Sarah Janesch
+About       : Le composant CustomTinderCard utilise TinderCard pour permettre de 
+              swiper les suggestions de profil. Il gère les actions de swipe à gauche 
+              et à droite, ainsi que le retrait d'une carte de l'écran. Le composant 
+              affiche également des informations sur le profil, telles que les photos, 
+              les informations de base, les objectifs relationnels, les hobbies et la 
+              biographie via divers composants.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React from "react";
 import PhotoCarousel from "./profile_card_components/PhotoCarousel";
 import BasicInfo from "./profile_card_components/BasicInfo";
 import RelationshipGoals from "./profile_card_components/RelationshipGoals";
 import Hobbies from "./profile_card_components/Hobbies";
 import Bio from "./profile_card_components/Bio";
-import { ProfileProps } from "@/pages/MatchingPage";
+import { IProfileProps } from "@/interfaces/interfaces";
 import TinderCard from "react-tinder-card";
-
-interface IProfileProps {
-  swipeLeft: (arg1: string, arg2: boolean) => void;
-  swipeRight: (arg1: string, arg2: boolean) => void;
-  suggestion_id: string;
-  profile_info: ProfileProps;
-  photos: string[];
-  isLastCard: boolean; // New prop to mark the last card
-  onLastCardLeftScreen?: () => void; // Callback for end-of-list detection
-}
 
 const CustomTinderCard: React.FC<IProfileProps> = ({
   swipeLeft,

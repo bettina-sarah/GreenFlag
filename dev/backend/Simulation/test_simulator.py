@@ -61,11 +61,11 @@ class TestSimulator:
 
     def swipe(self) -> None:
         self.get_fake_users() 
-
+        
         random.shuffle(self.users)
         nbr_users = len(self.users)
-        nbr_picky_users = int(nbr_users * 0.33)
-        nbr_random_users = int(nbr_users * 0.33)
+        nbr_picky_users = int(nbr_users * 0.165)
+        nbr_random_users = int(nbr_users * 0.165)
         nbr_desperate_users = nbr_users - nbr_picky_users - nbr_random_users
     
         strategy_list_for_users = [0] * nbr_picky_users + [1] * nbr_random_users + [2] * nbr_desperate_users

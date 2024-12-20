@@ -1,19 +1,24 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : ModifyProfilePage.tsx
+Created By  : Vincent Fournier (contribution visuelle: Bettina-Sarah Janesch)
+About       : Le composant ModifyProfilePage récupère les données de profil, affiche 
+              le profil avec ProfileCard et un formulaire de questionnaire pour la 
+              modification du profil, tout en gérant les états de chargement et d'erreur.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React from "react";
 import Menu from "@/components/menu_components/Menu";
 import { NotificationProvider } from "@/components/NotificationContext";
-import { useNavigate } from "react-router-dom";
 import QuestionnaireForm from "@/components/form_components/QuestionnaireForm";
 import ProfileCard from "@/components/ProfileCard";
 import useFetch from "@/api/useFetch";
-import { ProfileProps } from "./MatchingPage";
-
-export interface SingleProfileData {
-  profile_info: ProfileProps;
-  photo_keys: string[];
-}
+import { SingleProfileData } from "@/interfaces/interfaces";
 
 const ModifyProfilePage: React.FC = () => {
-  const navigate = useNavigate();
 
   const {
     data: profileData,

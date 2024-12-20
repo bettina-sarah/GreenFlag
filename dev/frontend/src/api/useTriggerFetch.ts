@@ -1,21 +1,19 @@
 /*
 ------------------------------------------------------------------------------------
+====================================================================================
 Fichier     : useTriggerFetch.ts
 Créé par    : Bettina-Sarah Janesch
 Résumé      : Hook personnalisé et générique permettant de déclencher des requêtes 
               HTTP avec `fetchData` à l'aide d'une variable `trigger`. Gère les états 
               de chargement, d'erreur, et de données typées (T), et réinitialise les 
               données à chaque déclenchement.
+====================================================================================
 ------------------------------------------------------------------------------------
 */
 
 import { useEffect, useState } from "react";
 import fetchData from "./fetchData";
-
-interface IUseFetch {
-  url: string;
-  data: any;
-}
+import { IUseFetch } from "@/interfaces/interfaces";
 
 const useTriggerFetch = <T extends any[]>(
   { url, data: incomingData }: IUseFetch,

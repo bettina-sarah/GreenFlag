@@ -10,7 +10,7 @@ About       : Fonction utilitaire générique pour effectuer des requêtes POST 
 ------------------------------------------------------------------------------------
 */
 
-import { IP_SERVER } from "@/config/constants";
+import { IP_SERVER } from "@/constants";
 import axios, { AxiosResponse } from "axios";
 
 const fetchData = async <T>(path: string, data: any): Promise<T> => {
@@ -56,4 +56,6 @@ const fetchData = async <T>(path: string, data: any): Promise<T> => {
   }
 };
 
+
 export default fetchData;
+

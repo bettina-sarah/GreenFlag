@@ -1,22 +1,29 @@
-import React, { useState } from "react";
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : ProfileCard.tsx
+Created By  : Bettina-Sarah Janesch
+About       : Le composant ProfileCard est utilisé pour afficher un profil utilisateur
+              en intégrant divers composants pour présenter les informations de profil, 
+              telles que les photos, les informations de base, les objectifs 
+              relationnels, les loisirs et la biographie. Il utilise PhotoCarousel 
+              pour afficher les photos, et divise le contenu en sections pour des 
+              informations de base, des objectifs relationnels, des hobbies et une 
+              biographie. Il ajuste également le style et les dimensions en fonction 
+              des tailles d'écran pour un affichage responsive.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
+import React from "react";
 import PhotoCarousel from "./profile_card_components/PhotoCarousel";
 import BasicInfo from "./profile_card_components/BasicInfo";
 import RelationshipGoals from "./profile_card_components/RelationshipGoals";
 import Hobbies from "./profile_card_components/Hobbies";
 import Bio from "./profile_card_components/Bio";
-import { ProfileProps } from "@/pages/MatchingPage";
-import IconButton from "./IconButton";
-import RedFlag from "../../ressources/icons/FlagButton_left.png";
-import GreenFlag from "../../ressources/icons/FlagButton_right.png";
-// import Undo from "../../ressources/icons/undo.png";
+import { IProfileCardProps } from "@/interfaces/interfaces";
 
-interface IProfileProps {
-  suggestion_id?: string;
-  profile_info: ProfileProps;
-  photos: string[];
-}
-
-const ProfileCard: React.FC<IProfileProps> = ({ profile_info, photos }) => {
+const ProfileCard: React.FC<IProfileCardProps> = ({ profile_info, photos }) => {
   return (
     <div
       className="shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]   w-full max-w-[400px] lg:max-w-[450px] bg-primary-color rounded-e-md 
@@ -34,6 +41,6 @@ const ProfileCard: React.FC<IProfileProps> = ({ profile_info, photos }) => {
       </div>
     </div>
   );
-};
+};3
 
 export default ProfileCard;
