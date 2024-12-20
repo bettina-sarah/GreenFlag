@@ -56,24 +56,24 @@ export const religions = [
 
 export type FormDataHobbies = {
   // Activities
-  "Hiking": boolean;
-  "Yoga": boolean;
-  "Photography": boolean;
-  "Cooking": boolean;
-  "Traveling": boolean;
-  "Reading": boolean;
+  Hiking: boolean;
+  Yoga: boolean;
+  Photography: boolean;
+  Cooking: boolean;
+  Traveling: boolean;
+  Reading: boolean;
   "Video gaming": boolean;
-  "Biking": boolean;
-  "Running": boolean;
+  Biking: boolean;
+  Running: boolean;
   "Watching movies": boolean;
   "Working out": boolean;
-  "Dancing": boolean;
+  Dancing: boolean;
   "Playing instrument": boolean;
   "Attending concerts": boolean;
-  "Painting": boolean;
-  "Volunteering": boolean;
+  Painting: boolean;
+  Volunteering: boolean;
   "Playing sports": boolean;
-  "Crafting": boolean;
+  Crafting: boolean;
   "Pet lover": boolean;
   "Learning new language": boolean;
 };
@@ -152,7 +152,6 @@ export const onSubmitFormInfo = async (info: FormDataInfo) => {
       id: sessionStorage.getItem("id"),
       info: info,
     };
-    console.log("info : " + sessionStorage.getItem("id"));
     const answer = await axios.post(IP_SERVER + "/questionnaire", data);
     if (answer.data) {
       if (sessionStorage.getItem("profileComplete") === "false") {

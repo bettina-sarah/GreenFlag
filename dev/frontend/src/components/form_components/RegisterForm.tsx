@@ -54,7 +54,7 @@ const RegisterForm = () => {
       if (response.data) {
         authenticate();
       } else {
-        console.log("Error during account creation:", response);
+        console.error("Error during account creation:", response);
       }
     } catch (error) {
       console.error("Error during account creation:", error);

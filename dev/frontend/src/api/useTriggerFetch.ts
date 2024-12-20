@@ -29,7 +29,6 @@ const useTriggerFetch = <T extends any[]>(
     fetchData<T>(url, incomingData)
       .then((data) => {
         setData(data);
-        console.log("data", data);
       })
       .catch((error) => {
         console.error(error);

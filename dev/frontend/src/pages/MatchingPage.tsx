@@ -73,8 +73,6 @@ const MatchingPage: React.FC = () => {
         return [...prevCards];
       });
     }
-    console.log("right: ", suggestion_id);
-    console.log("isLastCard:", isLastCard);
     if (isLastCard) {
       handleEndOfList();
     }
@@ -91,7 +89,6 @@ const MatchingPage: React.FC = () => {
         return [...prevCards];
       });
     }
-    console.log("left: ", suggestion_id);
     if (isLastCard) {
       handleEndOfList();
     }
@@ -116,7 +113,6 @@ const MatchingPage: React.FC = () => {
               const hasSwiped = cardsSwiped[index]?.swiped;
 
               return (
-                console.log("index: ", index),
                 !hasSwiped && (
                   <div>
                     <CustomTinderCard
