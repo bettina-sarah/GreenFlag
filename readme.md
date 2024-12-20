@@ -1,6 +1,5 @@
 # Green Flag
-## to-do:
-* Il est attendu que pour chaque fichier de code se trouve un en-tête standardisé qui contient au minimum le nom du fichier (introspection), le contexte de ce fichier, que retrouve-t-on ici? (une très courte phrase), le nom de l’auteur ou des auteurs. Tentez de déterminer un standard élégant et de le respecter dans tous les fichiers.
+
 ### par Vincent Fournier et Bettina-Sarah Janesch
 
 ## Présentation
