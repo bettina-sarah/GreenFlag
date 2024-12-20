@@ -51,13 +51,14 @@ About       : Ce fichier CSS utilise Tailwind pour la mise en page, définit des
 .theme-electric {
   --bg-color: 254, 236, 240;
   /* --bg-color: 241, 65, 65; */  
-  --text-color: 216, 240, 142;
+  --text-color: 54, 46, 222;
   --text-muted: 255, 255, 255;
-  --custom-h1: 218, 242, 138;
-  --custom-h2: 159, 242, 138;
-  --primary-color: 240, 29, 73;
+  --custom-h1: 54, 46, 222;
+  --custom-h2: 85, 46, 230;
+  /* --primary-color: 240, 29, 73; */
+  --primary-color: 220, 29, 73;
   --secondary-color: 81, 123, 243;
-  --optional-color: 112, 246, 208;
+  --optional-color: 143, 29, 73;
   --bg-image-1: url("../ressources/bg/electric/Background.svg");
   --bg-image-2: url("../ressources/bg/electric/Background-2.svg");
 }
@@ -89,14 +90,14 @@ About       : Ce fichier CSS utilise Tailwind pour la mise en page, définit des
 }
 
 .theme-green {
-  --bg-color: 251, 253, 250; /* Soft muted green */
+  --bg-color: 171, 191, 252;
   --text-color: 18, 24, 12;
-  /* --text-muted:; */
-  --custom-h1: 238, 230, 131;
-  --custom-h2: 189, 223, 123;
-  --primary-color: 136, 195, 76; /* - Bright green */
-  --secondary-color: 182, 224, 138; /* - Light seafoam */
-  --optional-color: 155, 221, 89; /* - Pale green */
+  --text-muted:14, 14, 145;
+  --custom-h1: 74, 108, 254;
+  --custom-h2: 79, 79, 254;
+  --primary-color: 171, 191, 252; 
+  --secondary-color: 92, 96, 254; 
+  --optional-color: 92, 121, 254; 
   --bg-image-1: url("../ressources/bg/green/Background.svg");
   --bg-image-2: url("../ressources/bg/green/Background-2.svg");
 }

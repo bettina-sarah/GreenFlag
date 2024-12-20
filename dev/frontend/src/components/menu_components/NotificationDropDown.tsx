@@ -50,9 +50,6 @@ const NotificationDropDown: React.FC<NotificationDropDownProps> = ({
     };
   }, []);
 
-  console.log("notificationDropDown:", notifications);
-  // console.log("notificationDropDown:", notifications);
-
   return (
     <div ref={componentRef} className="relative pt-1">
       {notifications?.length > 0 && (
