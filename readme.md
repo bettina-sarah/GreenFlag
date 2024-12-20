@@ -3,7 +3,7 @@
 ### par Vincent Fournier et Bettina-Sarah Janesch
 
 ## Présentation
-Une introduction succincte au projet, exposant son but et les éléments clés.
+Greenflag est une application web de rencontres qui emploie des algorithmes afin de trouver des partenaires avec des intérêts similaires. Elle permet également la communication entre les utilisateurs en temps réel et la possibilité de signaler un usager pour mauvais comportement. Il y a également un système de notification connectée avec le mécanisme de matching et chat, ainsi qu’une gestion de session qui génère des jetons JWT qui rend l’application plus sécuritaire.
 
 ## Installation
 Requirements:
