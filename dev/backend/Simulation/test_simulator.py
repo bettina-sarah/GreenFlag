@@ -28,6 +28,7 @@ class TestSimulator:
         self.suggestions= set()
         self.contexts = (SwipingContext(PickyStrategy()), SwipingContext(RandomStrategy()), SwipingContext(DesperateStrategy())) 
         self.faker = Faker()
+        self.get_fake_users()
     
     def create_random_users(self, user_amount: int = 100, gender_proportion: list = [0.25,0.25,0.25,0.25]):
         random.shuffle(gender_proportion)       
@@ -50,15 +51,16 @@ class TestSimulator:
                 pass
 
     def get_fake_users(self):
-        fake_users = AccountDAO.get_fake_users((True,))
-        for user in fake_users:
-            old_user = User()
-            old_user.user_id = user[0]
-            self.users.append(old_user)
+        try:
+            fake_users = AccountDAO.get_fake_users((True,))
+            for user in fake_users:
+                old_user = User()
+                old_user.user_id = user[0]
+                self.users.append(old_user)
+        except:
+            logging.error(f'erreur: BD vide')
 
     def swipe(self) -> None:
-        self.get_fake_users() 
-        
         random.shuffle(self.users)
         nbr_users = len(self.users)
         nbr_picky_users = int(nbr_users * 0.165)
