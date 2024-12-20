@@ -24,7 +24,6 @@ const RelationshipGoals: React.FC<RelationshipProps> = ({
         <div className="font-nunito-semibold p-1 m-1 px-3 border-[2px] border-slate-700 bg-complementary-color rounded-3xl text-muted-text ">
           {relationship} 💕
         </div>
-
         <div className="font-nunito-semibold p-1 px-3 m-1 border-[2px] border-slate-700 bg-complementary-color rounded-3xl text-muted-text ">
           {wants_kids ? "Wants kids 🍼" : "Doesn't want kids ❌"}
         </div>
