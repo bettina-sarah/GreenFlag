@@ -175,6 +175,21 @@ VALUES
   ('Pet lover'),
   ('Learning new language');
 
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : views_functins.sql
+Created By  : Bettina-Sarah Janesh et Vincent Fournier
+About       : Ce fichier contient des définitions de vues et de fonctions SQL 
+              utilisées pour gérer les données liées aux membres, suggestions, 
+              notifications et messages dans une application de rencontre, y compris 
+              des fonctions pour ajouter des photos et des activités aux membres, 
+              calculer les distances entre les membres, gérer les correspondances et 
+              les notifications de messages.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 DROP VIEW IF EXISTS member_photos_view;
 DROP VIEW IF EXISTS member_activities_view;
 DROP VIEW IF EXISTS chatroom_messages_view;
@@ -291,12 +306,13 @@ BEGIN
   RETURN TRUE;
 END$$;
 
-
+-- DISTANCE & LOCALISATION FUNCTIONS
 
 DROP FUNCTION IF EXISTS calculate_distance;
 
 CREATE OR REPLACE FUNCTION calculate_distance
-(user1_lat DOUBLE PRECISION, user1_long DOUBLE PRECISION, user2_lat DOUBLE PRECISION, user2_long DOUBLE PRECISION)
+(user1_lat DOUBLE PRECISION, user1_long DOUBLE PRECISION, user2_lat DOUBLE PRECISION,
+ user2_long DOUBLE PRECISION)
 RETURNS DOUBLE PRECISION
 AS $$
 DECLARE
@@ -306,12 +322,50 @@ BEGIN
     distance_km := 6371 * 2 * ASIN(
         SQRT(
             POWER( SIN( (RADIANS(user1_lat) - RADIANS(user2_lat) ) / 2), 2) + 
-            COS(RADIANS(user1_lat)) * COS(RADIANS(user2_lat)) * POWER(SIN( ( RADIANS(user1_long) - RADIANS(user2_long) ) / 2), 2)
+            COS(RADIANS(user1_lat)) * COS(RADIANS(user2_lat)) * 
+            POWER(SIN( ( RADIANS(user1_long) - RADIANS(user2_long) ) / 2), 2)
         )
     );
 	RETURN distance_km * 1000;
 END;
 $$ LANGUAGE PLPGSQL;
+
+
+DROP FUNCTION IF EXISTS fetch_distance;
+CREATE OR REPLACE FUNCTION fetch_distance(logged_id INT, suggestion_id INT)
+RETURNS NUMERIC
+AS $$
+DECLARE
+    lat1 DOUBLE PRECISION;
+    long1 DOUBLE PRECISION;
+    lat2 DOUBLE PRECISION;
+    long2 DOUBLE PRECISION;
+    distance DOUBLE PRECISION;
+    second_user_id INT;
+BEGIN
+    SELECT last_lat, last_long
+    INTO lat1, long1
+    FROM member
+    WHERE id = logged_id;
+    
+    SELECT member_id_2
+    INTO second_user_id
+    FROM suggestion
+    WHERE id = suggestion_id AND member_id_1 = logged_id;
+    IF second_user_id IS NULL THEN
+        RETURN NULL;
+    END IF;
+    SELECT last_lat, last_long
+    INTO lat2, long2
+    FROM member
+    WHERE id = second_user_id;
+    IF lat1 IS NULL OR long1 IS NULL OR lat2 IS NULL OR long2 IS NULL THEN
+        RETURN NULL;
+    END IF;
+    distance := calculate_distance(lat1, long1, lat2, long2); 
+    RETURN ROUND((distance / 1000)::NUMERIC, 1); 
+END;
+$$ LANGUAGE plpgsql;
 
 
 
