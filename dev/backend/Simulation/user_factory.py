@@ -139,7 +139,7 @@ class UserFactory(Factory):
         relationship_type = UserFactory.RELATIONSHIP_TYPE[rel_type]
         
         nbr_pref_gender = random.randint(1, 4)
-        preferred_gender = set(random.sample(list(UserFactory.GENDER), nbr_pref_gender))   # Select a random subset of genders
+        preferred_gender = set(random.sample(list(UserFactory.GENDER), nbr_pref_gender))
         
         preferences = {'min_age': str(min_age), 'max_age': str(max_age),
                        'relationship_type': relationship_type,

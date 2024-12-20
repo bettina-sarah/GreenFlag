@@ -17,7 +17,7 @@ from util_classes.discharged_list import DischargedList
 
 class ChatroomManager(DischargedList.Observer):
     def __init__(self) -> None:
-        self.requests = DischargedList(5,5)
+        self.requests = DischargedList(5,1)
         self.requests.add_observer(self)
 
     def __call__(self, list:list[tuple[str,int]]):

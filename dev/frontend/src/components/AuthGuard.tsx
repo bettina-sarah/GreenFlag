@@ -27,13 +27,11 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
     const checkAuth = async () => {
       const token = sessionStorage.getItem("authToken");
       if (!token) {
-        // No token; redirect to login
         setIsAuthenticated(false);
         navigate("/login");
         return;
       } else {
         try {
-          // Send the token to the backend for validation
           console.log(
             "auth session storage:",
             sessionStorage.getItem("authToken")
@@ -71,10 +69,8 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
     checkAuth();
   }, [navigate]);
 
-  // While checking, dont render
   if (isAuthenticated === null) return null;
 
-  // Render children if authenticated; otherwise, user is redirected
   return <>{isAuthenticated ? children : null}</>;
 };
 
