@@ -16,7 +16,7 @@ import { HobbiesProps } from "@/interfaces/interfaces";
 
 const Hobbies: React.FC<HobbiesProps> = ({ hobbies }) => {
   return (
-    <div className="flex flex-col items-baseline pl-4 pt-1 select-none">
+    <div className="flex flex-col items-baseline pl-4 pt-1">
       <h2 className="font-nunito-bold text-h2-custom">Interests</h2>
       <div className="flex flex-row flex-wrap">
         {hobbies.map((hobby, index) => (
