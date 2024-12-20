@@ -15,7 +15,6 @@ About       : Cette classe gère la validation et le renouvellement des sessions
 
 
 from authentication.crypt_keeper import CryptKeeper
-from functools import wraps
 
 class AuthenticationMiddleware:
     def __init__(self) -> None:

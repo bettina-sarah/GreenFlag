@@ -22,7 +22,7 @@ import logging
 class CryptKeeper:
     def __init__(self) -> None:
         self.__key = "secret"
-        self.__expiry_time = 1800  # 30 mins * 60 sec = 1800 for tests  | should be 150 so 2.5mins 
+        self.__expiry_time = 300  # 30 mins * 60 sec = 1800 for tests  | should be 150 so 2.5mins 
     
     def decode(self,token: str) -> str:
         logging.critical(f"received token:{token}")
@@ -63,7 +63,7 @@ class CryptKeeper:
         jwt_instance = PyJWT()
         final_json = self.expiry_date(payload)  
         encoded_jwt = jwt_instance.encode(final_json, self.__key, algorithm="HS256")
-        logging.warn(f'encoded jwt: {encoded_jwt}')
+        logging.critical(f'encoded JWT token: {encoded_jwt}')
         return encoded_jwt
     
     def expiry_date(self, json):
