@@ -1,10 +1,17 @@
-import React from "react";
-import { Emoji } from "react-emoji-render";
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : RelationshipGoals.tsx
+Created By  : Bettina-Sarah Janesch
+About       : RelationshipGoals est un composant React qui affiche les objectifs 
+              relationnels et les préférences concernant la parentalité d'un 
+              utilisateur, en utilisant des tags stylisés pour chaque option.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
 
-interface RelationshipProps {
-  relationship: string;
-  wants_kids: boolean;
-}
+import React from "react";
+import { RelationshipProps } from "@/interfaces/interfaces";
 
 const RelationshipGoals: React.FC<RelationshipProps> = ({
   relationship,

@@ -1,3 +1,17 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : CustomTheme.tsx
+Created By  : Vincent Fournier
+About       : Ce fichier contient des objets de thèmes personnalisés pour les 
+              composants de saisie de texte, sélecteur, zone de texte, datepicker et
+              modal dans une application React utilisant Flowbite. Ces thèmes 
+              définissent les couleurs, les bordures et autres styles visuels pour 
+              chaque composant afin d'assurer une cohérence esthétique dans l'application.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import type { CustomFlowbiteTheme } from "flowbite-react";
 
 export const textInputTheme: CustomFlowbiteTheme["textInput"] = {

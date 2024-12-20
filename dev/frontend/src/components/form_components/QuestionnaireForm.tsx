@@ -1,3 +1,17 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : QuestionnaireForm.tsx
+Created By  : Vincent Fournier (Contribution: Bettina-Sarah Janesch)
+About       : Le composant QuestionnaireForm est un formulaire React qui permet aux 
+              utilisateurs de remplir des informations personnelles, de sélectionner 
+              leurs intérêts, préférences de relation, genre, religion, date de 
+              naissance, et d'uploader une photo, avec des soumissions gérées via 
+              des fonctions handleSubmit et des formulaires personnalisés.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";

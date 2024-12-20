@@ -1,17 +1,22 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : IconButton.tsx
+Created By  : Bettina-Sarah Janesch
+About       : Le composant IconButton prend en entrée des props pour afficher une 
+              icône, naviguer vers une page, exécuter une fonction personnalisée 
+              onClick, et gérer l'état de l'icône. Il utilise le composant Icon pour 
+              afficher l'icône, et gère les clics pour naviguer, appeler onClick, et 
+              toggler l'état d'activation si nécessaire.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React from "react";
 import Icon from "./Icon";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
-interface IconButtonProps {
-  icon: string;
-  page?: string | null; // button can naviagate or execute custom function!
-  onClick?: () => void;
-  disabled?: boolean;
-  toggleState?: boolean; // optional turn on off !
-  suggestion_id?: string;
-  className?: string;
-}
+import { IconButtonProps } from "@/interfaces/interfaces";
 
 const IconButton: React.FC<IconButtonProps> = ({
   icon,
@@ -30,20 +35,13 @@ const IconButton: React.FC<IconButtonProps> = ({
       navigate(`/${page}`);
     }
 
-    // If a custom onClick function is provided, execute it
     if (onClick) {
       console.log("onclick");
-      onClick(); // !! when i define my button, i can provide it any function i want !!!
+      onClick();
     }
 
-    // If the button has a toggleState prop, toggle its state
     if (toggleState !== undefined) {
       setIsActive((prev) => !prev);
-    }
-    if (isActive) {
-      console.log(
-        "im now an active button .. if you want, execute smth extra here idk"
-      );
     }
   };
 

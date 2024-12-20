@@ -1,3 +1,16 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : AccountSettingsPage.tsx
+Created By  : Vincent Fournier (contribution visuelle: Bettina-Sarah Janesch)
+About       : Le composant AccountSettingsPage rassemble différentes fonctionnalités 
+              de gestion de compte telles que la sélection d’un assistant, la 
+              modification du mot de passe et la suppression de compte, dans une 
+              interface centrée sur l’utilisateur et stylisée avec Tailwind CSS.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 import React from "react";
 import DeleteAccountForm from "@/components/form_components/DeleteAccountForm";
 import Menu from "@/components/menu_components/Menu";

@@ -1,4 +1,20 @@
-import { IP_SERVER } from "@/config/constants";
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : RegisterForm.tsx
+Created By  : Vincent Fournier
+About       : Le composant RegisterForm est un formulaire React pour l'inscription 
+              d'un utilisateur. Il utilise useForm pour la gestion du formulaire avec
+              validation de champs (prénom, nom, email, mot de passe, confirmation du
+              mot de passe) via react-hook-form. Les erreurs sont affichées 
+              directement sous chaque champ en cas de validation échouée. Le formulaire 
+              envoie les données au backend via une requête POST avec axios pour créer
+              un compte et, en cas de succès, navigue vers la page de connexion.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
+import { IP_SERVER } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";

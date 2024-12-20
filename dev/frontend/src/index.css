@@ -1,3 +1,15 @@
+/*
+------------------------------------------------------------------------------------
+====================================================================================
+Filename    : index.css
+Created By  : Vincent Fournier et Bettina-Sarah Janesch
+About       : Ce fichier CSS utilise Tailwind pour la mise en page, définit des thèmes
+              avec des variables CSS, et personnalise la typographie avec des polices
+              Google et des classes Tailwind.
+====================================================================================
+------------------------------------------------------------------------------------
+*/
+
 @import "flowbite/dist/flowbite.css";
 /* title fonts: */
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
