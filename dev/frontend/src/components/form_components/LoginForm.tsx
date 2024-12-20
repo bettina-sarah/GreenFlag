@@ -122,9 +122,9 @@ const LoginForm = () => {
       {/* Login form */}
       <form
         onSubmit={onSubmit}
-        className=" space-y-1 flex flex-col justify-between items-center w-full max-w-sm"
+        className="relative space-y-1 flex flex-col justify-between items-center w-full max-w-sm"
       >
-        <div className="flex py-2 items-center w-full border-b-2 border-custom-bg mb-4">
+        <div className="relative flex py-2 items-center w-full border-b-2 border-custom-bg mb-4">
           <img src={EmailIcon} className="size-7" />
           <input
             className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
@@ -133,16 +133,17 @@ const LoginForm = () => {
               required: true,
               pattern: /^[\w.]+@([\w-]+\.)+[\w-]{2,4}$/,
             })}
+
           />
-          {errors.email && errors.email.type === "required" && (
-            <span>This is required</span>
-          )}
-          {errors.email && errors.email.type === "pattern" && (
-            <span>you need to give an email</span>
-          )}
+          {errors.email && (
+          <span className="absolute top-5 right-1 text-red-500 text-xs">
+            {errors.email?.type === "required" && "This is required"}
+            {errors.email?.type === "pattern" && "You need to provide a valid email"}
+          </span>
+        )}
         </div>
 
-        <div className="flex !mb-[25px] py-2 items-center w-full border-b-2 border-custom-bg">
+        <div className="relative flex !mb-[25px] py-2 items-center w-full border-b-2 border-custom-bg">
           <img src={LockIcon} className="size-7" />
           <input
             className="pl-3 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
@@ -150,11 +151,11 @@ const LoginForm = () => {
             type="password"
             {...register("password", { required: true, maxLength: 20 })}
           />
-          {errors.password && errors.password.type === "required" && (
-            <span>This is required</span>
-          )}
-          {errors.password && errors.password.type === "maxLength" && (
-            <span>Max length exceeded</span>
+          {errors.password && (
+            <span className="absolute top-8 right-1 text-red-500 text-xs">
+              {errors.password?.type === "required" && "This is required"}
+              {errors.password?.type === "maxLength" && "Max length exceeded"}
+            </span>
           )}
         </div>
 
