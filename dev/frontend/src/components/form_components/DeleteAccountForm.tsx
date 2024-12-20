@@ -45,7 +45,7 @@ const DeleteAccountForm = () => {
         toast.success("Account deleted successfully");
       }
     } catch (error) {
-      console.error("Error during login:", error);
+      toast.error("Error during login");
     }
   });
 
@@ -54,7 +54,7 @@ const DeleteAccountForm = () => {
       onSubmit={onSubmit}
       className="flex flex-col h-48 justify-between m-5 space-y-6"
     >
-      <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
+      <div className="relative flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
         <img src={EmailIcon} className="size-7 mb-3" />
         <input
           className="pl-3 w-80 mb-2 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
@@ -64,17 +64,15 @@ const DeleteAccountForm = () => {
             pattern: /^[\w.]+@([\w-]+\.)+[\w-]{2,4}$/,
           })}
         />
+        {errors.email && (
+          <span className="absolute top-0 right-1 text-red-500 text-xs">
+            {errors.email?.type === "required" && "This is required"}
+            {errors.email?.type === "pattern" && "You need to provide a valid email"}
+          </span>
+        )}
       </div>
-      {errors.email?.type === "required" && (
-        <span className="text-red-500 text-xs">This is required</span>
-      )}
-      {errors.email?.type === "pattern" && (
-        <span className="text-red-500 text-xs">
-          You need to provide a valid email
-        </span>
-      )}
 
-      <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
+      <div className="relative flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg">
         <img src={LockIcon} className="size-7 mb-3" />
         <input
           className="pl-3 mb-2 w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
@@ -82,15 +80,15 @@ const DeleteAccountForm = () => {
           type="password"
           {...register("password", { required: true, maxLength: 20 })}
         />
+        {errors.password &&(
+          <span className="absolute top-0 right-1 text-red-500 text-xs">
+            {errors.password?.type === "required" && "This is required"}
+            {errors.password?.type === "maxLength" && "Max length exceeded"}
+          </span>
+        )}
       </div>
-      {errors.password?.type === "required" && (
-        <span className="text-red-500 text-xs">This is required</span>
-      )}
-      {errors.password?.type === "maxLength" && (
-        <span className="text-red-500 text-xs">Max length exceeded</span>
-      )}
 
-      <div className="flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg mb-3">
+      <div className="relative flex items-center w-full max-w-sm border-b-2 h-6 border-custom-bg mb-3">
         <img src={LockIcon} className="size-7" />
         <input
           className="pl-3 mb-2w-80 text-custom-bg font-inter bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-custom-bg"
@@ -102,15 +100,12 @@ const DeleteAccountForm = () => {
               PasswordValue != val ? "Your passwords do not match" : true,
           })}
         />
+        {errors.cpassword && (
+          <span className="absolute top-0 right-1 text-red-500 text-xs">
+            {errors.cpassword.type === "required" ? "This is required" : errors.cpassword.message}
+          </span>
+        )}
       </div>
-      {errors.password?.type === "required" && (
-        <span className="text-red-500 text-xs">This is required</span>
-      )}
-      {errors.cpassword?.message && (
-        <span className="text-red-500 text-xs">
-          {errors.cpassword?.message}
-        </span>
-      )}
 
       <button
         className="transition-colors duration-300 bg-red-600 hover:bg-red-900
