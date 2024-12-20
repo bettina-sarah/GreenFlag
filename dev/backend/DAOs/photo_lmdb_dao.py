@@ -19,7 +19,7 @@ import logging
 
 class PhotoDAO:
     def __init__(self) -> None:
-        self.env = lmdb.open('my_lmdb_database', map_size=48 * 1024 * 1024)
+        self.env = lmdb.open('my_lmdb_database', map_size=1 * 1024 * 1024 * 1024)
         self.faker = Faker()
 
     def add_photos(self, photos:List[str]= None) -> list | bool:
