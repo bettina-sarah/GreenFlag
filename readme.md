@@ -54,10 +54,12 @@ Vous pouvez maintenant utiliser l'application à l'addresse localhost:5173
 ![My Image](images/chat_optimized.png)
 
 ## Références
-Une compilation des ressources et des références principales consultées durant le
-développement du projet, avec des liens hypertextes le cas échéant.
-ChatGpt https://chatgpt.com/
+
 Scikit-Learn Github Repo https://github.com/scikit-learn/scikit-learn/blob/6e9039160/sklearn/cluster/_mean_shift.py#L302 for the algorithm Meanshift
+Cours sur React https://frontendmasters.com/courses/complete-react-v9/
+Documentation React https://react.dev/
+Documentation TypeScript https://www.typescriptlang.org/docs/
+ChatGpt https://chatgpt.com/
 
 
 ## Contact
@@ -71,4 +73,4 @@ email: bettina.sarah.janesch@gmail.com
 ## Remerciements
 On remercie Pierre-Paul Monty pour son aide et ses conseils sur les algorithmes,
 Frédéric Thériault pour ses conseils frontend qui nous ont permis à mieux nous enligner dans notre projet
-et pour finir Erik Freundorfer pour ses conseils frontend
+et pour finir Erik Freundorfer pour ses conseils frontend.
