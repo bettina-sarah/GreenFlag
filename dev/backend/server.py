@@ -83,7 +83,7 @@ def confirm_email() -> bool:
 @app.route('/get-profile', methods=['POST'])
 def get_profile() -> bool:
     response = AccountManager.get_profile(request.json)
-    print('get profile: ', response)
+    logger.critical(f'get profile: {response}')
     return jsonify(response) if response else jsonify(False)
 
 # --- TOKEN ROUTES ------
@@ -94,8 +94,10 @@ def verify_token() -> bool:
     token_is_valid, user_id = AuthenticationMiddleware().check_session_validity(token)
     if isinstance(token_is_valid, bool):
         if token_is_valid:
+            logger.info(f'token is valid: {token}')
             does_token_exist = AccountManager.does_token_exist(user_id, token)
             response = does_token_exist[0][0]
+            logger.warning(f'token exists in database:{response}'if response else 'token doesnt exist in database. UNAUTHORIZED')
             return jsonify(response)
         return jsonify(False)
     else: # is_valid a string: new token
@@ -115,7 +117,7 @@ def modify_profile() -> bool:
 
 @app.route('/delete-account', methods=['POST'])
 def settings() -> bool:
-    print(request.json)
+    logger.error(f'account deleted: {request.json}')
     response = AccountManager.delete_account(request.json)
     return jsonify(response)
 
@@ -124,11 +126,11 @@ def settings() -> bool:
 @app.route('/localisation', methods=['POST'])
 def update_localisation() -> bool:
     response = AccountManager.update_localisation(request.json)
+    logger.info(f'localisation updated: {request.json, response}')
     return jsonify(response)
 
 @app.route('/get-location', methods=['POST'])
 def get_location() -> bool:
-    
     response = AccountManager.get_location(request.json)
     return jsonify(response)
 
@@ -153,13 +155,11 @@ def upload_photos() -> bool:
 
 @app.route('/questionnaire', methods=['POST'])
 def questionnaire() -> bool:
-    print(request.json)
     response = AccountManager.update_preferences(request.json)
     return jsonify(response)
 
 @app.route('/hobbies', methods=['POST'])
 def update_hobbies() -> bool:
-    print(request.json)
     response = AccountManager.update_hobbies(request.json)
     return jsonify(response)
 
@@ -173,19 +173,19 @@ def fetch_chatroom_list() -> list:
 @app.route('/get-messages', methods=['POST'])
 def connect_chatroom() -> list:
     response = chatroomManager.get_chatroom_messages(request.json)
-    print(response)
+    logger.critical(f'messages de la DB: {response}')
     return jsonify(response)
 
 @app.route('/get-chatroom-subject', methods=['POST'])
 def fetch_chatroom_subject() -> list:
     response = chatroomManager.get_chatroom_subject(request.json)
-    print(response)
+    logger.warning(f'chatroom subject: {response}')
     return jsonify(response)
 
 @app.route('/flag',methods=['POST'])
 def flag_user() -> bool:
     response = chatroomManager.flag_user(request.json)
-    print("response from flag backend:",response)
+    logger.info(f"response from flag backend: {response}")
     return jsonify(response)
 
 # -------- MATCHING ------------
