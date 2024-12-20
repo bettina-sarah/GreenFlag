@@ -41,8 +41,6 @@ const DeleteAccountForm = () => {
     try {
       const answer = await axios.post(IP_SERVER + "/delete-account", data);
       if (answer.data) {
-        console.log(answer);
-        console.log("Account deleted successfully");
         navigate("/login");
         toast.success("Account deleted successfully");
       }

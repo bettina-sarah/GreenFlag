@@ -37,13 +37,9 @@ const CustomTinderCard: React.FC<IProfileProps> = ({
     } else if (direction == "right") {
       swipeRight(suggestion_id, isLastCard);
     }
-    console.log("You swiped: " + direction);
   };
 
   const handleCardLeftScreen = () => {
-    console.log(`Card with suggestion_id ${suggestion_id} was swiped out.`);
-    console.log("isLastCard:", isLastCard);
-
     if (isLastCard && onLastCardLeftScreen) {
       onLastCardLeftScreen();
     }
@@ -64,7 +60,10 @@ const CustomTinderCard: React.FC<IProfileProps> = ({
           <PhotoCarousel images={photos} />
           {/* </div> */}
           <div className="max-h-[700px] overflow-auto">
-            <BasicInfo basic_info={profile_info.basic_info} suggestion_id = {suggestion_id} />
+            <BasicInfo
+              basic_info={profile_info.basic_info}
+              suggestion_id={suggestion_id}
+            />
             <RelationshipGoals
               relationship={profile_info.relationship}
               wants_kids={profile_info.wants_kids}

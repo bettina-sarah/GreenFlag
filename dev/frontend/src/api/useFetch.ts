@@ -24,7 +24,6 @@ const useFetch = <T>({ url, data: incomingData }: IUseFetch) => {
     fetchData<T>(url, incomingData)
       .then((data) => {
         setData(data);
-        console.log("data", data);
       })
       .catch((error) => {
         console.error(error);

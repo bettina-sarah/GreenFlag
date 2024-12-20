@@ -40,26 +40,16 @@ const LoginForm = () => {
     try {
       const answer = await axios.post(IP_SERVER + "/login", data);
       if (answer.data && typeof answer.data === "object") {
-        console.log("login data: ", answer.data);
         sessionStorage.setItem("id", answer.data.id);
-        // should get token via login route here !
         sessionStorage.setItem("authToken", answer.data.token);
         sessionStorage.setItem(
           "profileComplete",
           answer.data.profile_completed
         );
-        console.log(
-          "session storages: id",
-          sessionStorage.getItem("id"),
-          "profileComplete:",
-          sessionStorage.getItem("profileComplete")
-        );
 
-        // update lat/long to current location
         navigator.geolocation.getCurrentPosition(
           async (position) => {
             const { latitude, longitude } = position.coords;
-            console.log("lat:" + latitude + "\nlong:" + longitude);
             data = {
               id: sessionStorage.getItem("id"),
               lat: latitude,
@@ -68,7 +58,7 @@ const LoginForm = () => {
             try {
               await axios.post(IP_SERVER + "/localisation", data);
             } catch (error) {
-              console.log("Error sending location:", error);
+              console.error("Error sending location:", error);
             }
           },
           (error) => {
