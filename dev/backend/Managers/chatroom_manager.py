@@ -48,7 +48,6 @@ class ChatroomManager(DischargedList.Observer):
         params = (chatroom_name,)
         response = ChatDAO.get_chatroom_subject(params)
         if response:
-            print("chatroom_subject", response)
             if response[0][0] == int(user_id):
                 subject_id = response[0][1]
             else:
