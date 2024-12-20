@@ -18,7 +18,7 @@ const RelationshipGoals: React.FC<RelationshipProps> = ({
   wants_kids,
 }) => {
   return (
-    <div className="flex flex-col items-baseline pl-4 pt-1">
+    <div className="flex flex-col items-baseline pl-4 pt-1 select-none">
       <h2 className="font-nunito-bold text-h2-custom">Relationship Goals</h2>
       <div className="flex flex-wrap">
         <div className="font-nunito-semibold p-1 m-1 px-3 border-[2px] border-slate-700 bg-complementary-color rounded-3xl text-muted-text ">

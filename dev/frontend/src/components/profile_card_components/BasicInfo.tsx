@@ -42,7 +42,7 @@ const BasicInfo: React.FC<BasicInfoProps> = ({ basic_info, suggestion_id }) => {
   const distance = locationData?.[0][0] ?? 0;
 
   return (
-    <div className="flex flex-col items-baseline pl-4 pt-1 mt-2 mb-2">
+    <div className="flex flex-col items-baseline pl-4 pt-1 mt-2 mb-2 select-none">
       <h1 className="font-nunito-extrabold text-h1-custom mb-1 ">
         {basic_info.first_name}, {basic_info.age}
       </h1>
